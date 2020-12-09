@@ -6,113 +6,169 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Spells</title>
     <script src="./spells.js"></script>
+    <script src="./icons.js"></script>
     <style>
-      *{
-          margin: 0;
-          padding: 0;
-          box-sizing: content-box;
-          background: none;
-      }
-      .r{
-          position: absolute;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 0;
-          overflow: auto;
-          display: flex;
-          background: #171829;
-          color: #aaa;
-      }
-      #a,#b,#c,.f,.c,.g{
-          display: flex;
-          align-items: center;
-      }
-      #a{
-          height: 100%;
-          overflow: auto;
-          flex-wrap: wrap;
-          flex: 1;
-          margin-right: 300px;
-          padding: 30px;
-      }
-      #a::-webkit-scrollbar {
-          width: 1em;
-      }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", STHeiti, "Microsoft Yahei", Tahoma, Simsun, sans-serif;
+        }
 
-      #a::-webkit-scrollbar-track {
-          box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: content-box;
+            background: none;
+        }
 
-      #a::-webkit-scrollbar-thumb {
-          background-color: darkgrey;
-          outline: 1px solid slategrey;
-      }
-      #b{
-          position: fixed;
-          right: 0;
-          width: 300px;
-          background: #161d2f;
-          height: 100%;
-      }
-      .p{
-          position: fixed;
-          left: 0;
-          right: 0;
-          top: 0;
-          padding: 0 30px;
-          background: #161d2f;
-          height: 50px;
-          display: flex;
-      }
-      .g{
-          margin: 50px 0 0;
-      }
-      .c *{
-          white-space: normal;
-          word-break: break-all;
-      }
-      .c label{
-          font-size: 13px;
-          color: #fff;
-      }
-      .c{
-          width: 300px;
-          border: 3px solid #153049;
-          margin: 3px;
-          height: 100px;
-          padding: 10px;
-          background: #161d2f;
-      }
-      .f{
+        .r {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            overflow: auto;
+            display: flex;
+            background: #171829;
+            color: #aaa;
+        }
 
-      }
+        #a, #b, #c, .f, .c, .g {
+            display: flex;
+            align-items: center;
+        }
+
+        #a {
+            height: 100%;
+            overflow: auto;
+            flex-wrap: wrap;
+            flex: 1;
+            margin-right: 300px;
+            padding: 30px;
+        }
+
+        *::-webkit-scrollbar {
+            width: 1em;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, .05);
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: darkgrey;
+        }
+
+        #c div:hover, .act {
+            color: Orange;
+        }
+
+        #c div {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #b {
+            position: fixed;
+            right: 0;
+            width: 300px;
+            background: #161d2f;
+            height: 100%;
+        }
+
+        .p {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            padding: 0 30px;
+            background: #161d2f;
+            height: 50px;
+            display: flex;
+        }
+
+        .g {
+            padding-top: 20px;
+            margin: 50px 0 0;
+        }
+
+        .c * {
+            white-space: normal;
+            word-break: break-all;
+        }
+
+        .c label {
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .c div{
+            flex: 1;
+            height: 100%;
+        }
+        .c {
+            align-items: flex-start;
+            width: 300px;
+            border: 3px solid #153049;
+            margin: 3px;
+            height: 100px;
+            padding: 10px;
+            background: #161d2f;
+        }
+
+        .c i {
+            border: 1px solid #404040;
+            border-radius: 10px;
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin-right: 10px;
+            background: #04172b url("./Icons_Skills.png");
+        }
+
+        input:focus {
+            border-color: #1c93ff;
+        }
+
+        input {
+            padding: 0 5px;
+            color: #fff;
+            border: 0;
+            outline: none;
+            border-bottom: 1px solid rgba(255, 255, 255, .5);
+            margin-right: 20px;
+        }
+
+        .f {
+            font-size: 13px;
+            flex: 1;
+            justify-content: flex-end;
+            padding: 0 30px;
+        }
     </style>
 </head>
 <body>
 <div class="r">
-   <div class="p">
-       <div class="f">
-           <div class="v">
-               <label>Name</label>
-               <input id="v0"/>
-           </div>
-           <div class="v">
-               <label>Damage</label>
-               <input id="v1"/>
-           </div>
-       </div>
-       <div id="c">
-       </div>
-   </div>
-   <div class="g">
-       <div id="a">
+    <div class="p">
+        <div id="c">
+        </div>
+        <div class="f">
+            <div class="v">
+                <label>Spell Name</label>
+                <input id="v0"/>
+            </div>
+            <div class="v">
+                <label>Min Damage</label>
+                <input id="v1"/>
+            </div>
+        </div>
+    </div>
+    <div class="g">
+        <div id="a">
 
-       </div>
-       <div id="b">
+        </div>
+        <div id="b">
 
-       </div>
-   </div>
+        </div>
+    </div>
 </div>
 <script>
     const ft = {};
@@ -120,17 +176,33 @@
     const b = document.getElementById('b');
     const c = document.getElementById('c');
     const {spells, types} = data;
+
+    function ico(k) {
+        const o = icons[k];
+        if (o) {
+            const {U1, U2, V1, V2} = o;
+            return `background-position:-${U1}px -${V1}px`
+
+        }
+        return 'background-image:none'
+    }
+
     const el = (t) => {
         const e = document.createElement('div');
         e.innerHTML = t;
         return e.children[0];
     }
     const card = (o) => {
-        const {Key, SpellType, SpellProperties = []} = o;
+        const {Key, SpellType, SpellProperties = [], Icon} = o;
         const v = el(`
 <div class="c">
-   <label>${Key}</label>
-
+   <i style="${ico(Icon)}" title="${Icon}"></i>
+   <div>
+   <label>${Key.replace(SpellType + '_', '')
+            .replace(/_/g, ' ')
+            .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+        }</label>
+    </div>
 </div>
            `)
         v.d = o;
@@ -167,7 +239,7 @@
     }
     [''].concat(Object.keys(types)).forEach(t => {
         const n = t || 'ALL';
-        const b = el(`<div>${n}</div>`);
+        const b = el(`<div>${n.toUpperCase()}</div>`);
         b.onclick = () => {
             cg(n, t);
         }
@@ -177,7 +249,7 @@
         tbs.push(b);
         c.appendChild(b);
     })
-    cg('ALL','');
+    cg('ALL', '');
 </script>
 </body>
 </html>

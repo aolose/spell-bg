@@ -20,10 +20,15 @@ const fileParser = a => {
 }
 
 const toJS = (name, regex) => {
-    const arr = (fs.readdirSync('./') || [])
-        .filter(a => regex.test(a))
-        .map(a => fileParser(fs.readFileSync(a).toString())
-            .reduce((a, b) => a.concat(b), []))
+    const p = __dirname+'/'+name+'/'
+    const arr = (fs.readdirSync(p) || [])
+        .filter(a => {
+            return regex.test(a)
+        })
+        .map(a => {
+            return fileParser(fs.readFileSync(p+a).toString())
+                .reduce((a, b) => a.concat(b), [])
+        })
 
     const spells = {}
     const types = {}
@@ -56,8 +61,9 @@ return o;
 }
 Object.values(data.spells).forEach(parse);
     `;
-    if (!fs.existsSync('out')) fs.mkdirSync('out');
-    fs.writeFileSync('out/' + name + '.js', js);
+    const o = __dirname+'/out/'
+    if (!fs.existsSync(o)) fs.mkdirSync(o);
+    fs.writeFileSync(o + name + '.js', js);
 }
 
 
