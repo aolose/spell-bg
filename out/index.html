@@ -323,7 +323,7 @@
     };
 
     const card = (o) => {
-        const {Name, SpellType, SpellProperties = [], Icon, Level} = o;
+        const {Name, SpellType, SpellSuccess = [], Icon, Level} = o;
         const v = el(`
 <div class="c">
    <i style="${ico(Icon)}" title="${Icon}"></i>
@@ -333,7 +333,7 @@
    <label>${Name.replace(SpellType + "_", "")
             .replace(/_/g, " ")
             .replace(/([a-z0-9])([A-Z])/g, "$1 $2")}</label>
-   <ul>${SpellProperties.map((p) => "<li>" + p + "</li>").join("")}</ul>
+   <ul>${SpellSuccess.map((p) => "<li>" + p + "</li>").join("")}</ul>
     </div>
 </div>
            `);
@@ -360,7 +360,7 @@
 
             if (g && !isNaN(+g)) {
                 let n = 0;
-                SpellProperties.forEach((v) => {
+                SpellSuccess.forEach((v) => {
                     const r = /DealDamage\((\d+)d(\d+),.*?\)/;
                     const [, a, b] = r.exec(v) || [];
 
