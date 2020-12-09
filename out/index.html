@@ -12,9 +12,6 @@
             font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica Neue, STHeiti, Microsoft Yahei, Tahoma, Simsun, sans-serif
         }
 
-        #v1, #v0 {
-            width: 50px
-        }
 
         * {
             font-size: 13px;
@@ -312,12 +309,16 @@
     const c = document.getElementById("c");
     function ib(){
         b.innerHTML=`<pre>
-Input will ignores case.
+  Input will ignores case.
 
-· Label: The Property name of the spell.
-· Value: The Value of the Property.  '-' means empty.
+· Label:
+         The Property name of the spell.
 
-e.g:
+· Value:
+         The Value of the Property.
+         '-' means empty.
+         '*' means not empty.
+· e.g:
     Label: level  Value:-
 </pre>`;
     }
@@ -379,8 +380,10 @@ e.g:
             let a = 0;
             const f = (k, va) => {
                 if (k) {
-                    if (va === '-') {
-                        if (!k) a = 1;
+                    if (k === '-') {
+                        if (va) a = 1;
+                    } else if (k === '*') {
+                        if (!va) a = 1;
                     } else {
                         const v0 = (va+'').toLowerCase();
                         if (v0.indexOf((k+'').toLowerCase()) === -1) a = 1;
@@ -391,7 +394,7 @@ e.g:
             if (k && l) {
                 let ok = 0
                 Object.keys(o).forEach(kk => {
-                    if (kk.toLowerCase() === k) {
+                    if (kk.toLowerCase() === k.toLowerCase()) {
                         ok=1;
                         f(l, o[kk])
                     }
