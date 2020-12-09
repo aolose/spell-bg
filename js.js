@@ -1,20 +1,20 @@
 const fs = require('fs');
-const arrayKey = {};
+const arrayName = {};
 const fileParser = a => {
     const r = [];
     a.split(/\r?\n\r?\n/).forEach(v => {
         const e = {};
         v.split(/\r?\n/).forEach(n => {
-            if (/^new entry/.test(n)) e.Key = JSON.parse(n.replace('new entry ', ''));
+            if (/^new entry/.test(n)) e.Name = JSON.parse(n.replace('new entry ', ''));
             else if (/^using/.test(n)) {
                 e.Parent = n.substr(6).replace(/"/g, '')
             } else if (/^data/.test(n)) {
                 const [, b, c] = /"([ \w-_]+)" "([ ,()a-z0-9-_:><.;]+)"/gi.exec(n) || [];
                 if (c) e[b] = /^\d+$/.test(c) ? +c : c;
-                if (/;/.test(c)) arrayKey[b] = 1;
+                if (/;/.test(c)) arrayName[b] = 1;
             }
         });
-        if (e.Key) r.push(e);
+        if (e.Name) r.push(e);
     });
     return r;
 }
@@ -34,12 +34,12 @@ const toJS = (name, regex) => {
     const types = {}
     arr.forEach(ar => ar.forEach(o => {
         if (o) {
-            const {SpellType, Key} = o;
-            (types[SpellType] = (types[SpellType] || [])).push(Key);
-            spells[Key] = o;
+            const {SpellType, Name} = o;
+            (types[SpellType] = (types[SpellType] || [])).push(Name);
+            spells[Name] = o;
             Object.keys(o).forEach(k => {
-                if (arrayKey[k]) {
-                    o[k] = o[k].split(';').filter(a => a)
+                if (arrayName[k]) {
+                    o[k] = o[k].split(';').filter(a => a.replace(/, /g,''))
                 }
             });
         }
