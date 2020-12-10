@@ -35,7 +35,7 @@ const toJS = (name, regex) => {
     arr.forEach(ar => ar.forEach(o => {
         if (o) {
             const {SpellType, Name} = o;
-            (types[SpellType] = (types[SpellType] || [])).push(Name);
+            types[SpellType] = 1;
             spells[Name] = o;
             Object.keys(o).forEach(k => {
                 if (arrayName[k]) {
