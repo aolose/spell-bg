@@ -39,7 +39,9 @@ const toJS = (name, regex) => {
             spells[Name] = o;
             Object.keys(o).forEach(k => {
                 if (arrayName[k]) {
-                    o[k] = o[k].split(';').filter(a => a.replace(/, /g,''))
+                    if(o[k].split){
+                        o[k] = o[k].split(';').filter(a => a.replace(/, /g,''))
+                    }
                 }
             });
         }

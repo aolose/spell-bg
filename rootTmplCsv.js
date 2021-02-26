@@ -19,4 +19,4 @@ let str = `"Name","Type","Stats","ID","EquipmentSlots"\n`;
         str += `"${v0}","${v1}","${v2}","${v3}","${v4}"\n`
     })
 })
-require('fs').writeFileSync("./out/rootTemplate.csv", str)
+require('fs').writeFileSync("./scripts/out/rootTemplate.csv", str)

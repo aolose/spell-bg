@@ -183,7 +183,8 @@ const data = {
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_Dipped_Poison": {
    "Name": "Projectile_Dipped_Poison",
@@ -237,7 +238,8 @@ const data = {
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Internal"
   },
   "Projectile_SneakAttack": {
    "Name": "Projectile_SneakAttack",
@@ -331,6 +333,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "MemoryCost": 1
   },
   "Projectile_HordeBreaker": {
@@ -360,6 +363,9 @@ const data = {
     "DealDamage(MainRangedWeapon, MainRangedWeaponDamageType)"
    ],
    "TooltipAttackSave": "RangedWeaponAttack",
+   "TooltipStatusApply": [
+    "ApplyStatus(HORDE_BREAKER_TARGET,100,1)"
+   ],
    "PrepareEffect": [
     "VFX_Actions_Prepare_WeaponAttack_Projectile_HordeBreaker_Root_01,Detach:Dummy_Root::0:None::None::0:0::::"
    ],
@@ -774,7 +780,7 @@ const data = {
    "TargetRadius": "RangedMainWeaponRange",
    "SpellRoll": "Attack(AttackType.RangedWeaponAttack)",
    "SpellSuccess": [
-    "IF(not SavingThrow(Ability.Strength, SourceSpellDC())):ApplyStatus(ENSNARING_STRIKE,100,10)",
+    "IF(not SavingThrow(Ability.Strength, SourceSpellDC(),AdvantageOnRestrained(),DisadvantageOnRestrained())):ApplyStatus(ENSNARING_STRIKE,100,10)",
     "DealDamage(MainRangedWeapon, MainRangedWeaponDamageType)",
     " ExecuteWeaponFunctors(MainHand)"
    ],
@@ -809,7 +815,6 @@ const data = {
    "PreviewCursor": "Bow",
    "CastTextEvent": "Cast",
    "CastSound": "Spell_Cast_Control_ProjectileEnsnaringStrike_L1to3",
-   "VocalComponentSound": "Vocal_Component_DamageGeneral",
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:1"
@@ -851,7 +856,8 @@ const data = {
    "SpellType": "Projectile",
    "Parent": "Projectile_EnsnaringStrike",
    "SpellSuccess": [
-    "IF(not SavingThrow(Ability.Strength, SourceSpellDC())):ApplyStatus(ENSNARING_STRIKE_2,100,10)DealDamage(MainRangedWeapon, MainRangedWeaponDamageType)",
+    "IF(not SavingThrow(Ability.Strength, SourceSpellDC(),AdvantageOnRestrained(),DisadvantageOnRestrained())):ApplyStatus(ENSNARING_STRIKE_2,100,10)",
+    "DealDamage(MainRangedWeapon, MainRangedWeaponDamageType)",
     " ExecuteWeaponFunctors(MainHand)"
    ],
    "Icon": "Spell_Conjuration_EnsnaringStrikeRanged_2",
@@ -1026,6 +1032,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "MemoryCost": 1
   },
   "Projectile_ChromaticOrb": {
@@ -1150,8 +1157,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful",
     "AddFallDamageOnLand"
-   ],
-   "RechargeValues": "4-6"
+   ]
   },
   "Projectile_FireBolt": {
    "Name": "Projectile_FireBolt",
@@ -1220,12 +1226,13 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
-   "RechargeValues": "4-6"
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_FireBolt_NoRecharge": {
    "Name": "Projectile_FireBolt_NoRecharge",
    "SpellType": "Projectile",
-   "Parent": "Projectile_FireBolt"
+   "Parent": "Projectile_FireBolt",
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_FireBolt_Goblin": {
    "Name": "Projectile_FireBolt_Goblin",
@@ -1304,6 +1311,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "MemoryCost": 1
   },
   "Projectile_GuildingBolt_2": {
@@ -1473,14 +1481,19 @@ const data = {
     "HasSomaticComponent",
     "IsHarmful"
    ],
-   "RechargeValues": "5-6"
+   "SpellHitAnimationType": "MagicalDamage_Internal"
   },
   "Projectile_ProduceFlame_Hurl": {
    "Name": "Projectile_ProduceFlame_Hurl",
    "SpellType": "Projectile",
    "Level": 0,
+   "SpellSchool": "Conjuration",
    "SpellProperties": [
-    "RemoveStatus(PRODUCE_FLAME)"
+    "GROUND:RemoveStatus(SELF,PRODUCE_FLAME)",
+    "GROUND:RemoveStatus(SELF,PRODUCE_FLAME_HURL)",
+    "GROUND:RemoveStatus(SELF,PRODUCE_FLAME_HURL_FREE)",
+    "GROUND:SurfaceChange(Ignite)",
+    "GROUND:SurfaceChange(Vaporize)"
    ],
    "TargetRadius": 9,
    "SpellRoll": "Attack(AttackType.RangedSpellAttack)",
@@ -1489,26 +1502,50 @@ const data = {
    ],
    "TargetConditions": "not Self() and not Dead()",
    "ProjectileCount": 1,
-   "Template": "792ba497-a6ea-46bc-81cb-deb78e4dd9d3",
-   "Icon": "unknown",
+   "Template": "6a2ef1c3-cdd3-4dd3-a023-16a26f5c1a99",
+   "Icon": "Spell_Conjuration_ProduceFlame_Hurl",
    "DisplayName": "Projectile_ProduceFlame_Hurl_DisplayName",
    "Description": "Projectile_ProduceFlame_Hurl_Description",
+   "DescriptionParams": [
+    "DealDamage(1d8,Fire)"
+   ],
+   "ExtraDescriptionParams": [
+    "Throwing the flame immediately after you conjure it does not cost an action. Extinguishing or throwing it on subsequent turns costs an action."
+   ],
+   "TooltipAttackSave": "RangedSpellAttack",
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Fire_ProduceFlame_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_ProduceFlame_Hurl_01:::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Damage_Fire_ProjectileSingle_ProduceFlame_Hurl_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Damage_ProduceFlameHurl_L1to3",
    "CycleConditions": "Enemy() and not Dead()",
    "UseCosts": [
     "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "3ff87abf-1ea1-4c32-aadf-c822d74c7dc0(SPL_Arcane_Damage_01_Prepare)",
-    "49fe22cb-4b9f-4480-b7ce-050942c420bb(SPL_Somatic_Projectile_ThrowHorizontal_01_Cast)"
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "0a3d0870-c69c-449e-aa6d-fc7b61a37556(CMBT_Skill_Throw_High_01_Antic)",
+    "3ad7bf24-805f-458e-803b-8ee070d1597f(CMBT_Skill_Throw_High_01_Attack)",
+    "28b56ad3-33c4-4153-bbac-a1bf2fc5bc98(CMBT_Skill_Throw_High_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "26810cdb-342f-4e93-96ea-927ed6f0de65(SPL_Divine_Damage_01_Prepare)",
-    "49fe22cb-4b9f-4480-b7ce-050942c420bb(SPL_Somatic_Projectile_ThrowHorizontal_01_Cast)"
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "0a3d0870-c69c-449e-aa6d-fc7b61a37556(CMBT_Skill_Throw_High_01_Antic)",
+    "3ad7bf24-805f-458e-803b-8ee070d1597f(CMBT_Skill_Throw_High_01_Attack)",
+    "28b56ad3-33c4-4153-bbac-a1bf2fc5bc98(CMBT_Skill_Throw_High_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "3ff87abf-1ea1-4c32-aadf-c822d74c7dc0(SPL_Arcane_Damage_01_Prepare)",
-    "49fe22cb-4b9f-4480-b7ce-050942c420bb(SPL_Somatic_Projectile_ThrowHorizontal_01_Cast)"
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "0a3d0870-c69c-449e-aa6d-fc7b61a37556(CMBT_Skill_Throw_High_01_Antic)",
+    "3ad7bf24-805f-458e-803b-8ee070d1597f(CMBT_Skill_Throw_High_01_Attack)",
+    "28b56ad3-33c4-4153-bbac-a1bf2fc5bc98(CMBT_Skill_Throw_High_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
    ],
    "VerbalIntent": "Damage",
    "SpellFlags": [
@@ -1516,7 +1553,13 @@ const data = {
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
+  },
+  "Projectile_ProduceFlame_Hurl_Free": {
+   "Name": "Projectile_ProduceFlame_Hurl_Free",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_ProduceFlame_Hurl"
   },
   "Projectile_ThrowMissile": {
    "Name": "Projectile_ThrowMissile",
@@ -1566,12 +1609,16 @@ const data = {
    "SpellType": "Projectile",
    "Level": 1,
    "SpellSchool": "Evocation",
+   "SpellProperties": [
+    "GROUND:DealDamage(1d12,Lightning)"
+   ],
    "TargetRadius": 18,
    "SpellRoll": "Attack(AttackType.RangedSpellAttack)",
    "SpellSuccess": [
     "ApplyStatus(WITCH_BOLT,100,2)",
     "DealDamage(1d12,Lightning)",
-    "ApplyStatus(SELF,WITCH_BOLT_OWNER,100,10)"
+    "ApplyStatus(SELF,WITCH_BOLT_OWNER,100,10)",
+    "AI_ONLY:ApplyStatus(AI_HELPER_WITCHBOLT,100,2)"
    ],
    "TargetConditions": "not Self() and not (not Player(context.Source) and IsConcentrating(context.Source))",
    "ProjectileCount": 1,
@@ -1636,7 +1683,8 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
-   "RechargeValues": "5-6",
+   "SpellHitAnimationType": "MagicalDamage_Electric",
+   "RechargeValues": "3-6",
    "MemoryCost": 1
   },
   "Projectile_WitchBolt_2": {
@@ -1724,7 +1772,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
-   "RechargeValues": 6,
+   "RechargeValues": "4-6",
    "MemoryCost": 1
   },
   "Projectile_MagicMissile_2": {
@@ -1762,7 +1810,6 @@ const data = {
   "Projectile_Jump": {
    "Name": "Projectile_Jump",
    "SpellType": "Projectile",
-   "Cooldown": "OncePerTurnNoRealtime",
    "TargetRadius": "4.5",
    "AddRangeFromAbility": "Strength,1",
    "ProjectileCount": 1,
@@ -1779,7 +1826,6 @@ const data = {
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_Jump",
    "ProjectileTerrainOffset": "Yes",
-   "MovingObject": "Caster",
    "UseCosts": [
     "BonusActionPoint:1",
     "Movement:3"
@@ -1807,9 +1853,11 @@ const data = {
     "HasHighGroundRangeExtension",
     "IgnoreVisionBlock",
     "Stealth",
-    "CannotTargetCharacter"
+    "CannotTargetCharacter",
+    "Invisible"
    ],
    "SpellActionType": "Jump",
+   "SpellAnimationIntentType": "Peaceful",
    "SpellJumpType": "Locomotion"
   },
   "Projectile_Jump_NPC": {
@@ -1861,9 +1909,25 @@ const data = {
     "HasHighGroundRangeExtension",
     "HasVerbalComponent",
     "HasSomaticComponent",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ],
    "SpellActionType": "None"
+  },
+  "Projectile_Jump_FlamingSphere": {
+   "Name": "Projectile_Jump_FlamingSphere",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_Jump",
+   "Cooldown": "OncePerTurnNoRealtime",
+   "TargetRadius": 3,
+   "DisplayName": "Projectile_Jump_FlamingSphere_DisplayName",
+   "Description": "Projectile_Jump_FlamingSphere_Description",
+   "DescriptionParams": [
+    "Distance(3)"
+   ],
+   "UseCosts": [
+    "Movement:3"
+   ]
   },
   "Projectile_Fly": {
    "Name": "Projectile_Fly",
@@ -1888,7 +1952,9 @@ const data = {
     "CannotTargetCharacter",
     "CannotTargetItems",
     "IgnoreVisionBlock",
-    "RangeIgnoreVerticalThreshold"
+    "RangeIgnoreVerticalThreshold",
+    "Stealth",
+    "Invisible"
    ]
   },
   "Projectile_BEAM": {
@@ -1949,7 +2015,8 @@ const data = {
     "HasVerbalComponent",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_HellishRebuke_2": {
    "Name": "Projectile_HellishRebuke_2",
@@ -2105,7 +2172,7 @@ const data = {
    "TargetRadius": 18,
    "SpellRoll": "Attack(AttackType.RangedSpellAttack)",
    "SpellSuccess": [
-    "IF(not SavingThrow(Ability.Constitution, SourceSpellDC())):ApplyStatus(POISONED,100,2)",
+    "IF(not SavingThrow(Ability.Constitution, SourceSpellDC(),AdvantageOnPoisoned())):ApplyStatus(POISONED,100,2)",
     "DealDamage(2d8,Poison)"
    ],
    "TargetConditions": "not Self() and not Dead()",
@@ -2165,6 +2232,7 @@ const data = {
     "IsHarmful",
     "CannotTargetTerrain"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Internal",
    "MemoryCost": 1
   },
   "Projectile_RayOfSickness_2": {
@@ -2172,7 +2240,7 @@ const data = {
    "SpellType": "Projectile",
    "Parent": "Projectile_RayOfSickness",
    "SpellSuccess": [
-    "IF(not SavingThrow(Ability.Constitution, SourceSpellDC())):ApplyStatus(POISONED,100,2)",
+    "IF(not SavingThrow(Ability.Constitution, SourceSpellDC(),AdvantageOnPoisoned())):ApplyStatus(POISONED,100,2)",
     "DealDamage(3d8,Poison)"
    ],
    "Icon": "Spell_Necromancy_RayOfSickness_2",
@@ -2257,6 +2325,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "RechargeValues": "5-6",
    "MemoryCost": 1
   },
@@ -2344,7 +2413,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
-   "RechargeValues": "4-6"
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_AcidSplash_Goblin": {
    "Name": "Projectile_AcidSplash_Goblin",
@@ -2406,6 +2475,7 @@ const data = {
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "MemoryCost": 1
   },
   "Projectile_Fireball_FromWand": {
@@ -2477,7 +2547,8 @@ const data = {
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_ArrowOfDarkness": {
    "Name": "Projectile_ArrowOfDarkness",
@@ -2496,7 +2567,8 @@ const data = {
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ]
   },
   "Projectile_ArrowOfIce": {
@@ -2548,7 +2620,8 @@ const data = {
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_ArrowOfLightning": {
    "Name": "Projectile_ArrowOfLightning",
@@ -2576,7 +2649,8 @@ const data = {
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Electric"
   },
   "Projectile_ArrowOfPiercing": {
    "Name": "Projectile_ArrowOfPiercing",
@@ -2588,6 +2662,7 @@ const data = {
    ],
    "Template": "834f77fd-a61a-4282-9635-be98a4396ae1",
    "DisplayName": "Projectile_ArrowOfPiercing_DisplayName",
+   "CastSound": "Proj_Arr_Cast_Arrow_Piercing",
    "SpellFlags": [
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
@@ -2605,6 +2680,7 @@ const data = {
    ],
    "Template": "a50cd248-2f39-43e5-8435-940bf7f790f7",
    "DisplayName": "Projectile_ArrowOfRicochet_DisplayName",
+   "CastSound": "Proj_Arr_Cast_Arrow_Ricochet",
    "SpellFlags": [
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold",
@@ -2942,7 +3018,8 @@ const data = {
    ],
    "SpellFlags": [
     "IsTrap"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_SpiderlingSpawning": {
    "Name": "Projectile_SpiderlingSpawning",
@@ -2958,7 +3035,7 @@ const data = {
    ],
    "TargetRadius": 0,
    "AreaRadius": 0,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, 10)",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, 10,AdvantageOnFrightened())",
    "SpellSuccess": [
     "ApplyStatus(FRIGHTENED, 100, 2)"
    ]
@@ -2968,10 +3045,11 @@ const data = {
    "SpellType": "Projectile",
    "Parent": "Projectile_Fireball",
    "AreaRadius": 2,
-   "SpellRoll": "not SavingThrow(Ability.Constitution, 10)",
+   "SpellRoll": "not SavingThrow(Ability.Constitution, 10,AdvantageOnPoisoned())",
    "SpellSuccess": [
     "ApplyStatus(POISONED, 100, 2)"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Internal"
   },
   "Projectile_CausticBulb": {
    "Name": "Projectile_CausticBulb",
@@ -2991,7 +3069,8 @@ const data = {
     "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)",
     "6ec808e1-e128-44ef-9361-a713bf86de8f(CMBT_Range_RHand_01_Loop)",
     "b2e9c771-3497-444c-b360-23b4441985a1(CMBT_Range_RHand_01_Dash)"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Projectile_SpikedBulb": {
    "Name": "Projectile_SpikedBulb",
@@ -3339,7 +3418,8 @@ const data = {
     "GROUND:DealDamage(MainRangedWeapon, MainRangedWeaponDamageType)",
     "GROUND:ExecuteWeaponFunctors(MainHand)"
    ],
-   "DisplayName": "Projectile_ExtraAttack_DisplayName"
+   "DisplayName": "Projectile_ExtraAttack_DisplayName",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Generic_Gnoll": {
    "Name": "Projectile_Generic_Gnoll",
@@ -3403,6 +3483,20 @@ const data = {
     "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
    ]
   },
+  "Projectile_InkBlot_VampireSquid": {
+   "Name": "Projectile_InkBlot_VampireSquid",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_AcidSplash",
+   "SpellSuccess": [
+    "DealDamage(2d6,Bludgeoning)",
+    "ApplyStatus(WET, 100, 2)",
+    "IF(not SavingThrow(Ability.Constitution, 12)):ApplyStatus(BLIND,100,2)"
+   ],
+   "TargetConditions": "not Self() and not Dead() and not Item()",
+   "DisplayName": "Projectile_InkBlot_VampireSquid_DisplayName",
+   "Description": "Projectile_InkBlot_VampireSquid_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
   "Projectile_Javelin": {
    "Name": "Projectile_Javelin",
    "SpellType": "Projectile",
@@ -3422,7 +3516,8 @@ const data = {
     "IgnoreSilence",
     "IsHarmful",
     "AddFallDamageOnLand"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Javelin_Ogre": {
    "Name": "Projectile_Javelin_Ogre",
@@ -3433,13 +3528,15 @@ const data = {
     "VFX_Enemies_Ogre_Javelin_Cast_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
    ],
    "CastTextEvent": "Cast",
-   "CastSound": "CrSpell_Cast_OgreThrowJavelin"
+   "CastSound": "CrSpell_Cast_OgreThrowJavelin",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Javelin_Ogre_NoRecharge": {
    "Name": "Projectile_Javelin_Ogre_NoRecharge",
    "SpellType": "Projectile",
    "Parent": "Projectile_Javelin_Ogre",
-   "Cooldown": "OncePerTurn"
+   "Cooldown": "OncePerTurn",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Javelin_Bugbear": {
    "Name": "Projectile_Javelin_Bugbear",
@@ -3472,7 +3569,8 @@ const data = {
     "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_01_Attack)",
     "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_01_Recover)",
     "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_01_Loop)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Jump_HookHorror": {
    "Name": "Projectile_Jump_HookHorror",
@@ -3585,7 +3683,6 @@ const data = {
    "SpellFlags": [
     "IsJump",
     "HasHighGroundRangeExtension",
-    "AddFallDamageOnLand",
     "CannotTargetCharacter",
     "CannotTargetItems",
     "IgnoreVisionBlock",
@@ -3608,7 +3705,7 @@ const data = {
    ],
    "CastTextEvent": "Cast",
    "UseCosts": [
-    "ActionPoint:1"
+    "BonusActionPoint:1"
    ],
    "SpellAnimationNoneMagic": [
     "b6bebde2-ecff-4df6-9d24-cd9fabb9fe79(CMBT_Skill_JumpFlight_01_Prepare)",
@@ -3624,6 +3721,12 @@ const data = {
     "CannotTargetCharacter"
    ]
   },
+  "Projectile_Jump_Spider_WildShape": {
+   "Name": "Projectile_Jump_Spider_WildShape",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_Jump_Spider",
+   "TargetRadius": 9
+  },
   "Projectile_Jump_Spider_Queen": {
    "Name": "Projectile_Jump_Spider_Queen",
    "SpellType": "Projectile",
@@ -3634,12 +3737,16 @@ const data = {
    "Name": "Projectile_Jump_Spider_Summon",
    "SpellType": "Projectile",
    "Parent": "Projectile_Jump_Spider",
+   "TargetRadius": "4.5",
    "Template": "36c7f460-5d81-45ac-bde1-24352dd1761d"
   },
   "Projectile_Jump_Spider_Tiny": {
    "Name": "Projectile_Jump_Spider_Tiny",
    "SpellType": "Projectile",
    "Parent": "Projectile_Jump_Spider",
+   "SpellProperties": [
+    "AI_ONLY:CreateExplosion(Projectile_AiHelper_OffensiveJump)"
+   ],
    "TargetRadius": "4.5",
    "Template": "52c2a22b-72e9-4d19-9a15-afe66c049256"
   },
@@ -3659,7 +3766,6 @@ const data = {
    "CastTextEvent": "Cast",
    "CastSound": "CrSpell_Cast_HarpyFlight",
    "ProjectileTerrainOffset": "Yes",
-   "MovingObject": "Caster",
    "UseCosts": [
     "Movement:3"
    ],
@@ -3880,7 +3986,7 @@ const data = {
    ],
    "AreaRadius": 6,
    "ExplodeRadius": 5,
-   "SpellRoll": "not SavingThrow(Ability.Dexterity, 13)",
+   "SpellRoll": "not SavingThrow(Ability.Dexterity, 13,AdvantageOnRestrained(),DisadvantageOnRestrained())",
    "SpellSuccess": [
     "ApplyStatus(MEPHIT_MUD_RESTRAINED, 100, 2)"
    ],
@@ -3918,13 +4024,15 @@ const data = {
     "CannotTargetItems",
     "CannotTargetTerrain",
     "IgnoreSilence"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_MenacingAttack_NPC": {
    "Name": "Projectile_MenacingAttack_NPC",
    "SpellType": "Projectile",
    "Parent": "Projectile_MenacingAttack",
-   "Cooldown": "OncePerCombat"
+   "Cooldown": "OncePerCombat",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Multiattack": {
    "Name": "Projectile_Multiattack",
@@ -3973,13 +4081,39 @@ const data = {
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_PinDown_NPC": {
    "Name": "Projectile_PinDown_NPC",
    "SpellType": "Projectile",
    "Parent": "Projectile_PinDown",
-   "Cooldown": "OncePerCombat"
+   "Cooldown": "OncePerCombat",
+   "SpellAnimationArcaneMagic": [
+    "73afb4e5-8cfe-4479-95cf-16889597fee3(CMBT_Range_RHand_01_Prepare)",
+    "7e67bfd0-2fc2-4d10-bed5-cfda9e660de5(CMBT_Range_RHand_01_Antic)",
+    "eb054308-7fce-4b85-bf4c-7a0031fda7ac(CMBT_Range_RHand_01_Attack)",
+    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)",
+    "6ec808e1-e128-44ef-9361-a713bf86de8f(CMBT_Range_RHand_01_Loop)",
+    "b2e9c771-3497-444c-b360-23b4441985a1(CMBT_Range_RHand_01_Dash)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "73afb4e5-8cfe-4479-95cf-16889597fee3(CMBT_Range_RHand_01_Prepare)",
+    "7e67bfd0-2fc2-4d10-bed5-cfda9e660de5(CMBT_Range_RHand_01_Antic)",
+    "eb054308-7fce-4b85-bf4c-7a0031fda7ac(CMBT_Range_RHand_01_Attack)",
+    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)",
+    "6ec808e1-e128-44ef-9361-a713bf86de8f(CMBT_Range_RHand_01_Loop)",
+    "b2e9c771-3497-444c-b360-23b4441985a1(CMBT_Range_RHand_01_Dash)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "73afb4e5-8cfe-4479-95cf-16889597fee3(CMBT_Range_RHand_01_Prepare)",
+    "7e67bfd0-2fc2-4d10-bed5-cfda9e660de5(CMBT_Range_RHand_01_Antic)",
+    "eb054308-7fce-4b85-bf4c-7a0031fda7ac(CMBT_Range_RHand_01_Attack)",
+    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)",
+    "6ec808e1-e128-44ef-9361-a713bf86de8f(CMBT_Range_RHand_01_Loop)",
+    "b2e9c771-3497-444c-b360-23b4441985a1(CMBT_Range_RHand_01_Dash)"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_PinDown_Gnoll": {
    "Name": "Projectile_PinDown_Gnoll",
@@ -4002,13 +4136,15 @@ const data = {
     "bf6ea370-a917-45b3-908d-35729c98db10(CMBT_Range_LHand_01_Antic)",
     "4a789a60-04b8-4a26-b476-65cf26ca558b(CMBT_Range_LHand_01_Attack)",
     "5eb39acc-ecbd-4940-84c8-a1e13668b865(CMBT_Range_LHand_01_Loop)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_PushingAttack_NPC": {
    "Name": "Projectile_PushingAttack_NPC",
    "SpellType": "Projectile",
    "Parent": "Projectile_PushingAttack",
-   "Cooldown": "OncePerCombat"
+   "Cooldown": "OncePerCombat",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Multiattack_Gnoll_Flind_Ranged": {
    "Name": "Projectile_Multiattack_Gnoll_Flind_Ranged",
@@ -4056,7 +4192,8 @@ const data = {
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Net_Kuotoa": {
    "Name": "Projectile_Net_Kuotoa",
@@ -4067,8 +4204,12 @@ const data = {
    "SpellSuccess": [
     "ApplyStatus(NET, 100, 2)"
    ],
+   "Template": "1fcb5fe8-7200-4901-9bb7-7336d45e2f09",
    "Icon": "unknown",
    "DisplayName": "Projectile_Net_Kuotoa_DisplayName",
+   "CastEffect": [
+    "VFX_Projectiles_Throwable_Net_Kuotoa_Cast_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::"
+   ],
    "CastSound": "CrSpell_Cast_Net",
    "SpellAnimationArcaneMagic": [
     "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_01_Prepare)",
@@ -4084,7 +4225,8 @@ const data = {
     "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_01_Prepare)",
     "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_01_Attack)",
     "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_01_Recover)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Pounce_Wolf_Summon": {
    "Name": "Projectile_Pounce_Wolf_Summon",
@@ -4117,9 +4259,9 @@ const data = {
    "SpellFlags": [
     "IsJump",
     "IgnoreVisionBlock",
-    "Stealth",
     "CannotTargetItems"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_Spike_Trap": {
    "Name": "Projectile_Spike_Trap",
@@ -4144,6 +4286,7 @@ const data = {
    "SpellFlags": [
     "IsTrap"
    ],
+   "SpellAnimationIntentType": "Aggressive",
    "MemoryCost": 1
   },
   "Projectile_GreenSporeCloud": {
@@ -4198,6 +4341,8 @@ const data = {
    "SpellFlags": [
     "CannotTargetItems"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive",
    "RechargeValues": "3-6"
   },
   "Projectile_BlackSporeCloud": {
@@ -4217,6 +4362,8 @@ const data = {
    ],
    "CastSound": "CrSpell_Cast_SporeCloud",
    "VerbalIntent": "Control",
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive",
    "RechargeValues": "5-6"
   },
   "Projectile_WhiteSporeCloud": {
@@ -4241,6 +4388,7 @@ const data = {
     "BonusActionPoint:1"
    ],
    "VerbalIntent": "Buff",
+   "SpellAnimationIntentType": "Aggressive",
    "RechargeValues": 6
   },
   "Projectile_UrticatingHair_Spider": {
@@ -4289,7 +4437,8 @@ const data = {
    "SpellFlags": [
     "HasSomaticComponent",
     "HasHighGroundRangeExtension"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_SpiderInfestation": {
    "Name": "Projectile_SpiderInfestation",
@@ -4310,7 +4459,8 @@ const data = {
    "ExtraDescriptionParams": [
     "DealDamage(1d4,Piercing)",
     "DealDamage(1d4,Poison)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_StoneThrow_Harpy": {
    "Name": "Projectile_StoneThrow_Harpy",
@@ -4336,7 +4486,8 @@ const data = {
     "CannotTargetTerrain",
     "IgnoreSilence",
     "HasSomaticComponent"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_ToxicSpit": {
    "Name": "Projectile_ToxicSpit",
@@ -4381,7 +4532,9 @@ const data = {
     "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_01_Attack)",
     "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_01_Recover)",
     "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_01_Loop)"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_ToxicSpit_Frog": {
    "Name": "Projectile_ToxicSpit_Frog",
@@ -4423,7 +4576,8 @@ const data = {
     "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
     "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
     "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_ToxicSpit_PhaseSpider": {
    "Name": "Projectile_ToxicSpit_PhaseSpider",
@@ -4433,7 +4587,8 @@ const data = {
     "GROUND:CreateSurface(1,3,Poison)"
    ],
    "TargetRadius": 12,
-   "TargetConditions": "Character() and not Dead() and Enemy()"
+   "TargetConditions": "Character() and not Dead() and Enemy()",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_ToxicSpit_PhaseSpiderQueen": {
    "Name": "Projectile_ToxicSpit_PhaseSpiderQueen",
@@ -4445,7 +4600,8 @@ const data = {
    "TargetRadius": 20,
    "AreaRadius": 2,
    "ExplodeRadius": 2,
-   "Template": "fb58165e-389b-4197-ba32-6896fbaccd9c"
+   "Template": "fb58165e-389b-4197-ba32-6896fbaccd9c",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_ToxicSpit_Bulette": {
    "Name": "Projectile_ToxicSpit_Bulette",
@@ -4504,13 +4660,16 @@ const data = {
     "HasSomaticComponent",
     "HasHighGroundRangeExtension",
     "RangeIgnoreVerticalThreshold"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_TripAttack_NPC": {
    "Name": "Projectile_TripAttack_NPC",
    "SpellType": "Projectile",
    "Parent": "Projectile_TripAttack",
-   "Cooldown": "OncePerCombat"
+   "Cooldown": "OncePerCombat",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_SynapticDischarge_IntDev": {
    "Name": "Projectile_SynapticDischarge_IntDev",
@@ -4520,34 +4679,52 @@ const data = {
    "TargetRadius": 18,
    "DeathType": "Electrocution",
    "SpellRoll": "Attack(AttackType.RangedUnarmedAttack)",
-   "TargetConditions": "not Self() and not Dead()",
+   "TargetConditions": "Character() and not Self() and not Dead()",
    "ProjectileCount": 1,
-   "Template": "b64b516c-1afd-4f8d-b624-4c9caf06f1c2",
-   "Icon": "unknown",
+   "Template": "c0cd820b-c32c-4ffa-b4b0-5cde60ecc2ae",
+   "Icon": "Spell_IntellectDevourer_SynapticDischarge",
    "DisplayName": "Projectile_SynapticDischarge_IntDev_DisplayName",
+   "Description": "Projectile_SynapticDischarge_IntDev_Description",
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Psychic_BodyFX_01:Dummy_BodyFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Damage_Psychic_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Damage_Psychic_ProjectileSingle_BodyFX_01:Dummy_BodyFX::0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "CrSpell_Cast_SypnaticDischarge",
    "UseCosts": [
     "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
+    "73afb4e5-8cfe-4479-95cf-16889597fee3(CMBT_Range_RHand_01_Prepare)",
     "7e67bfd0-2fc2-4d10-bed5-cfda9e660de5(CMBT_Range_RHand_01_Antic)",
     "eb054308-7fce-4b85-bf4c-7a0031fda7ac(CMBT_Range_RHand_01_Attack)",
-    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)"
+    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)",
+    "6ec808e1-e128-44ef-9361-a713bf86de8f(CMBT_Range_RHand_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
+    "73afb4e5-8cfe-4479-95cf-16889597fee3(CMBT_Range_RHand_01_Prepare)",
     "7e67bfd0-2fc2-4d10-bed5-cfda9e660de5(CMBT_Range_RHand_01_Antic)",
     "eb054308-7fce-4b85-bf4c-7a0031fda7ac(CMBT_Range_RHand_01_Attack)",
-    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)"
+    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)",
+    "6ec808e1-e128-44ef-9361-a713bf86de8f(CMBT_Range_RHand_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
+    "73afb4e5-8cfe-4479-95cf-16889597fee3(CMBT_Range_RHand_01_Prepare)",
     "7e67bfd0-2fc2-4d10-bed5-cfda9e660de5(CMBT_Range_RHand_01_Antic)",
     "eb054308-7fce-4b85-bf4c-7a0031fda7ac(CMBT_Range_RHand_01_Attack)",
-    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)"
+    "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)",
+    "6ec808e1-e128-44ef-9361-a713bf86de8f(CMBT_Range_RHand_01_Loop)"
    ],
+   "VerbalIntent": "Damage",
    "SpellFlags": [
-    "IsAttack",
     "IsEnemySpell",
     "IgnoreSilence"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Psychic",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_MudFling_MudMephit": {
    "Name": "Projectile_MudFling_MudMephit",
@@ -4591,10 +4768,10 @@ const data = {
     "2ad09ff0-8b24-4da4-acc2-9bb5606f8ebe(CMBT_Skill_MudFling_01_Recover)"
    ],
    "SpellFlags": [
-    "IsAttack",
     "IsEnemySpell",
     "IgnoreSilence"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Projectile_TRAPS": {
    "Name": "Projectile_TRAPS",
@@ -4827,7 +5004,10 @@ const data = {
   "Projectile_AI_HELPERS": {
    "Name": "Projectile_AI_HELPERS",
    "SpellType": "Projectile",
-   "Parent": "Projectile_MainHandAttack"
+   "Parent": "Projectile_MainHandAttack",
+   "SpellFlags": [
+    "IsEnemySpell"
+   ]
   },
   "Projectile_AiHelper_Summon_Weak": {
    "Name": "Projectile_AiHelper_Summon_Weak",
@@ -4879,6 +5059,16 @@ const data = {
    "AreaRadius": 6,
    "ExplodeRadius": 6,
    "TargetConditions": "Character()"
+  },
+  "Projectile_AiHelper_MoonBeam": {
+   "Name": "Projectile_AiHelper_MoonBeam",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_AI_HELPERS",
+   "SpellProperties": [
+    "ApplyStatus(MOONBEAM,100,1)"
+   ],
+   "AreaRadius": 1,
+   "ExplodeRadius": 1
   },
   "Projectile_AiHelper_OffensiveJump": {
    "Name": "Projectile_AiHelper_OffensiveJump",
@@ -4941,7 +5131,7 @@ const data = {
     "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
     " ExecuteWeaponFunctors(MainHand)"
    ],
-   "TargetConditions": "Enemy()",
+   "TargetConditions": "not Ally()",
    "Icon": "Action_Rush",
    "DisplayName": "Rush_Rush_DisplayName",
    "Description": "Rush_Rush_Description",
@@ -4969,19 +5159,22 @@ const data = {
     "eae21eb0-bde7-4c86-a197-12a2a0c3ecac(CMBT_Skill_Rush_01_Prepare)",
     "7bfeb9dd-1348-45c7-bff9-ed42f8cd43a1(CMBT_Skill_Rush_01_Antic)",
     "b780092c-cc12-43d5-b60e-acbac3fdceed(CMBT_Skill_Rush_01_Attack)",
-    "abbeb7de-2128-4b16-95e5-7b9d7b1af2f9(CMBT_Skill_Rush_01_Recover)"
+    "abbeb7de-2128-4b16-95e5-7b9d7b1af2f9(CMBT_Skill_Rush_01_Recover)",
+    "e6a25c4b-816c-41e1-888a-50215d994b23(CMBT_Skill_Rush_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
     "eae21eb0-bde7-4c86-a197-12a2a0c3ecac(CMBT_Skill_Rush_01_Prepare)",
     "7bfeb9dd-1348-45c7-bff9-ed42f8cd43a1(CMBT_Skill_Rush_01_Antic)",
     "b780092c-cc12-43d5-b60e-acbac3fdceed(CMBT_Skill_Rush_01_Attack)",
-    "abbeb7de-2128-4b16-95e5-7b9d7b1af2f9(CMBT_Skill_Rush_01_Recover)"
+    "abbeb7de-2128-4b16-95e5-7b9d7b1af2f9(CMBT_Skill_Rush_01_Recover)",
+    "e6a25c4b-816c-41e1-888a-50215d994b23(CMBT_Skill_Rush_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
     "eae21eb0-bde7-4c86-a197-12a2a0c3ecac(CMBT_Skill_Rush_01_Prepare)",
     "7bfeb9dd-1348-45c7-bff9-ed42f8cd43a1(CMBT_Skill_Rush_01_Antic)",
     "b780092c-cc12-43d5-b60e-acbac3fdceed(CMBT_Skill_Rush_01_Attack)",
-    "abbeb7de-2128-4b16-95e5-7b9d7b1af2f9(CMBT_Skill_Rush_01_Recover)"
+    "abbeb7de-2128-4b16-95e5-7b9d7b1af2f9(CMBT_Skill_Rush_01_Recover)",
+    "e6a25c4b-816c-41e1-888a-50215d994b23(CMBT_Skill_Rush_01_Loop)"
    ],
    "WeaponTypes": [
     "Melee"
@@ -4990,10 +5183,11 @@ const data = {
     "IsDefaultWeaponAction",
     "IsHarmful"
    ],
+   "SpellAnimationIntentType": "Aggressive",
    "RechargeValues": "4-6"
   },
-  "Rush_SINGLE": {
-   "Name": "Rush_SINGLE",
+  "Rush_Aggressive": {
+   "Name": "Rush_Aggressive",
    "SpellType": "Rush",
    "Parent": "Rush_Rush"
   },
@@ -5020,8 +5214,36 @@ const data = {
    "Name": "Rush_Rush_Boar_Summon",
    "SpellType": "Rush",
    "Parent": "Rush_Rush_Boar",
+   "TargetConditions": "not ally()",
    "DisplayName": "Rush_Rush_Boar_Summon_DisplayName",
-   "Description": "Rush_Rush_Boar_Summon_Description"
+   "Description": "Rush_Rush_Boar_Summon_Description",
+   "SpellFlags": [
+    "IsHarmful"
+   ]
+  },
+  "Rush_Rush_DeepRothe": {
+   "Name": "Rush_Rush_DeepRothe",
+   "SpellType": "Rush",
+   "Parent": "Rush_Rush",
+   "SpellProperties": [
+    "AI_ONLY:CreateExplosion(Projectile_AiHelper_Charge_Minotaur)"
+   ],
+   "SpellRoll": "Attack(AttackType.MeleeUnarmedAttack)",
+   "TargetConditions": "not Ally() and not (not Player(context.Source) and (DistanceToTarget() < 5.0))",
+   "Icon": "Action_DeepRothe_Charge",
+   "DisplayName": "Rush_Rush_DeepRothe_DisplayName",
+   "Description": "Rush_Rush_DeepRothe_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(PRONE,100,2)"
+   ],
+   "CastSound": "CrSpell_Cast_Charge",
+   "UseCosts": [
+    "ActionPoint:1",
+    "Movement:Distance"
+   ],
+   "SpellFlags": [
+    "IsHarmful"
+   ]
   },
   "Rush_ForceTunnel": {
    "Name": "Rush_ForceTunnel",
@@ -5178,6 +5400,7 @@ const data = {
    "PreviewCursor": "Cast",
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_Surge",
+   "TargetSound": "Action_Impact_Surge",
    "SpellAnimationArcaneMagic": [
     "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
     "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
@@ -5202,6 +5425,99 @@ const data = {
    "Name": "Shout_SELF",
    "SpellType": "Shout",
    "Parent": "Shout_ActionSurge"
+  },
+  "Shout_AberrantShape": {
+   "Name": "Shout_AberrantShape",
+   "SpellType": "Shout",
+   "SpellProperties": [
+    "ApplyStatus(ABERRANT_SHAPE,100,-1)"
+   ],
+   "TargetConditions": "Self()",
+   "Icon": "TadpoleSuperPower_AberrantShape",
+   "DisplayName": "Shout_AberrantShape_DisplayName",
+   "Description": "Shout_AberrantShape_Description",
+   "DescriptionParams": [
+    "RegainHitPoints(21)"
+   ],
+   "ExtraDescription": "Shout_AberrantShape_ExtraDescription",
+   "CastEffect": [
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_BodyFX_01:Dummy_BodyFX:VFX_Cast_00:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_IntDev_HandFX_Overlay_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_IntDev_HandFX_Overlay_02:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_IntDev_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_BodyFX_02:Dummy_BodyFX:VFX_Cast_01:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spell_Prepare_Tadpole_HeadFX_01,KeepRot,Detach:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spell_Prepare_Tadpole_Root_01:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spell_Prepare_Tadpole_Overlay_HeadFX_01:Dummy_HeadFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spell_Prepare_Tadpole_HeadFX_PostProcess_01,KeepRot,Detach:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Tadpole_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Tadpole_AberrantShape_L1to3",
+   "UseCosts": [
+    "ActionPoint:1",
+    "WildShape:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "f94542d9-a79c-478a-92de-573cead9260e(TAD_PsionicPull_01_Prepare)",
+    "45eb309a-40c4-4093-bbf2-c22f6321553e(TAD_AbberantShape_01_Cast)",
+    "bd339475-d2b5-46e8-8d0c-9f2ad6a91328(TAD_PsionicPull_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "f94542d9-a79c-478a-92de-573cead9260e(TAD_PsionicPull_01_Prepare)",
+    "45eb309a-40c4-4093-bbf2-c22f6321553e(TAD_AbberantShape_01_Cast)",
+    "bd339475-d2b5-46e8-8d0c-9f2ad6a91328(TAD_PsionicPull_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "f94542d9-a79c-478a-92de-573cead9260e(TAD_PsionicPull_01_Prepare)",
+    "45eb309a-40c4-4093-bbf2-c22f6321553e(TAD_AbberantShape_01_Cast)",
+    "bd339475-d2b5-46e8-8d0c-9f2ad6a91328(TAD_PsionicPull_01_Loop)"
+   ],
+   "VerbalIntent": "Utility"
+  },
+  "Shout_AberrantShape_Dismiss": {
+   "Name": "Shout_AberrantShape_Dismiss",
+   "SpellType": "Shout",
+   "SpellProperties": [
+    "RemoveStatus(SG_Polymorph)"
+   ],
+   "TargetConditions": "Self()",
+   "Icon": "Skill_Druid_WildShape_Dismiss",
+   "DisplayName": "Shout_AberrantShape_Dismiss_DisplayName",
+   "Description": "Shout_AberrantShape_Dismiss_Description",
+   "CastEffect": [
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_IntDev_Dismiss_HeadFX_01:Dummy_HeadFX:VFX_Cast_00:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Tadpole_Shout_WildShape_AberrantShape_IntDev_Dismiss_BodyFX_01:Dummy_BodyFX:VFX_Cast_00:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Tadpole_ShoutSelf_AberrantShape_Dismiss_Root_01,Detach:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Tadpole_AberrantShapeDismiss_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "VerbalIntent": "Utility",
+   "SpellActionType": "Dismiss"
   },
   "Shout_DivineEminence": {
    "Name": "Shout_DivineEminence",
@@ -5375,6 +5691,7 @@ const data = {
    "PreviewCursor": "Cast",
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_ArcaneRecovery",
+   "TargetSound": "Action_Impact_ArcaneRecovery",
    "UseCosts": [
     "ActionPoint:1",
     "ArcaneRecoveryPoint:1"
@@ -5531,6 +5848,7 @@ const data = {
    "PreviewCursor": "Cast",
    "CastTextEvent": "Cast",
    "CastSound": "Spell_Cast_Buff_BladeWard_L1to3",
+   "TargetSound": "Spell_Impact_Buff_BladeWard_L1to3",
    "UseCosts": [
     "ActionPoint:1"
    ],
@@ -5725,7 +6043,8 @@ const data = {
    ],
    "VerbalIntent": "Utility",
    "SpellFlags": [
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ]
   },
   "Shout_ComprehendLanguages": {
@@ -5864,7 +6183,8 @@ const data = {
     "CannotTargetItems",
     "CannotTargetTerrain",
     "ImmediateCast",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ]
   },
   "Shout_CrusadersMantle": {
@@ -5915,7 +6235,6 @@ const data = {
   "Shout_Dash": {
    "Name": "Shout_Dash",
    "SpellType": "Shout",
-   "Cooldown": "OncePerTurn",
    "TargetConditions": "Self()",
    "Icon": "Action_Dash",
    "DisplayName": "Shout_Dash_DisplayName",
@@ -5935,6 +6254,7 @@ const data = {
    "PreviewCursor": "Cast",
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_Dash",
+   "TargetSound": "Action_Impact_Dash",
    "UseCosts": [
     "ActionPoint:1"
    ],
@@ -5961,10 +6281,11 @@ const data = {
    ],
    "SpellFlags": [
     "IgnoreSilence",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ],
    "SpellActionType": "Dash",
-   "SpellAnimationIntentType": "Aggressive"
+   "SpellAnimationIntentType": "None"
   },
   "Shout_Dash_BonusAction": {
    "Name": "Shout_Dash_BonusAction",
@@ -6961,6 +7282,7 @@ const data = {
    "SpellProperties": [
     "ApplyStatus(FALSE_LIFE,100,-1)"
    ],
+   "TargetConditions": "Self()",
    "Icon": "Spell_Necromancy_FalseLife",
    "DisplayName": "Shout_FalseLife_DisplayName",
    "Description": "Shout_FalseLife_Description",
@@ -7069,21 +7391,73 @@ const data = {
    "SpellType": "Shout",
    "Level": 2,
    "SpellSchool": "Evocation",
-   "SpellProperties": [
-    "ApplyStatus(FLAME_BLADE,100,100)"
-   ],
-   "TargetConditions": "Self()",
-   "Icon": "unknown",
+   "TargetConditions": "Self() and not (not Player(context.Source) and IsConcentrating(context.Source))",
+   "Icon": "Spell_Evocation_FlameBlade",
    "DisplayName": "Shout_FlameBlade_DisplayName",
    "Description": "Shout_FlameBlade_Description",
+   "DescriptionParams": [
+    "DealDamage(3d6,Fire)",
+    "Distance(3)",
+    "Distance(6)"
+   ],
+   "ExtraDescription": "Shout_FlameBlade_ExtraDescription",
    "CastEffect": [
-    "VFX_Spells_Cast_Intent_Whitebox_ShoutSelf_Cast_Root_01,Detach:Dummy_BodyFX::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Whitebox_ShoutSelf_Impact_01:Dummy_Root:Cast:0:None::None::0:0::::"
+    "VFX_Spells_Cast_Intent_Summon_ShoutSelf_FlameBlade_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Summon_ShoutSelf_FlameBlade_L_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Summon_ShoutSelf_FlameBlade_DummyFX_01:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Summon_FlameBlade_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Summon_FlameBlade_CastFX_02,Detach:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Summon_Fire_CastFX_Textkey_01:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Summon_Flameblade_L1to3",
+   "VocalComponentSound": "Vocal_Component_EnchantWeapon",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "35b644cf-5c13-4407-9dc1-23bf4309216e(SPL_Weapon_01_Cast)",
+    "823e3ddf-c670-41ef-b7b4-9f4a4e38300b(SPL_Weapon_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "35b644cf-5c13-4407-9dc1-23bf4309216e(SPL_Weapon_01_Cast)",
+    "823e3ddf-c670-41ef-b7b4-9f4a4e38300b(SPL_Weapon_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "35b644cf-5c13-4407-9dc1-23bf4309216e(SPL_Weapon_01_Cast)",
+    "823e3ddf-c670-41ef-b7b4-9f4a4e38300b(SPL_Weapon_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellFlags": [
+    "IsSpell",
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsConcentration",
+    "SwitchSheathUnsheathOnCast",
+    "Force1HSSubSetDuringCast"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Shout_FlameBlade_4": {
+   "Name": "Shout_FlameBlade_4",
+   "SpellType": "Shout",
+   "Parent": "Shout_FlameBlade",
+   "SpellProperties": [
+    "SummonInInventory(7bbfed72-1302-4709-8da5-2220343d7d29,-1,1,true,true,true,,FLAME_BLADE,FLAME_BLADE)"
    ],
    "CastTextEvent": "Cast",
    "UseCosts": [
     "BonusActionPoint:1",
-    "SpellSlot:1:1:2"
+    "SpellSlot:1:1:4"
    ],
    "SpellAnimationArcaneMagic": [
     "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
@@ -7101,12 +7475,8 @@ const data = {
     "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
    ],
    "VerbalIntent": "Damage",
-   "SpellFlags": [
-    "IsSpell",
-    "HasVerbalComponent",
-    "HasSomaticComponent",
-    "IsConcentration"
-   ]
+   "RootSpellID": "Shout_FlameBlade",
+   "PowerLevel": 4
   },
   "Shout_HellishRebuke": {
    "Name": "Shout_HellishRebuke",
@@ -7223,7 +7593,9 @@ const data = {
     "Stealth",
     "CannotTargetTerrain",
     "ImmediateCast",
-    "DontForceSheathOrUnsheath"
+    "DontForceSheathOrUnsheath",
+    "AllowMoveAndCast",
+    "Invisible"
    ],
    "SpellActionType": "Hide"
   },
@@ -7453,6 +7825,90 @@ const data = {
    "Parent": "Shout_MirrorImage",
    "ExtraDescription": "Shout_MirrorImage_TrickeryCleric_ExtraDescription"
   },
+  "Shout_NaturalRecovery": {
+   "Name": "Shout_NaturalRecovery",
+   "SpellType": "Shout",
+   "ContainerSpells": [
+    "Shout_NaturalRecovery_1"
+   ],
+   "TargetConditions": "Self()",
+   "Icon": "Skill_Druid_NaturalRecovery",
+   "DisplayName": "Shout_NaturalRecovery_DisplayName",
+   "Description": "Shout_NaturalRecovery_Description",
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_Cast_BodyFX_01:Dummy_BodyFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_Root_01:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_CastFX_01:Dummy_CastFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_Generic_Impact_PostProcess_Textkey_01:Cast::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_Impact_EyeFX_01:Dummy_EyeFX_01:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_Impact_EyeFX_02:Dummy_EyeFX_02:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_Cast_HandFX_Overlay_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_Cast_HandFX_Overlay_02:Dummy_L_HandFX::0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_Root_01:::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_01:Dummy_EyeFX_01::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_02:Dummy_EyeFX_02::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_02:Dummy_L_HandFX::0:None::None::0:0::::"
+   ],
+   "PreviewCursor": "Cast",
+   "CastTextEvent": "Cast",
+   "CastSound": "Action_Cast_NaturalRecovery",
+   "UseCosts": [
+    "ActionPoint:1",
+    "NaturalRecoveryPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
+    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
+    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
+    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
+   ],
+   "VerbalIntent": "Utility",
+   "SpellFlags": [
+    "IsLinkedSpellContainer"
+   ]
+  },
+  "Shout_NaturalRecovery_1": {
+   "Name": "Shout_NaturalRecovery_1",
+   "SpellType": "Shout",
+   "Parent": "Shout_NaturalRecovery",
+   "SpellContainerID": "Shout_NaturalRecovery",
+   "SpellProperties": [
+    "RestoreResource(SpellSlot,2,1)"
+   ],
+   "Icon": "Skill_Druid_NaturalRecovery",
+   "DisplayName": "Shout_NaturalRecovery_1_DisplayName",
+   "Description": "Shout_NaturalRecovery_1_Description"
+  },
+  "Shout_NaturalRecovery_2": {
+   "Name": "Shout_NaturalRecovery_2",
+   "SpellType": "Shout",
+   "Parent": "Shout_NaturalRecovery",
+   "SpellContainerID": "Shout_NaturalRecovery",
+   "SpellProperties": [
+    "RestoreResource(SpellSlot,1,2)"
+   ],
+   "Icon": "Skill_Druid_NaturalRecovery",
+   "DisplayName": "Shout_NaturalRecovery_2_DisplayName",
+   "Description": "Shout_NaturalRecovery_2_Description",
+   "RootSpellID": "Shout_NaturalRecovery_1",
+   "PowerLevel": 2
+  },
   "Shout_OneWithShadows": {
    "Name": "Shout_OneWithShadows",
    "SpellType": "Shout",
@@ -7487,7 +7943,8 @@ const data = {
    ],
    "VerbalIntent": "Utility",
    "SpellFlags": [
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ]
   },
   "Shout_PactOfTheBlade": {
@@ -7698,35 +8155,52 @@ const data = {
    "Level": 0,
    "SpellSchool": "Conjuration",
    "SpellProperties": [
-    "ApplyStatus(PRODUCE_FLAME,100,100)"
+    "ApplyStatus(PRODUCE_FLAME,100,100)",
+    "ApplyStatus(PRODUCE_FLAME_HURL_FREE,100,1)"
    ],
    "TargetConditions": "Self()",
-   "Icon": "unknown",
+   "Icon": "Spell_Conjuration_ProduceFlame_Light",
    "DisplayName": "Shout_ProduceFlame_DisplayName",
    "Description": "Shout_ProduceFlame_Description",
+   "DescriptionParams": [
+    "Distance(3)",
+    "DealDamage(1d8,Fire)"
+   ],
+   "ExtraDescription": "Shout_ProduceFlame_ExtraDescription",
+   "TooltipStatusApply": [
+    "ApplyStatus(PRODUCE_FLAME,100,100)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Fire_ProduceFlame_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Damage_Fire_ProduceFlame_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
    "CastEffect": [
-    "VFX_Spells_Cast_Intent_Whitebox_ShoutSelf_Cast_Root_01,Detach:Dummy_BodyFX::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Whitebox_ShoutSelf_Impact_01:Dummy_Root:Cast:0:None::None::0:0::::"
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_ProduceFlame_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_ProduceFlame_HandFX_Textkey_01,Detach:Dummy_R_HandFX:Cast:0:None::None::0:0::::"
    ],
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Damage_Fire_ProduceFlame_L1to3",
    "VocalComponentSound": "Vocal_Component_Light",
    "UseCosts": [
     "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "7c194893-2879-4afe-84dc-9ea842fe0a43(SPL_Arcane_Utility_01_Cast)",
-    "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "29cc8ef2-e45e-4513-8f98-085d0dad7bc1(SPL_Somatic_Target_Swipe_01_Cast)",
+    "bb428832-db99-4236-8a81-a2737b81d0cc(SPL_Somatic_Target_Swipe_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "c277d147-4f77-4c05-a8e7-3095da3fc736(SPL_Divine_Utility_01_Prepare)",
-    "519955c5-4001-4104-8dc4-e5ac4c70857e(SPL_Divine_Utility_01_Cast)",
-    "37c21db3-cf01-45ed-a8de-da391e9e3a0a(SPL_Divine_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "29cc8ef2-e45e-4513-8f98-085d0dad7bc1(SPL_Somatic_Target_Swipe_01_Cast)",
+    "bb428832-db99-4236-8a81-a2737b81d0cc(SPL_Somatic_Target_Swipe_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "7c194893-2879-4afe-84dc-9ea842fe0a43(SPL_Arcane_Utility_01_Cast)",
-    "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "29cc8ef2-e45e-4513-8f98-085d0dad7bc1(SPL_Somatic_Target_Swipe_01_Cast)",
+    "bb428832-db99-4236-8a81-a2737b81d0cc(SPL_Somatic_Target_Swipe_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "VerbalIntent": "Utility",
    "SpellFlags": [
@@ -7741,34 +8215,44 @@ const data = {
    "Level": 0,
    "SpellSchool": "Conjuration",
    "SpellProperties": [
-    "RemoveStatus(PRODUCE_FLAME)"
+    "RemoveStatus(PRODUCE_FLAME)",
+    "RemoveStatus(PRODUCE_FLAME_HURL)",
+    "RemoveStatus(PRODUCE_FLAME_HURL_FREE)"
    ],
    "TargetConditions": "Self()",
-   "Icon": "unknown",
+   "Icon": "Spell_Conjuration_ProduceFlame_Dismiss",
    "DisplayName": "Shout_ProduceFlame_Dismiss_DisplayName",
    "Description": "Shout_ProduceFlame_Dismiss_Description",
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Fire_ProduceFlame_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_ProduceFlame_Dismiss_01:::0:None::None::0:0::::"
+   ],
    "CastEffect": [
-    "VFX_Spells_Cast_Intent_Whitebox_ShoutSelf_Cast_Root_01,Detach:Dummy_BodyFX::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Whitebox_ShoutSelf_Impact_01:Dummy_Root:Cast:0:None::None::0:0::::"
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_ProduceFlame_Dismiss_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_ShoutSelf_ProduceFlame_Dismiss_HandFX_Textkey_02,Detach:Dummy_R_HandFX:Cast:0:None::None::0:0::::"
    ],
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Damage_ProduceFlameDismiss_L1to3",
    "UseCosts": [
     "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "7c194893-2879-4afe-84dc-9ea842fe0a43(SPL_Arcane_Utility_01_Cast)",
-    "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "c0513845-6e0e-42e8-9a8c-baa5e2b6ead6(SPL_Somatic_Summon_01_Cast)",
+    "fbf20742-9dbf-475b-9ff5-42e4b08064ad(SPL_Somatic_Summon_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "c277d147-4f77-4c05-a8e7-3095da3fc736(SPL_Divine_Utility_01_Prepare)",
-    "519955c5-4001-4104-8dc4-e5ac4c70857e(SPL_Divine_Utility_01_Cast)",
-    "37c21db3-cf01-45ed-a8de-da391e9e3a0a(SPL_Divine_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "c0513845-6e0e-42e8-9a8c-baa5e2b6ead6(SPL_Somatic_Summon_01_Cast)",
+    "fbf20742-9dbf-475b-9ff5-42e4b08064ad(SPL_Somatic_Summon_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "7c194893-2879-4afe-84dc-9ea842fe0a43(SPL_Arcane_Utility_01_Cast)",
-    "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "c0513845-6e0e-42e8-9a8c-baa5e2b6ead6(SPL_Somatic_Summon_01_Cast)",
+    "fbf20742-9dbf-475b-9ff5-42e4b08064ad(SPL_Somatic_Summon_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "VerbalIntent": "Utility",
    "SpellFlags": [
@@ -7906,6 +8390,7 @@ const data = {
    "PreviewCursor": "Cast",
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_RegainHP",
+   "TargetSound": "Action_Impact_RegainHP",
    "UseCosts": [
     "ActionPoint:1"
    ],
@@ -8020,6 +8505,7 @@ const data = {
    "PreviewCursor": "Cast",
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_SecondWind",
+   "TargetSound": "Action_Impact_SecondWind",
    "UseCosts": [
     "BonusActionPoint:1"
    ],
@@ -8041,6 +8527,69 @@ const data = {
    "SpellFlags": [
     "CannotTargetItems"
    ]
+  },
+  "Shout_Shillelagh": {
+   "Name": "Shout_Shillelagh",
+   "SpellType": "Shout",
+   "Level": 0,
+   "SpellSchool": "Transmutation",
+   "TargetConditions": "Self()",
+   "Icon": "Spell_Abjuration_Transmutation_Shillelagh",
+   "DisplayName": "Shout_Shillelagh_DisplayName",
+   "Description": "Shout_Shillelagh_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(SHILLELAGH, 100, 10)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX,Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_Textkey_01,KeepRot:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_ShoutSelf_Shillelagh_Root_01:::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_ShoutSelf_Shillelagh_R_HandFX_01:Dummy_FX_01::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_ShoutSelf_Shillelagh_R_HandFX_Texkey_01:Dummy_FX_01:Cast:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Buff_Shillelagh_L0",
+   "VocalComponentSound": "Vocal_Component_EnchantWeapon",
+   "TargetSound": "Spell_Impact_Buff_Shillelagh_L0",
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "35b644cf-5c13-4407-9dc1-23bf4309216e(SPL_Weapon_01_Cast)",
+    "823e3ddf-c670-41ef-b7b4-9f4a4e38300b(SPL_Weapon_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "35b644cf-5c13-4407-9dc1-23bf4309216e(SPL_Weapon_01_Cast)",
+    "823e3ddf-c670-41ef-b7b4-9f4a4e38300b(SPL_Weapon_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "35b644cf-5c13-4407-9dc1-23bf4309216e(SPL_Weapon_01_Cast)",
+    "823e3ddf-c670-41ef-b7b4-9f4a4e38300b(SPL_Weapon_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)"
+   ],
+   "VerbalIntent": "Buff",
+   "WeaponTypes": [
+    "StaffOrClub",
+    "Melee"
+   ],
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "IsMelee",
+    "IsSpell",
+    "CannotTargetTerrain",
+    "HasSomaticComponent"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_SpeakWithAnimals": {
    "Name": "Shout_SpeakWithAnimals",
@@ -8242,34 +8791,336 @@ const data = {
    ],
    "VerbalIntent": "Summon"
   },
-  "Shout_WildShape_Wolf": {
-   "Name": "Shout_WildShape_Wolf",
+  "Shout_WildShape": {
+   "Name": "Shout_WildShape",
    "SpellType": "Shout",
-   "SpellProperties": [
-    "ApplyStatus(WILDSHAPE_WOLF,100,-1)"
+   "ContainerSpells": [
+    "Shout_WildShape_Badger",
+    "Shout_WildShape_Spider",
+    "Shout_WildShape_Wolf_Dire",
+    "Shout_WildShape_Cat"
    ],
    "TargetConditions": "Self()",
-   "Icon": "unknown",
-   "DisplayName": "Shout_WildShape_Wolf_DisplayName",
+   "Icon": "Skill_Druid_WildShape",
+   "DisplayName": "Shout_WildShape_DisplayName",
+   "Description": "Shout_WildShape_Description",
+   "ExtraDescription": "Shout_WildShape_ExtraDescription",
    "CastTextEvent": "Cast",
    "UseCosts": [
-    "ActionPoint:1"
+    "ActionPoint:1",
+    "WildShape:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)"
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
-    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)"
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
-    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)"
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
    ],
    "VerbalIntent": "Utility",
+   "SpellFlags": [
+    "IsLinkedSpellContainer"
+   ]
+  },
+  "Shout_WildShape_Dismiss": {
+   "Name": "Shout_WildShape_Dismiss",
+   "SpellType": "Shout",
+   "SpellProperties": [
+    "RemoveStatus(SG_Polymorph_BeastShape)"
+   ],
+   "TargetConditions": "Self()",
+   "Icon": "Skill_Druid_WildShape_Dismiss",
+   "DisplayName": "Shout_WildShape_Dismiss_DisplayName",
+   "Description": "Shout_WildShape_Dismiss_Description",
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Bear_Dismiss_HeadFX_01:Dummy_HeadFX:VFX_Cast_00:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Dismiss_BodyFX_01:Dummy_BodyFX:VFX_Cast_00:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Dismiss_Root_01,Detach:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Dismiss_EyeFX_01:Dummy_EyeFX_01::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Dismiss_EyeFX_02:Dummy_EyeFX_02::0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Buff_WildShapeDismiss_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "VerbalIntent": "Utility",
+   "SpellActionType": "Dismiss"
+  },
+  "Shout_WildShape_Badger": {
+   "Name": "Shout_WildShape_Badger",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape",
+   "SpellContainerID": "Shout_WildShape",
+   "SpellProperties": [
+    "ApplyStatus(WILDSHAPE_BADGER_PLAYER,100,-1)"
+   ],
+   "Icon": "Skill_Druid_WildShape_GiantBadger",
+   "DisplayName": "Shout_WildShape_Badger_DisplayName",
+   "Description": "Shout_WildShape_Badger_Description",
+   "ExtraDescription": "Shout_WildShape_Badger_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(13)"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Badger_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Creature_Overlay_01:Dummy_Root:VFX_Cast_04:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_WildShapeBadger_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "f324c7b4-4fb8-4088-ae4a-02fa323a8701(SPL_WildShape_Badger_01_Prepare)",
+    "825a94f3-b675-402a-a275-adcc465f4f62(SPL_WildShape_Badger_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "c5b317da-4fc3-4d59-a45e-2681592cf0ed(SPL_WildShape_Badger_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "f324c7b4-4fb8-4088-ae4a-02fa323a8701(SPL_WildShape_Badger_01_Prepare)",
+    "825a94f3-b675-402a-a275-adcc465f4f62(SPL_WildShape_Badger_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "c5b317da-4fc3-4d59-a45e-2681592cf0ed(SPL_WildShape_Badger_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "f324c7b4-4fb8-4088-ae4a-02fa323a8701(SPL_WildShape_Badger_01_Prepare)",
+    "825a94f3-b675-402a-a275-adcc465f4f62(SPL_WildShape_Badger_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "c5b317da-4fc3-4d59-a45e-2681592cf0ed(SPL_WildShape_Badger_01_Loop)"
+   ],
+   "SpellFlags": [
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Bear_Polar": {
+   "Name": "Shout_WildShape_Bear_Polar",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape",
+   "SpellContainerID": "Shout_WildShape",
+   "SpellProperties": [
+    "ApplyStatus(WILDSHAPE_BEAR_POLAR_PLAYER,100,-1)"
+   ],
+   "Icon": "Skill_Druid_WildShape_PolarBear",
+   "DisplayName": "Shout_WildShape_Bear_Polar_DisplayName",
+   "Description": "Shout_WildShape_Bear_Polar_Description",
+   "ExtraDescription": "Shout_WildShape_Bear_Polar_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(30)"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Bear_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Creature_Overlay_01:Dummy_Root:VFX_Cast_04:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_WildShapeBear_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "d03adb1c-8b8a-4cf6-b06f-15de13cd67ee(SPL_WildShape_Bear_01_Prepare)",
+    "0e901555-c5ba-43ea-b548-fc19a94799b2(SPL_WildShape_Bear_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "e7c2e184-0ad2-4439-9594-c6a39f9e218b(SPL_WildShape_Bear_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "d03adb1c-8b8a-4cf6-b06f-15de13cd67ee(SPL_WildShape_Bear_01_Prepare)",
+    "0e901555-c5ba-43ea-b548-fc19a94799b2(SPL_WildShape_Bear_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "e7c2e184-0ad2-4439-9594-c6a39f9e218b(SPL_WildShape_Bear_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "d03adb1c-8b8a-4cf6-b06f-15de13cd67ee(SPL_WildShape_Bear_01_Prepare)",
+    "0e901555-c5ba-43ea-b548-fc19a94799b2(SPL_WildShape_Bear_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "e7c2e184-0ad2-4439-9594-c6a39f9e218b(SPL_WildShape_Bear_01_Loop)"
+   ],
+   "SpellFlags": [
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Cat": {
+   "Name": "Shout_WildShape_Cat",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape",
+   "SpellContainerID": "Shout_WildShape",
+   "SpellProperties": [
+    "ApplyStatus(WILDSHAPE_CAT_PLAYER,100,-1)"
+   ],
+   "Icon": "Skill_Druid_WildShape_Cat",
+   "DisplayName": "Shout_WildShape_Cat_DisplayName",
+   "Description": "Shout_WildShape_Cat_Description",
+   "ExtraDescription": "Shout_WildShape_Cat_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(2)"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Cat_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Creature_Overlay_01:Dummy_Root:VFX_Cast_04:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Cat_BodyFX_01:Dummy_L_HandFX:VFX_Cast_02:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_WildShapeCat_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "0ff03958-d308-40d7-9be0-5e2862fd2b0b(SPL_WildShape_Cat_01_Prepare)",
+    "42122b24-01c7-4b93-8b29-6d969b877690(SPL_WildShape_Cat_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "cff0d09b-0ba7-4085-9261-9f2889f53aab(SPL_WildShape_Cat_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "0ff03958-d308-40d7-9be0-5e2862fd2b0b(SPL_WildShape_Cat_01_Prepare)",
+    "42122b24-01c7-4b93-8b29-6d969b877690(SPL_WildShape_Cat_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "cff0d09b-0ba7-4085-9261-9f2889f53aab(SPL_WildShape_Cat_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "0ff03958-d308-40d7-9be0-5e2862fd2b0b(SPL_WildShape_Cat_01_Prepare)",
+    "42122b24-01c7-4b93-8b29-6d969b877690(SPL_WildShape_Cat_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "cff0d09b-0ba7-4085-9261-9f2889f53aab(SPL_WildShape_Cat_01_Loop)"
+   ],
+   "SpellFlags": [
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_DeepRothe": {
+   "Name": "Shout_WildShape_DeepRothe",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape",
+   "SpellContainerID": "Shout_WildShape",
+   "SpellProperties": [
+    "ApplyStatus(WILDSHAPE_DEEP_ROTHE_PLAYER,100,-1)"
+   ],
+   "Icon": "Skill_Druid_WildShape_DeepRothe",
+   "DisplayName": "Shout_WildShape_DeepRothe_DisplayName",
+   "Description": "Shout_WildShape_DeepRothe_Description",
+   "ExtraDescription": "Shout_WildShape_DeepRothe_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(23)"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_DeepRothe_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Creature_Overlay_01:Dummy_Root:VFX_Cast_04:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_WildShapeRothe_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "3851e40b-df28-4f3c-a4a8-9d5ccda5dfc2(SPL_WildShape_DeepRothe_01_Prepare)",
+    "796611ce-d13b-485e-9965-1e3f9023dd18(SPL_WildShape_DeepRothe_01_Cast)",
+    "b0dc06be-342a-495f-84c2-5a7f393b6cd7(SPL_WildShape_DeepRothe_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "3851e40b-df28-4f3c-a4a8-9d5ccda5dfc2(SPL_WildShape_DeepRothe_01_Prepare)",
+    "796611ce-d13b-485e-9965-1e3f9023dd18(SPL_WildShape_DeepRothe_01_Cast)",
+    "b0dc06be-342a-495f-84c2-5a7f393b6cd7(SPL_WildShape_DeepRothe_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "3851e40b-df28-4f3c-a4a8-9d5ccda5dfc2(SPL_WildShape_DeepRothe_01_Prepare)",
+    "796611ce-d13b-485e-9965-1e3f9023dd18(SPL_WildShape_DeepRothe_01_Cast)",
+    "b0dc06be-342a-495f-84c2-5a7f393b6cd7(SPL_WildShape_DeepRothe_01_Loop)"
+   ],
+   "SpellFlags": [
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Raven": {
+   "Name": "Shout_WildShape_Raven",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape",
+   "SpellContainerID": "Shout_WildShape",
+   "SpellProperties": [
+    "ApplyStatus(WILDSHAPE_RAVEN_PLAYER,100,-1)"
+   ],
+   "Icon": "Skill_Druid_WildShape_Raven",
+   "DisplayName": "Shout_WildShape_Raven_DisplayName",
+   "Description": "Shout_WildShape_Raven_Description",
+   "ExtraDescription": "Shout_WildShape_Raven_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(11)"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Raven_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Creature_Overlay_01:Dummy_Root:VFX_Cast_04:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Raven_BodyFX_01:Dummy_BodyFX:VFX_Cast_02:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_WildShapeRaven_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "fa60e31a-ae11-41ae-8ccc-d5dad8c0ff7a(SPL_WildShape_Raven_01_Prepare)",
+    "40345593-6ec6-47b9-b110-609588ff03fa(SPL_WildShape_Raven_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "801bc9f0-230d-4c99-8825-6163e58dcf63(SPL_WildShape_Raven_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "fa60e31a-ae11-41ae-8ccc-d5dad8c0ff7a(SPL_WildShape_Raven_01_Prepare)",
+    "40345593-6ec6-47b9-b110-609588ff03fa(SPL_WildShape_Raven_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "801bc9f0-230d-4c99-8825-6163e58dcf63(SPL_WildShape_Raven_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "fa60e31a-ae11-41ae-8ccc-d5dad8c0ff7a(SPL_WildShape_Raven_01_Prepare)",
+    "40345593-6ec6-47b9-b110-609588ff03fa(SPL_WildShape_Raven_01_Cast)",
+    "721abca5-2d52-4317-82a3-2a2e970a7a16(SPL_ShapeShift_Peace_01_Recover)",
+    "801bc9f0-230d-4c99-8825-6163e58dcf63(SPL_WildShape_Raven_01_Loop)"
+   ],
    "SpellFlags": [
     "HasSomaticComponent"
    ]
@@ -8277,80 +9128,307 @@ const data = {
   "Shout_WildShape_Spider": {
    "Name": "Shout_WildShape_Spider",
    "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Wolf",
+   "Parent": "Shout_WildShape",
+   "SpellContainerID": "Shout_WildShape",
    "SpellProperties": [
-    "ApplyStatus(WILDSHAPE_GIANT_SPIDER,100,-1)"
+    "ApplyStatus(WILDSHAPE_SPIDER_GIANT_PLAYER,100,-1)"
    ],
-   "DisplayName": "Shout_WildShape_Spider_DisplayName"
-  },
-  "Shout_WildShape_Boar": {
-   "Name": "Shout_WildShape_Boar",
-   "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Wolf",
-   "SpellProperties": [
-    "ApplyStatus(WILDSHAPE_BOAR,100,-1)"
+   "Icon": "Skill_Druid_WildShape_GiantSpider",
+   "DisplayName": "Shout_WildShape_Spider_DisplayName",
+   "Description": "Shout_WildShape_Spider_Description",
+   "ExtraDescription": "Shout_WildShape_Spider_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(20)"
    ],
-   "DisplayName": "Shout_WildShape_Boar_DisplayName"
-  },
-  "Shout_WildShape_Bear": {
-   "Name": "Shout_WildShape_Bear",
-   "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Wolf",
-   "SpellProperties": [
-    "ApplyStatus(WILDSHAPE_BEAR,100,-1)"
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Spider_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Creature_Overlay_01:Dummy_Root:VFX_Cast_04:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Buff_ShoutSelf_WildShape_Spider_BodyFX_01:Dummy_BodyFX:VFX_Cast_01:0:None::None::0:0::::"
    ],
-   "Icon": "Skill_Druid_WildShape_Bear",
-   "DisplayName": "Shout_WildShape_Bear_DisplayName"
-  },
-  "Shout_WildShape_Wolf_NPC": {
-   "Name": "Shout_WildShape_Wolf_NPC",
-   "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Wolf",
-   "Cooldown": "OncePerCombat",
-   "SpellProperties": [
-    "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
-    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_WOLF,100,-1)"
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_WildShapeSpider_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "912b2675-ff93-4f31-bd8e-e0798154b4e2(SPL_WildShape_Spider_01_Prepare)",
+    "a8b6de8e-526b-455f-9ffa-ce674d477c58(SPL_WildShape_Spider_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ff40f1fd-5043-4449-911d-4c2d20cb89e8(SPL_WildShape_Spider_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "912b2675-ff93-4f31-bd8e-e0798154b4e2(SPL_WildShape_Spider_01_Prepare)",
+    "a8b6de8e-526b-455f-9ffa-ce674d477c58(SPL_WildShape_Spider_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ff40f1fd-5043-4449-911d-4c2d20cb89e8(SPL_WildShape_Spider_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "912b2675-ff93-4f31-bd8e-e0798154b4e2(SPL_WildShape_Spider_01_Prepare)",
+    "a8b6de8e-526b-455f-9ffa-ce674d477c58(SPL_WildShape_Spider_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ff40f1fd-5043-4449-911d-4c2d20cb89e8(SPL_WildShape_Spider_01_Loop)"
+   ],
+   "SpellFlags": [
+    "HasSomaticComponent"
    ]
   },
-  "Shout_WildShape_Wolf_Dire_NPC": {
-   "Name": "Shout_WildShape_Wolf_Dire_NPC",
+  "Shout_WildShape_Wolf_Dire": {
+   "Name": "Shout_WildShape_Wolf_Dire",
    "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Wolf",
-   "Cooldown": "OncePerCombat",
+   "Parent": "Shout_WildShape",
+   "SpellContainerID": "Shout_WildShape",
    "SpellProperties": [
-    "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
-    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_WOLF_DIRE,100,-1)"
+    "ApplyStatus(WILDSHAPE_WOLF_DIRE_PLAYER,100,-1)"
+   ],
+   "Icon": "Skill_Druid_WildShape_DireWolf",
+   "DisplayName": "Shout_WildShape_Wolf_Dire_DisplayName",
+   "Description": "Shout_WildShape_Wolf_Dire_Description",
+   "ExtraDescription": "Shout_WildShape_Wolf_Dire_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(18)"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Wolf_Root_01,Detach:Dummy_Root:VFX_Cast_03:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_02:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_Creature_Overlay_01:Dummy_Root:VFX_Cast_04:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_ShoutSelf_WildShape_HandFX_Overlay_01:Dummy_L_HandFX:VFX_Cast_01:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Actions_Prepare_Intent_Buff_ShoutSelf_WildShape_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_WildShapeWolf_L1to3",
+   "SpellAnimationArcaneMagic": [
+    "62b4dc84-8233-4226-ae60-92eceeb9c673(SPL_WildShape_Wolf_01_Prepare)",
+    "6fa555b6-9096-47b6-8ce1-d177c54fcba0(SPL_WildShape_Wolf_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "125b10d6-ffeb-4060-9076-8ac12a0b1921(SPL_WildShape_Wolf_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "62b4dc84-8233-4226-ae60-92eceeb9c673(SPL_WildShape_Wolf_01_Prepare)",
+    "6fa555b6-9096-47b6-8ce1-d177c54fcba0(SPL_WildShape_Wolf_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "125b10d6-ffeb-4060-9076-8ac12a0b1921(SPL_WildShape_Wolf_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "62b4dc84-8233-4226-ae60-92eceeb9c673(SPL_WildShape_Wolf_01_Prepare)",
+    "6fa555b6-9096-47b6-8ce1-d177c54fcba0(SPL_WildShape_Wolf_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "125b10d6-ffeb-4060-9076-8ac12a0b1921(SPL_WildShape_Wolf_01_Loop)"
+   ],
+   "SpellFlags": [
+    "HasSomaticComponent"
    ]
   },
-  "Shout_WildShape_Spider_NPC": {
-   "Name": "Shout_WildShape_Spider_NPC",
+  "Shout_WildShape_Combat": {
+   "Name": "Shout_WildShape_Combat",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape",
+   "ContainerSpells": [
+    "Shout_WildShape_Combat_Badger",
+    "Shout_WildShape_Combat_Spider",
+    "Shout_WildShape_Combat_Wolf_Dire",
+    "Shout_WildShape_Combat_Cat"
+   ],
+   "TargetConditions": "Self()",
+   "CastTextEvent": "Cast",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "d7745165-66e4-41c4-9e42-d09d95a29491(SPL_ShapeShift_01_Prepare)",
+    "fd5e6365-f314-42e8-a39b-a041dc56b0e7(SPL_ShapeShift_01_Cast)",
+    "14294166-95db-46c1-b22a-2b780c2c2790(SPL_ShapeShift_Combat_01_Recover)",
+    "ce773016-6fb4-44fe-84db-e037aaa22041(SPL_ShapeShift_01_Loop)"
+   ]
+  },
+  "Shout_WildShape_Combat_Badger": {
+   "Name": "Shout_WildShape_Combat_Badger",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Badger",
+   "SpellContainerID": "Shout_WildShape_Combat",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Combat_Bear_Polar": {
+   "Name": "Shout_WildShape_Combat_Bear_Polar",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_Polar",
+   "SpellContainerID": "Shout_WildShape_Combat",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Combat_Cat": {
+   "Name": "Shout_WildShape_Combat_Cat",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Cat",
+   "SpellContainerID": "Shout_WildShape_Combat",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Combat_DeepRothe": {
+   "Name": "Shout_WildShape_Combat_DeepRothe",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_DeepRothe",
+   "SpellContainerID": "Shout_WildShape_Combat",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Combat_Raven": {
+   "Name": "Shout_WildShape_Combat_Raven",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Raven",
+   "SpellContainerID": "Shout_WildShape_Combat",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Combat_Spider": {
+   "Name": "Shout_WildShape_Combat_Spider",
    "SpellType": "Shout",
    "Parent": "Shout_WildShape_Spider",
-   "Cooldown": "OncePerCombat",
-   "SpellProperties": [
-    "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
-    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_GIANT_SPIDER,100,-1)"
+   "SpellContainerID": "Shout_WildShape_Combat",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
    ]
   },
-  "Shout_WildShape_Boar_NPC": {
-   "Name": "Shout_WildShape_Boar_NPC",
+  "Shout_WildShape_Combat_Wolf_Dire": {
+   "Name": "Shout_WildShape_Combat_Wolf_Dire",
    "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Boar",
-   "Cooldown": "OncePerCombat",
-   "SpellProperties": [
-    "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
-    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BOAR,100,-1)"
+   "Parent": "Shout_WildShape_Wolf_Dire",
+   "SpellContainerID": "Shout_WildShape_Combat",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
    ]
   },
-  "Shout_WildShape_Bear_NPC": {
-   "Name": "Shout_WildShape_Bear_NPC",
+  "Shout_WildShape_Combat_Heal": {
+   "Name": "Shout_WildShape_Combat_Heal",
    "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Bear",
-   "Cooldown": "OncePerCombat",
+   "Level": 1,
+   "ContainerSpells": [
+    "Shout_WildShape_Combat_Heal_1"
+   ],
+   "TargetConditions": "Self()",
+   "Icon": "Skill_Druid_WildShape_Heal",
+   "DisplayName": "Shout_WildShape_Combat_Heal_DisplayName",
+   "Description": "Shout_WildShape_Combat_Heal_Description",
+   "ExtraDescription": "Shout_WildShape_Combat_Heal_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "RegainHitPoints(1d8)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_CastFX_01:Dummy_HeadFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_CastFX_Textkey_01:Dummy_HeadFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_Root_Textkey_01,Detach:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Heal_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Healing_ShoutSelf_Impact_Root_01:Dummy_Root:Cast:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Healing_FalseLife_L1to3",
+   "TargetSound": "Spell_Impact_Heal_WildShapeHeal_L1to3",
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "VerbalIntent": "Healing",
+   "SpellFlags": [
+    "IsLinkedSpellContainer",
+    "WildShape"
+   ],
+   "RechargeValues": "5-6"
+  },
+  "Shout_WildShape_Combat_Heal_1": {
+   "Name": "Shout_WildShape_Combat_Heal_1",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Combat_Heal",
+   "SpellContainerID": "Shout_WildShape_Combat_Heal",
    "SpellProperties": [
-    "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
-    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR,100,-1)"
+    "RegainHitPoints(1d8)"
+   ],
+   "DisplayName": "Shout_WildShape_Combat_Heal_1_DisplayName",
+   "Description": "Shout_WildShape_Combat_Heal_1_Description",
+   "DescriptionParams": [
+    "RegainHitPoints(1d8)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "SpellSlot:1:1:1"
    ]
+  },
+  "Shout_WildShape_Combat_Heal_2": {
+   "Name": "Shout_WildShape_Combat_Heal_2",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Combat_Heal_1",
+   "SpellContainerID": "Shout_WildShape_Combat_Heal",
+   "SpellProperties": [
+    "RegainHitPoints(2d8)"
+   ],
+   "Icon": "Skill_Druid_WildShape_Heal_2",
+   "DisplayName": "Shout_WildShape_Combat_Heal_2_DisplayName",
+   "Description": "Shout_WildShape_Combat_Heal_2_Description",
+   "DescriptionParams": [
+    "RegainHitPoints(2d8)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "RootSpellID": "Shout_WildShape_Combat_Heal_1",
+   "PowerLevel": 2
   },
   "Shout_AOE": {
    "Name": "Shout_AOE",
@@ -8457,6 +9535,9 @@ const data = {
     "DealDamage(2d6, Necrotic)"
    ],
    "TooltipAttackSave": "Strength",
+   "TooltipStatusApply": [
+    "ApplyStatus(ARMS_OF_HADAR,100,1)"
+   ],
    "PrepareEffect": [
     "VFX_Spells_Prepare_Arcane_Damage_Necrotic_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
     "VFX_Spells_Prepare_Arcane_Damage_Necrotic_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
@@ -8571,7 +9652,7 @@ const data = {
    "Name": "Shout_CharmAnimalsAndPlants",
    "SpellType": "Shout",
    "AreaRadius": 9,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC())",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC(),AdvantageOnCharmed())",
    "SpellSuccess": [
     "ApplyStatus(CHARM_ANIMALS_AND_PLANTS, 100, 10)"
    ],
@@ -8665,6 +9746,7 @@ const data = {
    "Name": "Shout_FeatherFall_2",
    "SpellType": "Shout",
    "Parent": "Shout_FeatherFall",
+   "Icon": "Spell_Transmutation_FeatherFall_2",
    "UseCosts": [
     "BonusActionPoint:1",
     "SpellSlotsGroup:1:1:2"
@@ -8830,7 +9912,8 @@ const data = {
     "IsSpell",
     "HasVerbalComponent",
     "HasSomaticComponent",
-    "IsConcentration"
+    "IsConcentration",
+    "Invisible"
    ]
   },
   "Shout_PassWithoutTrace_TrickeryCleric": {
@@ -8911,22 +9994,13 @@ const data = {
     "RegainHitPoints(Level)"
    ],
    "ExtraDescription": "Shout_PreserveLife_ExtraDescription",
-   "PrepareEffect": [
-    "VFX_Spells_Prepare_Arcane_Intent_Healing_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Healing_HandFX_01,KeepRot:Dummy_L_HandFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Healing_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Healing_CastFX_Textkey_01:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Healing_Root_Textkey_01,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
-    "VFX_Sound_Spell_Prepare_Intent_Heal_01:Dummy_Root::0:None::None::0:0::::"
-   ],
    "CastEffect": [
-    "VFX_Spells_Cast_Intent_Healing_ShoutAoE_Impact_Textkey_01:Dummy_Root:Cast:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Healing_TargetSingle_PostProcess_Textkey_01:Dummy_Root:Cast:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Healing_ShoutAoe_Rise_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Healing_ShoutAoE_Rise_CastFX_Textkey_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
+    "VFX_Spells_Cast_Intent_Action_ShoutAoE_Healing_PreserveLife_CastFX_Textkey_01,Detach:Dummy_CastFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_ShoutAoE_Healing_PreserveLife_Cast_Overlay_01::Cast:0:None::None::0:0::::"
    ],
    "TargetEffect": [
-    "VFX_Spells_Cast_Intent_Healing_ShoutAoE_Impact_Root_Textkey_01:Dummy_Root:Cast:0:None::None::0:0::::"
+    "VFX_Spells_Cast_Intent_Action_ShoutAoE_Healing_PreserveLife_Impact_Root_01,Detach:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_ShoutAoE_Healing_PreserveLife_Impact_Overlay_01::Cast:0:None::None::0:0::::"
    ],
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_PreserveLife",
@@ -9264,6 +10338,20 @@ const data = {
    "SpellType": "Shout",
    "Parent": "Shout_ActionSurge"
   },
+  "Shout_Berserk_FleshGolem": {
+   "Name": "Shout_Berserk_FleshGolem",
+   "SpellType": "Shout",
+   "Parent": "Shout_ActionSurge",
+   "DisplayName": "Shout_Berserk_FleshGolem_DisplayName",
+   "Description": "Shout_Berserk_FleshGolem_Description"
+  },
+  "Shout_BlackHole_DarkVine_Giant": {
+   "Name": "Shout_BlackHole_DarkVine_Giant",
+   "SpellType": "Shout",
+   "Parent": "Shout_ActionSurge",
+   "DisplayName": "Shout_BlackHole_DarkVine_Giant_DisplayName",
+   "Description": "Shout_BlackHole_DarkVine_Giant_Description"
+  },
   "Shout_CallForHelp": {
    "Name": "Shout_CallForHelp",
    "SpellType": "Shout",
@@ -9361,7 +10449,8 @@ const data = {
    "SpellFlags": [
     "HasSomaticComponent",
     "HasVerbalComponent"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_HelpArrives_HookHorror": {
    "Name": "Shout_HelpArrives_HookHorror",
@@ -9413,7 +10502,8 @@ const data = {
    "SpellType": "Shout",
    "Parent": "Shout_Dash",
    "SpellProperties": [
-    "ApplyStatus(CRIME_DISTRACTION,100,100)"
+    "RemoveStatus(SELF,CRIME_DISTRACTION)",
+    "ApplyStatus(SELF,CRIME_DISTRACTION,100,5)"
    ],
    "AreaRadius": 18,
    "Icon": "Action_Cat_DrawAttention",
@@ -9502,6 +10592,15 @@ const data = {
     "CannotTargetItems"
    ]
   },
+  "Shout_ForcedDive_VampireSquid_Tentacle": {
+   "Name": "Shout_ForcedDive_VampireSquid_Tentacle",
+   "SpellType": "Shout",
+   "Parent": "Shout_ActionSurge",
+   "Cooldown": "OncePerTurn",
+   "TargetConditions": "Self()",
+   "Icon": "unknown",
+   "DisplayName": "Shout_ForcedDive_VampireSquid_Tentacle_DisplayName"
+  },
   "Shout_GoadingRoar_Bear_Summon": {
    "Name": "Shout_GoadingRoar_Bear_Summon",
    "SpellType": "Shout",
@@ -9515,9 +10614,17 @@ const data = {
    "DisplayName": "Shout_GoadingRoar_Bear_Summon_DisplayName",
    "Description": "Shout_GoadingRoar_Bear_Summon_Description",
    "ExtraDescription": "Shout_GoadingRoar_Bear_Summon_ExtraDescription",
+   "TooltipAttackSave": "Wisdom",
+   "TooltipStatusApply": [
+    "ApplyStatus(TAUNTED,100,2)"
+   ],
    "CastEffect": [
-    "VFX_Enemies_Bear_Shout_GoadingRoar_CastFX_01,KeepRot:Dummy_MouthFX:Cast:0:None::None::0:0::::",
-    "VFX_Enemies_Bear_Shout_GoadingRoar_CastFX_Root_01,Detach::Cast:0:None::None::0:0::::"
+    "VFX_Enemies_Bear_Shout_GoadingRoar_HeadFX_Texkey_01:Dummy_HeadFX:VFX_Attack_01:0:None::None::0:0::::",
+    "VFX_Enemies_Bear_Shout_GoadingRoar_Texkey_01,Detach::VFX_Attack_01:0:None::None::0:0::::",
+    "VFX_Enemies_Bear_Shout_GoadingRoar_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Enemies_Bear_Shout_GoadingRoar_Prepare_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::"
    ],
    "CastTextEvent": "Cast",
    "CastSound": "CrSpell_Cast_GoadingRoar",
@@ -9588,6 +10695,7 @@ const data = {
    "SpellFlags": [
     "HasVerbalComponent"
    ],
+   "SpellAnimationIntentType": "Aggressive",
    "RechargeValues": 6
   },
   "Shout_Generic_Bugbear": {
@@ -9823,6 +10931,7 @@ const data = {
     "IgnoreVisionBlock",
     "IsConcentration"
    ],
+   "SpellAnimationIntentType": "Aggressive",
    "RechargeValues": "5-6"
   },
   "Shout_Moan_Cloaker": {
@@ -9831,7 +10940,68 @@ const data = {
    "Parent": "Shout_ActionSurge",
    "Icon": "unknown",
    "DisplayName": "Shout_Moan_Cloaker_DisplayName",
-   "Description": "Shout_Moan_Cloaker_Description"
+   "Description": "Shout_Moan_Cloaker_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Shout_Needlestorm_DarkVine_Giant": {
+   "Name": "Shout_Needlestorm_DarkVine_Giant",
+   "SpellType": "Shout",
+   "Parent": "Shout_ActionSurge",
+   "Icon": "unknown",
+   "DisplayName": "Shout_Needlestorm_DarkVine_Giant_DisplayName",
+   "Description": "Shout_Needlestorm_DarkVine_Giant_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Shout_PackHowl_Wolf_Dire": {
+   "Name": "Shout_PackHowl_Wolf_Dire",
+   "SpellType": "Shout",
+   "Cooldown": "OncePerCombat",
+   "SpellProperties": [
+    "ApplyStatus(PACK_HOWL_WOLF_DIRE,100,1)"
+   ],
+   "AreaRadius": 9,
+   "TargetConditions": "Character() and Ally()",
+   "Icon": "Action_DireWolfPack_Howl",
+   "DisplayName": "Shout_PackHowl_Wolf_Dire_DisplayName",
+   "Description": "Shout_PackHowl_Wolf_Dire_Description",
+   "DescriptionParams": [
+    "Distance(3)"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Wolf_IncitingHowl_Cast_CastFX_01:Dummy_HeadFX::0:None::None::0:0::::",
+    "VFX_Enemies_Wolf_IncitingHowl_Cast_Root_01:Dummy_Root:cast:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Enemies_Wolf_IncitingHowl_Prepare_CastFX_01:Dummy_HeadFX::0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "CrSpell_Cast_PackHowl",
+   "UseCosts": [
+    "ActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "VerbalIntent": "Buff",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_Phantasms_Cloaker": {
    "Name": "Shout_Phantasms_Cloaker",
@@ -9839,7 +11009,8 @@ const data = {
    "Parent": "Shout_ActionSurge",
    "Icon": "unknown",
    "DisplayName": "Shout_Phantasms_Cloaker_DisplayName",
-   "Description": "Shout_Phantasms_Cloaker_Description"
+   "Description": "Shout_Phantasms_Cloaker_Description",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_PrimalHowl_Wolf": {
    "Name": "Shout_PrimalHowl_Wolf",
@@ -9878,7 +11049,8 @@ const data = {
     "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
     "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
     "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_Reckless_Minotaur": {
    "Name": "Shout_Reckless_Minotaur",
@@ -9917,7 +11089,43 @@ const data = {
     "357230d1-e552-4f0f-879b-578a5eb422c7(CMBT_Skill_Reckless_01_Attack)",
     "40e1918e-027e-4c7a-a26c-df26426758fe(CMBT_Skill_Reckless_01_Recover)"
    ],
+   "SpellAnimationIntentType": "Aggressive",
    "RechargeValues": "4-6"
+  },
+  "Shout_Roar_Bear_Polar": {
+   "Name": "Shout_Roar_Bear_Polar",
+   "SpellType": "Shout",
+   "Parent": "Shout_GoadingRoar_Bear_Summon",
+   "PrepareEffect": [
+    "VFX_Enemies_Bear_Shout_GoadingRoar_Prepare_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Bear_Shout_GoadingRoar_HeadFX_Texkey_01:Dummy_HeadFX:VFX_Attack_01:0:None::None::0:0::::",
+    "VFX_Enemies_Bear_Shout_GoadingRoar_Texkey_01,Detach::VFX_Attack_01:0:None::None::0:0::::",
+    "VFX_Enemies_Bear_Shout_GoadingRoar_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_ShadowBlend_ShadowMastiff": {
    "Name": "Shout_ShadowBlend_ShadowMastiff",
@@ -9935,7 +11143,8 @@ const data = {
    "SpellFlags": [
     "Stealth",
     "IgnoreSilence",
-    "IsEnemySpell"
+    "IsEnemySpell",
+    "Invisible"
    ]
   },
   "Shout_ShadowStealth_Meazel": {
@@ -9960,7 +11169,29 @@ const data = {
    ],
    "Icon": "unknown",
    "DisplayName": "Shout_ShadowStealth_Shadow_DisplayName",
-   "Description": "Shout_ShadowStealth_Shadow_Description"
+   "Description": "Shout_ShadowStealth_Shadow_Description",
+   "SpellAnimationArcaneMagic": [
+    "18dc0b72-bb98-4adb-a096-28efe713f9ee(CMBT_Skill_Stealth_01_Prepare)",
+    "f9d2d8e0-cf00-4054-8466-88a5307f84c1(CMBT_Skill_Stealth_01_Antic)",
+    "2cd5b0c0-15d7-4dcd-84e6-eeabd74b4acd(CMBT_Skill_Stealth_01_Attack)",
+    "a5774c36-cd17-42ff-9c80-58626e27fefb(CMBT_Skill_Stealth_01_Recover)",
+    "b1c8d2b1-9749-4fbf-8507-bb2be0a9afe2(CMBT_Skill_Stealth_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "18dc0b72-bb98-4adb-a096-28efe713f9ee(CMBT_Skill_Stealth_01_Prepare)",
+    "f9d2d8e0-cf00-4054-8466-88a5307f84c1(CMBT_Skill_Stealth_01_Antic)",
+    "2cd5b0c0-15d7-4dcd-84e6-eeabd74b4acd(CMBT_Skill_Stealth_01_Attack)",
+    "a5774c36-cd17-42ff-9c80-58626e27fefb(CMBT_Skill_Stealth_01_Recover)",
+    "b1c8d2b1-9749-4fbf-8507-bb2be0a9afe2(CMBT_Skill_Stealth_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "18dc0b72-bb98-4adb-a096-28efe713f9ee(CMBT_Skill_Stealth_01_Prepare)",
+    "f9d2d8e0-cf00-4054-8466-88a5307f84c1(CMBT_Skill_Stealth_01_Antic)",
+    "2cd5b0c0-15d7-4dcd-84e6-eeabd74b4acd(CMBT_Skill_Stealth_01_Attack)",
+    "a5774c36-cd17-42ff-9c80-58626e27fefb(CMBT_Skill_Stealth_01_Recover)",
+    "b1c8d2b1-9749-4fbf-8507-bb2be0a9afe2(CMBT_Skill_Stealth_01_Loop)"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_Shapechanger": {
    "Name": "Shout_Shapechanger",
@@ -10004,6 +11235,9 @@ const data = {
    "DescriptionParams": [
     "DealDamage(3d10,Lightning)"
    ],
+   "ExtraDescriptionParams": [
+    "Grounded creatures cannot be knocked down or pushed back."
+   ],
    "TooltipDamageList": [
     "DealDamage(3d10,Lightning)"
    ],
@@ -10044,7 +11278,8 @@ const data = {
    ],
    "SpellFlags": [
     "HasSomaticComponent"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Shout_SuddenRush_Gnoll": {
    "Name": "Shout_SuddenRush_Gnoll",
@@ -10091,6 +11326,321 @@ const data = {
    ],
    "SpellFlags": [
     "IsSpell"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Shout_UmbralFury_DarkJusticiar": {
+   "Name": "Shout_UmbralFury_DarkJusticiar",
+   "SpellType": "Shout",
+   "Parent": "Shout_Blur",
+   "DisplayName": "Shout_UmbralFury_DarkJusticiar_DisplayName",
+   "Description": "Shout_UmbralFury_DarkJusticiar_Description"
+  },
+  "Shout_WildShape_Badger_NPC": {
+   "Name": "Shout_WildShape_Badger_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Badger",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BADGER,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Badger_NPC_DisplayName",
+   "UseCosts": [
+    "ActionPoint:1",
+    "WildShape:1"
+   ],
+   "SpellFlags": [
+    "IsSpell",
+    "HasSomaticComponent"
+   ],
+   "RechargeValues": "4-6"
+  },
+  "Shout_WildShape_Badger_NPC_Moon": {
+   "Name": "Shout_WildShape_Badger_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Badger_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BADGER_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Bear_NPC": {
+   "Name": "Shout_WildShape_Bear_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_Polar",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Bear_NPC_DisplayName",
+   "Description": "Shout_WildShape_Bear_NPC_Description",
+   "ExtraDescription": "Shout_WildShape_Bear_NPC_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "Regain Hit Points(19)"
+   ],
+   "SpellFlags": [
+    "IsSpell",
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Bear_NPC_Moon": {
+   "Name": "Shout_WildShape_Bear_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Bear_Black_NPC": {
+   "Name": "Shout_WildShape_Bear_Black_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR_BLACK,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Bear_Black_NPC_DisplayName",
+   "Description": "Shout_WildShape_Bear_Black_NPC_Description"
+  },
+  "Shout_WildShape_Bear_Black_NPC_Moon": {
+   "Name": "Shout_WildShape_Bear_Black_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_Black_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR_BLACK_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Bear_Grey_NPC": {
+   "Name": "Shout_WildShape_Bear_Grey_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR_GREY,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Bear_Grey_NPC_DisplayName",
+   "Description": "Shout_WildShape_Bear_Grey_NPC_Description"
+  },
+  "Shout_WildShape_Bear_Grey_NPC_Moon": {
+   "Name": "Shout_WildShape_Bear_Grey_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_Grey_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR_GREY_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Bear_Polar_NPC": {
+   "Name": "Shout_WildShape_Bear_Polar_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_Polar",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BEAR_POLAR,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Bear_Polar_NPC_DisplayName"
+  },
+  "Shout_WildShape_Bear_Polar_NPC_Moon": {
+   "Name": "Shout_WildShape_Bear_Polar_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Bear_Polar_NPC",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Boar_NPC": {
+   "Name": "Shout_WildShape_Boar_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Badger",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BOAR,100,-1)"
+   ],
+   "Icon": "unknown",
+   "DisplayName": "Shout_WildShape_Boar_NPC_DisplayName",
+   "Description": "Shout_WildShape_Boar_NPC_Description",
+   "ExtraDescription": "Shout_WildShape_Boar_NPC_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "Regain Hit Points(11)"
+   ],
+   "SpellFlags": [
+    "IsSpell",
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Boar_NPC_Moon": {
+   "Name": "Shout_WildShape_Boar_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Boar_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_BOAR_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_DeepRothe_NPC": {
+   "Name": "Shout_WildShape_DeepRothe_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_DeepRothe",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_DEEP_ROTHE,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_DeepRothe_NPC_DisplayName"
+  },
+  "Shout_WildShape_Raven_NPC": {
+   "Name": "Shout_WildShape_Raven_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Raven",
+   "SpellProperties": [
+    "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_RAVEN,100,-1)"
+   ],
+   "SpellFlags": [
+    "IsSpell",
+    "HasSomaticComponent"
+   ],
+   "RechargeValues": "5-6"
+  },
+  "Shout_WildShape_Raven_NPC_Moon": {
+   "Name": "Shout_WildShape_Raven_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Raven_NPC",
+   "SpellProperties": [
+    "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_RAVEN_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ],
+   "RechargeValues": "5-6"
+  },
+  "Shout_WildShape_Spider_NPC": {
+   "Name": "Shout_WildShape_Spider_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Spider",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_GIANT_SPIDER,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Spider_NPC_DisplayName",
+   "SpellFlags": [
+    "IsSpell",
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Spider_NPC_Moon": {
+   "Name": "Shout_WildShape_Spider_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Spider_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_GIANT_SPIDER_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Wolf_NPC": {
+   "Name": "Shout_WildShape_Wolf_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Wolf_Dire",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_WOLF,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Wolf_NPC_DisplayName",
+   "Description": "Shout_WildShape_Wolf_NPC_Description",
+   "ExtraDescription": "Shout_WildShape_Wolf_NPC_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "Regain Hit Points(11)"
+   ],
+   "SpellFlags": [
+    "IsSpell",
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Wolf_NPC_Moon": {
+   "Name": "Shout_WildShape_Wolf_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Wolf_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_WOLF_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Wolf_White_NPC": {
+   "Name": "Shout_WildShape_Wolf_White_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Wolf_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_WOLF_WHITE,100,-1)"
+   ],
+   "Description": "Shout_WildShape_Wolf_White_NPC_Description"
+  },
+  "Shout_WildShape_Wolf_White_NPC_Moon": {
+   "Name": "Shout_WildShape_Wolf_White_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Wolf_White_NPC",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_WOLF_WHITE_MOON,100,-1)"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
+   ]
+  },
+  "Shout_WildShape_Wolf_Dire_NPC": {
+   "Name": "Shout_WildShape_Wolf_Dire_NPC",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Wolf_Dire",
+   "SpellProperties": [
+    "AI_ONLY:ApplyStatus(SELF,AI_HELPER_WILDSHAPE_MELEE,100,2)",
+    "AI_IGNORE:CAST:ApplyStatus(WILDSHAPE_WOLF_DIRE,100,-1)"
+   ],
+   "DisplayName": "Shout_WildShape_Wolf_Dire_NPC_DisplayName",
+   "SpellFlags": [
+    "IsSpell",
+    "HasSomaticComponent"
+   ]
+  },
+  "Shout_WildShape_Wolf_Dire_NPC_Moon": {
+   "Name": "Shout_WildShape_Wolf_Dire_NPC_Moon",
+   "SpellType": "Shout",
+   "Parent": "Shout_WildShape_Wolf_Dire_NPC",
+   "UseCosts": [
+    "BonusActionPoint:1",
+    "WildShape:1"
    ]
   },
   "Shout_ITEMS": {
@@ -10279,18 +11829,26 @@ const data = {
    "Parent": "Target_MainHandAttack",
    "Level": 2,
    "SpellSchool": "Evocation",
+   "SpellProperties": [
+    "GROUND:DealDamage(MainMeleeWeapon, Fire)",
+    "GROUND:ExecuteWeaponFunctors(MainHand)"
+   ],
    "TargetRadius": "MeleeMainWeaponRange",
-   "SpellRoll": "Attack(AttackType.MeleeWeaponAttack)",
+   "SpellRoll": "Attack(AttackType.MeleeSpellAttack)",
    "SpellSuccess": [
-    "DealDamage(3d6, Fire)"
+    "DealDamage(MainMeleeWeapon, Fire)",
+    "ExecuteWeaponFunctors(MainHand)"
    ],
    "Icon": "unknown",
    "DisplayName": "Target_FlameBlade_Attack_DisplayName",
    "Description": "Target_FlameBlade_Attack_Description",
+   "DescriptionParams": [
+    "DealDamage(MainMeleeWeapon, Fire)"
+   ],
+   "ExtraDescription": "Target_FlameBlade_Attack_ExtraDescription",
    "CastTextEvent": "Cast",
    "UseCosts": [
-    "ActionPoint:1",
-    "SpellSlot:1:1:2"
+    "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
     "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
@@ -10319,7 +11877,8 @@ const data = {
    "VerbalIntent": "Damage",
    "SpellFlags": [
     "IsMelee",
-    "IsHarmful"
+    "IsHarmful",
+    "IsAttack"
    ],
    "MemoryCost": 1
   },
@@ -10553,6 +12112,7 @@ const data = {
     "IsConcentration",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "MemoryCost": 1
   },
   "Target_Smite_Thunderous": {
@@ -10611,6 +12171,7 @@ const data = {
     "HasVerbalComponent",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Electric",
    "MemoryCost": 1
   },
   "Target_Smite_Wrathful": {
@@ -10668,6 +12229,7 @@ const data = {
     "IsConcentration",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Psychic",
    "MemoryCost": 1
   },
   "Target_OffhandAttack": {
@@ -10748,6 +12310,7 @@ const data = {
    "Icon": "Action_UnarmedAttack",
    "DisplayName": "Target_UnarmedAttack_DisplayName",
    "Description": "Target_UnarmedAttack_Description",
+   "TooltipAttackSave": "MeleeUnarmedAttack",
    "PreviewCursor": "Melee",
    "CastTextEvent": "Cast",
    "CycleConditions": "Character() and Enemy() and not Dead()",
@@ -10781,7 +12344,8 @@ const data = {
    "SpellFlags": [
     "IsAttack",
     "IsMelee",
-    "IsHarmful"
+    "IsHarmful",
+    "DontForceSheathOrUnsheath"
    ],
    "SpellAnimationIntentType": "Aggressive"
   },
@@ -10913,6 +12477,30 @@ const data = {
     "08e862c4-75d3-489d-bdb2-b2f95031373e(CMBT_Skill_Slash_01_Loop)",
     "3ed0eebd-86d0-4902-bcea-e0b039e9ad1f(CMBT_Skill_Slash_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "b6a6bde4-f4f3-4f10-bd8b-e642a8da4aa9(CMBT_Skill_Slash_02_Prepare)",
+    "550c6598-8929-4071-aced-c12f5c9ad8aa(CMBT_Skill_Slash_02_Antic)",
+    "da4fb3e1-c9e0-4d16-ba92-aca8def437b3(CMBT_Skill_Slash_02_Attack)",
+    "be687d06-cb06-4fca-b977-bd2746cacc91(CMBT_Skill_Slash_02_Recover)",
+    "12773179-f31c-4c27-a8d5-0649df16995d(CMBT_Skill_Slash_02_Loop)",
+    "7bd69a21-e7f9-4c8b-aaf3-64ad999293b4(CMBT_Skill_Slash_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "b6a6bde4-f4f3-4f10-bd8b-e642a8da4aa9(CMBT_Skill_Slash_02_Prepare)",
+    "550c6598-8929-4071-aced-c12f5c9ad8aa(CMBT_Skill_Slash_02_Antic)",
+    "da4fb3e1-c9e0-4d16-ba92-aca8def437b3(CMBT_Skill_Slash_02_Attack)",
+    "be687d06-cb06-4fca-b977-bd2746cacc91(CMBT_Skill_Slash_02_Recover)",
+    "12773179-f31c-4c27-a8d5-0649df16995d(CMBT_Skill_Slash_02_Loop)",
+    "7bd69a21-e7f9-4c8b-aaf3-64ad999293b4(CMBT_Skill_Slash_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "b6a6bde4-f4f3-4f10-bd8b-e642a8da4aa9(CMBT_Skill_Slash_02_Prepare)",
+    "550c6598-8929-4071-aced-c12f5c9ad8aa(CMBT_Skill_Slash_02_Antic)",
+    "da4fb3e1-c9e0-4d16-ba92-aca8def437b3(CMBT_Skill_Slash_02_Attack)",
+    "be687d06-cb06-4fca-b977-bd2746cacc91(CMBT_Skill_Slash_02_Recover)",
+    "12773179-f31c-4c27-a8d5-0649df16995d(CMBT_Skill_Slash_02_Loop)",
+    "7bd69a21-e7f9-4c8b-aaf3-64ad999293b4(CMBT_Skill_Slash_02_Dash)"
+   ],
    "WeaponTypes": [
     "Melee"
    ],
@@ -10962,6 +12550,30 @@ const data = {
     "a0503ad0-c1b1-449c-b431-4ac6c39c58d7(CMBT_Skill_Precision_01_Loop)",
     "c36ed247-2272-492b-99c2-2ca10b014670(CMBT_Skill_Precision_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
    "WeaponTypes": [
     "Melee"
    ],
@@ -10982,7 +12594,7 @@ const data = {
    "TargetRadius": "MeleeMainWeaponRange",
    "SpellRoll": "Attack(AttackType.MeleeWeaponAttack)",
    "SpellSuccess": [
-    "IF(not SavingThrow(Ability.Strength, SourceSpellDC())):ApplyStatus(ENSNARING_STRIKE,100,10)",
+    "IF(not SavingThrow(Ability.Strength, SourceSpellDC(),AdvantageOnRestrained(),DisadvantageOnRestrained())):ApplyStatus(ENSNARING_STRIKE,100,10)",
     "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
     " ExecuteWeaponFunctors(MainHand)"
    ],
@@ -11045,6 +12657,30 @@ const data = {
     "a0503ad0-c1b1-449c-b431-4ac6c39c58d7(CMBT_Skill_Precision_01_Loop)",
     "c36ed247-2272-492b-99c2-2ca10b014670(CMBT_Skill_Precision_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
    "VerbalIntent": "Control",
    "WeaponTypes": [
     "Melee"
@@ -11065,7 +12701,7 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_EnsnaringStrike",
    "SpellSuccess": [
-    "IF(not SavingThrow(Ability.Strength, SourceSpellDC())):ApplyStatus(ENSNARING_STRIKE_2,100,10)",
+    "IF(not SavingThrow(Ability.Strength, SourceSpellDC(),AdvantageOnRestrained(),DisadvantageOnRestrained())):ApplyStatus(ENSNARING_STRIKE_2,100,10)",
     "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
     " ExecuteWeaponFunctors(MainHand)"
    ],
@@ -11206,6 +12842,30 @@ const data = {
     "7f20e242-be7c-4fd1-a2bd-5715b2adca03(CMBT_Skill_Power_01_Loop)",
     "7465f7f7-67ea-41f2-8dd4-3c97f1089a54(CMBT_Skill_Power_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
    "WeaponTypes": [
     "Melee"
    ],
@@ -11281,6 +12941,30 @@ const data = {
     "32c33123-7962-4d95-b497-532b1a897e85(CMBT_Skill_Power_01_Recover)",
     "7f20e242-be7c-4fd1-a2bd-5715b2adca03(CMBT_Skill_Power_01_Loop)",
     "7465f7f7-67ea-41f2-8dd4-3c97f1089a54(CMBT_Skill_Power_01_Dash)"
+   ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
    ],
    "WeaponTypes": [
     "Melee"
@@ -11482,6 +13166,30 @@ const data = {
     "863fabe7-d990-42a3-8961-7898c207bcb1(CMBT_Skill_Sweep_01_Loop)",
     "0002afee-5ad9-4109-ae64-9b2571601226(CMBT_Skill_Sweep_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "403865ab-807c-4ca1-b798-e698773fe18d(CMBT_Skill_Sweep_02_Prepare)",
+    "ed63aaa2-36fe-4f50-b2cc-b2df68558693(CMBT_Skill_Sweep_02_Antic)",
+    "d4f528cf-78b2-49c8-a414-2896d12c4d70(CMBT_Skill_Sweep_02_Attack)",
+    "60693960-2eb6-4d22-81cf-2861a3ead2c6(CMBT_Skill_Sweep_02_Recover)",
+    "f2532a95-383b-4ec7-b9f5-ec2bf17b6e0e(CMBT_Skill_Sweep_02_Loop)",
+    "75dd8a27-dd89-43f1-a08b-772df28606ad(CMBT_Skill_Sweep_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "403865ab-807c-4ca1-b798-e698773fe18d(CMBT_Skill_Sweep_02_Prepare)",
+    "ed63aaa2-36fe-4f50-b2cc-b2df68558693(CMBT_Skill_Sweep_02_Antic)",
+    "d4f528cf-78b2-49c8-a414-2896d12c4d70(CMBT_Skill_Sweep_02_Attack)",
+    "60693960-2eb6-4d22-81cf-2861a3ead2c6(CMBT_Skill_Sweep_02_Recover)",
+    "f2532a95-383b-4ec7-b9f5-ec2bf17b6e0e(CMBT_Skill_Sweep_02_Loop)",
+    "75dd8a27-dd89-43f1-a08b-772df28606ad(CMBT_Skill_Sweep_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "403865ab-807c-4ca1-b798-e698773fe18d(CMBT_Skill_Sweep_02_Prepare)",
+    "ed63aaa2-36fe-4f50-b2cc-b2df68558693(CMBT_Skill_Sweep_02_Antic)",
+    "d4f528cf-78b2-49c8-a414-2896d12c4d70(CMBT_Skill_Sweep_02_Attack)",
+    "60693960-2eb6-4d22-81cf-2861a3ead2c6(CMBT_Skill_Sweep_02_Recover)",
+    "f2532a95-383b-4ec7-b9f5-ec2bf17b6e0e(CMBT_Skill_Sweep_02_Loop)",
+    "75dd8a27-dd89-43f1-a08b-772df28606ad(CMBT_Skill_Sweep_02_Dash)"
+   ],
    "WeaponTypes": [
     "Melee"
    ],
@@ -11542,6 +13250,30 @@ const data = {
     "32c33123-7962-4d95-b497-532b1a897e85(CMBT_Skill_Power_01_Recover)",
     "7f20e242-be7c-4fd1-a2bd-5715b2adca03(CMBT_Skill_Power_01_Loop)",
     "7465f7f7-67ea-41f2-8dd4-3c97f1089a54(CMBT_Skill_Power_01_Dash)"
+   ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
    ],
    "WeaponTypes": [
     "Melee"
@@ -11623,6 +13355,30 @@ const data = {
     "08e862c4-75d3-489d-bdb2-b2f95031373e(CMBT_Skill_Slash_01_Loop)",
     "3ed0eebd-86d0-4902-bcea-e0b039e9ad1f(CMBT_Skill_Slash_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "b6a6bde4-f4f3-4f10-bd8b-e642a8da4aa9(CMBT_Skill_Slash_02_Prepare)",
+    "550c6598-8929-4071-aced-c12f5c9ad8aa(CMBT_Skill_Slash_02_Antic)",
+    "da4fb3e1-c9e0-4d16-ba92-aca8def437b3(CMBT_Skill_Slash_02_Attack)",
+    "be687d06-cb06-4fca-b977-bd2746cacc91(CMBT_Skill_Slash_02_Recover)",
+    "12773179-f31c-4c27-a8d5-0649df16995d(CMBT_Skill_Slash_02_Loop)",
+    "7bd69a21-e7f9-4c8b-aaf3-64ad999293b4(CMBT_Skill_Slash_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "b6a6bde4-f4f3-4f10-bd8b-e642a8da4aa9(CMBT_Skill_Slash_02_Prepare)",
+    "550c6598-8929-4071-aced-c12f5c9ad8aa(CMBT_Skill_Slash_02_Antic)",
+    "da4fb3e1-c9e0-4d16-ba92-aca8def437b3(CMBT_Skill_Slash_02_Attack)",
+    "be687d06-cb06-4fca-b977-bd2746cacc91(CMBT_Skill_Slash_02_Recover)",
+    "12773179-f31c-4c27-a8d5-0649df16995d(CMBT_Skill_Slash_02_Loop)",
+    "7bd69a21-e7f9-4c8b-aaf3-64ad999293b4(CMBT_Skill_Slash_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "b6a6bde4-f4f3-4f10-bd8b-e642a8da4aa9(CMBT_Skill_Slash_02_Prepare)",
+    "550c6598-8929-4071-aced-c12f5c9ad8aa(CMBT_Skill_Slash_02_Antic)",
+    "da4fb3e1-c9e0-4d16-ba92-aca8def437b3(CMBT_Skill_Slash_02_Attack)",
+    "be687d06-cb06-4fca-b977-bd2746cacc91(CMBT_Skill_Slash_02_Recover)",
+    "12773179-f31c-4c27-a8d5-0649df16995d(CMBT_Skill_Slash_02_Loop)",
+    "7bd69a21-e7f9-4c8b-aaf3-64ad999293b4(CMBT_Skill_Slash_02_Dash)"
+   ],
    "WeaponTypes": [
     "Melee"
    ],
@@ -11683,6 +13439,30 @@ const data = {
     "32c33123-7962-4d95-b497-532b1a897e85(CMBT_Skill_Power_01_Recover)",
     "7f20e242-be7c-4fd1-a2bd-5715b2adca03(CMBT_Skill_Power_01_Loop)",
     "7465f7f7-67ea-41f2-8dd4-3c97f1089a54(CMBT_Skill_Power_01_Dash)"
+   ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "6f9e662c-b10c-4388-9e56-d74320efa0c0(CMBT_Skill_Power_02_Prepare)",
+    "d668f9d6-bd9d-435c-83b5-6d46ac54761f(CMBT_Skill_Power_02_Antic)",
+    "8e60eacb-12be-4711-96e2-d6d906a1ce25(CMBT_Skill_Power_02_Attack)",
+    "603a7bfb-d53e-41c2-98dd-e004fdf5a0e8(CMBT_Skill_Power_02_Recover)",
+    "003e58fc-f11d-41b6-90d9-ea8bc943826b(CMBT_Skill_Power_02_Loop)",
+    "b850a756-6bd6-4c4d-a3fc-6c524a49a818(CMBT_Skill_Power_02_Dash)"
    ],
    "WeaponTypes": [
     "Melee"
@@ -11767,6 +13547,14 @@ const data = {
     "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
     "DealDamage(1d6,Fire)"
    ],
+   "TooltipDamageList": [
+    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
+    "DealDamage(1d6,Fire)"
+   ],
+   "TooltipAttackSave": "MeleeWeaponAttack",
+   "TooltipStatusApply": [
+    "ApplyStatus(SEARING_SMITE, 100, 10)"
+   ],
    "PrepareEffect": [
     "VFX_Actions_Prepare_WeaponAttack_Target_Smite_Searing_Root_01,Detach:Dummy_Root::0:None::None::0:0::::",
     "VFX_Actions_Prepare_Smite_Searing_Weapon_01:Dummy_FX::0:None::None::0:0::::"
@@ -11812,8 +13600,11 @@ const data = {
    "SpellFlags": [
     "IsConcentration",
     "CannotTargetTerrain",
-    "IsHarmful"
+    "IsHarmful",
+    "HasVerbalComponent",
+    "IsSpell"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "MemoryCost": 1
   },
   "Target_Smite_Searing_2": {
@@ -11827,6 +13618,13 @@ const data = {
     " ApplyStatus(SEARING_SMITE, 100, 10)"
    ],
    "Icon": "Spell_Evocation_SearingSmite_2",
+   "DescriptionParams": [
+    "DealDamage(2d6, Fire)"
+   ],
+   "TooltipDamageList": [
+    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
+    "DealDamage(2d6, Fire)"
+   ],
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:2"
@@ -11901,6 +13699,30 @@ const data = {
     "a0503ad0-c1b1-449c-b431-4ac6c39c58d7(CMBT_Skill_Precision_01_Loop)",
     "c36ed247-2272-492b-99c2-2ca10b014670(CMBT_Skill_Precision_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "c25d80c5-aaf3-4aba-bc1f-bb1c8534725e(CMBT_Skill_Precision_02_Prepare)",
+    "45bcbbd4-f9ca-4b19-88c2-822c5e2b0d8b(CMBT_Skill_Precision_02_Antic)",
+    "466e7470-712f-4a67-8ef1-5908a20b0449(CMBT_Skill_Precision_02_Attack)",
+    "c1713221-163b-4bae-95de-e6681d665c76(CMBT_Skill_Precision_02_Recover)",
+    "dc83b386-41f5-43df-9649-788107052830(CMBT_Skill_Precision_02_Loop)",
+    "b63dee1e-08e1-4f7a-88ee-1e6baa38e0dd(CMBT_Skill_Precision_02_Dash)"
+   ],
    "WeaponTypes": [
     "Melee",
     "Finesse"
@@ -11950,6 +13772,30 @@ const data = {
     "1172e0b6-08d1-4f28-a651-a01681b84ee6(CMBT_Skill_Sweep_01_Recover)",
     "863fabe7-d990-42a3-8961-7898c207bcb1(CMBT_Skill_Sweep_01_Loop)",
     "0002afee-5ad9-4109-ae64-9b2571601226(CMBT_Skill_Sweep_01_Dash)"
+   ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "403865ab-807c-4ca1-b798-e698773fe18d(CMBT_Skill_Sweep_02_Prepare)",
+    "ed63aaa2-36fe-4f50-b2cc-b2df68558693(CMBT_Skill_Sweep_02_Antic)",
+    "d4f528cf-78b2-49c8-a414-2896d12c4d70(CMBT_Skill_Sweep_02_Attack)",
+    "60693960-2eb6-4d22-81cf-2861a3ead2c6(CMBT_Skill_Sweep_02_Recover)",
+    "f2532a95-383b-4ec7-b9f5-ec2bf17b6e0e(CMBT_Skill_Sweep_02_Loop)",
+    "75dd8a27-dd89-43f1-a08b-772df28606ad(CMBT_Skill_Sweep_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "403865ab-807c-4ca1-b798-e698773fe18d(CMBT_Skill_Sweep_02_Prepare)",
+    "ed63aaa2-36fe-4f50-b2cc-b2df68558693(CMBT_Skill_Sweep_02_Antic)",
+    "d4f528cf-78b2-49c8-a414-2896d12c4d70(CMBT_Skill_Sweep_02_Attack)",
+    "60693960-2eb6-4d22-81cf-2861a3ead2c6(CMBT_Skill_Sweep_02_Recover)",
+    "f2532a95-383b-4ec7-b9f5-ec2bf17b6e0e(CMBT_Skill_Sweep_02_Loop)",
+    "75dd8a27-dd89-43f1-a08b-772df28606ad(CMBT_Skill_Sweep_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "403865ab-807c-4ca1-b798-e698773fe18d(CMBT_Skill_Sweep_02_Prepare)",
+    "ed63aaa2-36fe-4f50-b2cc-b2df68558693(CMBT_Skill_Sweep_02_Antic)",
+    "d4f528cf-78b2-49c8-a414-2896d12c4d70(CMBT_Skill_Sweep_02_Attack)",
+    "60693960-2eb6-4d22-81cf-2861a3ead2c6(CMBT_Skill_Sweep_02_Recover)",
+    "f2532a95-383b-4ec7-b9f5-ec2bf17b6e0e(CMBT_Skill_Sweep_02_Loop)",
+    "75dd8a27-dd89-43f1-a08b-772df28606ad(CMBT_Skill_Sweep_02_Dash)"
    ],
    "WeaponTypes": [
     "Melee"
@@ -12023,6 +13869,30 @@ const data = {
     "082f9ee1-a009-4234-9fb5-412d3afba640(CMBT_Skill_Trip_01_Loop)",
     "dced792c-ab29-450c-b9ec-d0c291c6c022(CMBT_Skill_Trip_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "ce4e5210-46ca-436f-90c0-00ef3e9eeb29(CMBT_Skill_Trip_02_Prepare)",
+    "f2a2f68b-8ee1-402e-a374-6cddacc16fe4(CMBT_Skill_Trip_02_Antic)",
+    "f63970b8-ddbe-4058-a6e4-c689ffa8f4bb(CMBT_Skill_Trip_02_Attack)",
+    "aec7bcca-5a0b-4f73-bddd-2f1dc3ce6f00(CMBT_Skill_Trip_02_Recover)",
+    "3201ba74-a4d2-428b-be90-cbef244878df(CMBT_Skill_Trip_02_Loop)",
+    "9946ece2-74fc-4b81-927a-4bf83503cc20(CMBT_Skill_Trip_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "ce4e5210-46ca-436f-90c0-00ef3e9eeb29(CMBT_Skill_Trip_02_Prepare)",
+    "f2a2f68b-8ee1-402e-a374-6cddacc16fe4(CMBT_Skill_Trip_02_Antic)",
+    "f63970b8-ddbe-4058-a6e4-c689ffa8f4bb(CMBT_Skill_Trip_02_Attack)",
+    "aec7bcca-5a0b-4f73-bddd-2f1dc3ce6f00(CMBT_Skill_Trip_02_Recover)",
+    "3201ba74-a4d2-428b-be90-cbef244878df(CMBT_Skill_Trip_02_Loop)",
+    "9946ece2-74fc-4b81-927a-4bf83503cc20(CMBT_Skill_Trip_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "ce4e5210-46ca-436f-90c0-00ef3e9eeb29(CMBT_Skill_Trip_02_Prepare)",
+    "f2a2f68b-8ee1-402e-a374-6cddacc16fe4(CMBT_Skill_Trip_02_Antic)",
+    "f63970b8-ddbe-4058-a6e4-c689ffa8f4bb(CMBT_Skill_Trip_02_Attack)",
+    "aec7bcca-5a0b-4f73-bddd-2f1dc3ce6f00(CMBT_Skill_Trip_02_Recover)",
+    "3201ba74-a4d2-428b-be90-cbef244878df(CMBT_Skill_Trip_02_Loop)",
+    "9946ece2-74fc-4b81-927a-4bf83503cc20(CMBT_Skill_Trip_02_Dash)"
+   ],
    "WeaponTypes": [
     "Melee"
    ],
@@ -12089,6 +13959,30 @@ const data = {
     "87c14b90-fb0a-4cd3-8364-b38c3204dae4(CMBT_Skill_Trip_01_Recover)",
     "082f9ee1-a009-4234-9fb5-412d3afba640(CMBT_Skill_Trip_01_Loop)",
     "dced792c-ab29-450c-b9ec-d0c291c6c022(CMBT_Skill_Trip_01_Dash)"
+   ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "ce4e5210-46ca-436f-90c0-00ef3e9eeb29(CMBT_Skill_Trip_02_Prepare)",
+    "f2a2f68b-8ee1-402e-a374-6cddacc16fe4(CMBT_Skill_Trip_02_Antic)",
+    "f63970b8-ddbe-4058-a6e4-c689ffa8f4bb(CMBT_Skill_Trip_02_Attack)",
+    "aec7bcca-5a0b-4f73-bddd-2f1dc3ce6f00(CMBT_Skill_Trip_02_Recover)",
+    "3201ba74-a4d2-428b-be90-cbef244878df(CMBT_Skill_Trip_02_Loop)",
+    "9946ece2-74fc-4b81-927a-4bf83503cc20(CMBT_Skill_Trip_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "ce4e5210-46ca-436f-90c0-00ef3e9eeb29(CMBT_Skill_Trip_02_Prepare)",
+    "f2a2f68b-8ee1-402e-a374-6cddacc16fe4(CMBT_Skill_Trip_02_Antic)",
+    "f63970b8-ddbe-4058-a6e4-c689ffa8f4bb(CMBT_Skill_Trip_02_Attack)",
+    "aec7bcca-5a0b-4f73-bddd-2f1dc3ce6f00(CMBT_Skill_Trip_02_Recover)",
+    "3201ba74-a4d2-428b-be90-cbef244878df(CMBT_Skill_Trip_02_Loop)",
+    "9946ece2-74fc-4b81-927a-4bf83503cc20(CMBT_Skill_Trip_02_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "ce4e5210-46ca-436f-90c0-00ef3e9eeb29(CMBT_Skill_Trip_02_Prepare)",
+    "f2a2f68b-8ee1-402e-a374-6cddacc16fe4(CMBT_Skill_Trip_02_Antic)",
+    "f63970b8-ddbe-4058-a6e4-c689ffa8f4bb(CMBT_Skill_Trip_02_Attack)",
+    "aec7bcca-5a0b-4f73-bddd-2f1dc3ce6f00(CMBT_Skill_Trip_02_Recover)",
+    "3201ba74-a4d2-428b-be90-cbef244878df(CMBT_Skill_Trip_02_Loop)",
+    "9946ece2-74fc-4b81-927a-4bf83503cc20(CMBT_Skill_Trip_02_Dash)"
    ],
    "WeaponTypes": [
     "Melee"
@@ -12169,7 +14063,8 @@ const data = {
     "CannotTargetTerrain",
     "AddFallDamageOnLand"
    ],
-   "SpellActionType": "Shove"
+   "SpellActionType": "Shove",
+   "SpellAnimationIntentType": "Peaceful"
   },
   "Target_Shove_MageHand": {
    "Name": "Target_Shove_MageHand",
@@ -12261,26 +14156,55 @@ const data = {
     "ApplyStatus(BARKSKIN,100,-1)"
    ],
    "TargetRadius": "1.5",
+   "RequirementConditions": "not (not Player(context.Source) and IsConcentrating(context.Source))",
    "TargetConditions": "Character()",
-   "Icon": "unknown",
+   "Icon": "Spell_Transmutation_Barkskin",
    "DisplayName": "Target_Barkskin_DisplayName",
    "Description": "Target_Barkskin_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(BARKSKIN,100,-1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Barkskin_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,Detach:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_Barkskin_Cast_CastFX_Textkey_01:Dummy_CastFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_Barkskin_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_Barkskin_Cast_Root_01,Detach:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_Barkskin_Impact_Root_Textkey_01::Cast:0:None::None::0:0::::"
+   ],
+   "CastSelfAnimation": "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Buff_Barkskin_L1to3",
+   "TargetSound": "Spell_Impact_Buff_Barkskin_L1to3",
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:2"
    ],
    "SpellAnimationArcaneMagic": [
-    "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "e37d18b8-0de7-4bbc-a644-31ec2a91e548(SPL_Somatic_Touch_01_Cast)",
+    "acfe8d41-20c1-4fe8-b158-f4b2be86e080(SPL_Somatic_Touch_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "f0e00e36-4d0d-4037-830c-fe09383c0d43(SPL_Divine_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "e37d18b8-0de7-4bbc-a644-31ec2a91e548(SPL_Somatic_Touch_01_Cast)",
+    "acfe8d41-20c1-4fe8-b158-f4b2be86e080(SPL_Somatic_Touch_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "e37d18b8-0de7-4bbc-a644-31ec2a91e548(SPL_Somatic_Touch_01_Cast)",
+    "acfe8d41-20c1-4fe8-b158-f4b2be86e080(SPL_Somatic_Touch_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "VerbalIntent": "Buff",
    "SpellFlags": [
@@ -12427,7 +14351,8 @@ const data = {
     "IsConcentration",
     "CannotTargetTerrain",
     "CannotTargetItems",
-    "IsMelee"
+    "IsMelee",
+    "Invisible"
    ],
    "MaximumTargets": 1
   },
@@ -12458,7 +14383,7 @@ const data = {
     "VFX_Spells_Cast_Intent_Healing_TargetTouch_Impact_Root_Textkey_01:Dummy_Root:VFX_Somatic_01:0:None::None::0:0::::"
    ],
    "PreviewCursor": "Cast",
-   "CastSelfAnimation": "efbf3ee5-7340-4b29-8ab5-113b004a8e7b(SPL_Somatic_Self_Touch_01_Cast)",
+   "CastSelfAnimation": "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
    "CastTextEvent": "Cast",
    "CastSound": "Spell_Cast_Healing_CureWounds_L1to3",
    "TargetSound": "Spell_Impact_Healing_CureWounds_L1to3",
@@ -12756,30 +14681,42 @@ const data = {
    "SpellType": "Target",
    "Level": 2,
    "SpellSchool": "Transmutation",
+   "ContainerSpells": [
+    "Target_EnhanceAbility_BearsEndurance",
+    "Target_EnhanceAbility_BullsStrength",
+    "Target_EnhanceAbility_CatsGrace",
+    "Target_EnhanceAbility_EaglesSplendor",
+    "Target_EnhanceAbility_FoxsCunning",
+    "Target_EnhanceAbility_OwlsWisdom"
+   ],
    "TargetRadius": "1.5",
-   "TargetConditions": "Character() and Ally()",
-   "Icon": "unknown",
+   "TargetConditions": "(Character() and Ally()) or Self()",
+   "Icon": "Spell_Transmutation_EnhanceAbility",
    "DisplayName": "Target_EnhanceAbility_DisplayName",
    "Description": "Target_EnhanceAbility_Description",
+   "CastSelfAnimation": "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
    "CastTextEvent": "Cast",
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:2"
    ],
    "SpellAnimationArcaneMagic": [
-    "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
-    "a640687f-b884-42d0-b147-6dd394b78cbd(SPL_Arcane_Buff_01_Cast)",
-    "194b3bb6-fbd5-44a0-bec5-c8b4d8ff4871(SPL_Arcane_Buff_01_Recover)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "8252328a-66dd-4dc0-bbe0-00eea3204922(SPL_Somatic_Circle_1HandCCW_01_Cast)",
+    "982d842b-5d44-4ef6-ab33-14d5ae514a50(SPL_Somatic_Circle_1HandCCW_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "f0e00e36-4d0d-4037-830c-fe09383c0d43(SPL_Divine_Buff_01_Prepare)",
-    "d6b582b8-11be-459b-bcff-d234b8c915fe(SPL_Divine_Buff_01_Cast)",
-    "84e6daf3-ebea-49e8-8591-101c1e362e76(SPL_Divine_Buff_01_Recover)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "8252328a-66dd-4dc0-bbe0-00eea3204922(SPL_Somatic_Circle_1HandCCW_01_Cast)",
+    "982d842b-5d44-4ef6-ab33-14d5ae514a50(SPL_Somatic_Circle_1HandCCW_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
-    "a640687f-b884-42d0-b147-6dd394b78cbd(SPL_Arcane_Buff_01_Cast)",
-    "194b3bb6-fbd5-44a0-bec5-c8b4d8ff4871(SPL_Arcane_Buff_01_Recover)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "8252328a-66dd-4dc0-bbe0-00eea3204922(SPL_Somatic_Circle_1HandCCW_01_Cast)",
+    "982d842b-5d44-4ef6-ab33-14d5ae514a50(SPL_Somatic_Circle_1HandCCW_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "VerbalIntent": "Buff",
    "SpellFlags": [
@@ -12789,10 +14726,432 @@ const data = {
     "IsConcentration",
     "CannotTargetItems",
     "CannotTargetTerrain",
-    "IsMelee"
+    "IsMelee",
+    "IsLinkedSpellContainer"
    ],
    "MaximumTargets": 1,
    "MemoryCost": 1
+  },
+  "Target_EnhanceAbility_3": {
+   "Name": "Target_EnhanceAbility_3",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "ContainerSpells": [
+    "Target_EnhanceAbility_BearsEndurance_3",
+    "Target_EnhanceAbility_BullsStrength_3",
+    "Target_EnhanceAbility_CatsGrace_3",
+    "Target_EnhanceAbility_EaglesSplendor_3",
+    "Target_EnhanceAbility_FoxsCunning_3",
+    "Target_EnhanceAbility_OwlsWisdom_3"
+   ],
+   "Description": "Target_EnhanceAbility_3_Description",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:3"
+   ],
+   "VerbalIntent": "Buff",
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsSpell",
+    "IsConcentration",
+    "CannotTargetItems",
+    "CannotTargetTerrain",
+    "IsMelee",
+    "IsLinkedSpellContainer"
+   ],
+   "MaximumTargets": 2,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility",
+   "PowerLevel": 3
+  },
+  "Target_EnhanceAbility_4": {
+   "Name": "Target_EnhanceAbility_4",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "ContainerSpells": [
+    "Target_EnhanceAbility_BearsEndurance_4",
+    "Target_EnhanceAbility_BullsStrength_4",
+    "Target_EnhanceAbility_CatsGrace_4",
+    "Target_EnhanceAbility_EaglesSplendor_4",
+    "Target_EnhanceAbility_FoxsCunning_4",
+    "Target_EnhanceAbility_OwlsWisdom_4"
+   ],
+   "Description": "Target_EnhanceAbility_4_Description",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:4"
+   ],
+   "VerbalIntent": "Buff",
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsSpell",
+    "IsConcentration",
+    "CannotTargetItems",
+    "CannotTargetTerrain",
+    "IsMelee",
+    "IsLinkedSpellContainer"
+   ],
+   "MaximumTargets": 3,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility",
+   "PowerLevel": 4
+  },
+  "Target_EnhanceAbility_BearsEndurance": {
+   "Name": "Target_EnhanceAbility_BearsEndurance",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "SpellContainerID": "Target_EnhanceAbility",
+   "SpellProperties": [
+    "ApplyStatus(BEARS_ENDURANCE, 100, -1)"
+   ],
+   "Icon": "Spell_Transmutation_EnhanceAbility_BearsEndurance",
+   "DisplayName": "Target_EnhanceAbility_BearsEndurance_DisplayName",
+   "Description": "Target_EnhanceAbility_BearsEndurance_Description",
+   "DescriptionParams": 7,
+   "TooltipStatusApply": [
+    "ApplyStatus(BEARS_ENDURANCE, 100, -1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX,Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Bear_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_Textkey_01,Detach:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Impact_Root_Textkey_01,KeepRot:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Bear_Impact_Root_Textkey_01,KeepRot,Detach:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Bear_Impact_OverheadFX_Textkey_01,KeepRot,Detach:Dummy_OverheadFX:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_EnhanceAbilityBearsEndurance_L1to3",
+   "TargetSound": "Spell_Impact_Buff_EnhanceAbilityBearsEndurance_L1to3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 1,
+   "MemoryCost": 1
+  },
+  "Target_EnhanceAbility_BearsEndurance_3": {
+   "Name": "Target_EnhanceAbility_BearsEndurance_3",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_BearsEndurance",
+   "SpellContainerID": "Target_EnhanceAbility_3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 2,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_BearsEndurance",
+   "PowerLevel": 3
+  },
+  "Target_EnhanceAbility_BearsEndurance_4": {
+   "Name": "Target_EnhanceAbility_BearsEndurance_4",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_BearsEndurance",
+   "SpellContainerID": "Target_EnhanceAbility_4",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 3,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_BearsEndurance",
+   "PowerLevel": 4
+  },
+  "Target_EnhanceAbility_BullsStrength": {
+   "Name": "Target_EnhanceAbility_BullsStrength",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "SpellContainerID": "Target_EnhanceAbility",
+   "SpellProperties": [
+    "ApplyStatus(BULLS_STRENGTH, 100, -1)"
+   ],
+   "Icon": "Spell_Transmutation_EnhanceAbility_BullsStrenght",
+   "DisplayName": "Target_EnhanceAbility_BullsStrength_DisplayName",
+   "Description": "Target_EnhanceAbility_BullsStrength_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(BULLS_STRENGTH, 100, -1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX,Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Bull_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_Textkey_01,Detach:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Impact_Root_Textkey_01,KeepRot:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Bull_Impact_OverheadFX_Textkey_01,KeepRot,Detach:Dummy_OverheadFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Bull_Impact_Root_Textkey_01,KeepRot,Detach:Dummy_Root:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_EnhanceAbilityBullsStrength_L1to3",
+   "TargetSound": "Spell_Impact_Buff_EnhanceAbilityBullsStrength_L1to3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 1,
+   "MemoryCost": 1
+  },
+  "Target_EnhanceAbility_BullsStrength_3": {
+   "Name": "Target_EnhanceAbility_BullsStrength_3",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_BullsStrength",
+   "SpellContainerID": "Target_EnhanceAbility_3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 2,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_BullsStrength",
+   "PowerLevel": 3
+  },
+  "Target_EnhanceAbility_BullsStrength_4": {
+   "Name": "Target_EnhanceAbility_BullsStrength_4",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_BullsStrength",
+   "SpellContainerID": "Target_EnhanceAbility_4",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 3,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_BullsStrength",
+   "PowerLevel": 4
+  },
+  "Target_EnhanceAbility_CatsGrace": {
+   "Name": "Target_EnhanceAbility_CatsGrace",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "SpellContainerID": "Target_EnhanceAbility",
+   "SpellProperties": [
+    "ApplyStatus(CATS_GRACE, 100, -1)"
+   ],
+   "Icon": "Spell_Transmutation_EnhanceAbility_CatsGrace",
+   "DisplayName": "Target_EnhanceAbility_CatsGrace_DisplayName",
+   "Description": "Target_EnhanceAbility_CatsGrace_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(CATS_GRACE, 100, -1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX,Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Cat_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_Textkey_01,Detach:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Impact_Root_Textkey_01,KeepRot:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Cat_Impact_OverheadFX_Textkey_01,KeepRot,Detach:Dummy_OverheadFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Cat_Impact_Root_Textkey_01,KeepRot,Detach:Dummy_Root:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_EnhanceAbilityCatsGrace_L1to3",
+   "TargetSound": "Spell_Impact_Buff_EnhanceAbilityCatsGrace_L1to3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 1,
+   "MemoryCost": 1
+  },
+  "Target_EnhanceAbility_CatsGrace_3": {
+   "Name": "Target_EnhanceAbility_CatsGrace_3",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_CatsGrace",
+   "SpellContainerID": "Target_EnhanceAbility_3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 2,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_CatsGrace",
+   "PowerLevel": 3
+  },
+  "Target_EnhanceAbility_CatsGrace_4": {
+   "Name": "Target_EnhanceAbility_CatsGrace_4",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_CatsGrace",
+   "SpellContainerID": "Target_EnhanceAbility_4",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 3,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_CatsGrace",
+   "PowerLevel": 4
+  },
+  "Target_EnhanceAbility_EaglesSplendor": {
+   "Name": "Target_EnhanceAbility_EaglesSplendor",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "SpellContainerID": "Target_EnhanceAbility",
+   "SpellProperties": [
+    "ApplyStatus(EAGLES_SPLENDOR, 100, -1)"
+   ],
+   "Icon": "Spell_Transmutation_EnhanceAbility_EaglesSplendor",
+   "DisplayName": "Target_EnhanceAbility_EaglesSplendor_DisplayName",
+   "Description": "Target_EnhanceAbility_EaglesSplendor_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(EAGLES_SPLENDOR, 100, -1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX,Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Eagle_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_Textkey_01,Detach:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Impact_Root_Textkey_01,KeepRot:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Eagle_Impact_OverheadFX_Textkey_01,KeepRot,Detach:Dummy_OverheadFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Eagle_Impact_Root_Textkey_01,KeepRot,Detach:Dummy_Root:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_EnhanceAbilityEaglesSplendor_L1to3",
+   "TargetSound": "Spell_Impact_Buff_EnhanceAbilityEaglesSplendor_L1to3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 1,
+   "MemoryCost": 1
+  },
+  "Target_EnhanceAbility_EaglesSplendor_3": {
+   "Name": "Target_EnhanceAbility_EaglesSplendor_3",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_EaglesSplendor",
+   "SpellContainerID": "Target_EnhanceAbility_3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 2,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_EaglesSplendor",
+   "PowerLevel": 3
+  },
+  "Target_EnhanceAbility_EaglesSplendor_4": {
+   "Name": "Target_EnhanceAbility_EaglesSplendor_4",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_EaglesSplendor",
+   "SpellContainerID": "Target_EnhanceAbility_4",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 3,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_EaglesSplendor",
+   "PowerLevel": 4
+  },
+  "Target_EnhanceAbility_FoxsCunning": {
+   "Name": "Target_EnhanceAbility_FoxsCunning",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "SpellContainerID": "Target_EnhanceAbility",
+   "SpellProperties": [
+    "ApplyStatus(FOXS_CUNNING, 100, -1)"
+   ],
+   "Icon": "Spell_Transmutation_EnhanceAbility_FoxsCunning",
+   "DisplayName": "Target_EnhanceAbility_FoxsCunning_DisplayName",
+   "Description": "Target_EnhanceAbility_FoxsCunning_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(FOXS_CUNNING, 100, -1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX,Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Fox_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_Textkey_01,Detach:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Impact_Root_Textkey_01,KeepRot:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Fox_Impact_OverheadFX_Textkey_01,KeepRot,Detach:Dummy_OverheadFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Fox_Impact_Root_Textkey_01,KeepRot,Detach:Dummy_Root:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_EnhanceAbilityFoxsCunning_L1to3",
+   "TargetSound": "Spell_Impact_Buff_EnhanceAbilityFoxsCunning_L1to3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 1,
+   "MemoryCost": 1
+  },
+  "Target_EnhanceAbility_FoxsCunning_3": {
+   "Name": "Target_EnhanceAbility_FoxsCunning_3",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_FoxsCunning",
+   "SpellContainerID": "Target_EnhanceAbility_3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 2,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_FoxsCunning",
+   "PowerLevel": 3
+  },
+  "Target_EnhanceAbility_FoxsCunning_4": {
+   "Name": "Target_EnhanceAbility_FoxsCunning_4",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_FoxsCunning",
+   "SpellContainerID": "Target_EnhanceAbility_4",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 3,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_FoxsCunning",
+   "PowerLevel": 4
+  },
+  "Target_EnhanceAbility_OwlsWisdom": {
+   "Name": "Target_EnhanceAbility_OwlsWisdom",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility",
+   "SpellContainerID": "Target_EnhanceAbility",
+   "SpellProperties": [
+    "ApplyStatus(OWLS_WISDOM, 100, -1)"
+   ],
+   "Icon": "Spell_Transmutation_EnhanceAbility_OwlsWisdom",
+   "DisplayName": "Target_EnhanceAbility_OwlsWisdom_DisplayName",
+   "Description": "Target_EnhanceAbility_OwlsWisdom_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(OWLS_WISDOM, 100, -1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_HandFX_01:Dummy_L_HandFX,Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_EnhanceAbility_Owl_Root_Textkey_01,KeepRot,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Buff_01:Dummy_Root::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromEvilGood_R_HandFX_Textkey_01,Detach:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Impact_Root_Textkey_01,KeepRot:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Owl_Impact_OverheadFX_Textkey_01,KeepRot,Detach:Dummy_OverheadFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_EnhanceAbility_Owl_Impact_Root_Textkey_01,KeepRot,Detach:Dummy_Root:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "Spell_Cast_Buff_EnhanceAbilityOwlsWisdom_L1to3",
+   "TargetSound": "Spell_Impact_Buff_EnhanceAbilityOwlsWisdom_L1to3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 1,
+   "MemoryCost": 1
+  },
+  "Target_EnhanceAbility_OwlsWisdom_3": {
+   "Name": "Target_EnhanceAbility_OwlsWisdom_3",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_OwlsWisdom",
+   "SpellContainerID": "Target_EnhanceAbility_3",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 2,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_OwlsWisdom",
+   "PowerLevel": 3
+  },
+  "Target_EnhanceAbility_OwlsWisdom_4": {
+   "Name": "Target_EnhanceAbility_OwlsWisdom_4",
+   "SpellType": "Target",
+   "Parent": "Target_EnhanceAbility_OwlsWisdom",
+   "SpellContainerID": "Target_EnhanceAbility_4",
+   "VerbalIntent": "Buff",
+   "MaximumTargets": 3,
+   "MemoryCost": 1,
+   "RootSpellID": "Target_EnhanceAbility_OwlsWisdom",
+   "PowerLevel": 4
   },
   "Target_FeignDeath": {
    "Name": "Target_FeignDeath",
@@ -12853,6 +15212,10 @@ const data = {
    "Icon": "unknown",
    "DisplayName": "Target_FreedomOfMovement_DisplayName",
    "Description": "Target_FreedomOfMovement_Description",
+   "ExtraDescription": "Target_FreedomOfMovement_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "Distance(1.5)"
+   ],
    "CastTextEvent": "Cast",
    "CycleConditions": "Ally() and not Dead()",
    "UseCosts": [
@@ -12991,26 +15354,60 @@ const data = {
    "SpellType": "Target",
    "Level": 1,
    "SpellSchool": "Transmutation",
+   "SpellProperties": [
+    "SummonInInventory(de6b186e-839e-41d0-87af-a1a9d9327785,-1,4,false,false,false,,,)"
+   ],
    "TargetRadius": "1.5",
-   "Icon": "unknown",
+   "TargetConditions": "Player() and not Dead() and not Summon()",
+   "Icon": "Spell_Transmutation_Goodberry",
    "DisplayName": "Target_Goodberry_DisplayName",
    "Description": "Target_Goodberry_Description",
+   "DescriptionParams": [
+    "RegainHitPoints(1d4)"
+   ],
+   "ExtraDescription": "Target_Goodberry_ExtraDescription",
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_HandFX_01,KeepRot:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_HandFX_01,KeepRot:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_Root_Textkey_01,Detach:Dummy_Root:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Intent_Heal_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_CastFX_GoodBerry_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Healing_CastFX_GoodBerry_Textkey_01:Dummy_L_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Goodberry_01:::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Healing_TargetSingle_HandFX_GoodBerry_Textkey_01:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Healing_TargetSingle_OverheadFX_GoodBerry_Textkey_01,Detach:Dummy_OverheadFX:VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Healing_TargetSingle_Impact_GoodBerry_BodyFX_Texkey_01,FaceSource:Dummy_BodyFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "CastSelfAnimation": "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Summon_Goodberry_L1to3",
+   "CycleConditions": "Ally() and not Dead()",
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "414bbf02-2918-4f01-83fb-1ddc7a588d88(SPL_Arcane_Healing_01_Prepare)",
-    "c7022507-086a-40f6-a64e-3a9865d73900(SPL_Material_Combust_01):a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
+    "7552fe7c-f098-42a5-a312-9e9cd1fd6f52(SPL_Druid_Summon_01_Prepare)",
+    "29cc8ef2-e45e-4513-8f98-085d0dad7bc1(SPL_Somatic_Target_Swipe_01_Cast)",
+    "bb428832-db99-4236-8a81-a2737b81d0cc(SPL_Somatic_Target_Swipe_01_Recover)",
+    "da2204ae-af10-408e-8102-9091e9312800(SPL_Druid_Summon_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "3ea4de06-debb-47e2-a582-314ec644eba7(SPL_Divine_Healing_01_Prepare)",
-    "c7022507-086a-40f6-a64e-3a9865d73900(SPL_Material_Combust_01):a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
+    "7552fe7c-f098-42a5-a312-9e9cd1fd6f52(SPL_Druid_Summon_01_Prepare)",
+    "29cc8ef2-e45e-4513-8f98-085d0dad7bc1(SPL_Somatic_Target_Swipe_01_Cast)",
+    "bb428832-db99-4236-8a81-a2737b81d0cc(SPL_Somatic_Target_Swipe_01_Recover)",
+    "da2204ae-af10-408e-8102-9091e9312800(SPL_Druid_Summon_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "414bbf02-2918-4f01-83fb-1ddc7a588d88(SPL_Arcane_Healing_01_Prepare)",
-    "c7022507-086a-40f6-a64e-3a9865d73900(SPL_Material_Combust_01):a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
+    "7552fe7c-f098-42a5-a312-9e9cd1fd6f52(SPL_Druid_Summon_01_Prepare)",
+    "29cc8ef2-e45e-4513-8f98-085d0dad7bc1(SPL_Somatic_Target_Swipe_01_Cast)",
+    "bb428832-db99-4236-8a81-a2737b81d0cc(SPL_Somatic_Target_Swipe_01_Recover)",
+    "da2204ae-af10-408e-8102-9091e9312800(SPL_Druid_Summon_01_Loop)"
    ],
    "VerbalIntent": "Summon",
    "SpellFlags": [
@@ -13300,7 +15697,7 @@ const data = {
    "Icon": "unknown",
    "DisplayName": "Target_Identify_DisplayName",
    "Description": "Target_Identify_Description",
-   "CastSelfAnimation": "efbf3ee5-7340-4b29-8ab5-113b004a8e7b(SPL_Somatic_Self_Touch_01_Cast)",
+   "CastSelfAnimation": "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
    "CastTextEvent": "Cast",
    "VocalComponentSound": "Vocal_Component_Identify",
    "UseCosts": [
@@ -13454,7 +15851,7 @@ const data = {
     "VFX_Spells_Cast_Intent_Utility_TargetTouch_Impact_BodyFX_Textkey_01:Dummy_BodyFX:Cast:0:None::None::0:0::::",
     "VFX_Spells_Cast_Intent_Utility_Generic_Impact_PostProcess_Textkey_01:Cast::0:None::None::0:0::::"
    ],
-   "CastSelfAnimation": "efbf3ee5-7340-4b29-8ab5-113b004a8e7b(SPL_Somatic_Self_Touch_01_Cast)",
+   "CastSelfAnimation": "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
    "CastTextEvent": "Cast",
    "CastSound": "Spell_Cast_Utility_Invisibility_L1to3",
    "VocalComponentSound": "Vocal_Component_Invisibility",
@@ -13518,7 +15915,7 @@ const data = {
    "TargetEffect": [
     "VFX_Spells_Cast_Intent_Buff_TargetTouch_Impact_Root_01:Dummy_Root:Cast:0:None::None::0:0::::"
    ],
-   "CastSelfAnimation": "efbf3ee5-7340-4b29-8ab5-113b004a8e7b(SPL_Somatic_Self_Touch_01_Cast)",
+   "CastSelfAnimation": "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
    "CastTextEvent": "Cast",
    "CastSound": "Spell_Cast_Utility_Jump_L1to3",
    "TargetSound": "Spell_Impact_Utility_Jump_L1to3",
@@ -13571,6 +15968,10 @@ const data = {
    "Icon": "Spell_Transmutation_LongJump_2",
    "CastSound": "Spell_Cast_Utility_Jump_L1to3",
    "TargetSound": "Spell_Impact_Utility_Jump_L1to3",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
    "RootSpellID": "Target_Jump",
    "PowerLevel": 2
   },
@@ -13595,6 +15996,10 @@ const data = {
    "ExtraDescription": "Target_KnockOut_Person_ExtraDescription",
    "TooltipDamageList": [
     "DealDamage(1d4, Bludgeoning)"
+   ],
+   "TooltipAttackSave": "MeleeWeaponAttack",
+   "TooltipStatusApply": [
+    "ApplyStatus(KNOCKED_OUT,100,-1)"
    ],
    "PrepareEffect": [
     "VFX_Actions_Prepare_Common_KnockOut_HandFX_01:Dummy_FX::0:None::None::0:0::::",
@@ -13641,6 +16046,30 @@ const data = {
     "6574bfb9-d601-4760-bd53-867747514006(CMBT_Skill_Subdual_01_Loop)",
     "66cf0be9-de93-4821-a755-32fdda2743e8(CMBT_Skill_Subdual_01_Dash)"
    ],
+   "DualWieldingSpellAnimationArcaneMagic": [
+    "07fb29aa-cde0-41cc-8014-204f97eb8849(CMBT_Skill_Subdual_02_Attack_Prepare)",
+    "fe385f62-7e9b-4517-ac55-32e5fa3f2204(CMBT_Skill_Subdual_02_Attack_Antic)",
+    "dd52220e-8435-41b3-b700-445a1c01e464(CMBT_Skill_Subdual_02_Attack_Attack)",
+    "ff694201-8c8a-440f-99d4-d3e7abb71b49(CMBT_Skill_Subdual_02_Attack_Recover)",
+    "25c8454a-5058-4605-a9f0-65988688eb56(CMBT_Skill_Subdual_02_Attack_Loop)",
+    "35691af0-4345-4b6a-b4ef-ff982e6cc116(CMBT_Skill_Subdual_02_Attack_Dash)"
+   ],
+   "DualWieldingSpellAnimationDivineMagic": [
+    "07fb29aa-cde0-41cc-8014-204f97eb8849(CMBT_Skill_Subdual_02_Attack_Prepare)",
+    "fe385f62-7e9b-4517-ac55-32e5fa3f2204(CMBT_Skill_Subdual_02_Attack_Antic)",
+    "dd52220e-8435-41b3-b700-445a1c01e464(CMBT_Skill_Subdual_02_Attack_Attack)",
+    "ff694201-8c8a-440f-99d4-d3e7abb71b49(CMBT_Skill_Subdual_02_Attack_Recover)",
+    "25c8454a-5058-4605-a9f0-65988688eb56(CMBT_Skill_Subdual_02_Attack_Loop)",
+    "35691af0-4345-4b6a-b4ef-ff982e6cc116(CMBT_Skill_Subdual_02_Attack_Dash)"
+   ],
+   "DualWieldingSpellAnimationNoneMagic": [
+    "07fb29aa-cde0-41cc-8014-204f97eb8849(CMBT_Skill_Subdual_02_Attack_Prepare)",
+    "fe385f62-7e9b-4517-ac55-32e5fa3f2204(CMBT_Skill_Subdual_02_Attack_Antic)",
+    "dd52220e-8435-41b3-b700-445a1c01e464(CMBT_Skill_Subdual_02_Attack_Attack)",
+    "ff694201-8c8a-440f-99d4-d3e7abb71b49(CMBT_Skill_Subdual_02_Attack_Recover)",
+    "25c8454a-5058-4605-a9f0-65988688eb56(CMBT_Skill_Subdual_02_Attack_Loop)",
+    "35691af0-4345-4b6a-b4ef-ff982e6cc116(CMBT_Skill_Subdual_02_Attack_Dash)"
+   ],
    "WeaponTypes": [
     "Melee"
    ],
@@ -13650,7 +16079,8 @@ const data = {
     "CannotTargetTerrain",
     "IsHarmful"
    ],
-   "SpellActionType": "Knockout"
+   "SpellActionType": "Knockout",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_LayOnHands_Cure": {
    "Name": "Target_LayOnHands_Cure",
@@ -14277,35 +16707,58 @@ const data = {
    "Level": 2,
    "SpellSchool": "Abjuration",
    "SpellProperties": [
-    "RemoveStatus(POISONED)",
+    "RemoveStatus(SG_Poisoned)",
     " ApplyStatus(PROTECTION_FROM_POISON, 100, -1)"
    ],
    "TargetRadius": "1.5",
    "TargetConditions": "Character()",
-   "Icon": "unknown",
+   "Icon": "Spell_Abjuration_ProtectionFromPoison",
    "DisplayName": "Target_ProtectionFromPoison_DisplayName",
    "Description": "Target_ProtectionFromPoison_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(PROTECTION_FROM_POISON, 100, -1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_ProtectionFromPoison_Root_01:Dummy_Root::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_ProtectionFromPoison_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Buff_ProtectionFromPoison_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_ProtectionFromPoison_01:::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromPoison_HandFX_01:Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromPoison_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromPoison_Impact_BodyFX_01:Dummy_BodyFX:VFX_Somatic_02:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Buff_TargetTouch_ProtectionFromPoison_Impact_Root_01:Dummy_Root:VFX_Somatic_02:0:None::None::0:0::::"
+   ],
+   "CastSelfAnimation": "ab7b6aac-b3c9-4918-8f17-f777a94dcb5e(SPL_Somatic_Target_01_Cast)",
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Buff_ProtectionFromPoison_L1to3",
    "VocalComponentSound": "Vocal_Component_ResistPoison",
+   "TargetSound": "Spell_Impact_Buff_ProtectionFromPoison_L1to3",
    "CycleConditions": "Ally() and not Dead()",
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:2"
    ],
    "SpellAnimationArcaneMagic": [
-    "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)",
-    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "ab7b6aac-b3c9-4918-8f17-f777a94dcb5e(SPL_Somatic_Target_01_Cast)",
+    "57211a11-ed0b-46d7-9369-81df25a85df6(SPL_Somatic_Target_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "f0e00e36-4d0d-4037-830c-fe09383c0d43(SPL_Divine_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)",
-    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "ab7b6aac-b3c9-4918-8f17-f777a94dcb5e(SPL_Somatic_Target_01_Cast)",
+    "57211a11-ed0b-46d7-9369-81df25a85df6(SPL_Somatic_Target_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "414bbf02-2918-4f01-83fb-1ddc7a588d88(SPL_Arcane_Healing_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)",
-    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
+    "e089d263-0588-4aab-aef9-55f4f4ece224(SPL_Druid_Buff_01_Prepare)",
+    "ab7b6aac-b3c9-4918-8f17-f777a94dcb5e(SPL_Somatic_Target_01_Cast)",
+    "57211a11-ed0b-46d7-9369-81df25a85df6(SPL_Somatic_Target_01_Recover)",
+    "1a116d74-9e8d-4abb-952b-bd644d8a4494(SPL_Druid_Buff_01_Loop)"
    ],
    "VerbalIntent": "Buff",
    "SpellFlags": [
@@ -14511,44 +16964,6 @@ const data = {
     "IsMelee"
    ]
   },
-  "Target_Shillelagh": {
-   "Name": "Target_Shillelagh",
-   "SpellType": "Target",
-   "Level": 0,
-   "SpellSchool": "Transmutation",
-   "SpellProperties": [
-    "ApplyStatus(SHILLELAGH, 100, 10)"
-   ],
-   "TargetRadius": "1.5",
-   "Icon": "unknown",
-   "DisplayName": "Target_Shillelagh_DisplayName",
-   "Description": "Target_Shillelagh_Description",
-   "CastTextEvent": "Cast",
-   "VocalComponentSound": "Vocal_Component_EnchantWeapon",
-   "UseCosts": [
-    "BonusActionPoint:1"
-   ],
-   "SpellAnimationArcaneMagic": [
-    "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
-   ],
-   "SpellAnimationDivineMagic": [
-    "f0e00e36-4d0d-4037-830c-fe09383c0d43(SPL_Divine_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
-   ],
-   "SpellAnimationNoneMagic": [
-    "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
-    "a4da186a-0872-461e-ae5e-93d5b32b9bef(SPL_Somatic_Circle_1HandCW_01_Cast)"
-   ],
-   "VerbalIntent": "Buff",
-   "SpellFlags": [
-    "HasVerbalComponent",
-    "HasSomaticComponent",
-    "IsMelee",
-    "IsSpell",
-    "CannotTargetTerrain"
-   ]
-  },
   "Target_ShockingGrasp": {
    "Name": "Target_ShockingGrasp",
    "SpellType": "Target",
@@ -14558,7 +16973,7 @@ const data = {
     "GROUND:SurfaceChange(Electrify)"
    ],
    "TargetRadius": "1.5",
-   "SpellRoll": "Attack(AttackType.MeleeSpellAttack)",
+   "SpellRoll": "Attack(AttackType.MeleeSpellAttack,HasMetalArmor())",
    "SpellSuccess": [
     "ApplyStatus(SHOCKING_GRASP,100,1)",
     "DealDamage(1d8,Lightning)"
@@ -14618,7 +17033,8 @@ const data = {
     "HasSomaticComponent",
     "IsMelee",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Electric"
   },
   "Target_SpareTheDying": {
    "Name": "Target_SpareTheDying",
@@ -14766,6 +17182,7 @@ const data = {
     "IsConcentration",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Internal",
    "MaximumTargets": 1,
    "MemoryCost": 1
   },
@@ -14889,6 +17306,20 @@ const data = {
    "Icon": "unknown",
    "DisplayName": "Target_AbjureEnemy_DisplayName",
    "Description": "Target_AbjureEnemy_Description",
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_BodyFX_Textkey_01,FaceSource,CharacterScale,Detach:Dummy_BodyFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_PostProcess_Textkey_01::Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_Textkey_01,Detach::Cast:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_CastFX_Textkey_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_Body_Texkey_01::VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_Texkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_Texkey_02:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
    "CastTextEvent": "Cast",
    "UseCosts": [
     "ActionPoint:1",
@@ -14922,7 +17353,7 @@ const data = {
    "Level": 1,
    "SpellSchool": "Enchantment",
    "TargetRadius": 18,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC())",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC(),AdvantageOnCharmed())",
    "SpellSuccess": [
     "ApplyStatus(CHARMED,100,10)"
    ],
@@ -15358,6 +17789,7 @@ const data = {
     "ActionPoint:1",
     "SpellSlot:1:1:2"
    ],
+   "MaximumTargets": 4,
    "RootSpellID": "Target_Bless_LifeCleric",
    "PowerLevel": 2
   },
@@ -15466,7 +17898,7 @@ const data = {
    "Level": 1,
    "SpellSchool": "Enchantment",
    "TargetRadius": 18,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC())",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC(),AdvantageOnCharmed())",
    "SpellSuccess": [
     "ApplyStatus(CHARMED,100,10)"
    ],
@@ -15565,7 +17997,7 @@ const data = {
    "TargetRadius": 18,
    "SpellRoll": "Attack(AttackType.RangedSpellAttack)",
    "SpellSuccess": [
-    "ApplyStatus(CHILL_TOUCH,100,2)",
+    "ApplyStatus(CHILL_TOUCH,100,1)",
     "DealDamage(1d8, Necrotic)"
    ],
    "TargetConditions": "not Self() and not Dead()",
@@ -15627,7 +18059,8 @@ const data = {
     "IsSpell",
     "HasHighGroundRangeExtension",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Internal"
   },
   "Target_Command_Halt": {
    "Name": "Target_Command_Halt",
@@ -16055,7 +18488,7 @@ const data = {
    "VocalComponentSound": "Vocal_Component_Light",
    "TargetSound": "Spell_Impact_Utility_DancingLights_L0",
    "UseCosts": [
-    "BonusActionPoint:1"
+    "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
     "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
@@ -16149,19 +18582,26 @@ const data = {
    ],
    "SpellAnimationNoneMagic": [
     "2ba949b7-0329-4190-992c-11b0d29183c5(CMBT_Skill_Precision_01_Prepare)",
-    "de006e3f-70fb-4eb7-a98d-d845d15b20e8(CMBT_Skill_Precision_01_Attack)"
+    "de006e3f-70fb-4eb7-a98d-d845d15b20e8(CMBT_Skill_Precision_01_Attack)",
+    "a0503ad0-c1b1-449c-b431-4ac6c39c58d7(CMBT_Skill_Precision_01_Loop)"
    ],
    "WeaponTypes": [
     "Dippable"
    ],
    "SpellFlags": [
-    "CannotTargetCharacter",
     "IsMelee",
     "TargetClosestEqualGroundSurface",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ],
    "SpellActionType": "Dip",
-   "SpellAnimationType": "Dipping"
+   "SpellAnimationType": "Dipping",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Dip_NPC": {
+   "Name": "Target_Dip_NPC",
+   "SpellType": "Target",
+   "Parent": "Target_Dip"
   },
   "Target_DispelMagic": {
    "Name": "Target_DispelMagic",
@@ -16205,7 +18645,7 @@ const data = {
    "Level": 1,
    "SpellSchool": "Enchantment",
    "TargetRadius": 18,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC())",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC(), AdvantageOnFrightened())",
    "SpellSuccess": [
     "DealDamage(3d6,Psychic)",
     "ApplyStatus(FRIGHTENED,100,2)"
@@ -16267,6 +18707,7 @@ const data = {
     "CannotTargetTerrain",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Psychic",
    "MemoryCost": 1
   },
   "Target_DissonantWhispers_2": {
@@ -16401,7 +18842,8 @@ const data = {
     "9bcbf658-8433-46f0-a34a-9c9d2dcd585b(SPL_Arcane_Damage_01_Cast)",
     "d75865cd-fddd-4ad1-be34-d5b89155d7c6(SPL_Arcane_Damage_01_Recover)"
    ],
-   "VerbalIntent": "Damage"
+   "VerbalIntent": "Damage",
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Target_FistOfUnbrokenAir": {
    "Name": "Target_FistOfUnbrokenAir",
@@ -16438,42 +18880,6 @@ const data = {
     "IsHarmful"
    ]
   },
-  "Target_FlamingSphere": {
-   "Name": "Target_FlamingSphere",
-   "SpellType": "Target",
-   "Level": 2,
-   "SpellSchool": "Conjuration",
-   "TargetRadius": 18,
-   "Icon": "unknown",
-   "DisplayName": "Target_FlamingSphere_DisplayName",
-   "Description": "Target_FlamingSphere_Description",
-   "CastTextEvent": "Cast",
-   "UseCosts": [
-    "ActionPoint:1",
-    "SpellSlot:1:1:2"
-   ],
-   "SpellAnimationArcaneMagic": [
-    "3ff87abf-1ea1-4c32-aadf-c822d74c7dc0(SPL_Arcane_Damage_01_Prepare)",
-    "511410cf-c347-41ef-8dd2-1b150cedcfdb(SPL_Material_Sprinkle_01):0fa05642-9607-46c1-9544-75c61e133865(SPL_Somatic_Circle_2HandSphere_01_Cast)"
-   ],
-   "SpellAnimationDivineMagic": [
-    "26810cdb-342f-4e93-96ea-927ed6f0de65(SPL_Divine_Damage_01_Prepare)",
-    "511410cf-c347-41ef-8dd2-1b150cedcfdb(SPL_Material_Sprinkle_01):0fa05642-9607-46c1-9544-75c61e133865(SPL_Somatic_Circle_2HandSphere_01_Cast)"
-   ],
-   "SpellAnimationNoneMagic": [
-    "3ff87abf-1ea1-4c32-aadf-c822d74c7dc0(SPL_Arcane_Damage_01_Prepare)",
-    "511410cf-c347-41ef-8dd2-1b150cedcfdb(SPL_Material_Sprinkle_01):0fa05642-9607-46c1-9544-75c61e133865(SPL_Somatic_Circle_2HandSphere_01_Cast)"
-   ],
-   "VerbalIntent": "Summon",
-   "SpellFlags": [
-    "IsSpell",
-    "HasVerbalComponent",
-    "HasSomaticComponent",
-    "HasHighGroundRangeExtension",
-    "IsConcentration"
-   ],
-   "MemoryCost": 1
-  },
   "Target_FloatingDisk": {
    "Name": "Target_FloatingDisk",
    "SpellType": "Target",
@@ -16508,6 +18914,105 @@ const data = {
    ],
    "MemoryCost": 1
   },
+  "Target_FlamingSphere_Move": {
+   "Name": "Target_FlamingSphere_Move",
+   "SpellType": "Target",
+   "Cooldown": "OncePerTurnNoRealtime",
+   "SpellProperties": [
+    "RemoveStatus(SELF,FLAMING_SPHERE_BLOCK)",
+    "UseActionResource(BonusActionPoint,1)"
+   ],
+   "TargetRadius": 36,
+   "Icon": "Skill_Druid_FlamingSphere_Move",
+   "DisplayName": "Target_FlamingSphere_Move_DisplayName",
+   "Description": "Target_FlamingSphere_Move_Description",
+   "ExtraDescription": "Target_FlamingSphere_Move_ExtraDescription",
+   "CastTextEvent": "Cast",
+   "SpellAnimationArcaneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "e96cce98-e889-45c3-a21f-fbb901b31107(SPL_Material_Container_01):0fa05642-9607-46c1-9544-75c61e133865(SPL_Somatic_Circle_2HandSphere_01_Cast)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "e96cce98-e889-45c3-a21f-fbb901b31107(SPL_Material_Container_01):0fa05642-9607-46c1-9544-75c61e133865(SPL_Somatic_Circle_2HandSphere_01_Cast)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "e96cce98-e889-45c3-a21f-fbb901b31107(SPL_Material_Container_01):0fa05642-9607-46c1-9544-75c61e133865(SPL_Somatic_Circle_2HandSphere_01_Cast)"
+   ],
+   "VerbalIntent": "Utility",
+   "SpellFlags": [
+    "IgnoreVisionBlock",
+    "RangeIgnoreVerticalThreshold"
+   ]
+  },
+  "Target_FlamingSphere_Ram": {
+   "Name": "Target_FlamingSphere_Ram",
+   "SpellType": "Target",
+   "Parent": "Target_Shove",
+   "TargetRadius": "1.5",
+   "SpellRoll": "not SavingThrow(Ability.Dexterity, 12)",
+   "SpellSuccess": [
+    "DealDamage(2d6,Fire)"
+   ],
+   "TargetConditions": "not Dead()",
+   "Icon": "Skill_Druid_FlamingSphere_Ram",
+   "DisplayName": "Target_FlamingSphere_Ram_DisplayName",
+   "Description": "Target_FlamingSphere_Ram_Description",
+   "DescriptionParams": [
+    "DealDamage(2d6,Fire)"
+   ],
+   "ExtraDescription": "Target_FlamingSphere_Ram_ExtraDescription",
+   "TooltipDamageList": [
+    "DealDamage(2d6,Fire)"
+   ],
+   "TooltipAttackSave": "Dexterity",
+   "CastEffect": [
+    "VFX_Actions_Cast_Damage_Fire_TargetTouch_FlamingSphere_Ram_BodyFX_Texkey_01,FollowScale,Detach:Dummy_BodyFX:VFX_Attack_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Actions_Cast_Common_Impact_Overlay_01::Cast:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Damage_Fire_TargetTouch_FlamingSphere_Ram_Impact_BodyFX_Texkey_01,Detach:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Damage_Fire_TargetTouch_FlamingSphere_Ram_01:::0:None::None::0:0::::"
+   ],
+   "PreviewCursor": "Cast",
+   "CastTextEvent": "Cast",
+   "CastSound": "CrSpell_Cast_Ram",
+   "TargetSound": "CrSpell_Impact_Ram",
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "0319ca29-4024-4649-9278-3c1f20c5f023(CMBT_Skill_Shove_01_Prepare)",
+    "a71e11ca-95ab-463d-a4bf-fe8094126b61(CMBT_Skill_Shove_01_Antic)",
+    "352c3a89-f99c-4472-8424-58c0ffb15e55(CMBT_Skill_Shove_01_Attack)",
+    "a57fc614-ed20-4574-936b-bdcc6cebd36a(CMBT_Skill_Shove_01_Recover)",
+    "b24b3f23-6d3a-43ce-ae3a-abfb44d26082(CMBT_Skill_Shove_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "0319ca29-4024-4649-9278-3c1f20c5f023(CMBT_Skill_Shove_01_Prepare)",
+    "a71e11ca-95ab-463d-a4bf-fe8094126b61(CMBT_Skill_Shove_01_Antic)",
+    "352c3a89-f99c-4472-8424-58c0ffb15e55(CMBT_Skill_Shove_01_Attack)",
+    "a57fc614-ed20-4574-936b-bdcc6cebd36a(CMBT_Skill_Shove_01_Recover)",
+    "b24b3f23-6d3a-43ce-ae3a-abfb44d26082(CMBT_Skill_Shove_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "0319ca29-4024-4649-9278-3c1f20c5f023(CMBT_Skill_Shove_01_Prepare)",
+    "a71e11ca-95ab-463d-a4bf-fe8094126b61(CMBT_Skill_Shove_01_Antic)",
+    "352c3a89-f99c-4472-8424-58c0ffb15e55(CMBT_Skill_Shove_01_Attack)",
+    "a57fc614-ed20-4574-936b-bdcc6cebd36a(CMBT_Skill_Shove_01_Recover)",
+    "b24b3f23-6d3a-43ce-ae3a-abfb44d26082(CMBT_Skill_Shove_01_Loop)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellFlags": [
+    "IsAttack",
+    "IsMelee",
+    "IsHarmful"
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
+  },
   "Target_ForcedManeuver": {
    "Name": "Target_ForcedManeuver",
    "SpellType": "Target",
@@ -16539,7 +19044,8 @@ const data = {
    "SpellFlags": [
     "CannotTargetItems",
     "CannotTargetTerrain"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Friends": {
    "Name": "Target_Friends",
@@ -16718,6 +19224,122 @@ const data = {
    "RootSpellID": "Target_HealingWord",
    "PowerLevel": 2
   },
+  "Target_HeatMetal": {
+   "Name": "Target_HeatMetal",
+   "SpellType": "Target",
+   "Level": 2,
+   "SpellSchool": "Transmutation",
+   "SpellProperties": [
+    "ApplyStatus(HEAT_METAL_DISADVANTAGE,100,1)",
+    "IF(IsMetalItem()):ApplyStatus(HEAT_METAL,100,10)",
+    "IF(not IsMetalItem() and HasMetalWeapon(context.Target, true)):ApplyEquipmentStatus(MainHand,HEAT_METAL,100,10)",
+    "IF(not IsMetalItem() and not HasMetalWeapon(context.Target, true) and HasMetalWeapon(context.Target, false)):ApplyEquipmentStatus(OffHand,HEAT_METAL,100,10)",
+    "IF(not IsMetalItem() and not HasMetalWeapon(context.Target, true) and not HasMetalWeapon(context.Target, false) and HasMetalArmor()):ApplyEquipmentStatus(Breast,HEAT_METAL,100,10)",
+    "IF(Character()):DealDamage(2d8,Fire)",
+    "ApplyStatus(SELF,HEAT_METAL_TECHNICAL,100,10)"
+   ],
+   "TargetRadius": 18,
+   "RequirementConditions": "not (not Player(context.Source) and IsConcentrating(context.Source))",
+   "TargetConditions": "IsMetalItem() or HasMetalWeapon(context.Target, true) or HasMetalWeapon(context.Target, false) or HasMetalArmor()",
+   "Icon": "Spell_Transmutation_HeatMetal",
+   "DisplayName": "Target_HeatMetal_DisplayName",
+   "Description": "Target_HeatMetal_Description",
+   "DescriptionParams": [
+    "DealDamage(2d8,Fire)"
+   ],
+   "ExtraDescription": "Target_HeatMetal_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "DealDamage(2d8,Fire)"
+   ],
+   "TooltipAttackSave": "Constitution",
+   "TooltipStatusApply": [
+    "ApplyStatus(HEAT_METAL,100,10)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Fire_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Damage_Fire_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Damage_Fire_TargetTouch_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Damage_Fire_TargetTouch_R_HandFX_Texkey_01,Detach:Dummy_R_HandFX:Cast:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Damage_Fire_TargetTouch_HeatMetal_Impact_Texkey_01::Cast:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Damage_HeatMetal_L1to3",
+   "TargetSound": "Spell_Impact_Damage_HeatMetal_L1to3",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "d30d2b40-c45a-45bd-94d7-9b2baaf0f77b(SPL_Somatic_Beam_2HandCone_01_Cast)",
+    "a601b33c-5320-455d-b4d4-74d6dc35b757(SPL_Somatic_Beam_2HandCone_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "d30d2b40-c45a-45bd-94d7-9b2baaf0f77b(SPL_Somatic_Beam_2HandCone_01_Cast)",
+    "a601b33c-5320-455d-b4d4-74d6dc35b757(SPL_Somatic_Beam_2HandCone_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "d30d2b40-c45a-45bd-94d7-9b2baaf0f77b(SPL_Somatic_Beam_2HandCone_01_Cast)",
+    "a601b33c-5320-455d-b4d4-74d6dc35b757(SPL_Somatic_Beam_2HandCone_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsConcentration",
+    "IsSpell"
+   ],
+   "MemoryCost": 1
+  },
+  "Target_HeatMetal_Reapply": {
+   "Name": "Target_HeatMetal_Reapply",
+   "SpellType": "Target",
+   "Parent": "Target_HeatMetal",
+   "SpellProperties": [
+    "ApplyStatus(HEAT_METAL_DISADVANTAGE,100,1)",
+    "DealDamage(2d8,Fire)"
+   ],
+   "TargetRadius": 18,
+   "Icon": "Spell_Transmutation_HeatMetal_Reapply",
+   "DisplayName": "Target_HeatMetal_Reapply_DisplayName",
+   "Description": "Target_HeatMetal_Reapply_Description",
+   "DescriptionParams": [
+    "DealDamage(2d8,Fire)"
+   ],
+   "TooltipAttackSave": "Constitution",
+   "CastTextEvent": "Cast",
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "d30d2b40-c45a-45bd-94d7-9b2baaf0f77b(SPL_Somatic_Beam_2HandCone_01_Cast)",
+    "a601b33c-5320-455d-b4d4-74d6dc35b757(SPL_Somatic_Beam_2HandCone_01_Recover)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "d30d2b40-c45a-45bd-94d7-9b2baaf0f77b(SPL_Somatic_Beam_2HandCone_01_Cast)",
+    "a601b33c-5320-455d-b4d4-74d6dc35b757(SPL_Somatic_Beam_2HandCone_01_Recover)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "d30d2b40-c45a-45bd-94d7-9b2baaf0f77b(SPL_Somatic_Beam_2HandCone_01_Cast)",
+    "a601b33c-5320-455d-b4d4-74d6dc35b757(SPL_Somatic_Beam_2HandCone_01_Recover)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellFlags": [
+    "IsSpell"
+   ]
+  },
   "Target_HellishRebuke": {
    "Name": "Target_HellishRebuke",
    "SpellType": "Target",
@@ -16854,7 +19476,8 @@ const data = {
     "IsConcentration",
     "IsSpell",
     "CannotTargetTerrain",
-    "IsLinkedSpellContainer"
+    "IsLinkedSpellContainer",
+    "IsHarmful"
    ],
    "MemoryCost": 1
   },
@@ -16887,6 +19510,7 @@ const data = {
     "ApplyStatus(SELF,HEX_OWNER,100,-1)",
     "ApplyStatus(HEX_STRENGTH,100,-1)"
    ],
+   "Icon": "Spell_Enchantment_Hex_Strenght",
    "DisplayName": "Target_Hex_Strength_DisplayName",
    "Description": "Target_Hex_Strength_Description",
    "TooltipStatusApply": [
@@ -16897,7 +19521,8 @@ const data = {
     "HasSomaticComponent",
     "IsConcentration",
     "IsSpell",
-    "CannotTargetTerrain"
+    "CannotTargetTerrain",
+    "IsHarmful"
    ]
   },
   "Target_Hex_Strength_2": {
@@ -16905,7 +19530,7 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_Hex_Strength",
    "SpellContainerID": "Target_Hex_2",
-   "Icon": "Spell_Enchantment_Hex_2",
+   "Icon": "Spell_Enchantment_Hex_Strenght_2",
    "UseCosts": [
     "BonusActionPoint:1",
     " SpellSlotsGroup:1:1:2"
@@ -16922,6 +19547,7 @@ const data = {
     "ApplyStatus(SELF,HEX_OWNER,100,-1)",
     "ApplyStatus(HEX_DEXTERITY,100,-1)"
    ],
+   "Icon": "Spell_Enchantment_Hex_Dexterity",
    "DisplayName": "Target_Hex_Dexterity_DisplayName",
    "Description": "Target_Hex_Dexterity_Description",
    "TooltipStatusApply": [
@@ -16933,7 +19559,7 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_Hex_Dexterity",
    "SpellContainerID": "Target_Hex_2",
-   "Icon": "Spell_Enchantment_Hex_2",
+   "Icon": "Spell_Enchantment_Hex_Dexterity_2",
    "UseCosts": [
     "BonusActionPoint:1",
     " SpellSlotsGroup:1:1:2"
@@ -16950,6 +19576,7 @@ const data = {
     "ApplyStatus(SELF,HEX_OWNER,100,-1)",
     "ApplyStatus(HEX_CONSTITUTION,100,-1)"
    ],
+   "Icon": "Spell_Enchantment_Hex_Constitution",
    "DisplayName": "Target_Hex_Constitution_DisplayName",
    "Description": "Target_Hex_Constitution_Description",
    "TooltipStatusApply": [
@@ -16961,7 +19588,7 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_Hex_Constitution",
    "SpellContainerID": "Target_Hex_2",
-   "Icon": "Spell_Enchantment_Hex_2",
+   "Icon": "Spell_Enchantment_Hex_Constitution_2",
    "UseCosts": [
     "BonusActionPoint:1",
     " SpellSlotsGroup:1:1:2"
@@ -16978,6 +19605,7 @@ const data = {
     "ApplyStatus(SELF,HEX_OWNER,100,-1)",
     "ApplyStatus(HEX_INTELLIGENCE,100,-1)"
    ],
+   "Icon": "Spell_Enchantment_Hex_Intelligence",
    "DisplayName": "Target_Hex_Intelligence_DisplayName",
    "Description": "Target_Hex_Intelligence_Description",
    "TooltipStatusApply": [
@@ -16989,7 +19617,7 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_Hex_Intelligence",
    "SpellContainerID": "Target_Hex_2",
-   "Icon": "Spell_Enchantment_Hex_2",
+   "Icon": "Spell_Enchantment_Hex_Intelligence_2",
    "UseCosts": [
     "BonusActionPoint:1",
     " SpellSlotsGroup:1:1:2"
@@ -17006,6 +19634,7 @@ const data = {
     "ApplyStatus(SELF,HEX_OWNER,100,-1)",
     "ApplyStatus(HEX_WISDOM,100,-1)"
    ],
+   "Icon": "Spell_Enchantment_Hex_Wisdom",
    "DisplayName": "Target_Hex_Wisdom_DisplayName",
    "Description": "Target_Hex_Wisdom_Description",
    "TooltipStatusApply": [
@@ -17017,7 +19646,7 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_Hex_Wisdom",
    "SpellContainerID": "Target_Hex_2",
-   "Icon": "Spell_Enchantment_Hex_2",
+   "Icon": "Spell_Enchantment_Hex_Wisdom_2",
    "UseCosts": [
     "BonusActionPoint:1",
     " SpellSlotsGroup:1:1:2"
@@ -17034,6 +19663,7 @@ const data = {
     "ApplyStatus(SELF,HEX_OWNER,100,-1)",
     "ApplyStatus(HEX_CHARISMA,100,-1)"
    ],
+   "Icon": "Spell_Enchantment_Hex_Charisma",
    "DisplayName": "Target_Hex_Charisma_DisplayName",
    "Description": "Target_Hex_Charisma_Description",
    "TooltipStatusApply": [
@@ -17340,7 +19970,8 @@ const data = {
     "CannotTargetItems",
     "CannotTargetTerrain",
     "HasHighGroundRangeExtension",
-    "IsConcentration"
+    "IsConcentration",
+    "IsHarmful"
    ],
    "RechargeValues": "5-6",
    "MemoryCost": 1
@@ -17583,6 +20214,20 @@ const data = {
    "TooltipStatusApply": [
     "ApplyStatus(KNOW_YOUR_ENEMY,100,10)"
    ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_BodyFX_Textkey_01,FaceSource,CharacterScale,Detach:Dummy_BodyFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_PostProcess_Textkey_01::Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_Textkey_01,Detach::Cast:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_CastFX_Textkey_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_Body_Texkey_01::VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_Texkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_Texkey_02:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
    "CastTextEvent": "Cast",
    "CycleConditions": "Enemy() and not Dead()",
    "UseCosts": [
@@ -17620,7 +20265,8 @@ const data = {
    ],
    "VerbalIntent": "Debuff",
    "SpellFlags": [
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ]
   },
   "Target_Levitate": {
@@ -17790,7 +20436,8 @@ const data = {
     "CannotTargetCharacter",
     "CannotTargetItems",
     "IgnoreSilence",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ]
   },
   "Target_MistyStep": {
@@ -17850,7 +20497,8 @@ const data = {
     "CannotTargetItems",
     "CannotTargetCharacter",
     "HasHighGroundRangeExtension",
-    "RangeIgnoreVerticalThreshold"
+    "RangeIgnoreVerticalThreshold",
+    "Invisible"
    ],
    "MemoryCost": 1,
    "LineOfSightFlags": "AddSourceHeight"
@@ -17864,6 +20512,13 @@ const data = {
    "UseCosts": [
     "BonusActionPoint:1"
    ]
+  },
+  "Target_MistyStep_Shadow_TEST": {
+   "Name": "Target_MistyStep_Shadow_TEST",
+   "SpellType": "Target",
+   "Parent": "Target_MistyStep",
+   "Level": 0,
+   "AreaRadius": 30
   },
   "Target_NaturesWrath": {
    "Name": "Target_NaturesWrath",
@@ -17925,12 +20580,10 @@ const data = {
     "VFX_Sound_Spell_Prepare_Tadpole_01:Dummy_Root::0:None::None::0:0::::"
    ],
    "CastEffect": [
-    "VFX_Enemies_Goblin_Telekinesis_Cast_HandFX_Textkey_01:Dummy_R_HandFX:Cast:0:None::None::0:0::::",
     "VFX_Spells_Cast_Tadpole_Target_PsionicPull_CastFX_01:Dummy_CastFX:VFX_Somatic_01:0:None::None::0:0::::",
     "VFX_Spells_Cast_Tadpole_Target_PsionicPull_HitImpactFX_01:Dummy_HitImpactFX:VFX_Somatic_01:0:None::None::0:0::::"
    ],
    "TargetEffect": [
-    "VFX_Enemies_Goblin_Telekinesis_Impact_Dummy_Textkey_01,FaceSource:Dummy_FX_01:VFX_Somatic_01:0:None::None::0:0::::",
     "VFX_Spells_Cast_Tadpole_Target_PsionicPull_Target_PreHit_01:Dummy_BodyFX:VFX_Somatic_01:0:None::Characters:7fbed0d4-cabc-4a9d-804e-12ca6088a0a8:0:0::::",
     "VFX_Spells_Cast_Tadpole_Target_PsionicPull_Target_Hit_01,FaceSource:Dummy_BodyFX:VFX_Somatic_02:0:None::Characters::0:0::::",
     "VFX_Spells_Cast_Tadpole_Target_PsionicPull_Target_PreHit_Y_01:Dummy_BodyFX:VFX_Somatic_01:0:None::Characters:890b5a2a-e773-48df-b191-c887d87bec16:0:0::::"
@@ -17976,7 +20629,7 @@ const data = {
     "ApplyStatus(RALLY,100,5)"
    ],
    "TargetRadius": 18,
-   "TargetConditions": "Character() and Ally()",
+   "TargetConditions": "Character() and Ally() and not Self()",
    "Icon": "Skill_Fighter_Rally",
    "DisplayName": "Target_Rally_DisplayName",
    "Description": "Target_Rally_Description",
@@ -18160,7 +20813,8 @@ const data = {
     "IsSpell",
     "CannotTargetTerrain",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External"
   },
   "Target_Sanctuary": {
    "Name": "Target_Sanctuary",
@@ -18631,45 +21285,63 @@ const data = {
    "TargetRadius": 9,
    "SpellRoll": "Attack(AttackType.MeleeSpellAttack)",
    "SpellSuccess": [
-    "TARGET:IF(TargetSizeEqualOrSmaller(Size.Large)):Force(4)",
-    " DealDamage(1d6,Piercing)"
+    "TARGET:IF(TargetSizeEqualOrSmaller(Size.Large)):Force(-3)",
+    " DealDamage(1d6,Piercing,Magical)"
    ],
-   "TargetConditions": "Character()",
-   "Icon": "unknown",
+   "TargetConditions": "Character() and not Self()",
+   "Icon": "Spell_Transmutation_ThornWhip",
    "DisplayName": "Target_ThornWhip_DisplayName",
    "Description": "Target_ThornWhip_Description",
    "DescriptionParams": [
     "DealDamage(1d6,Piercing)",
     "Distance(3)"
    ],
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_WeaponAttack_Target_ThornWhip_Root_01:::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_WeaponAttack_Target_ThornWhip_R_HandFX_01,Detach:Dummy_R_HandFX:Cast:0:None::None::0:0::::",
+    "VFX_Actions_Cast_WeaponAttack_Target_ThornWhip_BodyFX_01:Dummy_BodyFX::0:None::None::0:0::::",
+    "VFX_Actions_Cast_WeaponAttack_Target_ThornWhip_R_HandFX_02:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Actions_Cast_WeaponAttack_Target_Thornwhip_Target_Hit_01,FaceSource:Dummy_BodyFX:VFX_Somatic_02:0:None::None::0:0::::",
+    "VFX_Actions_Cast_WeaponAttack_Target_Thornwhip_Target_PreHit_01,FaceSource:Dummy_BodyFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
+   "BeamEffect": "VFX_Actions_Cast_WeaponAttack_Target_ThornWhip_Beam_R_HandFX_01:Dummy_R_HandFX:Dummy_BodyFX:::",
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Damage_ThornWhip_L0",
    "VocalComponentSound": "Vocal_Component_DamagePiercingWhip",
+   "TargetSound": "Spell_Impact_Damage_ThornWhip_L0",
    "UseCosts": [
     "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "3ff87abf-1ea1-4c32-aadf-c822d74c7dc0(SPL_Arcane_Damage_01_Prepare)",
-    "9bcbf658-8433-46f0-a34a-9c9d2dcd585b(SPL_Arcane_Damage_01_Cast)",
-    "d75865cd-fddd-4ad1-be34-d5b89155d7c6(SPL_Arcane_Damage_01_Recover)"
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "70a28457-dba7-46f7-b03c-ceb3b9e12bad(SPL_Arcane_01_Cast)",
+    "68868848-6341-448a-97e3-94aa43ad5faf(SPL_Arcane_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "26810cdb-342f-4e93-96ea-927ed6f0de65(SPL_Divine_Damage_01_Prepare)",
-    "99de2c83-19ab-4479-ab5c-676a58a1f01e(SPL_Divine_Damage_01_Cast)",
-    "9a01c2f4-1a12-4dcb-a18c-6d9f6d3c1d9e(SPL_Divine_Damage_01_Recover)"
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "70a28457-dba7-46f7-b03c-ceb3b9e12bad(SPL_Arcane_01_Cast)",
+    "68868848-6341-448a-97e3-94aa43ad5faf(SPL_Arcane_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "3ff87abf-1ea1-4c32-aadf-c822d74c7dc0(SPL_Arcane_Damage_01_Prepare)",
-    "9bcbf658-8433-46f0-a34a-9c9d2dcd585b(SPL_Arcane_Damage_01_Cast)",
-    "d75865cd-fddd-4ad1-be34-d5b89155d7c6(SPL_Arcane_Damage_01_Recover)"
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "70a28457-dba7-46f7-b03c-ceb3b9e12bad(SPL_Arcane_01_Cast)",
+    "68868848-6341-448a-97e3-94aa43ad5faf(SPL_Arcane_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
    ],
    "VerbalIntent": "Damage",
    "SpellFlags": [
-    "IsMelee",
     "IsSpell",
     "CannotTargetTerrain",
     "HasVerbalComponent",
     "HasSomaticComponent",
-    "CannotTargetItems"
+    "CannotTargetItems",
+    "AddFallDamageOnLand"
    ],
    "MaximumTargets": 1
   },
@@ -18790,7 +21462,8 @@ const data = {
     "IsSpell",
     "HasVerbalComponent",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Psychic"
   },
   "Target_VowOfEmnity": {
    "Name": "Target_VowOfEmnity",
@@ -18803,6 +21476,20 @@ const data = {
    "Icon": "unknown",
    "DisplayName": "Target_VowOfEmnity_DisplayName",
    "Description": "Target_VowOfEmnity_Description",
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_BodyFX_Textkey_01,FaceSource,CharacterScale,Detach:Dummy_BodyFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_PostProcess_Textkey_01::Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_Impact_Textkey_01,Detach::Cast:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Action_TargetSingle_Debuff_CastFX_Textkey_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_Body_Texkey_01::VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_Texkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_Texkey_02:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Action_TargetSingle_Debuff_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
+   ],
    "CastTextEvent": "Cast",
    "UseCosts": [
     "BonusActionPoint:1",
@@ -18925,6 +21612,7 @@ const data = {
     "IsHarmful",
     "RangeIgnoreVerticalThreshold"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Electric",
    "MemoryCost": 1
   },
   "Target_SUMMON": {
@@ -18935,6 +21623,72 @@ const data = {
     "ab7b6aac-b3c9-4918-8f17-f777a94dcb5e(SPL_Somatic_Target_01_Cast)",
     "57211a11-ed0b-46d7-9369-81df25a85df6(SPL_Somatic_Target_01_Recover)"
    ]
+  },
+  "Target_FlamingSphere": {
+   "Name": "Target_FlamingSphere",
+   "SpellType": "Target",
+   "Level": 2,
+   "SpellSchool": "Conjuration",
+   "SpellProperties": [
+    "GROUND:Summon(a4ca1c8f-d59b-4393-9c06-987713f8f74d, 10,,,INVULNERABLE_NOT_SHOWN)",
+    "AI_ONLY:GROUND:CreateExplosion(Projectile_AiHelper_Summon_Weak)"
+   ],
+   "TargetRadius": 18,
+   "AreaRadius": 2,
+   "Icon": "Spell_Conjuration_FlamingSphere",
+   "DisplayName": "Target_FlamingSphere_DisplayName",
+   "Description": "Target_FlamingSphere_Description",
+   "DescriptionParams": [
+    "DealDamage(2d6,Fire)",
+    "Distance(6)"
+   ],
+   "ExtraDescription": "Target_FlamingSphere_ExtraDescription",
+   "TooltipDamageList": [
+    "DealDamage(2d6,Fire)"
+   ],
+   "TooltipAttackSave": "Dexterity",
+   "TooltipStatusApply": [
+    "ApplyStatus(FLAMING_SPHERE,100,10)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Summon_Fire_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Summon_Fire_CastFX_Textkey_01:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Summon_TargetSummon_FlamingSphere_R_HandFX_Textkey_01,Detach:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Summon_TargetSummon_FlamingSphere_CastFX_Textkey_02,Detach:Dummy_CastFX:VFX_Somatic_02:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Summon_TargetSummon_FlamingSphere_CastFX_01,Detach:Dummy_CastFX::0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "VFX_Somatic_03",
+   "CastSound": "Spell_Cast_Summon_FlamingSphere_L1to3",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "7552fe7c-f098-42a5-a312-9e9cd1fd6f52(SPL_Druid_Summon_01_Prepare)",
+    "0149cfd3-d80f-4ce8-8cf7-234e0864ba46(SPL_Somatic_Aoe_Shrink_01_Cast)",
+    "1c58959b-8cb1-491d-89b7-2a7d0a593215(SPL_Somatic_Aoe_Shrink_01_Recover)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "7552fe7c-f098-42a5-a312-9e9cd1fd6f52(SPL_Druid_Summon_01_Prepare)",
+    "0149cfd3-d80f-4ce8-8cf7-234e0864ba46(SPL_Somatic_Aoe_Shrink_01_Cast)",
+    "1c58959b-8cb1-491d-89b7-2a7d0a593215(SPL_Somatic_Aoe_Shrink_01_Recover)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "7552fe7c-f098-42a5-a312-9e9cd1fd6f52(SPL_Druid_Summon_01_Prepare)",
+    "0149cfd3-d80f-4ce8-8cf7-234e0864ba46(SPL_Somatic_Aoe_Shrink_01_Cast)",
+    "1c58959b-8cb1-491d-89b7-2a7d0a593215(SPL_Somatic_Aoe_Shrink_01_Recover)"
+   ],
+   "VerbalIntent": "Summon",
+   "SpellFlags": [
+    "IsSpell",
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "HasHighGroundRangeExtension",
+    "IsConcentration"
+   ],
+   "MemoryCost": 1
   },
   "Target_FindFamiliar": {
    "Name": "Target_FindFamiliar",
@@ -19137,6 +21891,126 @@ const data = {
    "SpellContainerID": "Target_FindFamiliar_Ritual",
    "UseCosts": [
     "ActionPoint:1"
+   ]
+  },
+  "Target_Moonbeam": {
+   "Name": "Target_Moonbeam",
+   "SpellType": "Target",
+   "Level": 2,
+   "SpellSchool": "Evocation",
+   "TargetRadius": 18,
+   "AreaRadius": 1,
+   "TargetConditions": "not (not Player(context.Source) and IsConcentrating(context.Source))",
+   "Icon": "Spell_Evocation_Moonbeam",
+   "DisplayName": "Target_Moonbeam_DisplayName",
+   "Description": "Target_Moonbeam_Description",
+   "DescriptionParams": [
+    "DealDamage(2d10,Radiant)"
+   ],
+   "ExtraDescription": "Target_Moonbeam_ExtraDescription",
+   "ExtraDescriptionParams": [
+    "Distance(18)"
+   ],
+   "TooltipAttackSave": "Constitution",
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Radiant_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Damage_Radiant_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Damage_Radiant_TargetSingle_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Damage_Radiant_TargetSingle_CastFX_Textkey_02:Dummy_CastFX:VFX_Somatic_02:0:None::None::0:0::::"
+   ],
+   "PositionEffect": [
+    "VFX_Spells_Cast_Damage_Radiant_TargetSingle_Impact_Textkey_01,Detach::VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Damage_Radiant_TargetAoE_MoonBeam_Textkey_01,Detach::VFX_Somatic_02:0:None::None::0:0::::"
+   ],
+   "PreviewCursor": "Cast",
+   "CastTextEvent": "VFX_Somatic_03",
+   "CastSound": "Spell_Cast_Damage_Moonbeam_L1to3",
+   "TargetSound": "Spell_Impact_Damage_Moonbeam_L1to3",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
+    "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
+    "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
+    "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "VerbalIntent": "Summon",
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsConcentration",
+    "IsSpell"
+   ]
+  },
+  "Target_Moonbeam_Move": {
+   "Name": "Target_Moonbeam_Move",
+   "SpellType": "Target",
+   "Parent": "Target_Moonbeam",
+   "Icon": "Skill_Druid_MoonBeam_Move",
+   "DisplayName": "Target_Moonbeam_Move_DisplayName",
+   "Description": "Target_Moonbeam_Move_Description",
+   "DescriptionParams": [
+    "Distance(18)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Radiant_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Damage_Radiant_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Damage_Radiant_ProjectileSingle_R_HandFX_Textkey_02:Dummy_R_HandFX:VFX_Somatic_03:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Damage_Radiant_TargetSingle_CastFX_Textkey_02:Dummy_CastFX:VFX_Somatic_02:0:None::None::0:0::::"
+   ],
+   "DisappearEffect": [
+    "VFX_Spells_Cast_Intent_Healing_TargetSingle_Impact_Root_Textkey_01:Dummy_Root:Cast:0:None::None::0:0::::"
+   ],
+   "PositionEffect": [
+    "VFX_Spells_Cast_Damage_Radiant_TargetSingle_Impact_Textkey_01,Detach::VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Damage_Radiant_TargetAoE_MoonBeam_Textkey_01,Detach::VFX_Somatic_02:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Damage_MoveMoobeam_L1to3",
+   "TargetSound": "Spell_Impact_Damage_MoveMoobeam_L1to3",
+   "UseCosts": [
+    "ActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
+    "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
+    "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
+    "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellFlags": [
+    "RangeIgnoreVerticalThreshold",
+    "IsConcentration",
+    "IsSpell"
    ]
   },
   "Target_PactOfTheChain_Imp": {
@@ -19371,6 +22245,7 @@ const data = {
    "SpellType": "Target",
    "Level": 1,
    "SpellSchool": "Transmutation",
+   "SpellContainerID": "Target_CreateDestroyWater",
    "SpellProperties": [
     "ApplyStatus(WET,100, 3)",
     " GROUND:CreateSurface(4,0, Water)"
@@ -19430,6 +22305,40 @@ const data = {
     "RangeIgnoreVerticalThreshold"
    ],
    "MemoryCost": 1
+  },
+  "Target_CreateDestroyWater": {
+   "Name": "Target_CreateDestroyWater",
+   "SpellType": "Target",
+   "Parent": "Target_CreateWater",
+   "Level": 1,
+   "SpellSchool": "Transmutation",
+   "ContainerSpells": [
+    "Target_CreateWater",
+    "Target_DestroyWater"
+   ],
+   "DisplayName": "Target_CreateDestroyWater_DisplayName",
+   "Description": "Target_CreateDestroyWater_Description",
+   "SpellAnimationArcaneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
+    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
+    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
+    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
+   ],
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsSpell",
+    "IsLinkedSpellContainer"
+   ]
   },
   "Target_CreateWater_StaffOfRain": {
    "Name": "Target_CreateWater_StaffOfRain",
@@ -19515,7 +22424,8 @@ const data = {
     "HasVerbalComponent",
     "IsSpell",
     "IsConcentration",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ],
    "MemoryCost": 1
   },
@@ -19533,34 +22443,61 @@ const data = {
    "SpellType": "Target",
    "Level": 1,
    "SpellSchool": "Transmutation",
+   "SpellContainerID": "Target_CreateDestroyWater",
+   "SpellProperties": [
+    "GROUND:SurfaceChange(DestroyWater)"
+   ],
    "TargetRadius": 9,
    "AreaRadius": 4,
-   "Icon": "unknown",
+   "Icon": "Spell_Transmutation_DestroyWater",
    "DisplayName": "Target_DestroyWater_DisplayName",
    "Description": "Target_DestroyWater_Description",
    "DescriptionParams": [
     "Distance(4.5)"
    ],
+   "PositionEffect": [
+    "VFX_Spells_Cast_intent_Utility_TargetAoE_Destroy_Water_Impact_Textkey_01::Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_intent_Utility_TargetAoE_Destroy_Water_Impact_Textkey_02::VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_intent_Utility_TargetAoE_Destroy_Water_Impact_Textkey_01_Water::Cast:0:None::None::0:0::Water, WaterElectrified, WaterFrozen::",
+    "VFX_Spells_Cast_intent_Utility_TargetAoE_Destroy_Water_Impact_Textkey_01_Blood::Cast:0:None::None::0:0::Blood, BloodElectrified, BloodFrozen::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_Root_01:::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_01:Dummy_EyeFX_01::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_02:Dummy_EyeFX_02::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_01:Dummy_R_HandFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_02:Dummy_L_HandFX::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Utility_TargetAoE_Destroy_Water_CastFX_Textkey_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_TargetAoe_HandFX_Textkey_02:Dummy_L_HandFX,Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::"
+   ],
    "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Utility_DestroyWater_L1to3",
    "VocalComponentSound": "Vocal_Component_DestroyWater",
+   "TargetSound": "Spell_Impact_Utility_DestroyWater_L1to3",
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "7c194893-2879-4afe-84dc-9ea842fe0a43(SPL_Arcane_Utility_01_Cast)",
-    "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "9d86c202-31a5-4ba3-ae60-ec4fbb425665(SPL_Somatic_Aoe_Widen_01_Cast)",
+    "a4112e22-e36f-44ff-828f-81252360da53(SPL_Somatic_Aoe_Widen_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "c277d147-4f77-4c05-a8e7-3095da3fc736(SPL_Divine_Utility_01_Prepare)",
-    "519955c5-4001-4104-8dc4-e5ac4c70857e(SPL_Divine_Utility_01_Cast)",
-    "37c21db3-cf01-45ed-a8de-da391e9e3a0a(SPL_Divine_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "9d86c202-31a5-4ba3-ae60-ec4fbb425665(SPL_Somatic_Aoe_Widen_01_Cast)",
+    "a4112e22-e36f-44ff-828f-81252360da53(SPL_Somatic_Aoe_Widen_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
-    "7c194893-2879-4afe-84dc-9ea842fe0a43(SPL_Arcane_Utility_01_Cast)",
-    "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
+    "75e56f2b-46e4-4456-8b2a-ce91076718ea(SPL_Druid_Utility_01_Prepare)",
+    "9d86c202-31a5-4ba3-ae60-ec4fbb425665(SPL_Somatic_Aoe_Widen_01_Cast)",
+    "a4112e22-e36f-44ff-828f-81252360da53(SPL_Somatic_Aoe_Widen_01_Recover)",
+    "f2cce35f-eed2-4fdd-9f0b-16ca08fa1e25(SPL_Druid_Utility_01_Loop)"
    ],
    "VerbalIntent": "Utility",
    "SpellFlags": [
@@ -19572,20 +22509,38 @@ const data = {
    ],
    "MemoryCost": 1
   },
-  "Target_Web": {
-   "Name": "Target_Web",
+  "Target_DestroyWater_2": {
+   "Name": "Target_DestroyWater_2",
    "SpellType": "Target",
-   "Level": 2,
+   "Parent": "Target_DestroyWater",
+   "AreaRadius": 6,
+   "Icon": "Spell_Transmutation_DestroyWater_2",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "RootSpellID": "Target_DestroyWater",
+   "PowerLevel": 2
+  },
+  "Target_Entangle": {
+   "Name": "Target_Entangle",
+   "SpellType": "Target",
+   "Level": 1,
    "SpellSchool": "Conjuration",
    "SpellProperties": [
-    "GROUND:CreateSurface(3,10,Web)"
+    "GROUND:CreateSurface(3,10,Vines)"
    ],
    "TargetRadius": 18,
+   "AreaRadius": 3,
    "TargetConditions": "not (not Player(context.Source) and IsConcentrating(context.Source))",
-   "Icon": "Spell_Conjuration_Web",
-   "DisplayName": "Target_Web_DisplayName",
-   "Description": "Target_Web_Description",
-   "ExtraDescription": "Target_Web_ExtraDescription",
+   "Icon": "Spell_Conjuration_Entangled",
+   "DisplayName": "Target_Entangle_DisplayName",
+   "Description": "Target_Entangle_Description",
+   "ExtraDescription": "Target_Entangle_ExtraDescription",
+   "TooltipAttackSave": "Strength",
+   "TooltipStatusApply": [
+    "ApplyStatus(ENSNARED_VINES, 100, -1)"
+   ],
    "PrepareEffect": [
     "VFX_Spells_Prepare_Arcane_Intent_Control_CastFX_Textkey_01:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::",
     "VFX_Spells_Prepare_Arcane_Intent_Control_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
@@ -19594,85 +22549,39 @@ const data = {
     "VFX_Spells_Prepare_Arcane_Intent_Control_HandFX_Overlay_Textkey_01:Dummy_L_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
    ],
    "CastEffect": [
-    "VFX_Spells_Cast_Intent_Control_TargetAoE_CastFX_Textkey_01:Dummy_CastFX::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Control_TargetAoE_CastFX_Textkey_02:Dummy_CastFX:Cast:0:None::None::0:0::::"
+    "VFX_Spells_Cast_Intent_Control_TargetAoEControlVines_CastFX_01,Detach:Dummy_CastFX::0:None::None::0:0::::"
    ],
    "PositionEffect": [
-    "VFX_Spells_Cast_Intent_Control_TargetAoEWeb_Impact_Textkey_01::VFX_Somatic_01:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Control_TargetAoEWeb_Impact_Textkey_02::Cast:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Control_TargetAoE_Impact_PostProcess_Textkey_01::Cast:0:None::None::0:0::::"
+    "VFX_Spells_Cast_Intent_Control_TargetAoEControlVines_Impact_01:::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Control_TargetAoEControlVines_Impact_Textkey_01::Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Control_TargetAoEControlVines_Impact_PostProcess_Textkey_01::Cast:0:None::None::0:0::::"
    ],
    "CastTextEvent": "Cast",
-   "CastSound": "Spell_Cast_Control_Web_L1to3",
-   "VocalComponentSound": "Vocal_Component_SurfaceCreationWeb",
-   "TargetSound": "Spell_Impact_Control_Web_L1to3",
-   "CycleConditions": "Enemy() and not Dead()",
-   "UseCosts": [
-    "ActionPoint:1",
-    "SpellSlot:1:1:2"
-   ],
-   "SpellAnimationArcaneMagic": [
-    "554a18f7-952e-494a-b301-7702a85d4bc9(SPL_Arcane_Control_01_Prepare)",
-    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
-    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
-   ],
-   "SpellAnimationDivineMagic": [
-    "554a18f7-952e-494a-b301-7702a85d4bc9(SPL_Arcane_Control_01_Prepare)",
-    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
-    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
-   ],
-   "SpellAnimationNoneMagic": [
-    "554a18f7-952e-494a-b301-7702a85d4bc9(SPL_Arcane_Control_01_Prepare)",
-    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
-    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
-   ],
-   "VerbalIntent": "Control",
-   "SpellFlags": [
-    "HasVerbalComponent",
-    "HasSomaticComponent",
-    "IsSpell",
-    "HasHighGroundRangeExtension",
-    "IsConcentration",
-    "RangeIgnoreVerticalThreshold"
-   ],
-   "RechargeValues": "5-6",
-   "MemoryCost": 1
-  },
-  "Target_Entangle": {
-   "Name": "Target_Entangle",
-   "SpellType": "Target",
-   "Parent": "Target_Web",
-   "Level": 1,
-   "SpellSchool": "Conjuration",
-   "SpellProperties": [
-    "GROUND:CreateSurface(6,10,Vines)"
-   ],
-   "TargetRadius": 18,
-   "AreaRadius": 6,
-   "TargetConditions": "Character() and not (not Player(context.Source) and IsConcentrating(context.Source))",
-   "Icon": "unknown",
-   "DisplayName": "Target_Entangle_DisplayName",
-   "Description": "Target_Entangle_Description",
-   "ExtraDescription": "Target_Entangle_ExtraDescription",
-   "ExtraDescriptionParams": [
-    "DealDamage(1d6,Piercing)"
-   ],
-   "PrepareEffect": [
-    "VFX_Action_Prepare_Intent_Control_EnsnaringStrike_Root_01,Detach:::0:None::None::0:0::::",
-    "VFX_Actions_Prepare_EnsnaringStrike_Weapon_01:Dummy_FX::0:None::None::0:0::::",
-    "VFX_Actions_Prepare_EnsnaringStrike_Weapon_Overlay_01:::0:None::None::0:0::::"
-   ],
-   "CastEffect": [
-    "VFX_Spells_Cast_Intent_Debuff_TrueStrike_Somatic_01_Dummy_HandFX_01:Dummy_R_HandFX:VFX_Somatic_01:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Debuff_TrueStrike_Somatic_01_Dummy_CastFX:Dummy_CastFX:VFX_Somatic_02:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Debuff_TrueStrike_Dummy_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::"
-   ],
-   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Control_Entangle_L1to3",
    "VocalComponentSound": "Vocal_Component_SurfaceCreationVines",
+   "TargetSound": "Spell_Impact_Control_Entangle_L1to3",
    "CycleConditions": "Enemy() and not Dead()",
    "UseCosts": [
     "ActionPoint:1",
     "SpellSlot:1:1:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "b3f0ed98-2773-4fed-bcc1-6e19ba6b0063(SPL_Druid_Control_01_Prepare)",
+    "7abe77ed-9c77-4eac-872c-5b8caed070b6(SPL_Somatic_Aoe_Rise_01_Cast)",
+    "cb171bda-f065-4520-b470-e447f678ba1f(SPL_Somatic_Aoe_Rise_01_Recover)",
+    "c52d5d9e-f118-41f5-a6a2-18d37dc9678d(SPL_Druid_Control_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "b3f0ed98-2773-4fed-bcc1-6e19ba6b0063(SPL_Druid_Control_01_Prepare)",
+    "7abe77ed-9c77-4eac-872c-5b8caed070b6(SPL_Somatic_Aoe_Rise_01_Cast)",
+    "cb171bda-f065-4520-b470-e447f678ba1f(SPL_Somatic_Aoe_Rise_01_Recover)",
+    "c52d5d9e-f118-41f5-a6a2-18d37dc9678d(SPL_Druid_Control_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "b3f0ed98-2773-4fed-bcc1-6e19ba6b0063(SPL_Druid_Control_01_Prepare)",
+    "7abe77ed-9c77-4eac-872c-5b8caed070b6(SPL_Somatic_Aoe_Rise_01_Cast)",
+    "cb171bda-f065-4520-b470-e447f678ba1f(SPL_Somatic_Aoe_Rise_01_Recover)",
+    "c52d5d9e-f118-41f5-a6a2-18d37dc9678d(SPL_Druid_Control_01_Loop)"
    ],
    "VerbalIntent": "Control",
    "SpellFlags": [
@@ -19684,6 +22593,18 @@ const data = {
    ],
    "RechargeValues": "5-6",
    "MemoryCost": 1
+  },
+  "Target_Entangle_2": {
+   "Name": "Target_Entangle_2",
+   "SpellType": "Target",
+   "Parent": "Target_Entangle",
+   "Icon": "Spell_Conjuration_Entangled_2",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "RootSpellID": "Target_Entangle",
+   "PowerLevel": 2
   },
   "Target_FaerieFire": {
    "Name": "Target_FaerieFire",
@@ -19960,7 +22881,7 @@ const data = {
    "Level": 3,
    "SpellSchool": "Conjuration",
    "SpellProperties": [
-    "GROUND:CreateSurface(6,20,Darkness)"
+    "GROUND:CreateSurface(6,20,DarknessCloud)"
    ],
    "TargetRadius": 18,
    "AreaRadius": 6,
@@ -20021,7 +22942,7 @@ const data = {
    "SpellSchool": "Illusion",
    "TargetRadius": 18,
    "AreaRadius": 9,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC())",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, SourceSpellDC(), AdvantageOnCharmed())",
    "SpellSuccess": [
     "ApplyStatus(HYPNOTIC_PATTERN,100,10)"
    ],
@@ -20066,7 +22987,7 @@ const data = {
    "SpellSchool": "Evocation",
    "TargetRadius": 18,
    "AreaRadius": 3,
-   "SpellRoll": "not SavingThrow(Ability.Constitution, SourceSpellDC())",
+   "SpellRoll": "not SavingThrow(Ability.Constitution, SourceSpellDC(),false,IsInorganic())",
    "SpellSuccess": [
     "DealDamage(3d8,Thunder)"
    ],
@@ -20080,6 +23001,7 @@ const data = {
    "TooltipDamageList": [
     "DealDamage(3d8,Thunder)"
    ],
+   "TooltipAttackSave": "Constitution",
    "PrepareEffect": [
     "VFX_Spells_Prepare_Arcane_Damage_Thunder_R_HandFX_01:Dummy_R_HandFX::0:None::None::0:0::::",
     "VFX_Spells_Prepare_Arcane_Damage_Thunder_R_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Prepare_01:0:None::None::0:0::::",
@@ -20125,6 +23047,7 @@ const data = {
     "HasSomaticComponent",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Psychic",
    "MemoryCost": 1
   },
   "Target_Silence": {
@@ -20226,7 +23149,7 @@ const data = {
     "VFX_Spells_Prepare_Arcane_Intent_Control_HandFX_Overlay_Textkey_01:Dummy_L_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
    ],
    "CastEffect": [
-    "VFX_Spells_Cast_Intent_Control_TargetAoE_CastFX_Textkey_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Control_TargetAoE_Sleep_CastFX_Textkey_01:Dummy_R_HandFX::0:None::None::0:0::::",
     "VFX_Spells_Cast_Intent_Control_TargetAoE_CastFX_Textkey_02:Dummy_CastFX:Cast:0:None::None::0:0::::"
    ],
    "TargetEffect": [
@@ -20303,7 +23226,7 @@ const data = {
    "Level": 3,
    "SpellSchool": "Conjuration",
    "SpellProperties": [
-    "GROUND:CreateSurface(6,20,Darkness)"
+    "GROUND:CreateSurface(6,20,DarknessCloud)"
    ],
    "TargetRadius": 18,
    "AreaRadius": 12,
@@ -20354,6 +23277,140 @@ const data = {
     "IsConcentration",
     "IsSpell"
    ],
+   "MemoryCost": 1
+  },
+  "Target_SpikeGrowth": {
+   "Name": "Target_SpikeGrowth",
+   "SpellType": "Target",
+   "Level": 2,
+   "SpellSchool": "Transmutation",
+   "SpellProperties": [
+    "GROUND:CreateSurface(6,100,SpikeGrowth)"
+   ],
+   "TargetRadius": 18,
+   "AreaRadius": 6,
+   "TargetConditions": "not (not Player(context.Source) and IsConcentrating(context.Source))",
+   "Icon": "Spell_Transmutation_SpikeGrowth",
+   "DisplayName": "Target_SpikeGrowth_DisplayName",
+   "Description": "Target_SpikeGrowth_Description",
+   "DescriptionParams": [
+    "DealDamage(1d4,Piercing)",
+    "Distance(1.5)"
+   ],
+   "ExtraDescription": "Target_SpikeGrowth_ExtraDescription",
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Control_CastFX_Textkey_01:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_EyeFX_01:Dummy_EyeFX_01::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_EyeFX_02:Dummy_EyeFX_02::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_HandFX_Overlay_Textkey_01:Dummy_L_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Control_TargetAoE_SpikeGrowth_CastFX_01,Detach:Dummy_CastFX::0:None::None::0:0::::"
+   ],
+   "PositionEffect": [
+    "VFX_Spells_Cast_Intent_Control_TargetAoE_SpikeGrowth_Impact_01:::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Control_TargetAoE_SpikeGrowth_Impact_Textkey_01::Cast:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Control_SpikeGrowth_L1to3",
+   "TargetSound": "Spell_Impact_Control_SpikeGrowth_L1to3",
+   "CycleConditions": "Enemy() and not Dead()",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlotsGroup:1:1:2"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "7abe77ed-9c77-4eac-872c-5b8caed070b6(SPL_Somatic_Aoe_Rise_01_Cast)",
+    "cb171bda-f065-4520-b470-e447f678ba1f(SPL_Somatic_Aoe_Rise_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "7abe77ed-9c77-4eac-872c-5b8caed070b6(SPL_Somatic_Aoe_Rise_01_Cast)",
+    "cb171bda-f065-4520-b470-e447f678ba1f(SPL_Somatic_Aoe_Rise_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "54d977c9-c17a-4ba2-a727-5c51f97ee91a(SPL_Druid_Damage_01_Prepare)",
+    "7abe77ed-9c77-4eac-872c-5b8caed070b6(SPL_Somatic_Aoe_Rise_01_Cast)",
+    "cb171bda-f065-4520-b470-e447f678ba1f(SPL_Somatic_Aoe_Rise_01_Recover)",
+    "3fd6fd64-9a68-46c9-a7da-29a85e53ef7f(SPL_Druid_Damage_01_Loop)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsConcentration",
+    "IsSpell"
+   ],
+   "MemoryCost": 1
+  },
+  "Target_Web": {
+   "Name": "Target_Web",
+   "SpellType": "Target",
+   "Level": 2,
+   "SpellSchool": "Conjuration",
+   "SpellProperties": [
+    "GROUND:CreateSurface(3,10,Web)"
+   ],
+   "TargetRadius": 18,
+   "TargetConditions": "not (not Player(context.Source) and IsConcentrating(context.Source))",
+   "Icon": "Spell_Conjuration_Web",
+   "DisplayName": "Target_Web_DisplayName",
+   "Description": "Target_Web_Description",
+   "ExtraDescription": "Target_Web_ExtraDescription",
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Control_CastFX_Textkey_01:Dummy_CastFX:VFX_Prepare_01:0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_EyeFX_01:Dummy_EyeFX_01::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_EyeFX_02:Dummy_EyeFX_02::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Control_HandFX_Overlay_Textkey_01:Dummy_L_HandFX:VFX_Prepare_01:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Control_TargetAoE_CastFX_Textkey_01:Dummy_CastFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Control_TargetAoE_CastFX_Textkey_02:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "PositionEffect": [
+    "VFX_Spells_Cast_Intent_Control_TargetAoEWeb_Impact_Textkey_01::VFX_Somatic_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Control_TargetAoEWeb_Impact_Textkey_02::Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Control_TargetAoE_Impact_PostProcess_Textkey_01::Cast:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "Spell_Cast_Control_Web_L1to3",
+   "VocalComponentSound": "Vocal_Component_SurfaceCreationWeb",
+   "TargetSound": "Spell_Impact_Control_Web_L1to3",
+   "CycleConditions": "Enemy() and not Dead()",
+   "UseCosts": [
+    "ActionPoint:1",
+    "SpellSlot:1:1:2"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "554a18f7-952e-494a-b301-7702a85d4bc9(SPL_Arcane_Control_01_Prepare)",
+    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
+    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "554a18f7-952e-494a-b301-7702a85d4bc9(SPL_Arcane_Control_01_Prepare)",
+    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
+    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "554a18f7-952e-494a-b301-7702a85d4bc9(SPL_Arcane_Control_01_Prepare)",
+    "09ae2f11-f5b4-42f5-ae16-687a5b57d500(SPL_Somatic_Aoe_01_Cast)",
+    "10caea0e-c949-4d91-8ab7-3b50019dd054(SPL_Somatic_Aoe_01_Recover)"
+   ],
+   "VerbalIntent": "Control",
+   "SpellFlags": [
+    "HasVerbalComponent",
+    "HasSomaticComponent",
+    "IsSpell",
+    "HasHighGroundRangeExtension",
+    "IsConcentration",
+    "RangeIgnoreVerticalThreshold"
+   ],
+   "RechargeValues": "5-6",
    "MemoryCost": 1
   },
   "Target_MONSTERS": {
@@ -20453,10 +23510,15 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_UnarmedAttack",
    "TargetRadius": "1.5",
-   "Icon": "unknown",
+   "Icon": "Action_Raven_BeakAttack",
    "DisplayName": "Target_Beak_DisplayName",
    "Description": "Target_Beak_Description",
+   "CastEffect": [
+    "VFX_Enemies_Raven_Beak_Cast_CastFX_01,Detach:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
    "CastTextEvent": "Cast",
+   "CastSound": "CrSpell_Cast_BeakAttack",
+   "TargetSound": "CrSpell_Impact_BeakAttack",
    "UseCosts": [
     "ActionPoint:1"
    ],
@@ -20489,21 +23551,32 @@ const data = {
     "IsMelee",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Beak_Raven_Summon": {
    "Name": "Target_Beak_Raven_Summon",
    "SpellType": "Target",
    "Parent": "Target_Beak",
    "TargetEffect": [
-    "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+    "VFX_Enemies_Raven_Beak_Target_Cast_CastFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "CrSpell_Cast_BeakAttack",
+   "TargetSound": "CrSpell_Impact_BeakAttack"
+  },
+  "Target_Beak_Raven_Familiar": {
+   "Name": "Target_Beak_Raven_Familiar",
+   "SpellType": "Target",
+   "Parent": "Target_Beak_Raven_Summon",
+   "CastSound": "CrSpell_Cast_BeakAttack",
+   "TargetSound": "CrSpell_Impact_BeakAttack"
   },
   "Target_Bite": {
    "Name": "Target_Bite",
    "SpellType": "Target",
    "Parent": "Target_UnarmedAttack",
    "TargetRadius": "1.5",
+   "TargetConditions": "not Self() and not Dead()",
    "Icon": "Action_VampireBite",
    "DisplayName": "Target_Bite_DisplayName",
    "Description": "Target_Bite_Description",
@@ -20542,7 +23615,8 @@ const data = {
     "IsAttack",
     "IsMelee",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Bear_Brown": {
    "Name": "Target_Bite_Bear_Brown",
@@ -20550,7 +23624,8 @@ const data = {
    "Parent": "Target_Bite",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Bear_Black_Summon": {
    "Name": "Target_Bite_Bear_Black_Summon",
@@ -20558,7 +23633,8 @@ const data = {
    "Parent": "Target_Bite_Bear_Brown",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Bulette": {
    "Name": "Target_Bite_Bulette",
@@ -20567,7 +23643,8 @@ const data = {
    "Description": "Target_Bite_Bulette_Description",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Cloaker": {
    "Name": "Target_Bite_Cloaker",
@@ -20575,7 +23652,8 @@ const data = {
    "Parent": "Target_Bite",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Wolf": {
    "Name": "Target_Bite_Wolf",
@@ -20585,6 +23663,9 @@ const data = {
    "Description": "Target_Bite_Wolf_Description",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Wolf_Bite_Cast_CastFX_01:Dummy_CastFX:VFX_Attack_01:0:None::None::0:0::::"
    ],
    "SpellAnimationArcaneMagic": [
     "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
@@ -20609,7 +23690,8 @@ const data = {
     "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
     "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
     "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Dog": {
    "Name": "Target_Bite_Dog",
@@ -20618,57 +23700,86 @@ const data = {
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
-   "CastSound": "CrSpell_Cast_BiteTiny"
+   "CastSound": "CrSpell_Cast_BiteTiny",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Bite_Drider": {
+   "Name": "Target_Bite_Drider",
+   "SpellType": "Target",
+   "Parent": "Target_Bite",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_GiantBadger": {
    "Name": "Target_Bite_GiantBadger",
    "SpellType": "Target",
    "Parent": "Target_Bite",
+   "Icon": "Action_GiantBadger_Bite",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Badger_Bite_Cast_CastFX_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_GiantBadger_Summon": {
    "Name": "Target_Bite_GiantBadger_Summon",
    "SpellType": "Target",
    "Parent": "Target_Bite_GiantBadger",
-   "TargetConditions": "not Self() and not Dead()",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "PrepareEffect": [
+    "VFX_Enemies_GiantBadgerCompanion_Bite_Prepare_HeadFX_01:Socket_HeadFX::0:None::None::0:0::::",
+    "VFX_Sound_Spell_Prepare_Summons_01:::0:None::None::0:0::::"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_GiantSpider": {
    "Name": "Target_Bite_GiantSpider",
    "SpellType": "Target",
    "Parent": "Target_Bite",
-   "TargetConditions": "Character() and not Dead() and Enemy()",
+   "Icon": "Action_Spider_Giant_PoisonousBite",
    "DisplayName": "Target_Bite_GiantSpider_DisplayName",
    "Description": "Target_Bite_GiantSpider_Description",
    "ExtraDescription": "Target_Bite_GiantSpider_ExtraDescription",
+   "TooltipStatusApply": [
+    "ApplyStatus(POISONED,100,1)"
+   ],
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
-   "CastSound": "CrSpell_Cast_Bite"
+   "CastEffect": [
+    "VFX_Enemies_Spider_Bite_Cast_CastFX_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "CrSpell_Cast_Bite",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_GiantSpider_Summon": {
    "Name": "Target_Bite_GiantSpider_Summon",
    "SpellType": "Target",
    "Parent": "Target_Bite_GiantSpider",
-   "TargetConditions": "not Self() and not Dead()",
-   "Icon": "Action_Spider_Giant_PoisonousBite",
    "PrepareEffect": [
     "VFX_Enemies_Spider_PoisonousBite_Prepare_MouthFX_01:Dummy_MouthFX::0:None::None::0:0::::"
    ],
    "TargetEffect": [
     "VFX_Enemies_Spider_PoisonousBite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
-   "CastSound": "CrSpell_Cast_Bite"
+   "CastSound": "CrSpell_Cast_Bite",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Bite_GiantSpider_Wildshape": {
+   "Name": "Target_Bite_GiantSpider_Wildshape",
+   "SpellType": "Target",
+   "Parent": "Target_Bite_GiantSpider",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_SwordSpider": {
    "Name": "Target_Bite_SwordSpider",
    "SpellType": "Target",
    "Parent": "Target_Bite",
-   "CastSound": "CrSpell_Cast_Bite"
+   "CastSound": "CrSpell_Cast_Bite",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Mimic": {
    "Name": "Target_Bite_Mimic",
@@ -20676,19 +23787,21 @@ const data = {
    "Parent": "Target_Bite",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_PhaseSpider": {
    "Name": "Target_Bite_PhaseSpider",
    "SpellType": "Target",
    "Parent": "Target_Bite_GiantSpider",
    "TargetRadius": "1.5",
-   "TargetConditions": "Character() and not Dead() and Enemy()",
    "Description": "Target_Bite_PhaseSpider_Description",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
-   "CastSound": "CrSpell_Cast_Bite"
+   "CastSound": "CrSpell_Cast_Bite",
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_PhaseSpider_Queen": {
    "Name": "Target_Bite_PhaseSpider_Queen",
@@ -20696,7 +23809,7 @@ const data = {
    "Parent": "Target_Bite_PhaseSpider",
    "Cooldown": "OncePerTurn",
    "TargetRadius": 2,
-   "TargetConditions": "Character() and not Dead() and Enemy()",
+   "TargetConditions": "not Self() and not Dead() and not Item()",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
@@ -20706,7 +23819,9 @@ const data = {
     "IsMelee",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_PhaseSpider_Queen_ExtraAttack": {
    "Name": "Target_Bite_PhaseSpider_Queen_ExtraAttack",
@@ -20718,7 +23833,9 @@ const data = {
     "IsMelee",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_TinySpider": {
    "Name": "Target_Bite_TinySpider",
@@ -20730,7 +23847,9 @@ const data = {
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
    "CastSound": "CrSpell_Cast_BiteTiny",
-   "TargetSound": "CrSpell_Impact_BiteTiny"
+   "TargetSound": "CrSpell_Impact_BiteTiny",
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_TinySpider_Familiar": {
    "Name": "Target_Bite_TinySpider_Familiar",
@@ -20749,14 +23868,18 @@ const data = {
     "DealDamage(1, Piercing)",
     "DealDamage(1d4, Poison)"
    ],
-   "CastSound": "CrSpell_Cast_BiteTiny"
+   "CastSound": "CrSpell_Cast_BiteTiny",
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_TinySpider_Phase": {
    "Name": "Target_Bite_TinySpider_Phase",
    "SpellType": "Target",
    "Parent": "Target_Bite_TinySpider",
    "Description": "Target_Bite_TinySpider_Phase_Description",
-   "CastSound": "CrSpell_Cast_BiteTiny"
+   "CastSound": "CrSpell_Cast_BiteTiny",
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Gnoll": {
    "Name": "Target_Bite_Gnoll",
@@ -20795,7 +23918,9 @@ const data = {
    ],
    "SpellFlags": [
     "IsHarmful"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Gnoll_Bonus": {
    "Name": "Target_Bite_Gnoll_Bonus",
@@ -20835,7 +23960,8 @@ const data = {
     "IsMelee",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Gnoll_Fang": {
    "Name": "Target_Bite_Gnoll_Fang",
@@ -20875,7 +24001,8 @@ const data = {
     "IsMelee",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Gnoll_Fang_Bonus": {
    "Name": "Target_Bite_Gnoll_Fang_Bonus",
@@ -20883,7 +24010,8 @@ const data = {
    "Parent": "Target_Bite_Gnoll_Fang",
    "UseCosts": [
     "BonusActionPoint:1"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Hyena": {
    "Name": "Target_Bite_Hyena",
@@ -20891,7 +24019,8 @@ const data = {
    "Parent": "Target_Bite",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_ShadowMastiff": {
    "Name": "Target_Bite_ShadowMastiff",
@@ -20901,12 +24030,14 @@ const data = {
    "Description": "Target_Bite_ShadowMastiff_Description",
    "TargetEffect": [
     "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Spectator": {
    "Name": "Target_Bite_Spectator",
    "SpellType": "Target",
-   "Parent": "Target_Bite"
+   "Parent": "Target_Bite",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Rat_Summon": {
    "Name": "Target_Bite_Rat_Summon",
@@ -20935,25 +24066,55 @@ const data = {
    "PrepareEffect": [
     "VFX_Enemies_Rat_Bite_Prepare_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::",
     "VFX_Sound_Spell_Prepare_Summons_01:::0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Wolf_Summon": {
    "Name": "Target_Bite_Wolf_Summon",
    "SpellType": "Target",
    "Parent": "Target_Bite_Wolf",
    "Description": "Target_Bite_Wolf_Summon_Description",
-   "TargetEffect": [
-    "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ],
    "PrepareEffect": [
-    "VFX_Enemies_WolfCompanion_Bite_Prepare_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::",
-    "VFX_Sound_Spell_Prepare_Summons_01:::0:None::None::0:0::::"
-   ]
+    "VFX_Sound_Spell_Prepare_Summons_01:::0:None::None::0:0::::",
+    "VFX_Enemies_WolfCompanion_Bite_Prepare_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bite_Wolf_Dire": {
    "Name": "Target_Bite_Wolf_Dire",
    "SpellType": "Target",
-   "Parent": "Target_Bite_Wolf"
+   "Parent": "Target_Bite_Wolf",
+   "TargetRadius": "1.5",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Bite_Wolf_Dire_Wildshape": {
+   "Name": "Target_Bite_Wolf_Dire_Wildshape",
+   "SpellType": "Target",
+   "Parent": "Target_Bite_Wolf",
+   "Cooldown": "OncePerShortRest",
+   "SpellRoll": "Attack(AttackType.MeleeUnarmedAttack)",
+   "DisplayName": "Target_Bite_Wolf_Dire_Wildshape_DisplayName",
+   "Description": "Target_Bite_Wolf_Dire_Wildshape_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(EXPOSING_BITE,100,1)"
+   ],
+   "TargetEffect": [
+    "VFX_Enemies_Bite_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Wolf_Bite_Cast_CastFX_01:Dummy_CastFX:VFX_Attack_01:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Enemies_Wolf_Bite_Prepare_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::"
+   ],
+   "UseCosts": [
+    "ActionPoint:1"
+   ],
+   "SpellFlags": [
+    "IsMelee",
+    "IsHarmful"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Bufotoxin_Frog_Summon": {
    "Name": "Target_Bufotoxin_Frog_Summon",
@@ -20994,7 +24155,9 @@ const data = {
     "IgnoreSilence",
     "IsMelee",
     "IsAttack"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_BloodFest_Gnoll": {
    "Name": "Target_BloodFest_Gnoll",
@@ -21038,7 +24201,8 @@ const data = {
    "SpellFlags": [
     "IsMelee",
     "IsEnemySpell"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_BloodLust_RedCap": {
    "Name": "Target_BloodLust_RedCap",
@@ -21089,7 +24253,57 @@ const data = {
     "IsEnemySpell",
     "HasVerbalComponent"
    ],
-   "RechargeValues": "4-6"
+   "RechargeValues": "4-6",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Burrow_GiantBadger": {
+   "Name": "Target_Burrow_GiantBadger",
+   "SpellType": "Target",
+   "SpellProperties": [
+    "GROUND:TeleportSource()"
+   ],
+   "TargetRadius": 12,
+   "AreaRadius": 3,
+   "SpellRoll": "not SavingThrow(Ability.Dexterity, 13)",
+   "SpellSuccess": [
+    "ApplyStatus(PRONE,100,1)"
+   ],
+   "AoEConditions": "not Ally() and not Dead()",
+   "Icon": "Action_GiantBadger_Burrow",
+   "DisplayName": "Target_Burrow_GiantBadger_DisplayName",
+   "Description": "Target_Burrow_GiantBadger_Description",
+   "PrepareEffect": [
+    "VFX_Actions_Prepare_Intent_Utility_Burrow_WildShape_Badger_Root_01:::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Actions_Cast_Intent_Utility_Burrow_WildShape_Badger_Root_Textkey_01,Detach:Dummy_Root:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Actions_Cast_Intent_Utility_Burrow_WildShape_Badger_Root_Textkey_02,Detach:Dummy_Root:VFX_Cast_02:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "CrSpell_Cast_BurrowBulette",
+   "UseCosts": [
+    "ActionPoint:1",
+    "Movement:6"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "439be620-eee9-496b-83da-36fea96c7b02(CMBT_Skill_Claw_01_Prepare)",
+    "d94250ed-e555-471a-89ac-e0cb3e3b4792(UTIL_DeSpawn_01)",
+    "510ff37e-0618-40e4-8ce0-236e3dc9c291(UTIL_Spawn_01)",
+    "26bce56a-9d3f-48c4-b2ff-f1ae32f7817b(CMBT_Skill_Claw_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "439be620-eee9-496b-83da-36fea96c7b02(CMBT_Skill_Claw_01_Prepare)",
+    "d94250ed-e555-471a-89ac-e0cb3e3b4792(UTIL_DeSpawn_01)",
+    "510ff37e-0618-40e4-8ce0-236e3dc9c291(UTIL_Spawn_01)",
+    "26bce56a-9d3f-48c4-b2ff-f1ae32f7817b(CMBT_Skill_Claw_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "439be620-eee9-496b-83da-36fea96c7b02(CMBT_Skill_Claw_01_Prepare)",
+    "d94250ed-e555-471a-89ac-e0cb3e3b4792(UTIL_DeSpawn_01)",
+    "510ff37e-0618-40e4-8ce0-236e3dc9c291(UTIL_Spawn_01)",
+    "26bce56a-9d3f-48c4-b2ff-f1ae32f7817b(CMBT_Skill_Claw_01_Loop)"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Burrow_Bulette": {
    "Name": "Target_Burrow_Bulette",
@@ -21114,12 +24328,14 @@ const data = {
    ],
    "SpellFlags": [
     "CannotTargetItems"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws": {
    "Name": "Target_Claws",
    "SpellType": "Target",
    "Parent": "Target_UnarmedAttack",
+   "TargetConditions": "not Self() and not Dead()",
    "Icon": "unknown",
    "DisplayName": "Target_Claws_DisplayName",
    "Description": "Target_Claws_Description",
@@ -21158,7 +24374,8 @@ const data = {
     "IsMelee",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Bear_Brown": {
    "Name": "Target_Claws_Bear_Brown",
@@ -21170,7 +24387,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Bear_Black_Summon": {
    "Name": "Target_Claws_Bear_Black_Summon",
@@ -21181,7 +24399,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Bear_Cave": {
    "Name": "Target_Claws_Bear_Cave",
@@ -21193,7 +24412,59 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Claws_Bear_Polar": {
+   "Name": "Target_Claws_Bear_Polar",
+   "SpellType": "Target",
+   "Parent": "Target_Claws",
+   "Icon": "Action_Bear_Claws",
+   "CastEffect": [
+    "VFX_Enemies_Claw_Cast_CastFX_01:Dummy_CastFX:CastSlash:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
+    "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
+    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
+    "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
+    "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
+    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
+    "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
+    "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
+    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
+    "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Claws_Cat": {
+   "Name": "Target_Claws_Cat",
+   "SpellType": "Target",
+   "Parent": "Target_Claws",
+   "Icon": "Action_Cat_Claws",
+   "CastEffect": [
+    "VFX_Enemies_Cat_Claw_Cast_CastFX_01:Dummy_CastFX:CastSlash:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Ettercap": {
    "Name": "Target_Claws_Ettercap",
@@ -21204,7 +24475,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Harpy": {
    "Name": "Target_Claws_Harpy",
@@ -21233,12 +24505,44 @@ const data = {
     "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
     "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
     "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Claws_Ghoul": {
+   "Name": "Target_Claws_Ghoul",
+   "SpellType": "Target",
+   "Parent": "Target_Claws",
+   "SpellAnimationArcaneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
+    "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
+    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
+    "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
+    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
+    "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
+    "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellFlags": [
+    "IsMelee",
+    "IsAttack",
+    "IsHarmful"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_GiantBadger": {
    "Name": "Target_Claws_GiantBadger",
    "SpellType": "Target",
    "Parent": "Target_Claws",
+   "Icon": "Action_GiantBadger_Claws",
    "CastEffect": [
     "VFX_Enemies_Claw_Cast_CastFX_01:Dummy_CastFX:CastSlash:0:None::None::0:0::::"
    ],
@@ -21268,13 +24572,57 @@ const data = {
     "d91aab3d-0d93-4a31-8bc4-990e109a4eb3(CMBT_Skill_Claw_01_Recover)",
     "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
     "215d161c-5283-4409-920a-323aaebbd8e5(CMBT_Skill_Claw_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Claws_GiantBadger_Wildshape": {
+   "Name": "Target_Claws_GiantBadger_Wildshape",
+   "SpellType": "Target",
+   "Parent": "Target_Claws_GiantBadger",
+   "Description": "Target_Claws_GiantBadger_Wildshape_Description",
+   "CastEffect": [
+    "VFX_Enemies_Claw_Cast_CastFX_01:Dummy_CastFX:CastSlash:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Enemies_Badger_Claw_Prepare_Root_01:::0:None::None::0:0::::"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "9fa218b8-9596-4c94-b5a1-13d877d8330c(CMBT_Skill_Claw_01_Antic)",
+    "ff2789c1-1d26-43a6-992e-a6fd6af36fb3(CMBT_Skill_Claw_01_Attack)",
+    "d91aab3d-0d93-4a31-8bc4-990e109a4eb3(CMBT_Skill_Claw_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
+    "215d161c-5283-4409-920a-323aaebbd8e5(CMBT_Skill_Claw_01_Dash)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "9fa218b8-9596-4c94-b5a1-13d877d8330c(CMBT_Skill_Claw_01_Antic)",
+    "ff2789c1-1d26-43a6-992e-a6fd6af36fb3(CMBT_Skill_Claw_01_Attack)",
+    "d91aab3d-0d93-4a31-8bc4-990e109a4eb3(CMBT_Skill_Claw_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
+    "215d161c-5283-4409-920a-323aaebbd8e5(CMBT_Skill_Claw_01_Dash)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "8b8bb757-21ce-4e02-a2f3-97d55cf2f90b(CMBT_Melee_RHand_01_Prepare)",
+    "9fa218b8-9596-4c94-b5a1-13d877d8330c(CMBT_Skill_Claw_01_Antic)",
+    "ff2789c1-1d26-43a6-992e-a6fd6af36fb3(CMBT_Skill_Claw_01_Attack)",
+    "d91aab3d-0d93-4a31-8bc4-990e109a4eb3(CMBT_Skill_Claw_01_Recover)",
+    "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
+    "215d161c-5283-4409-920a-323aaebbd8e5(CMBT_Skill_Claw_01_Dash)"
+   ],
+   "SpellFlags": [
+    "IsMelee",
+    "IsHarmful"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_GreenHag": {
    "Name": "Target_Claws_GreenHag",
    "SpellType": "Target",
    "Parent": "Target_Claws",
-   "TargetConditions": "Character() and not Dead() and Enemy()",
    "CastEffect": [
     "VFX_Enemies_Claw_Cast_CastFX_01:Dummy_CastFX:CastSlashClaw:0:None::None::0:0::::"
    ],
@@ -21300,7 +24648,8 @@ const data = {
     "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
     "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
     "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Imp": {
    "Name": "Target_Claws_Imp",
@@ -21312,7 +24661,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Imp_Summon": {
    "Name": "Target_Claws_Imp_Summon",
@@ -21323,7 +24673,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_IntellectDevourer": {
    "Name": "Target_Claws_IntellectDevourer",
@@ -21372,7 +24723,8 @@ const data = {
     "IsMelee",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_IntellectDevourer_Weakened": {
    "Name": "Target_Claws_IntellectDevourer_Weakened",
@@ -21413,7 +24765,8 @@ const data = {
     "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
     "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
     "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Mephit_Mud": {
    "Name": "Target_Claws_Mephit_Mud",
@@ -21445,7 +24798,8 @@ const data = {
    "SpellFlags": [
     "IsMelee",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Mephit_Magma": {
    "Name": "Target_Claws_Mephit_Magma",
@@ -21457,7 +24811,9 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellHitAnimationType": "MagicalDamage_External",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Owlbear": {
    "Name": "Target_Claws_Owlbear",
@@ -21496,7 +24852,8 @@ const data = {
     "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
     "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)",
     "2b81c18b-9698-4262-a623-932c2bb1296d(CMBT_Melee_RHand_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Owlbear_Cub": {
    "Name": "Target_Claws_Owlbear_Cub",
@@ -21512,7 +24869,8 @@ const data = {
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
    "CastSound": "CrSpell_Cast_ClawTiny",
-   "TargetSound": "CrSpell_Impact_ClawTiny"
+   "TargetSound": "CrSpell_Impact_ClawTiny",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Quasit": {
    "Name": "Target_Claws_Quasit",
@@ -21524,7 +24882,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Quasit_Summon": {
    "Name": "Target_Claws_Quasit_Summon",
@@ -21535,7 +24894,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Scarecrow": {
    "Name": "Target_Claws_Scarecrow",
@@ -21547,7 +24907,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_StoneCursed": {
    "Name": "Target_Claws_StoneCursed",
@@ -21558,7 +24919,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Enemies_Claw_Impact_BodyFX_01,FaceSource:Dummy_BodyFX:Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Claws_Werewolf": {
    "Name": "Target_Claws_Werewolf",
@@ -21587,7 +24949,8 @@ const data = {
     "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
     "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
     "0b0dc35b-4953-45c0-a9eb-8d3fef5e798a(CMBT_Range_RHand_01_Recover)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Curse_Gnoll": {
    "Name": "Target_Curse_Gnoll",
@@ -21618,7 +24981,8 @@ const data = {
     "CannotTargetTerrain",
     "IsConcentration"
    ],
-   "RechargeValues": "4-6"
+   "RechargeValues": "4-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Curse_Ogre": {
    "Name": "Target_Curse_Ogre",
@@ -21642,23 +25006,194 @@ const data = {
     "CannotTargetItems",
     "CannotTargetTerrain"
    ],
-   "RechargeValues": "3-6"
+   "RechargeValues": "3-6",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Curse_DarkJusticiar": {
+   "Name": "Target_Curse_DarkJusticiar",
+   "SpellType": "Target",
+   "Parent": "Target_BestowCurse_Ability",
+   "Icon": "unknown",
+   "DisplayName": "Target_Curse_DarkJusticiar_DisplayName",
+   "Description": "Target_Curse_DarkJusticiar_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Curse_DarkJusticiar_Secret": {
+   "Name": "Target_Curse_DarkJusticiar_Secret",
+   "SpellType": "Target",
+   "Parent": "Target_BestowCurse_Ability",
+   "DisplayName": "Target_Curse_DarkJusticiar_Secret_DisplayName",
+   "Description": "Target_Curse_DarkJusticiar_Secret_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Crush_DarkVine_Giant": {
+   "Name": "Target_Crush_DarkVine_Giant",
+   "SpellType": "Target",
+   "Parent": "Target_Bite",
+   "DisplayName": "Target_Crush_DarkVine_Giant_DisplayName",
+   "Description": "Target_Crush_DarkVine_Giant_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_DancingLights_DeepRothe": {
+   "Name": "Target_DancingLights_DeepRothe",
+   "SpellType": "Target",
+   "Parent": "Target_DancingLights",
+   "CastEffect": [
+    "VFX_Spells_Cast_Intent_Utility_TargetSummon_DancingLights_DeepRothe_HeadFX_01,KeepRot:Dummy_HeadFX::0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_TargetSummon_DancingLights_DeepRothe_HeadFX_Textkey_01,KeepRot:Dummy_HeadFX:Cast:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Intent_Utility_TargetSummon_Impact_PostProcess_01:::0:None::None::0:0::::"
+   ],
+   "PositionEffect": [
+    "VFX_Spells_Cast_Intent_Utility_TargetSummon_DancingLights_DeepRothe_Impact_Texkey_01::Cast:0:None::None::0:0::::"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_DancingLights_DeepRothe_HeadFX_01:Dummy_HeadFX::0:None::None::0:0::::",
+    "VFX_Spells_Prepare_Arcane_Intent_Utility_DancingLights_DeepRothe_01:::0:None::None::0:0::::"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
+    "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
+    "7521e279-1bb3-4105-b32d-8206234836a3(CMBT_Skill_Shout_01_Attack)",
+    "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
+    "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
+   ],
+   "SpellFlags": [
+    "IsConcentration"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Darkness_Drider": {
+   "Name": "Target_Darkness_Drider",
+   "SpellType": "Target",
+   "Parent": "Target_Darkness",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Devour_ShadowMound": {
+   "Name": "Target_Devour_ShadowMound",
+   "SpellType": "Target",
+   "Parent": "Target_Bite",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Devour_Ghoul": {
+   "Name": "Target_Devour_Ghoul",
+   "SpellType": "Target",
+   "Parent": "Target_Bite",
+   "Cooldown": "OncePerTurn",
+   "TargetRadius": "1.5",
+   "SpellRoll": "Attack(AttackType.MeleeUnarmedAttack)",
+   "Icon": "Action_Wolf_Bite",
+   "DisplayName": "Target_Devour_Ghoul_DisplayName",
+   "CastTextEvent": "Cast",
+   "SpellAnimationArcaneMagic": [
+    "6687973c-0787-4189-a980-ff0dcf9c7774(CMBT_Skill_Devour_01_Prepare)",
+    "0dc197cc-2667-4125-ba4c-e2aac0ea7b12(CMBT_Skill_Devour_01_Antic)",
+    "a03544c9-9ac2-46a4-8826-50bab880bada(CMBT_Skill_Devour_01_Attack)",
+    "a17f7e8b-3557-45ee-a9f7-d0e2392c6aee(CMBT_Skill_Devour_01_Recover)",
+    "ee634117-9ebb-442d-baa5-deb39d11284f(CMBT_Skill_Devour_01_Loop)",
+    "dbf36a55-64ff-42d9-b6b4-8e5d0b4f75cb(CMBT_Skill_Devour_01_Dash)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "6687973c-0787-4189-a980-ff0dcf9c7774(CMBT_Skill_Devour_01_Prepare)",
+    "0dc197cc-2667-4125-ba4c-e2aac0ea7b12(CMBT_Skill_Devour_01_Antic)",
+    "a03544c9-9ac2-46a4-8826-50bab880bada(CMBT_Skill_Devour_01_Attack)",
+    "a17f7e8b-3557-45ee-a9f7-d0e2392c6aee(CMBT_Skill_Devour_01_Recover)",
+    "ee634117-9ebb-442d-baa5-deb39d11284f(CMBT_Skill_Devour_01_Loop)",
+    "dbf36a55-64ff-42d9-b6b4-8e5d0b4f75cb(CMBT_Skill_Devour_01_Dash)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "6687973c-0787-4189-a980-ff0dcf9c7774(CMBT_Skill_Devour_01_Prepare)",
+    "0dc197cc-2667-4125-ba4c-e2aac0ea7b12(CMBT_Skill_Devour_01_Antic)",
+    "a03544c9-9ac2-46a4-8826-50bab880bada(CMBT_Skill_Devour_01_Attack)",
+    "a17f7e8b-3557-45ee-a9f7-d0e2392c6aee(CMBT_Skill_Devour_01_Recover)",
+    "ee634117-9ebb-442d-baa5-deb39d11284f(CMBT_Skill_Devour_01_Loop)",
+    "dbf36a55-64ff-42d9-b6b4-8e5d0b4f75cb(CMBT_Skill_Devour_01_Dash)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellFlags": [
+    "IsEnemySpell",
+    "IsAttack",
+    "IsMelee"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_DevourIntellect": {
    "Name": "Target_DevourIntellect",
    "SpellType": "Target",
-   "Parent": "Target_Claws",
-   "Cooldown": "OncePerCombat",
+   "TargetRadius": "1.5",
    "SpellRoll": "not SavingThrow(Ability.Intelligence,12)",
-   "SpellSuccess": [
-    "DealDamage(2d10,Psychic)",
-    "ApplyStatus(DEVOURED_INT,100,10)"
-   ],
+   "TargetConditions": "Character() and not Self() and not Dead()",
+   "Icon": "Spell_IntellectDevourer_DevourIntellect",
    "DisplayName": "Target_DevourIntellect_DisplayName",
-   "SpellFlags": [
-    "IsSpell",
-    "IsMelee"
-   ]
+   "Description": "Target_DevourIntellect_Description",
+   "DescriptionParams": [
+    "DealDamage(2d10,Psychic)"
+   ],
+   "ExtraDescription": "Target_DevourIntellect_ExtraDescription",
+   "TooltipDamageList": [
+    "DealDamage(2d10,Psychic)"
+   ],
+   "TooltipAttackSave": "Intelligence",
+   "TooltipStatusApply": [
+    "ApplyStatus(DEVOURED_INT,100,1)"
+   ],
+   "PrepareEffect": [
+    "VFX_Spells_Prepare_Arcane_Damage_Psychic_AberrantShape_BodyFX_01,KeepRot:Dummy_BodyFX::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Spells_Cast_Damage_Psychic_TargetSingle_AberrantShape_DevourIntellect_Cast_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Attack_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Damage_Psychic_TargetSingle_AberrantShape_DevourIntellect_Cast_CastFX_Textkey_01,Detach:Dummy_CastFX:VFX_Attack_01:0:None::None::0:0::::",
+    "VFX_Spells_Cast_Damage_Psychic_TargetSingle_AberrantShape_DevourIntellect_Cast_CastFX_Textkey_02,Detach:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Damage_Psychic_TargetSingle_AberrantShape_DevourIntellect_Impact_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Attack_01:0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "CastSound": "CrSpell_Cast_DevourIntellect",
+   "TargetSound": "CrSpell_Impact_DevourIntellect",
+   "UseCosts": [
+    "ActionPoint:1"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "6687973c-0787-4189-a980-ff0dcf9c7774(CMBT_Skill_Devour_01_Prepare)",
+    "0dc197cc-2667-4125-ba4c-e2aac0ea7b12(CMBT_Skill_Devour_01_Antic)",
+    "a03544c9-9ac2-46a4-8826-50bab880bada(CMBT_Skill_Devour_01_Attack)",
+    "a17f7e8b-3557-45ee-a9f7-d0e2392c6aee(CMBT_Skill_Devour_01_Recover)",
+    "ee634117-9ebb-442d-baa5-deb39d11284f(CMBT_Skill_Devour_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "6687973c-0787-4189-a980-ff0dcf9c7774(CMBT_Skill_Devour_01_Prepare)",
+    "0dc197cc-2667-4125-ba4c-e2aac0ea7b12(CMBT_Skill_Devour_01_Antic)",
+    "a03544c9-9ac2-46a4-8826-50bab880bada(CMBT_Skill_Devour_01_Attack)",
+    "a17f7e8b-3557-45ee-a9f7-d0e2392c6aee(CMBT_Skill_Devour_01_Recover)",
+    "ee634117-9ebb-442d-baa5-deb39d11284f(CMBT_Skill_Devour_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "6687973c-0787-4189-a980-ff0dcf9c7774(CMBT_Skill_Devour_01_Prepare)",
+    "0dc197cc-2667-4125-ba4c-e2aac0ea7b12(CMBT_Skill_Devour_01_Antic)",
+    "a03544c9-9ac2-46a4-8826-50bab880bada(CMBT_Skill_Devour_01_Attack)",
+    "a17f7e8b-3557-45ee-a9f7-d0e2392c6aee(CMBT_Skill_Devour_01_Recover)",
+    "ee634117-9ebb-442d-baa5-deb39d11284f(CMBT_Skill_Devour_01_Loop)"
+   ],
+   "VerbalIntent": "Damage",
+   "SpellHitAnimationType": "MagicalDamage_Psychic",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_CripplingPinch_Crab_Summon": {
    "Name": "Target_CripplingPinch_Crab_Summon",
@@ -21674,10 +25209,15 @@ const data = {
    "Description": "Target_CripplingPinch_Crab_Summon_Description",
    "DescriptionParams": [
     "DealDamage(1,Slashing)",
-    "Distance(3)"
+    "Distance(3)",
+    "DealDamage(1d4,Piercing)"
    ],
    "TooltipDamageList": [
-    "DealDamage(1,Slashing)"
+    "DealDamage(1,Slashing)",
+    "DealDamage(1d4,Piercing)"
+   ],
+   "TooltipStatusApply": [
+    "ApplyStatus(CRAB_PINCHED,100,2)"
    ],
    "CastEffect": [
     "VFX_Enemies_Crab_CripplingPinch_Cast_01,Detach:Dummy_CastFX:Cast:0:None::None::0:0::::",
@@ -21693,7 +25233,8 @@ const data = {
    "UseCosts": [
     "ActionPoint:1"
    ],
-   "VerbalIntent": "Debuff"
+   "VerbalIntent": "Debuff",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_DigestCorpse_CorpseFlower": {
    "Name": "Target_DigestCorpse_CorpseFlower",
@@ -21726,7 +25267,8 @@ const data = {
     "CannotTargetTerrain",
     "CannotTargetItems",
     "IsEnemySpell"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_EtherealJaunt": {
    "Name": "Target_EtherealJaunt",
@@ -21835,21 +25377,24 @@ const data = {
     "IsSpell",
     "IsHarmful"
    ],
-   "RechargeValues": 6
+   "RechargeValues": 6,
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_ExtraAttack": {
    "Name": "Target_ExtraAttack",
    "SpellType": "Target",
    "Parent": "Target_MainHandAttack",
    "Cooldown": "OncePerTurn",
-   "DisplayName": "Target_ExtraAttack_DisplayName"
+   "DisplayName": "Target_ExtraAttack_DisplayName",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_ExtraAttack_Unarmed": {
    "Name": "Target_ExtraAttack_Unarmed",
    "SpellType": "Target",
    "Parent": "Target_UnarmedAttack",
    "Cooldown": "OncePerTurn",
-   "DisplayName": "Target_ExtraAttack_Unarmed_DisplayName"
+   "DisplayName": "Target_ExtraAttack_Unarmed_DisplayName",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Gore_Minotaur": {
    "Name": "Target_Gore_Minotaur",
@@ -21858,7 +25403,7 @@ const data = {
    "SpellProperties": [
     "IF(not Player(context.Source)):ApplyStatus(SELF,AI_HELPER_EXTRAATTACK,100,1)"
    ],
-   "TargetConditions": "Character() and not Ally()",
+   "TargetConditions": "not Self() and not Dead()",
    "Icon": "unknown",
    "DisplayName": "Target_Gore_Minotaur_DisplayName",
    "Description": "Target_Gore_Minotaur_Description",
@@ -21877,14 +25422,22 @@ const data = {
     "IsMelee",
     "AddFallDamageOnLand",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_ExtraAttack_Minotaur": {
    "Name": "Target_ExtraAttack_Minotaur",
    "SpellType": "Target",
    "Parent": "Target_Gore_Minotaur",
    "Cooldown": "OncePerTurn",
-   "DisplayName": "Target_ExtraAttack_Minotaur_DisplayName"
+   "DisplayName": "Target_ExtraAttack_Minotaur_DisplayName",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_FaerieFire_Drider": {
+   "Name": "Target_FaerieFire_Drider",
+   "SpellType": "Target",
+   "Parent": "Target_FaerieFire",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_FindFamiliar_NPC": {
    "Name": "Target_FindFamiliar_NPC",
@@ -21920,7 +25473,8 @@ const data = {
     "VFX_Enemies_Myconid_Target_Fist_Mid_01:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
    "CastSound": "CrSpell_Cast_Fist",
-   "TargetSound": "CrSpell_Impact_Fist"
+   "TargetSound": "CrSpell_Impact_Fist",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Fist_Myconid_Strong": {
    "Name": "Target_Fist_Myconid_Strong",
@@ -21930,7 +25484,8 @@ const data = {
    "TargetEffect": [
     "VFX_Enemies_Myconid_Target_Fist_Strong_01:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
-   "CastSound": "CrSpell_Cast_Fist"
+   "CastSound": "CrSpell_Cast_Fist",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Fist_Myconid_Weak": {
    "Name": "Target_Fist_Myconid_Weak",
@@ -21940,7 +25495,8 @@ const data = {
    "TargetEffect": [
     "VFX_Enemies_Myconid_Target_Fist_Weak_01:Dummy_BodyFX:Cast:0:None::None::0:0::::"
    ],
-   "CastSound": "CrSpell_Cast_Fist"
+   "CastSound": "CrSpell_Cast_Fist",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Flail_Gnoll_Madness": {
    "Name": "Target_Flail_Gnoll_Madness",
@@ -21977,7 +25533,8 @@ const data = {
     "f59fd33d-5b2e-40aa-a327-be307fea53d0(CMBT_Skill_FlailofMadness_01_Attack)",
     "6549ed7b-40de-45b5-b9f9-d9941b0096f0(CMBT_Skill_FlailofMadness_01_Recover)"
    ],
-   "RechargeValues": "3-6"
+   "RechargeValues": "3-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Flail_Gnoll_Pain": {
    "Name": "Target_Flail_Gnoll_Pain",
@@ -22018,7 +25575,8 @@ const data = {
     "IsMelee",
     "IsHarmful"
    ],
-   "RechargeValues": "5-6"
+   "RechargeValues": "5-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Flail_Gnoll_Paralysis": {
    "Name": "Target_Flail_Gnoll_Paralysis",
@@ -22055,7 +25613,8 @@ const data = {
     "f59fd33d-5b2e-40aa-a327-be307fea53d0(CMBT_Skill_FlailofMadness_01_Attack)",
     "6549ed7b-40de-45b5-b9f9-d9941b0096f0(CMBT_Skill_FlailofMadness_01_Recover)"
    ],
-   "RechargeValues": "3-6"
+   "RechargeValues": "3-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Generic_Goblin": {
    "Name": "Target_Generic_Goblin",
@@ -22071,6 +25630,56 @@ const data = {
    "Name": "Target_Generic_Hobgoblin",
    "SpellType": "Target",
    "Parent": "Target_Claws"
+  },
+  "Target_Gore_DeepRothe": {
+   "Name": "Target_Gore_DeepRothe",
+   "SpellType": "Target",
+   "Parent": "Target_UnarmedAttack",
+   "TargetConditions": "not Self() and not Dead()",
+   "Icon": "Action_DeepRothe_Gore",
+   "DisplayName": "Target_Gore_DeepRothe_DisplayName",
+   "Description": "Target_Gore_DeepRothe_Description",
+   "TargetEffect": [
+    "VFX_Enemies_DeepRothe_Gore_Impact_BodyFX_Texkey_01,FaceSource,Detach:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_DeepRothe_Gore_Cast_HeadFX_Texkey_01,Detach::Cast:0:None::None::0:0::::"
+   ],
+   "CastSound": "CrSpell_Cast_DeepRotheGore",
+   "TargetSound": "CrSpell_Impact_DeepRotheGore",
+   "SpellAnimationArcaneMagic": [
+    "da2bdc9e-d61e-4387-9652-34c180f31c2f(CMBT_Skill_Gore_01_Prepare)",
+    "bd87acd7-3cc1-42f7-b837-29a867b1feb1(CMBT_Skill_Gore_01_Antic)",
+    "2f1ce576-047a-4d92-bdf9-9d7d916029d4(CMBT_Skill_Gore_01_Attack)",
+    "c84adde9-5f4e-46ee-849e-8a376c977de0(CMBT_Skill_Gore_01_Recover)",
+    "9e6bb473-b74d-4a81-bdf9-f40b962ceb6f(CMBT_Skill_Gore_01_Loop)",
+    "f1b53206-0716-48c5-a92b-5e0bec7f1ccb(CMBT_Skill_Gore_01_Dash)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "da2bdc9e-d61e-4387-9652-34c180f31c2f(CMBT_Skill_Gore_01_Prepare)",
+    "bd87acd7-3cc1-42f7-b837-29a867b1feb1(CMBT_Skill_Gore_01_Antic)",
+    "2f1ce576-047a-4d92-bdf9-9d7d916029d4(CMBT_Skill_Gore_01_Attack)",
+    "c84adde9-5f4e-46ee-849e-8a376c977de0(CMBT_Skill_Gore_01_Recover)",
+    "9e6bb473-b74d-4a81-bdf9-f40b962ceb6f(CMBT_Skill_Gore_01_Loop)",
+    "f1b53206-0716-48c5-a92b-5e0bec7f1ccb(CMBT_Skill_Gore_01_Dash)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "da2bdc9e-d61e-4387-9652-34c180f31c2f(CMBT_Skill_Gore_01_Prepare)",
+    "bd87acd7-3cc1-42f7-b837-29a867b1feb1(CMBT_Skill_Gore_01_Antic)",
+    "2f1ce576-047a-4d92-bdf9-9d7d916029d4(CMBT_Skill_Gore_01_Attack)",
+    "c84adde9-5f4e-46ee-849e-8a376c977de0(CMBT_Skill_Gore_01_Recover)",
+    "9e6bb473-b74d-4a81-bdf9-f40b962ceb6f(CMBT_Skill_Gore_01_Loop)",
+    "f1b53206-0716-48c5-a92b-5e0bec7f1ccb(CMBT_Skill_Gore_01_Dash)"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Grief_DarkJusticiar": {
+   "Name": "Target_Grief_DarkJusticiar",
+   "SpellType": "Target",
+   "Parent": "Target_Claws",
+   "DisplayName": "Target_Grief_DarkJusticiar_DisplayName",
+   "Description": "Target_Grief_DarkJusticiar_Description",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_HallucinationSpores": {
    "Name": "Target_HallucinationSpores",
@@ -22115,7 +25724,8 @@ const data = {
     "7f12e62d-90e9-4128-b306-9591608927f5(CMBT_Skill_SporesHallucination_01_Recover)",
     "6380db06-8a5f-4e7b-950b-3021d2827f2e(CMBT_Skill_SporesHallucination_01_Loop)"
    ],
-   "VerbalIntent": "Debuff"
+   "VerbalIntent": "Debuff",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_HarvestTheDead_CorpseFlower": {
    "Name": "Target_HarvestTheDead_CorpseFlower",
@@ -22145,7 +25755,15 @@ const data = {
     "CannotTargetItems",
     "CannotTargetTerrain",
     "IsEnemySpell"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Heal_FleshGolem": {
+   "Name": "Target_Heal_FleshGolem",
+   "SpellType": "Target",
+   "Parent": "Target_CureWounds",
+   "DisplayName": "Target_Heal_FleshGolem_DisplayName",
+   "Description": "Target_Heal_FleshGolem_Description"
   },
   "Target_Hook": {
    "Name": "Target_Hook",
@@ -22171,12 +25789,26 @@ const data = {
     "AddFallDamageOnLand",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_HoldPerson_Redcap": {
    "Name": "Target_HoldPerson_Redcap",
    "SpellType": "Target",
    "Parent": "Target_HoldPerson",
+   "PrepareEffect": [
+    "VFX_Debug_EmptyEffect_01:::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Redcap_HoldPerson_Cast_HandFX_01,KeepRot:Dummy_R_HandFX,Dummy_L_HandFX::0:None::None::0:0::::",
+    "VFX_Enemies_Redcap_HoldPerson_Cast_CastFX_Textkey_01,Detach:Dummy_CastFX:VFX_Cast_02:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Spells_Cast_Intent_Control_TargetSingle_Impact_Root_Textkey_01:Dummy_Root:Cast:0:None::None::0:0::::",
+    "VFX_Enemies_Redcap_HoldPerson_Impact_BodyFX_01:Dummy_BodyFX::0:None::None::0:0::::",
+    "VFX_Enemies_Redcap_HoldPerson_Impact_BodyFX_Textkey_01:Dummy_BodyFX:VFX_Cast_01:0:None::None::0:0::::",
+    "VFX_Enemies_Redcap_HoldPerson_Impact_BodyFX_Textkey_02:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
    "CastTextEvent": "Cast",
    "SpellAnimationArcaneMagic": [
     "3c809c4e-24da-4fa6-b912-6ff108bfe5d7(SPL_HoldPerson_01_Prepare)",
@@ -22192,21 +25824,8 @@ const data = {
     "3c809c4e-24da-4fa6-b912-6ff108bfe5d7(SPL_HoldPerson_01_Prepare)",
     "496cec90-1c0c-49ae-9f68-32870b7e1dbe(SPL_HoldPerson_01_Cast)",
     "812a2026-61c7-4d46-b607-b5b71d34062c(SPL_HoldPerson_01_Recover)"
-   ]
-  },
-  "Target_HuntersMark_NPC": {
-   "Name": "Target_HuntersMark_NPC",
-   "SpellType": "Target",
-   "Parent": "Target_HuntersMark"
-  },
-  "Target_HuntersMark_NoSpellSlot": {
-   "Name": "Target_HuntersMark_NoSpellSlot",
-   "SpellType": "Target",
-   "Parent": "Target_HuntersMark",
-   "UseCosts": [
-    "BonusActionPoint:1"
    ],
-   "RechargeValues": 6
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_IronboundPursuit_RedCap": {
    "Name": "Target_IronboundPursuit_RedCap",
@@ -22257,7 +25876,8 @@ const data = {
     "AddFallDamageOnLand",
     "IsHarmful"
    ],
-   "RechargeValues": "4-6"
+   "RechargeValues": "4-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_LifeDrain_Wraith": {
    "Name": "Target_LifeDrain_Wraith",
@@ -22266,7 +25886,9 @@ const data = {
    "SpellRoll": "not SavingThrow(Ability.Constitution, 14)",
    "TargetConditions": "Character()",
    "Icon": "unknown",
-   "DisplayName": "Target_LifeDrain_Wraith_DisplayName"
+   "DisplayName": "Target_LifeDrain_Wraith_DisplayName",
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_MagicClub_WoodWoad": {
    "Name": "Target_MagicClub_WoodWoad",
@@ -22290,14 +25912,19 @@ const data = {
    "CastEffect": [
     "VFX_Enemies_WoodWoad_MagicClub_Cast_CastFX_01,Detach:Dummy_CastFX:Cast:0:None::None::0:0::::"
    ],
+   "TargetEffect": [
+    "VFX_Enemies_WoodWoad_MagicClub_CastFX_Impact_Texkey_01,Detach:Dummy_BodyFX:Cast:0:None::None::0:0::::"
+   ],
    "CastSound": "CrSpell_Cast_MagicClub",
-   "TargetSound": "CrSpell_Impact_MagicClub"
+   "TargetSound": "CrSpell_Impact_MagicClub",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_MenacingAttack_NPC": {
    "Name": "Target_MenacingAttack_NPC",
    "SpellType": "Target",
    "Parent": "Target_MenacingAttack",
-   "Cooldown": "OncePerCombat"
+   "Cooldown": "OncePerCombat",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack": {
    "Name": "Target_Multiattack",
@@ -22338,7 +25965,53 @@ const data = {
     "IsMelee",
     "IsHarmful",
     "IsEnemySpell"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Multiattack_Automaton": {
+   "Name": "Target_Multiattack_Automaton",
+   "SpellType": "Target",
+   "Parent": "Target_Multiattack",
+   "Description": "Target_Multiattack_Automaton_Description",
+   "DescriptionParams": [
+    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)"
+   ],
+   "TooltipDamageList": [
+    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
+    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)"
+   ],
+   "HitEffect": [
+    "VFX_Enemies_Automaton_MultiAttack_Impact_02,FaceSource:Dummy_BodyFX::0:None::None::0:0::::"
+   ],
+   "CastTextEvent": "Cast",
+   "AlternativeCastTextEvents": [
+    "Cast2"
+   ],
+   "SpellAnimationArcaneMagic": [
+    "6d444cbe-28c7-4f69-9409-9b4871851d9b(CMBT_Skill_MultiAttack_01_Prepare)",
+    "ebd0529b-057e-491f-b124-acfed054728b(CMBT_Skill_MultiAttack_01_Antic)",
+    "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
+    "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
+    "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
+    "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "6d444cbe-28c7-4f69-9409-9b4871851d9b(CMBT_Skill_MultiAttack_01_Prepare)",
+    "ebd0529b-057e-491f-b124-acfed054728b(CMBT_Skill_MultiAttack_01_Antic)",
+    "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
+    "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
+    "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
+    "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "6d444cbe-28c7-4f69-9409-9b4871851d9b(CMBT_Skill_MultiAttack_01_Prepare)",
+    "ebd0529b-057e-491f-b124-acfed054728b(CMBT_Skill_MultiAttack_01_Antic)",
+    "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
+    "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
+    "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
+    "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Bear": {
    "Name": "Target_Multiattack_Bear",
@@ -22373,7 +26046,8 @@ const data = {
     "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Cloaker": {
    "Name": "Target_Multiattack_Cloaker",
@@ -22400,7 +26074,14 @@ const data = {
     "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Multiattack_Drider": {
+   "Name": "Target_Multiattack_Drider",
+   "SpellType": "Target",
+   "Parent": "Target_Multiattack",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Ettercap": {
    "Name": "Target_Multiattack_Ettercap",
@@ -22436,7 +26117,14 @@ const data = {
     "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Multiattack_FleshGolem": {
+   "Name": "Target_Multiattack_FleshGolem",
+   "SpellType": "Target",
+   "Parent": "Target_Multiattack",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_GiantBadger": {
    "Name": "Target_Multiattack_GiantBadger",
@@ -22463,7 +26151,8 @@ const data = {
     "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Gnoll": {
    "Name": "Target_Multiattack_Gnoll",
@@ -22507,7 +26196,8 @@ const data = {
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
    ],
-   "RechargeValues": "5-6"
+   "RechargeValues": "5-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Gnoll_Flind_Melee": {
    "Name": "Target_Multiattack_Gnoll_Flind_Melee",
@@ -22552,7 +26242,8 @@ const data = {
    "WeaponTypes": [
     "Melee"
    ],
-   "RechargeValues": "2-6"
+   "RechargeValues": "2-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Harpy": {
    "Name": "Target_Multiattack_Harpy",
@@ -22589,7 +26280,8 @@ const data = {
     "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_HookHorror": {
    "Name": "Target_Multiattack_HookHorror",
@@ -22633,7 +26325,8 @@ const data = {
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Myconid": {
    "Name": "Target_Multiattack_Myconid",
@@ -22668,48 +26361,8 @@ const data = {
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
-  },
-  "Target_Multiattack_Automaton": {
-   "Name": "Target_Multiattack_Automaton",
-   "SpellType": "Target",
-   "Parent": "Target_Multiattack",
-   "Description": "Target_Multiattack_Automaton_Description",
-   "DescriptionParams": [
-    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)"
    ],
-   "TooltipDamageList": [
-    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)",
-    "DealDamage(MainMeleeWeapon, MainMeleeWeaponDamageType)"
-   ],
-   "CastTextEvent": "Cast",
-   "AlternativeCastTextEvents": [
-    "Cast2"
-   ],
-   "SpellAnimationArcaneMagic": [
-    "6d444cbe-28c7-4f69-9409-9b4871851d9b(CMBT_Skill_MultiAttack_01_Prepare)",
-    "ebd0529b-057e-491f-b124-acfed054728b(CMBT_Skill_MultiAttack_01_Antic)",
-    "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
-    "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
-    "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
-    "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ],
-   "SpellAnimationDivineMagic": [
-    "6d444cbe-28c7-4f69-9409-9b4871851d9b(CMBT_Skill_MultiAttack_01_Prepare)",
-    "ebd0529b-057e-491f-b124-acfed054728b(CMBT_Skill_MultiAttack_01_Antic)",
-    "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
-    "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
-    "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
-    "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ],
-   "SpellAnimationNoneMagic": [
-    "6d444cbe-28c7-4f69-9409-9b4871851d9b(CMBT_Skill_MultiAttack_01_Prepare)",
-    "ebd0529b-057e-491f-b124-acfed054728b(CMBT_Skill_MultiAttack_01_Antic)",
-    "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
-    "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
-    "caa0d92c-5cd1-4248-9a4a-f2a8e404dac3(CMBT_Skill_MultiAttack_01_Loop)",
-    "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Owlbear": {
    "Name": "Target_Multiattack_Owlbear",
@@ -22744,7 +26397,8 @@ const data = {
     "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
     "2b6afcc6-c9c1-4dc1-9904-88bebecb892f(CMBT_Skill_MultiAttack_01_Recover)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Redcap": {
    "Name": "Target_Multiattack_Redcap",
@@ -22792,7 +26446,14 @@ const data = {
    ],
    "WeaponTypes": [
     "Melee"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Multiattack_ShadowMound": {
+   "Name": "Target_Multiattack_ShadowMound",
+   "SpellType": "Target",
+   "Parent": "Target_Multiattack",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Multiattack_Werewolf": {
    "Name": "Target_Multiattack_Werewolf",
@@ -22831,7 +26492,8 @@ const data = {
     "eeca2c0a-5f81-411e-aad8-b72362322900(CMBT_Skill_MultiAttack_01_Attack)",
     "6d444cbe-28c7-4f69-9409-9b4871851d9b(CMBT_Skill_MultiAttack_01_Prepare)",
     "e6d40932-427f-4699-a0de-66f124d905b1(CMBT_Skill_MultiAttack_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_OpenWounds_Redcap": {
    "Name": "Target_OpenWounds_Redcap",
@@ -22871,7 +26533,8 @@ const data = {
     "be806e00-f4fa-4078-b1ad-f3b5cf49776d(SPL_OpenWounds_Prepare)",
     "89d18db2-07fc-48de-a2c9-5ad6857cc732(SPL_OpenWounds_Cast)",
     "33176205-04c0-430d-867b-8e54d876fd00(SPL_OpenWounds_Recover)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_PacifyingSpores": {
    "Name": "Target_PacifyingSpores",
@@ -22918,13 +26581,15 @@ const data = {
     "7feea097-93fa-4a04-b5a7-7d10593cbd60(CMBT_Skill_SporesPacifying_01_Attack)",
     "45ddf2aa-92ef-4579-8108-5c01b6e01005(CMBT_Skill_SporesPacifying_01_Recover)",
     "49460c9c-7620-44b8-8e27-ffaeb6c3b66f(CMBT_Skill_SporesPacifying_01_Loop)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_PushingAttack_NPC": {
    "Name": "Target_PushingAttack_NPC",
    "SpellType": "Target",
    "Parent": "Target_PushingAttack",
-   "Cooldown": "OncePerCombat"
+   "Cooldown": "OncePerCombat",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_ParalyzingRay_Spectator": {
    "Name": "Target_ParalyzingRay_Spectator",
@@ -22932,7 +26597,7 @@ const data = {
    "Parent": "Target_MainHandAttack",
    "Cooldown": "OncePerTurn",
    "TargetRadius": 18,
-   "SpellRoll": "not SavingThrow(Ability.Constitution, 13)",
+   "SpellRoll": "not SavingThrow(Ability.Constitution, 13, AdvantageOnParalyzed())",
    "SpellSuccess": [
     "ApplyStatus(PARALYZED,100,3)"
    ],
@@ -22964,6 +26629,7 @@ const data = {
     "CannotRotate"
    ],
    "RechargeValues": "4-6",
+   "SpellAnimationIntentType": "Aggressive",
    "SourceLimbIndex": 4
   },
   "Target_WoundingRay_Spectator": {
@@ -22992,6 +26658,8 @@ const data = {
    "SpellFlags": [
     "CannotRotate"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Internal",
+   "SpellAnimationIntentType": "Aggressive",
    "SourceLimbIndex": 3
   },
   "Target_ConfusionRay_Spectator": {
@@ -23010,13 +26678,14 @@ const data = {
    "SpellFlags": [
     "CannotRotate"
    ],
+   "SpellAnimationIntentType": "Aggressive",
    "SourceLimbIndex": 9
   },
   "Target_FearRay_Spectator": {
    "Name": "Target_FearRay_Spectator",
    "SpellType": "Target",
    "Parent": "Target_ParalyzingRay_Spectator",
-   "SpellRoll": "not SavingThrow(Ability.Wisdom,13)",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom,13, AdvantageOnFrightened())",
    "SpellSuccess": [
     "ApplyStatus(FRIGHTENED,100,3)"
    ],
@@ -23040,19 +26709,32 @@ const data = {
    "SpellFlags": [
     "CannotRotate"
    ],
+   "SpellAnimationIntentType": "Aggressive",
    "SourceLimbIndex": 10
   },
   "Target_Pseudopod_Mimic": {
    "Name": "Target_Pseudopod_Mimic",
    "SpellType": "Target",
-   "Parent": "Target_UnarmedAttack"
+   "Parent": "Target_UnarmedAttack",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Pull_DarkVine": {
+   "Name": "Target_Pull_DarkVine",
+   "SpellType": "Target",
+   "Parent": "Target_ThornWhip",
+   "SpellSuccess": [
+    "TARGET:IF(TargetSizeEqualOrSmaller(Size.Large)):Force(3)",
+    " DealDamage(1d6,Piercing)"
+   ],
+   "DisplayName": "Target_Pull_DarkVine_DisplayName",
+   "Description": "Target_Pull_DarkVine_Description",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_RangersCompanion_NPC": {
    "Name": "Target_RangersCompanion_NPC",
    "SpellType": "Target",
    "Parent": "Target_RangersCompanion",
    "Cooldown": "OncePerCombat",
-   "TargetConditions": "not (not Player(context.Source) and IsConcentrating(context.Source))",
    "SpellFlags": [
     "CannotTargetCharacter",
     "CannotTargetItems",
@@ -23096,6 +26778,9 @@ const data = {
    "Icon": "Action_Raven_RendVision",
    "DisplayName": "Target_RendVision_Raven_Summon_DisplayName",
    "Description": "Target_RendVision_Raven_Summon_Description",
+   "TooltipStatusApply": [
+    "ApplyStatus(BLINDED,100,2)"
+   ],
    "TargetEffect": [
     "VFX_Enemies_Raven_RendVision_Target_Cast_HeadFX_01,KeepRot,FaceSource,Detach:Dummy_HeadFX:Cast:0:None::None::0:0::::"
    ],
@@ -23110,7 +26795,12 @@ const data = {
    "TargetSound": "CrSpell_Impact_RendVision",
    "UseCosts": [
     "ActionPoint:1"
-   ]
+   ],
+   "SpellFlags": [
+    "IsMelee",
+    "IsHarmful"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_RendVision_RavenFamiliar_Summon": {
    "Name": "Target_RendVision_RavenFamiliar_Summon",
@@ -23118,7 +26808,7 @@ const data = {
    "Parent": "Target_RendVision_Raven_Summon",
    "SpellSuccess": [
     "DealDamage(1, Piercing)",
-    " ApplyStatus(BLINDED,100,1)"
+    "ApplyStatus(BLINDED,100,1)"
    ],
    "DescriptionParams": [
     "DealDamage(1, Piercing)"
@@ -23126,14 +26816,18 @@ const data = {
    "TooltipDamageList": [
     "DealDamage(1, Piercing)"
    ],
+   "TooltipStatusApply": [
+    "ApplyStatus(BLINDED,100,1)"
+   ],
    "CastSound": "CrSpell_Cast_RendVision",
-   "TargetSound": "CrSpell_Impact_RendVision"
+   "TargetSound": "CrSpell_Impact_RendVision",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Scare_Quasit": {
    "Name": "Target_Scare_Quasit",
    "SpellType": "Target",
    "TargetRadius": 6,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, 10)",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, 10, AdvantageOnFrightened())",
    "SpellSuccess": [
     "ApplyStatus(FRIGHTENED,100,2)"
    ],
@@ -23175,7 +26869,8 @@ const data = {
     "d172e037-7041-4352-9a20-5f4b185f9ef1(CMBT_Skill_Shout_01_Recover)",
     "5bcdefbb-2194-46c2-ac77-0b2d8472a5f7(CMBT_Skill_Shout_01_Loop)"
    ],
-   "VerbalIntent": "Control"
+   "VerbalIntent": "Control",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Scare_Quasit_Summon": {
    "Name": "Target_Scare_Quasit_Summon",
@@ -23196,21 +26891,24 @@ const data = {
    ],
    "UseCosts": [
     "ActionPoint:1"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Slash_NPC": {
    "Name": "Target_Slash_NPC",
    "SpellType": "Target",
    "Parent": "Target_Slash",
-   "Cooldown": "OncePerTurn",
-   "RechargeValues": "5-6"
+   "Cooldown": "OncePerCombat",
+   "RechargeValues": "5-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Smash_NPC": {
    "Name": "Target_Smash_NPC",
    "SpellType": "Target",
    "Parent": "Target_Smash",
-   "Cooldown": "OncePerTurn",
-   "RechargeValues": "5-6"
+   "Cooldown": "OncePerCombat",
+   "RechargeValues": "5-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_ShadowTeleport_Meazel": {
    "Name": "Target_ShadowTeleport_Meazel",
@@ -23225,7 +26923,8 @@ const data = {
    "SpellType": "Target",
    "Parent": "Target_Shove",
    "Cooldown": "OncePerTurn",
-   "TargetConditions": "not Self() and not Ally() and TargetSizeEqualOrSmaller(Size.Large) and not Grounded() and Character()"
+   "TargetConditions": "not Self() and not Ally() and TargetSizeEqualOrSmaller(Size.Large) and not Grounded() and Character()",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Shove_Bugbear": {
    "Name": "Target_Shove_Bugbear",
@@ -23236,7 +26935,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Actions_Cast_Common_Impact_Overlay_01:::0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Shove_Gnoll": {
    "Name": "Target_Shove_Gnoll",
@@ -23255,12 +26955,14 @@ const data = {
     "a57fc614-ed20-4574-936b-bdcc6cebd36a(CMBT_Skill_Shove_01_Recover)",
     "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
     "200ab854-a989-4a6a-8ac9-4b20aecaccda(CMBT_Skill_Shove_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Shove_Harpy": {
    "Name": "Target_Shove_Harpy",
    "SpellType": "Target",
-   "Parent": "Target_Shove_NPC"
+   "Parent": "Target_Shove_NPC",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Shove_Hobgoblin": {
    "Name": "Target_Shove_Hobgoblin",
@@ -23274,7 +26976,8 @@ const data = {
    ],
    "PrepareEffect": [
     "VFX_Debug_EmptyEffect_01:::0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Shove_Ogre": {
    "Name": "Target_Shove_Ogre",
@@ -23285,7 +26988,8 @@ const data = {
    ],
    "TargetEffect": [
     "VFX_Actions_Cast_Common_Impact_Overlay_01,KeepRot::Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Slam_Ogre": {
    "Name": "Target_Slam_Ogre",
@@ -23313,7 +27017,8 @@ const data = {
     "AddFallDamageOnLand",
     "IsHarmful"
    ],
-   "RechargeValues": "5-6"
+   "RechargeValues": "5-6",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Slam_MudElemental": {
    "Name": "Target_Slam_MudElemental",
@@ -23321,7 +27026,17 @@ const data = {
    "Parent": "Target_UnarmedAttack",
    "Icon": "Action_Slam",
    "DisplayName": "Target_Slam_MudElemental_DisplayName",
-   "Description": "Target_Slam_MudElemental_Description"
+   "Description": "Target_Slam_MudElemental_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Slam_VampireSquid_Tentacle": {
+   "Name": "Target_Slam_VampireSquid_Tentacle",
+   "SpellType": "Target",
+   "Parent": "Target_UnarmedAttack",
+   "Cooldown": "OncePerTurn",
+   "Icon": "Action_Slam",
+   "DisplayName": "Target_Slam_VampireSquid_Tentacle_DisplayName",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Slam_Zombie": {
    "Name": "Target_Slam_Zombie",
@@ -23347,7 +27062,8 @@ const data = {
     "6606c30b-be1c-4f17-ae6b-1a591c80b18c(CMBT_Melee_RHand_01_Antic)",
     "f4ac302b-1569-404f-bd52-1fe443e265df(CMBT_Melee_RHand_01_Attack)",
     "e8a5c57f-855b-4227-acaa-11e8ce8d7d64(CMBT_Melee_RHand_01_Recover)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Sting_Imp": {
    "Name": "Target_Sting_Imp",
@@ -23382,12 +27098,14 @@ const data = {
     "a2144fdb-83c3-4442-b567-d3eff9e48686(CMBT_Skill_Sting_01_Attack)",
     "c43c0cac-9447-4b88-a784-2f0d80a45104(CMBT_Skill_Sting_01_Recover)",
     "9ffd7e8c-1eba-4bb9-bc90-b1971c5de637(CMBT_Skill_Sting_01_Loop)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Sting_Imp_Summon": {
    "Name": "Target_Sting_Imp_Summon",
    "SpellType": "Target",
-   "Parent": "Target_Sting_Imp"
+   "Parent": "Target_Sting_Imp",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_StrengthDrain_Shadow": {
    "Name": "Target_StrengthDrain_Shadow",
@@ -23403,11 +27121,34 @@ const data = {
    "UseCosts": [
     "ActionPoint:1"
    ],
+   "SpellAnimationArcaneMagic": [
+    "18fefbef-446c-4bba-9212-4694caf04da5(CMBT_Skill_StrengthDrain_01_Prepare)",
+    "c579c259-f5ee-44ea-b42a-1c723af4d7bd(CMBT_Skill_StrengthDrain_01_Antic)",
+    "52f39423-c280-4521-9a0a-94d7b722306e(CMBT_Skill_StrengthDrain_01_Attack)",
+    "52c77f47-9634-4451-aef2-1cf06e4dba16(CMBT_Skill_StrengthDrain_01_Recover)",
+    "7be9dbf9-a748-4720-9923-79ab79d02671(CMBT_Skill_StrengthDrain_01_Loop)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "18fefbef-446c-4bba-9212-4694caf04da5(CMBT_Skill_StrengthDrain_01_Prepare)",
+    "c579c259-f5ee-44ea-b42a-1c723af4d7bd(CMBT_Skill_StrengthDrain_01_Antic)",
+    "52f39423-c280-4521-9a0a-94d7b722306e(CMBT_Skill_StrengthDrain_01_Attack)",
+    "52c77f47-9634-4451-aef2-1cf06e4dba16(CMBT_Skill_StrengthDrain_01_Recover)",
+    "7be9dbf9-a748-4720-9923-79ab79d02671(CMBT_Skill_StrengthDrain_01_Loop)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "18fefbef-446c-4bba-9212-4694caf04da5(CMBT_Skill_StrengthDrain_01_Prepare)",
+    "c579c259-f5ee-44ea-b42a-1c723af4d7bd(CMBT_Skill_StrengthDrain_01_Antic)",
+    "52f39423-c280-4521-9a0a-94d7b722306e(CMBT_Skill_StrengthDrain_01_Attack)",
+    "52c77f47-9634-4451-aef2-1cf06e4dba16(CMBT_Skill_StrengthDrain_01_Recover)",
+    "7be9dbf9-a748-4720-9923-79ab79d02671(CMBT_Skill_StrengthDrain_01_Loop)"
+   ],
    "SpellFlags": [
     "IsAttack",
     "IsEnemySpell",
-    "Stealth"
-   ]
+    "Stealth",
+    "Invisible"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Summon_MudMephit": {
    "Name": "Target_Summon_MudMephit",
@@ -23527,7 +27268,8 @@ const data = {
     "CannotTargetTerrain",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Tentacles_MindFlayer": {
    "Name": "Target_Tentacles_MindFlayer",
@@ -23569,13 +27311,14 @@ const data = {
     "f8d1de3f-8fd1-42b2-87a5-d83ce4937e8c(CMBT_Skill_Tentacles_01_Recover)",
     "7bb52cd4-0b1c-4926-9165-fa92b75876a3(CMBT_Melee_RHand_01_Loop)",
     "66cb2d8a-f5c5-4edd-8c1c-e2c03c80d3f7(CMBT_Skill_Tentacles_01_Dash)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_TerrifyingGlare_Scarecrow": {
    "Name": "Target_TerrifyingGlare_Scarecrow",
    "SpellType": "Target",
    "TargetRadius": 9,
-   "SpellRoll": "not SavingThrow(Ability.Wisdom, 11)",
+   "SpellRoll": "not SavingThrow(Ability.Wisdom, 11, AdvantageOnFrightened())",
    "SpellSuccess": [
     "ApplyStatus(FRIGHTENED,100,2)",
     " ApplyStatus(HOLD_PERSON,100,2)"
@@ -23608,13 +27351,23 @@ const data = {
     "IsSpell",
     "IsEnemySpell",
     "IsHarmful"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_ThornWhip_ShadowMound": {
+   "Name": "Target_ThornWhip_ShadowMound",
+   "SpellType": "Target",
+   "Parent": "Target_ThornWhip",
+   "DisplayName": "Target_ThornWhip_ShadowMound_DisplayName",
+   "Description": "Target_ThornWhip_ShadowMound_Description",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_TripAttack_NPC": {
    "Name": "Target_TripAttack_NPC",
    "SpellType": "Target",
    "Parent": "Target_TripAttack",
-   "Cooldown": "OncePerCombat"
+   "Cooldown": "OncePerCombat",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Tusk_Boar": {
    "Name": "Target_Tusk_Boar",
@@ -23628,19 +27381,31 @@ const data = {
    ],
    "CastTextEvent": "Cast",
    "CastSound": "CrSpell_Cast_Tusk",
-   "TargetSound": "CrSpell_Impact_Tusk"
+   "TargetSound": "CrSpell_Impact_Tusk",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Tusk_Boar_Summon": {
    "Name": "Target_Tusk_Boar_Summon",
    "SpellType": "Target",
-   "Parent": "Target_Tusk_Boar"
+   "Parent": "Target_Tusk_Boar",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_UnarmedAttack_Gnoll_Newborn": {
    "Name": "Target_UnarmedAttack_Gnoll_Newborn",
    "SpellType": "Target",
    "Parent": "Target_UnarmedAttack",
    "Icon": "unknown",
-   "DisplayName": "Target_UnarmedAttack_Gnoll_Newborn_DisplayName"
+   "DisplayName": "Target_UnarmedAttack_Gnoll_Newborn_DisplayName",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_DesignateTarget_ShadowMound": {
+   "Name": "Target_DesignateTarget_ShadowMound",
+   "SpellType": "Target",
+   "Parent": "Target_Web",
+   "Icon": "unknown",
+   "DisplayName": "Target_DesignateTarget_ShadowMound_DisplayName",
+   "Description": "Target_DesignateTarget_ShadowMound_Description",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Web_Spider": {
    "Name": "Target_Web_Spider",
@@ -23692,22 +27457,42 @@ const data = {
    "VerbalIntent": "Control",
    "SpellFlags": [
     "HasSomaticComponent",
-    "HasHighGroundRangeExtension"
+    "HasHighGroundRangeExtension",
+    "IsHarmful"
    ],
    "RechargeValues": "4-6",
+   "SpellAnimationIntentType": "Aggressive",
    "MemoryCost": 1
   },
   "Target_Web_Spider_Summon": {
    "Name": "Target_Web_Spider_Summon",
    "SpellType": "Target",
    "Parent": "Target_Web_Spider",
-   "Cooldown": "OncePerCombat",
    "CastEffect": [
     "VFX_Enemies_Ettercap_Web_Cast_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
    ],
    "PositionEffect": [
     "VFX_Enemies_Ettercap_Impact_Web_Textkey_01::Cast:0:None::None::0:0::::"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Web_Spider_WildShape": {
+   "Name": "Target_Web_Spider_WildShape",
+   "SpellType": "Target",
+   "Parent": "Target_Web_Spider",
+   "SpellProperties": [
+    "GROUND:CreateSurface(4.5,10,Web)"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Ettercap_Web_Cast_01:Dummy_CastFX:Cast:0:None::None::0:0::::"
+   ],
+   "PositionEffect": [
+    "VFX_Enemies_Ettercap_Impact_Web_Textkey_01::Cast:0:None::None::0:0::::"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ],
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_Web_Ettercap": {
    "Name": "Target_Web_Ettercap",
@@ -23739,7 +27524,28 @@ const data = {
     "37ab59f8-18b3-4e09-adf2-e7751239c2f7(CMBT_Skill_Web_01_Attack)",
     "ea1f4b27-e75b-49a2-aec2-e4473c5f5653(CMBT_Skill_Web_01_Recover)",
     "be54887b-b0b7-4f3a-92aa-807ab21ca880(CMBT_Skill_Web_01_Loop)"
-   ]
+   ],
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Whip_DarkVine": {
+   "Name": "Target_Whip_DarkVine",
+   "SpellType": "Target",
+   "Parent": "Target_ThornWhip",
+   "SpellSuccess": [
+    "TARGET:IF(TargetSizeEqualOrSmaller(Size.Large)):Force(3)",
+    " DealDamage(1d6,Piercing)"
+   ],
+   "DisplayName": "Target_Whip_DarkVine_DisplayName",
+   "Description": "Target_Whip_DarkVine_Description",
+   "SpellAnimationIntentType": "Aggressive"
+  },
+  "Target_Whip_DarkVine_Giant": {
+   "Name": "Target_Whip_DarkVine_Giant",
+   "SpellType": "Target",
+   "Parent": "Target_Whip_DarkVine",
+   "DisplayName": "Target_Whip_DarkVine_Giant_DisplayName",
+   "Description": "Target_Whip_DarkVine_Giant_Description",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_PLAYERS_TADPOLE": {
    "Name": "Target_PLAYERS_TADPOLE",
@@ -23769,7 +27575,8 @@ const data = {
     "7c194893-2879-4afe-84dc-9ea842fe0a43(SPL_Arcane_Utility_01_Cast)",
     "a000af58-a7c7-48d4-a746-c19242ef00ac(SPL_Arcane_Utility_01_Recover)"
    ],
-   "VerbalIntent": "Utility"
+   "VerbalIntent": "Utility",
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Target_ITEMS": {
    "Name": "Target_ITEMS",
@@ -23933,32 +27740,32 @@ const data = {
     "VFX_Actions_Cast_Common_Throw_HandFX_Textkey_01:Dummy_R_HandFX:Cast:0:None::None::0:0::::",
     "VFX_Actions_Cast_Common_Throw_HandFX_Textkey_01:Dummy_L_HandFX:Cast:0:None::None::0:0::::"
    ],
-   "PreviewCursor": "Arrow",
+   "PreviewCursor": "Cast",
    "CastTextEvent": "Cast",
    "CastSound": "Action_Cast_Throw",
    "UseCosts": [
     "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
-    "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_Combat_01_Prepare)",
-    "f2803838-31cf-471b-85d1-92fa2d0eb7c2(CMBT_Skill_Throw_Far_Combat_01_Antic)",
-    "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_Combat_01_Attack)",
-    "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_Combat_01_Recover)",
-    "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_Combat_01_Loop)"
+    "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_01_Prepare)",
+    "f2803838-31cf-471b-85d1-92fa2d0eb7c2(CMBT_Skill_Throw_Far_01_Antic)",
+    "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_01_Attack)",
+    "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_01_Recover)",
+    "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_01_Loop)"
    ],
    "SpellAnimationDivineMagic": [
-    "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_Combat_01_Prepare)",
-    "f2803838-31cf-471b-85d1-92fa2d0eb7c2(CMBT_Skill_Throw_Far_Combat_01_Antic)",
-    "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_Combat_01_Attack)",
-    "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_Combat_01_Recover)",
-    "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_Combat_01_Loop)"
+    "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_01_Prepare)",
+    "f2803838-31cf-471b-85d1-92fa2d0eb7c2(CMBT_Skill_Throw_Far_01_Antic)",
+    "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_01_Attack)",
+    "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_01_Recover)",
+    "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_01_Loop)"
    ],
    "SpellAnimationNoneMagic": [
-    "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_Combat_01_Prepare)",
-    "f2803838-31cf-471b-85d1-92fa2d0eb7c2(CMBT_Skill_Throw_Far_Combat_01_Antic)",
-    "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_Combat_01_Attack)",
-    "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_Combat_01_Recover)",
-    "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_Combat_01_Loop)"
+    "b1befe57-ee3e-4126-8c9d-3b6cec7eb3f4(CMBT_Skill_Throw_Far_01_Prepare)",
+    "f2803838-31cf-471b-85d1-92fa2d0eb7c2(CMBT_Skill_Throw_Far_01_Antic)",
+    "4be0751c-9fca-4c35-9337-6bf8a321c516(CMBT_Skill_Throw_Far_01_Attack)",
+    "86b52093-596c-4054-bb1d-2dbdfcdc4347(CMBT_Skill_Throw_Far_01_Recover)",
+    "e1726462-6f35-4551-af40-5247a314f38d(CMBT_Skill_Throw_Far_01_Loop)"
    ],
    "VerbalIntent": "Utility",
    "SpellFlags": [
@@ -24067,6 +27874,7 @@ const data = {
     "863fabe7-d990-42a3-8961-7898c207bcb1(CMBT_Skill_Sweep_01_Loop)",
     "0002afee-5ad9-4109-ae64-9b2571601226(CMBT_Skill_Sweep_01_Dash)"
    ],
+   "VerbalIntent": "Damage",
    "WeaponTypes": [
     "Melee"
    ],
@@ -24074,7 +27882,8 @@ const data = {
     "IsHarmful",
     "IsDefaultWeaponAction"
    ],
-   "RechargeValues": 6
+   "RechargeValues": 6,
+   "SpellAnimationIntentType": "Aggressive"
   },
   "Zone_WEAPON ATTACK": {
    "Name": "Zone_WEAPON ATTACK",
@@ -24154,6 +27963,7 @@ const data = {
     "IsSpell",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_External",
    "MemoryCost": 1,
    "PowerLevel": 1
   },
@@ -24483,6 +28293,7 @@ const data = {
     "IsSpell",
     "IsHarmful"
    ],
+   "SpellHitAnimationType": "MagicalDamage_Electric",
    "MemoryCost": 1
   },
   "Zone_Thunderwave": {
@@ -24600,7 +28411,7 @@ const data = {
    "SurfaceLifetime": 10,
    "SurfaceGrowStep": 5,
    "SurfaceGrowInterval": 10,
-   "SpellRoll": "not SavingThrow(Ability.Dexterity, 11)",
+   "SpellRoll": "not SavingThrow(Ability.Dexterity, 11,AdvantageOnRestrained(),DisadvantageOnRestrained())",
    "SpellSuccess": [
     "ApplyStatus(MEPHIT_MUD_RESTRAINED,100,10)"
    ],
@@ -24698,6 +28509,27 @@ const data = {
    ],
    "RechargeValues": "4-6"
   },
+  "Zone_InkGeyser_VampireSquid": {
+   "Name": "Zone_InkGeyser_VampireSquid",
+   "SpellType": "Zone",
+   "Parent": "Zone_ColorSpray",
+   "Cooldown": "OncePerTurn",
+   "SpellSuccess": [
+    "DealDamage(1d8,Bludgeoning)",
+    "ApplyStatus(WET, 100, 2)",
+    "IF(not SavingThrow(Ability.Constitution, 12)):ApplyStatus(BLIND,100,2)"
+   ],
+   "TargetConditions": "Character()",
+   "DisplayName": "Zone_InkGeyser_VampireSquid_DisplayName",
+   "Description": "Zone_InkGeyser_VampireSquid_Description"
+  },
+  "Zone_DigestiveSap_ShadowMound": {
+   "Name": "Zone_DigestiveSap_ShadowMound",
+   "SpellType": "Zone",
+   "Parent": "Zone_ColorSpray",
+   "DisplayName": "Zone_DigestiveSap_ShadowMound_DisplayName",
+   "Description": "Zone_DigestiveSap_ShadowMound_Description"
+  },
   "Projectile_HAG_HagGrenade_Fire": {
    "Name": "Projectile_HAG_HagGrenade_Fire",
    "SpellType": "Projectile",
@@ -24764,7 +28596,7 @@ const data = {
    "Level": 0,
    "TargetRadius": 26,
    "SpellSuccess": [
-    "IF(not SavingThrow(Ability.Constitution, SourceSpellDC())):ApplyStatus(POISONED,100,2)",
+    "IF(not SavingThrow(Ability.Constitution, SourceSpellDC(),AdvantageOnPoisoned())):ApplyStatus(POISONED,100,2)",
     "DealDamage(3d8,Poison)"
    ],
    "TargetConditions": "Character() and not Dead() and Enemy()",
@@ -24966,9 +28798,6 @@ const data = {
    "SpellType": "Projectile",
    "Parent": "Projectile_AcidArrow",
    "CastTextEvent": "Cast",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
    "SpellAnimationArcaneMagic": [
     "303ebd17-5b4e-46c6-ac4a-315c2aa29c6d(CMBT_Skill_Throw_Short_01_Prepare)",
     "97e3b980-9905-428b-b682-68462777d628(CMBT_Skill_Throw_Short_01_Antic)",
@@ -24986,17 +28815,13 @@ const data = {
     "97e3b980-9905-428b-b682-68462777d628(CMBT_Skill_Throw_Short_01_Antic)",
     "f43888ef-1069-40d8-9159-ca0bc413fd5f(CMBT_Skill_Throw_Short_01_Attack)",
     "29574072-3390-485e-8257-5a65d6703e5f(CMBT_Skill_Throw_Short_01_Recover)"
-   ],
-   "RechargeValues": "5-6"
+   ]
   },
   "Projectile_FOR_Ogre_FireBolt": {
    "Name": "Projectile_FOR_Ogre_FireBolt",
    "SpellType": "Projectile",
    "Parent": "Projectile_FireBolt",
    "CastTextEvent": "Cast",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
    "SpellAnimationArcaneMagic": [
     "303ebd17-5b4e-46c6-ac4a-315c2aa29c6d(CMBT_Skill_Throw_Short_01_Prepare)",
     "97e3b980-9905-428b-b682-68462777d628(CMBT_Skill_Throw_Short_01_Antic)",
@@ -25035,7 +28860,7 @@ const data = {
     "DealDamage(2d6,Bludgeoning)"
    ],
    "ProjectileCount": 1,
-   "Template": "348013df-7958-4ca9-ac9f-80337e054bee",
+   "Template": "4603448d-c3ee-401c-a152-1ac7b23cce38",
    "Icon": "unknown",
    "DisplayName": "Projectile_GOB_GoblinPriestess_StatueDebris_DisplayName",
    "SpellAnimationNoneMagic": [
@@ -25174,7 +28999,8 @@ const data = {
     "HasHighGroundRangeExtension",
     "IgnoreVisionBlock",
     "CannotTargetCharacter",
-    "Stealth"
+    "Stealth",
+    "Invisible"
    ]
   },
   "Projectile_FOR_Goblin_Jump": {
@@ -25308,7 +29134,7 @@ const data = {
     "IsTrap",
     "IsHarmful"
    ],
-   "SpellHitAnimationType": "MagicalDamage"
+   "SpellHitAnimationType": "MagicalDamage_Electric"
   },
   "Projectile_HAG_RayOfSickness_Staff": {
    "Name": "Projectile_HAG_RayOfSickness_Staff",
@@ -25323,7 +29149,8 @@ const data = {
    "SpellType": "Projectile",
    "Parent": "Projectile_Fireball_Trap",
    "SpellProperties": [
-    "Force(8)"
+    "Force(8)",
+    "DealDamage(1d4,Force)"
    ],
    "TargetRadius": 6,
    "TargetConditions": "not Self() and not Dead()",
@@ -25358,16 +29185,20 @@ const data = {
     "ActionPoint:1"
    ]
   },
-  "Projectile_HAG_RedcapSpikes": {
-   "Name": "Projectile_HAG_RedcapSpikes",
+  "Projectile_HAG_RedcapSpikes_Trap": {
+   "Name": "Projectile_HAG_RedcapSpikes_Trap",
    "SpellType": "Projectile",
    "Parent": "Projectile_SpikedBulb",
    "SpellProperties": [
     "IF(Character()):ApplyStatus(BLEEDING,100,3)",
     "IF(Character()):ApplyStatus(HAG_SMALLCUT,100,10)"
    ],
-   "TargetRadius": "0.5",
-   "AreaRadius": 1
+   "TargetRadius": 0,
+   "AreaRadius": 0,
+   "SpellFlags": [
+    "IsTrap",
+    "IsHarmful"
+   ]
   },
   "Projectile_UND_DuergarRaft_Hammer_Explosion": {
    "Name": "Projectile_UND_DuergarRaft_Hammer_Explosion",
@@ -25408,12 +29239,6 @@ const data = {
     "IsHarmful"
    ]
   },
-  "Projectile_DEN_Halsin_PoisonSpray": {
-   "Name": "Projectile_DEN_Halsin_PoisonSpray",
-   "SpellType": "Projectile",
-   "Parent": "Projectile_PoisonSpray",
-   "RechargeValues": "2-6"
-  },
   "Projectile_UND_ThayanCellar_OrbExplosion": {
    "Name": "Projectile_UND_ThayanCellar_OrbExplosion",
    "SpellType": "Projectile",
@@ -25424,6 +29249,39 @@ const data = {
    "Name": "Projectile_DEN_GoblinShot",
    "SpellType": "Projectile",
    "Parent": "Projectile_MainHandAttack"
+  },
+  "Projectile_SCL_Distillery_PoisonCloud_Trap": {
+   "Name": "Projectile_SCL_Distillery_PoisonCloud_Trap",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_PoisonCloud_Trap",
+   "SpellProperties": [
+    "GROUND:CreateSurface(3,3,PoisonCloud)"
+   ],
+   "ExplodeRadius": 3,
+   "SpellRoll": "not SavingThrow(Ability.Constitution, 15)",
+   "SpellSuccess": [
+    "DealDamage(8d6,Poison)"
+   ]
+  },
+  "Projectile_SHA_Shadowquake_SummonJusticiar": {
+   "Name": "Projectile_SHA_Shadowquake_SummonJusticiar",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_Fireball",
+   "SpellProperties": [
+    "GROUND:Summon(7e33f957-e22a-4654-b1bf-c06a269f3e53, -1)"
+   ],
+   "TargetRadius": 0,
+   "AreaRadius": 0
+  },
+  "Projectile_SHA_Shadowquake_SummonJusticiarElite": {
+   "Name": "Projectile_SHA_Shadowquake_SummonJusticiarElite",
+   "SpellType": "Projectile",
+   "Parent": "Projectile_Fireball",
+   "SpellProperties": [
+    "GROUND:Summon(89419ac3-95d1-4c90-9a29-7b6445acb270, -1)"
+   ],
+   "TargetRadius": 0,
+   "AreaRadius": 0
   },
   "ProjectileStrike_MOO_DesireDream_FlamingFistArtillery": {
    "Name": "ProjectileStrike_MOO_DesireDream_FlamingFistArtillery",
@@ -25803,15 +29661,12 @@ const data = {
    ],
    "RechargeValues": "4-6"
   },
-  "Shout_FOR_Ogre_MirrorImage": {
-   "Name": "Shout_FOR_Ogre_MirrorImage",
+  "Shout_FOR_Ogre_Blur": {
+   "Name": "Shout_FOR_Ogre_Blur",
    "SpellType": "Shout",
-   "Parent": "Shout_MirrorImage",
+   "Parent": "Shout_Blur",
    "Cooldown": "OncePerCombat",
    "CastTextEvent": "Cast",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
    "SpellAnimationArcaneMagic": [
     "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
     "d8b7f668-db2b-43b0-9707-5da2ed2cf27e(CMBT_Skill_Shout_01_Antic)",
@@ -25898,7 +29753,7 @@ const data = {
     "ApplyStatus(SELF,BLESS,100,1)"
    ],
    "TargetConditions": "Self()",
-   "Icon": "unknown",
+   "Icon": "Action_SacrificeToLoviatar",
    "DisplayName": "Shout_GOB_PainPriest_DaggerSpell_DisplayName",
    "Description": "Shout_GOB_PainPriest_DaggerSpell_Description",
    "DescriptionParams": [
@@ -25962,6 +29817,7 @@ const data = {
    ],
    "CastTextEvent": "VFX_Cast_01",
    "CastSound": "CrSpell_Cast_ShellKidStone",
+   "TargetSound": "CrSpell_Impact_ShellKidStone",
    "SpellAnimationArcaneMagic": [
     "03496c4a-49e0-4132-b585-3e5ecd1ad8e5(SPL_Arcane_Buff_01_Prepare)",
     "895ce382-397d-4b9a-9e8f-6ee3b1ff3a13(UTIL_Drink_01)",
@@ -25977,33 +29833,6 @@ const data = {
     "895ce382-397d-4b9a-9e8f-6ee3b1ff3a13(UTIL_Drink_01)",
     "a9682ef9-5d9e-4ac0-8144-2c7fe6eb868c(SPL_Arcane_Buff_01_Loop)"
    ]
-  },
-  "Shout_SHA_Nightsong_Nightfall": {
-   "Name": "Shout_SHA_Nightsong_Nightfall",
-   "SpellType": "Shout",
-   "Parent": "Shout_RadianceOfTheDawn",
-   "Cooldown": "OncePerTurn",
-   "SpellProperties": [
-    "IF(Item()):RemoveStatus(BURNING)"
-   ],
-   "DeathType": "Necrotic",
-   "SpellRoll": "SavingThrow(Ability.Constitution,14)",
-   "SpellSuccess": [
-    "IF(Character()):DealDamage(3d8,Necrotic)"
-   ],
-   "TargetConditions": "not Self() and not Ally()",
-   "AoEConditions": "not Self() and not Ally()",
-   "Icon": "unknown",
-   "DisplayName": "Shout_SHA_Nightsong_Nightfall_DisplayName",
-   "Description": "Shout_SHA_Nightsong_Nightfall_Description",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
-   "VerbalIntent": "Damage",
-   "SpellFlags": [
-    "IsEnemySpell"
-   ],
-   "RechargeValues": "3-6"
   },
   "Shout_UND_Invisibility_ShadowOfMenzoberranzan": {
    "Name": "Shout_UND_Invisibility_ShadowOfMenzoberranzan",
@@ -26126,18 +29955,15 @@ const data = {
   "Shout_DEN_Halsin_WildShape_Bear": {
    "Name": "Shout_DEN_Halsin_WildShape_Bear",
    "SpellType": "Shout",
-   "Parent": "Shout_WildShape_Bear_NPC",
-   "Cooldown": "OncePerCombat",
+   "Parent": "Shout_WildShape_Bear_Black_NPC_Moon",
    "SpellProperties": [
     "AI_ONLY:CAST:ApplyStatus(SELF,AI_STATUS_FAKE,100,3)",
     "AI_IGNORE:CAST:ApplyStatus(GOB_WolfPens_WILDSHAPE_BEAR,100,-1)"
-   ]
-  },
-  "Shout_DEN_Halsin_Blur": {
-   "Name": "Shout_DEN_Halsin_Blur",
-   "SpellType": "Shout",
-   "Parent": "Shout_Blur",
-   "Cooldown": "OncePerCombat"
+   ],
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ],
+   "RechargeValues": "4-6"
   },
   "Shout_GOB_GoblinPriest_CallForHelp": {
    "Name": "Shout_GOB_GoblinPriest_CallForHelp",
@@ -26150,6 +29976,37 @@ const data = {
    "TargetConditions": "Self()",
    "DisplayName": "Shout_GOB_GoblinPriest_CallForHelp_DisplayName",
    "Description": "Shout_GOB_GoblinPriest_CallForHelp_Description"
+  },
+  "Shout_CRA_DyingMindflayer_Enthrall": {
+   "Name": "Shout_CRA_DyingMindflayer_Enthrall",
+   "SpellType": "Shout",
+   "SpellProperties": [
+    "ApplyStatus(CRA_ENTHRALLED,100,-1)"
+   ],
+   "AreaRadius": 9,
+   "TargetConditions": "not Self()",
+   "DisplayName": "Shout_CRA_DyingMindflayer_Enthrall_DisplayName",
+   "Description": "Shout_CRA_DyingMindflayer_Enthrall_Description",
+   "CastTextEvent": "Cast",
+   "SpellAnimationArcaneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
+    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)"
+   ],
+   "SpellAnimationDivineMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
+    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)"
+   ],
+   "SpellAnimationNoneMagic": [
+    "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
+    "bcc3b0d9-f04f-4448-aab0-e0ad641167cc(SPL_Somatic_Self_01_Cast)",
+    "bf924cc6-8b39-4c3b-b1c0-eda264cf6150(SPL_Somatic_Self_01_Recover)"
+   ],
+   "SpellFlags": [
+    "IsEnemySpell",
+    "IsConcentration"
+   ]
   },
   "Target_MOO_Dominate_Mindflayer": {
    "Name": "Target_MOO_Dominate_Mindflayer",
@@ -26416,32 +30273,6 @@ const data = {
     "ActionPoint:1"
    ]
   },
-  "Target_DEN_Halsin_WildShape_Bear_Multiattack": {
-   "Name": "Target_DEN_Halsin_WildShape_Bear_Multiattack",
-   "SpellType": "Target",
-   "Parent": "Target_Multiattack_Bear"
-  },
-  "Target_DEN_Halsin_CharmPerson": {
-   "Name": "Target_DEN_Halsin_CharmPerson",
-   "SpellType": "Target",
-   "Parent": "Target_CharmPerson"
-  },
-  "Target_DEN_Halsin_HealingWord": {
-   "Name": "Target_DEN_Halsin_HealingWord",
-   "SpellType": "Target",
-   "Parent": "Target_HealingWord"
-  },
-  "Target_DEN_Halsin_MistyStep": {
-   "Name": "Target_DEN_Halsin_MistyStep",
-   "SpellType": "Target",
-   "Parent": "Target_MistyStep"
-  },
-  "Target_DEN_Halsin_RangersCompanion_Wolf": {
-   "Name": "Target_DEN_Halsin_RangersCompanion_Wolf",
-   "SpellType": "Target",
-   "Parent": "Target_RangersCompanion_Wolf_NPC",
-   "Cooldown": "OncePerCombat"
-  },
   "Target_DEN_Nettie_HealingWord": {
    "Name": "Target_DEN_Nettie_HealingWord",
    "SpellType": "Target",
@@ -26473,6 +30304,16 @@ const data = {
     "414bbf02-2918-4f01-83fb-1ddc7a588d88(SPL_Arcane_Healing_01_Prepare)",
     "ab7b6aac-b3c9-4918-8f17-f777a94dcb5e(SPL_Somatic_Target_01_Cast)",
     "57211a11-ed0b-46d7-9369-81df25a85df6(SPL_Somatic_Target_01_Recover)"
+   ]
+  },
+  "Target_DEN_Entangle_Staff": {
+   "Name": "Target_DEN_Entangle_Staff",
+   "SpellType": "Target",
+   "Parent": "Target_Entangle",
+   "Cooldown": "OncePerRest",
+   "DisplayName": "Target_DEN_Entangle_Staff_DisplayName",
+   "UseCosts": [
+    "ActionPoint:1"
    ]
   },
   "Target__FOR": {
@@ -26515,7 +30356,7 @@ const data = {
    ],
    "CastSound": "CrSpell_Cast_BroodmotherCall",
    "UseCosts": [
-    "BonusActionPoint:1"
+    "ActionPoint:1"
    ],
    "SpellAnimationArcaneMagic": [
     "5e57443f-284e-47b2-915e-5b6417db269c(CMBT_Skill_Shout_01_Prepare)",
@@ -26552,31 +30393,7 @@ const data = {
    "Name": "Target_UNI_MistyStep_DrowCommander_Amulet",
    "SpellType": "Target",
    "Parent": "Target_MistyStep",
-   "SpellSchool": "Conjuration",
    "Cooldown": "OncePerShortRest",
-   "SpellProperties": [
-    "GROUND:TeleportSource()"
-   ],
-   "TargetRadius": 18,
-   "Icon": "Spell_Conjuration_MistyStep",
-   "PrepareEffect": [
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_MistyStep_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_01:Dummy_R_HandFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_02:Dummy_L_HandFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_01:Dummy_EyeFX_01::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_02:Dummy_EyeFX_02::0:None::None::0:0::::"
-   ],
-   "CastEffect": [
-    "VFX_Spells_Cast_Intent_Utility_TargetJump_BodyFX_01:Dummy_Root::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Utility_TargetJump_BodyFX_02:Dummy_BodyFX::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Utility_Stealth_MistyStep_Root_02:Dummy_Root:VFX_Somatic_03:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Utility_Stealth_MistyStep_Root_01:Dummy_Root:VFX_Somatic_01:0:None::None::0:0::::"
-   ],
-   "CastTextEvent": "Cast",
-   "CastSound": "Spell_Cast_Utility_MistyStep_L1to3",
-   "VocalComponentSound": "Vocal_Component_Teleport",
-   "TargetSound": "Spell_Impact_Utility_MistyStep_L1to3",
    "UseCosts": [
     "BonusActionPoint:1"
    ],
@@ -26594,18 +30411,7 @@ const data = {
     "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
     "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
     "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)"
-   ],
-   "VerbalIntent": "Utility",
-   "SpellFlags": [
-    "HasVerbalComponent",
-    "IsSpell",
-    "CannotTargetItems",
-    "CannotTargetCharacter",
-    "HasHighGroundRangeExtension",
-    "RangeIgnoreVerticalThreshold"
-   ],
-   "MemoryCost": 1,
-   "LineOfSightFlags": "AddSourceHeight"
+   ]
   },
   "Target_GOB_CureWounds_SeluneAmulet": {
    "Name": "Target_GOB_CureWounds_SeluneAmulet",
@@ -26616,7 +30422,7 @@ const data = {
     "ApplyStatus(SLEEP,100,2,,,,not SavingThrow(Ability.Constitution,10))",
     " RegainHitPoints(1d8)"
    ],
-   "Icon": "unknown",
+   "Icon": "Action_SelunesDream",
    "DisplayName": "Target_GOB_CureWounds_SeluneAmulet_DisplayName",
    "Description": "Target_GOB_CureWounds_SeluneAmulet_Description",
    "UseCosts": [
@@ -26698,12 +30504,12 @@ const data = {
     "VFX_Debug_EmptyEffect_01:::0:None::None::0:0::::"
    ],
    "CastEffect": [
-    "VFX_Enemies_Goblin_Telekinesis_Cast_HandFX_Textkey_01:Dummy_R_HandFX:Cast:0:None::None::0:0::::"
+    "VFX_Enemies_Goblin_Telekinesis_Cast_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::"
    ],
    "TargetEffect": [
-    "VFX_Enemies_Goblin_Telekinesis_Impact_Dummy_Textkey_01,FaceSource:Dummy_FX_01:VFX_Somatic_01:0:None::None::0:0::::"
+    "VFX_Enemies_Goblin_Telekinesis_Impact_Dummy_Textkey_01,FaceSource:Dummy_FX_01:VFX_Cast_02:0:None::None::0:0::::"
    ],
-   "BeamEffect": "VFX_Enemies_Goblin_Telekinesis_Beam_01:Dummy_CastFX:Dummy_FX_01:Cast::",
+   "BeamEffect": "VFX_Enemies_Goblin_Telekinesis_Beam_01:Dummy_CastFX:Dummy_FX_01:VFX_Cast_01::",
    "CastTextEvent": "Cast",
    "CastSound": "CrSpell_Cast_GoblinTelekinesis",
    "TargetSound": "CrSpell_Impact_GoblinTelekinesis",
@@ -26744,6 +30550,16 @@ const data = {
    "Icon": "unknown",
    "DisplayName": "Target_GOB_Priestess_Telekinesis_Pull_DisplayName",
    "Description": "Target_GOB_Priestess_Telekinesis_Pull_Description",
+   "PrepareEffect": [
+    "VFX_Debug_EmptyEffect_01:::0:None::None::0:0::::"
+   ],
+   "CastEffect": [
+    "VFX_Enemies_Goblin_Telekinesis_Cast_HandFX_Textkey_01:Dummy_R_HandFX:VFX_Cast_01:0:None::None::0:0::::"
+   ],
+   "TargetEffect": [
+    "VFX_Enemies_Goblin_Telekinesis_Impact_BodyFX_Textkey_01,FaceSource:Dummy_BodyFX:VFX_Cast_02:0:None::None::0:0::::"
+   ],
+   "BeamEffect": "VFX_Enemies_Goblin_Telekinesis_Beam_01:Dummy_CastFX:Dummy_BodyFX:VFX_Cast_01::",
    "UseCosts": [
     "BonusActionPoint:1"
    ],
@@ -27381,31 +31197,7 @@ const data = {
    "Name": "Target_UNI_MistyStep_NightWalkers",
    "SpellType": "Target",
    "Parent": "Target_MistyStep",
-   "SpellSchool": "Conjuration",
    "Cooldown": "OncePerShortRest",
-   "SpellProperties": [
-    "GROUND:TeleportSource()"
-   ],
-   "TargetRadius": 18,
-   "Icon": "Spell_Conjuration_MistyStep",
-   "PrepareEffect": [
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_MistyStep_Root_01,KeepRot:Dummy_Root::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_CastFX_01:Dummy_CastFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_01:Dummy_R_HandFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_OverlayHands_02:Dummy_L_HandFX::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_01:Dummy_EyeFX_01::0:None::None::0:0::::",
-    "VFX_Spells_Prepare_Arcane_Intent_Utility_EyeFX_02:Dummy_EyeFX_02::0:None::None::0:0::::"
-   ],
-   "CastEffect": [
-    "VFX_Spells_Cast_Intent_Utility_TargetJump_BodyFX_01:Dummy_Root::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Utility_TargetJump_BodyFX_02:Dummy_BodyFX::0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Utility_Stealth_MistyStep_Root_02:Dummy_Root:VFX_Somatic_03:0:None::None::0:0::::",
-    "VFX_Spells_Cast_Intent_Utility_Stealth_MistyStep_Root_01:Dummy_Root:VFX_Somatic_01:0:None::None::0:0::::"
-   ],
-   "CastTextEvent": "Cast",
-   "CastSound": "Spell_Cast_Utility_MistyStep_L1to3",
-   "VocalComponentSound": "Vocal_Component_Teleport",
-   "TargetSound": "Spell_Impact_Utility_MistyStep_L1to3",
    "UseCosts": [
     "BonusActionPoint:1"
    ],
@@ -27423,18 +31215,7 @@ const data = {
     "dd86aa43-8189-4d9f-9a5c-454b5fe4a197(SPL_Arcane_Utility_01_Prepare)",
     "39daf365-ec06-49a8-81f3-9032640699d7(SPL_Somatic_Target_StrikeVertical_01_Cast)",
     "5c400e93-0266-499c-a2e1-75d53358460f(SPL_Somatic_Target_StrikeVertical_01_Recover)"
-   ],
-   "VerbalIntent": "Utility",
-   "SpellFlags": [
-    "HasVerbalComponent",
-    "IsSpell",
-    "CannotTargetItems",
-    "CannotTargetCharacter",
-    "HasHighGroundRangeExtension",
-    "RangeIgnoreVerticalThreshold"
-   ],
-   "MemoryCost": 1,
-   "LineOfSightFlags": "AddSourceHeight"
+   ]
   },
   "Target_UND_LoneDuergar_InflictWounds": {
    "Name": "Target_UND_LoneDuergar_InflictWounds",
@@ -27568,121 +31349,31 @@ const data = {
     "ActionPoint:1"
    ]
   },
+  "Target_UND_MyconidSovereign_BlissSpores": {
+   "Name": "Target_UND_MyconidSovereign_BlissSpores",
+   "SpellType": "Target",
+   "Parent": "Target_AnimatingSpores",
+   "Cooldown": "OncePerTurn",
+   "SpellProperties": [
+    "ApplyStatus(UND_BLISS_SPORES,100,2)"
+   ],
+   "TargetConditions": "not Item() and not Dead()",
+   "Icon": "unknown",
+   "DisplayName": "Target_UND_MyconidSovereign_BlissSpores_DisplayName",
+   "Description": "Target_UND_MyconidSovereign_BlissSpores_Description",
+   "UseCosts": [
+    "BonusActionPoint:1"
+   ]
+  },
   "Target__SHA": {
    "Name": "Target__SHA",
    "SpellType": "Target",
    "Parent": "Target_MainHandAttack"
   },
-  "Target_SHA_Nightsong_Shadowgrasp": {
-   "Name": "Target_SHA_Nightsong_Shadowgrasp",
+  "Target_SHA_Necromancer_SkeletonFakeAttack": {
+   "Name": "Target_SHA_Necromancer_SkeletonFakeAttack",
    "SpellType": "Target",
-   "Parent": "Target_HoldPerson",
-   "SpellRoll": "not SavingThrow(Ability.Constitution, 16)",
-   "SpellSuccess": [
-    "ApplyStatus(SHA_NIGHTSONG_SHADOWGRASP,100,10)"
-   ],
-   "Icon": "unknown",
-   "DisplayName": "Target_SHA_Nightsong_Shadowgrasp_DisplayName",
-   "Description": "Target_SHA_Nightsong_Shadowgrasp_Description",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
-   "SpellFlags": [
-    "IsEnemySpell"
-   ],
-   "MemoryCost": 0
-  },
-  "Target_SHA_Nightsong_EmergePush": {
-   "Name": "Target_SHA_Nightsong_EmergePush",
-   "SpellType": "Target",
-   "Parent": "Target_Shove",
-   "SpellProperties": [
-    "Force(1)"
-   ],
-   "SpellFlags": [
-    "IsMelee",
-    "CannotTargetItems",
-    "CannotTargetTerrain"
-   ]
-  },
-  "Target_SHA_Nightsong_LoomingDespair": {
-   "Name": "Target_SHA_Nightsong_LoomingDespair",
-   "SpellType": "Target",
-   "Parent": "Target_CreateWater",
-   "Icon": "unknown",
-   "Description": "Target_SHA_Nightsong_LoomingDespair_Description",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
-   "SpellFlags": [
-    "IsEnemySpell"
-   ],
-   "MemoryCost": 0
-  },
-  "Target_SHA_Nightsong_DarkWhispers": {
-   "Name": "Target_SHA_Nightsong_DarkWhispers",
-   "SpellType": "Target",
-   "Parent": "Target_Summon_MudMephit",
-   "SpellProperties": [
-    "AI_IGNORE:GROUND:Summon(122ce989-2603-4bf4-a3ee-8b2513c39d5e, -1,,,)",
-    "AI_ONLY:CAST:ApplyStatus(AI_STATUS_FAKE,100)"
-   ],
-   "TargetConditions": "not Character() and not Item()",
-   "Icon": "unknown",
-   "DisplayName": "Target_SHA_Nightsong_DarkWhispers_DisplayName",
-   "Description": "Target_SHA_Nightsong_DarkWhispers_Description",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
-   "SpellFlags": [
-    "IsEnemySpell"
-   ],
-   "MemoryCost": 0
-  },
-  "Target_SHA_Nightsong_Darkness": {
-   "Name": "Target_SHA_Nightsong_Darkness",
-   "SpellType": "Target",
-   "Parent": "Target_Darkness",
-   "Icon": "unknown",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
-   "SpellFlags": [
-    "IsEnemySpell"
-   ],
-   "MemoryCost": 0
-  },
-  "Target_SHA_Nightsong_ShadowStep": {
-   "Name": "Target_SHA_Nightsong_ShadowStep",
-   "SpellType": "Target",
-   "Parent": "Target_MistyStep",
-   "SpellProperties": [
-    "GROUND:ApplyStatus(SELF,SHA_NIGHTSONG_SHADOWSTEP_ADVANTAGE,100,1)",
-    "GROUND:TeleportSource()"
-   ],
-   "Icon": "unknown",
-   "DisplayName": "Target_SHA_Nightsong_ShadowStep_DisplayName",
-   "Description": "Target_SHA_Nightsong_ShadowStep_Description",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
-   "SpellFlags": [
-    "IsEnemySpell"
-   ],
-   "MemoryCost": 0
-  },
-  "Target_SHA_Nightsong_ChillTouch": {
-   "Name": "Target_SHA_Nightsong_ChillTouch",
-   "SpellType": "Target",
-   "Parent": "Target_ChillTouch",
-   "Icon": "unknown",
-   "UseCosts": [
-    "ActionPoint:1"
-   ],
-   "SpellFlags": [
-    "IsEnemySpell"
-   ],
-   "MemoryCost": 0
+   "Parent": "Target_MainHandAttack"
   },
   "Target__OUT": {
    "Name": "Target__OUT",
@@ -27852,7 +31543,7 @@ const data = {
   "Zone_PLA_StuckHalfElf_Backdraft": {
    "Name": "Zone_PLA_StuckHalfElf_Backdraft",
    "SpellType": "Zone",
-   "SurfaceType": "SporeBlackCloud",
+   "SurfaceType": "SporeGreenCloud",
    "SpellRoll": "not SavingThrow(Ability.Strength, 18)",
    "SpellSuccess": [
     "DealDamage(1d6,Thunder)",
@@ -27920,12 +31611,6 @@ const data = {
    "SpellType": "Zone",
    "Parent": "Zone_MindBlast_MindFlayer",
    "RechargeValues": 6
-  },
-  "Zone_DEN_Halsin_Thunderwave": {
-   "Name": "Zone_DEN_Halsin_Thunderwave",
-   "SpellType": "Zone",
-   "Parent": "Zone_Thunderwave",
-   "RechargeValues": "2-6"
   }
  },
  "types": {

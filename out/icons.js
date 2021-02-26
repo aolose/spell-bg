@@ -35,6 +35,12 @@ const icons={
   "V1": 448.5,
   "V2": 511.5
  },
+ "Action_Cat_Claws": {
+  "U1": 832.5,
+  "U2": 895.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "Action_Cat_DrawAttention": {
   "U1": 640.5,
   "U2": 703.5,
@@ -83,6 +89,18 @@ const icons={
   "V1": 0.5,
   "V2": 63.5
  },
+ "Action_DeepRothe_Charge": {
+  "U1": 1216.5,
+  "U2": 1279.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Action_DeepRothe_Gore": {
+  "U1": 1152.5,
+  "U2": 1215.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
  "Action_Dip": {
   "U1": 448.5,
   "U2": 511.5,
@@ -113,6 +131,18 @@ const icons={
   "V1": 128.5,
   "V2": 191.5
  },
+ "Action_DireWolfPack_Howl": {
+  "U1": 320.5,
+  "U2": 383.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "Action_ExhaleFire": {
+  "U1": 896.5,
+  "U2": 959.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "Action_Flurry": {
   "U1": 896.5,
   "U2": 959.5,
@@ -124,6 +154,24 @@ const icons={
   "U2": 639.5,
   "V1": 448.5,
   "V2": 511.5
+ },
+ "Action_GiantBadger_Bite": {
+  "U1": 1088.5,
+  "U2": 1151.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Action_GiantBadger_Burrow": {
+  "U1": 448.5,
+  "U2": 511.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "Action_GiantBadger_Claws": {
+  "U1": 1024.5,
+  "U2": 1087.5,
+  "V1": 768.5,
+  "V2": 831.5
  },
  "Action_Glut_BlackSporeCloud": {
   "U1": 64.5,
@@ -299,6 +347,12 @@ const icons={
   "V1": 448.5,
   "V2": 511.5
  },
+ "Action_Raven_BeakAttack": {
+  "U1": 640.5,
+  "U2": 703.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "Action_Raven_RendVision": {
   "U1": 1280.5,
   "U2": 1343.5,
@@ -340,6 +394,12 @@ const icons={
   "U2": 1407.5,
   "V1": 0.5,
   "V2": 63.5
+ },
+ "Action_ShroudedInShadow": {
+  "U1": 960.5,
+  "U2": 1023.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "Action_Singing": {
   "U1": 1792.5,
@@ -527,17 +587,113 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "Skill_Druid_FlamingSphere_Move": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Skill_Druid_FlamingSphere_Ram": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Skill_Druid_MoonBeam_Move": {
+  "U1": 960.5,
+  "U2": 1023.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Skill_Druid_NaturalRecovery": {
+  "U1": 576.5,
+  "U2": 639.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Skill_Druid_WildShape": {
+  "U1": 512.5,
+  "U2": 575.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "Skill_Druid_WildShape_Bear": {
   "U1": 960.5,
   "U2": 1023.5,
   "V1": 576.5,
   "V2": 639.5
  },
+ "Skill_Druid_WildShape_Cat": {
+  "U1": 704.5,
+  "U2": 767.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "Skill_Druid_WildShape_DeepRothe": {
+  "U1": 832.5,
+  "U2": 895.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Skill_Druid_WildShape_DeepRothé": {
+  "U1": 1920.5,
+  "U2": 1983.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Skill_Druid_WildShape_DireWolf": {
+  "U1": 1984.5,
+  "U2": 2047.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Skill_Druid_WildShape_Dismiss": {
+  "U1": 896.5,
+  "U2": 959.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Skill_Druid_WildShape_GiantBadger": {
+  "U1": 1856.5,
+  "U2": 1919.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Skill_Druid_WildShape_GiantSpider": {
+  "U1": 0.5,
+  "U2": 63.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Skill_Druid_WildShape_Heal": {
+  "U1": 256.5,
+  "U2": 319.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "Skill_Druid_WildShape_Heal_2": {
+  "U1": 192.5,
+  "U2": 255.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "Skill_Druid_WildShape_PolarBear": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
  "Skill_Druid_WildShape_Rat": {
   "U1": 1024.5,
   "U2": 1087.5,
   "V1": 576.5,
   "V2": 639.5
+ },
+ "Skill_Druid_WildShape_Raven": {
+  "U1": 768.5,
+  "U2": 831.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "Skill_Fighter_ActionSurge": {
   "U1": 448.5,
@@ -665,6 +821,12 @@ const icons={
   "V1": 512.5,
   "V2": 575.5
  },
+ "Spell_Abjuration_ProtectionFromPoison": {
+  "U1": 1728.5,
+  "U2": 1791.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
  "Spell_Abjuration_Resistance": {
   "U1": 0.5,
   "U2": 63.5,
@@ -682,6 +844,12 @@ const icons={
   "U2": 1407.5,
   "V1": 512.5,
   "V2": 575.5
+ },
+ "Spell_Abjuration_Transmutation_Shillelagh": {
+  "U1": 704.5,
+  "U2": 767.5,
+  "V1": 768.5,
+  "V2": 831.5
  },
  "Spell_Abjuration_WardingBond": {
   "U1": 1472.5,
@@ -737,6 +905,18 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "Spell_Conjuration_Entangled": {
+  "U1": 128.5,
+  "U2": 191.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Conjuration_Entangled_2": {
+  "U1": 1024.5,
+  "U2": 1087.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "Spell_Conjuration_FindFamiliar": {
   "U1": 0.5,
   "U2": 63.5,
@@ -772,6 +952,12 @@ const icons={
   "U2": 1855.5,
   "V1": 320.5,
   "V2": 383.5
+ },
+ "Spell_Conjuration_FlamingSphere": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 768.5,
+  "V2": 831.5
  },
  "Spell_Conjuration_FogCloud": {
   "U1": 832.5,
@@ -826,6 +1012,24 @@ const icons={
   "U2": 959.5,
   "V1": 64.5,
   "V2": 127.5
+ },
+ "Spell_Conjuration_ProduceFlame_Dismiss": {
+  "U1": 384.5,
+  "U2": 447.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Conjuration_ProduceFlame_Hurl": {
+  "U1": 320.5,
+  "U2": 383.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Conjuration_ProduceFlame_Light": {
+  "U1": 448.5,
+  "U2": 511.5,
+  "V1": 768.5,
+  "V2": 831.5
  },
  "Spell_Conjuration_Web": {
   "U1": 448.5,
@@ -989,6 +1193,78 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "Spell_Enchantment_Hex_Charisma": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Charisma_2": {
+  "U1": 896.5,
+  "U2": 959.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Constitution": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Constitution_2": {
+  "U1": 960.5,
+  "U2": 1023.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Dexterity": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Dexterity_2": {
+  "U1": 1024.5,
+  "U2": 1087.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Intelligence": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Intelligence_2": {
+  "U1": 1088.5,
+  "U2": 1151.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Strenght": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Strenght_2": {
+  "U1": 1152.5,
+  "U2": 1215.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Wisdom": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
+ "Spell_Enchantment_Hex_Wisdom_2": {
+  "U1": 1216.5,
+  "U2": 1279.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
  "Spell_Enchantment_HoldPerson": {
   "U1": 576.5,
   "U2": 639.5,
@@ -1139,6 +1415,12 @@ const icons={
   "V1": 0.5,
   "V2": 63.5
  },
+ "Spell_Evocation_FlameBlade": {
+  "U1": 1984.5,
+  "U2": 2047.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
  "Spell_Evocation_GuidingBolt": {
   "U1": 1856.5,
   "U2": 1919.5,
@@ -1186,6 +1468,12 @@ const icons={
   "U2": 255.5,
   "V1": 192.5,
   "V2": 255.5
+ },
+ "Spell_Evocation_Moonbeam": {
+  "U1": 1792.5,
+  "U2": 1855.5,
+  "V1": 704.5,
+  "V2": 767.5
  },
  "Spell_Evocation_PrayerOfHealing": {
   "U1": 1344.5,
@@ -1337,6 +1625,18 @@ const icons={
   "V1": 256.5,
   "V2": 319.5
  },
+ "Spell_IntellectDevourer_DevourIntellect": {
+  "U1": 576.5,
+  "U2": 639.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "Spell_IntellectDevourer_SynapticDischarge": {
+  "U1": 384.5,
+  "U2": 447.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "Spell_Necromancy_Blindness": {
   "U1": 1792.5,
   "U2": 1855.5,
@@ -1403,6 +1703,12 @@ const icons={
   "V1": 128.5,
   "V2": 191.5
  },
+ "Spell_Transmutation_Barkskin": {
+  "U1": 192.5,
+  "U2": 255.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
  "Spell_Transmutation_CreateWater": {
   "U1": 1792.5,
   "U2": 1855.5,
@@ -1414,6 +1720,60 @@ const icons={
   "U2": 1983.5,
   "V1": 448.5,
   "V2": 511.5
+ },
+ "Spell_Transmutation_DestroyWater": {
+  "U1": 256.5,
+  "U2": 319.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_DestroyWater_2": {
+  "U1": 64.5,
+  "U2": 127.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "Spell_Transmutation_EnhanceAbility": {
+  "U1": 1920.5,
+  "U2": 1983.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_EnhanceAbility_BearsEndurance": {
+  "U1": 1856.5,
+  "U2": 1919.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_EnhanceAbility_BullsStrenght": {
+  "U1": 1728.5,
+  "U2": 1791.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_EnhanceAbility_CatsGrace": {
+  "U1": 1792.5,
+  "U2": 1855.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_EnhanceAbility_EaglesSplendor": {
+  "U1": 1664.5,
+  "U2": 1727.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_EnhanceAbility_FoxsCunning": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_EnhanceAbility_OwlsWisdom": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 768.5,
+  "V2": 831.5
  },
  "Spell_Transmutation_Enlarge": {
   "U1": 1472.5,
@@ -1432,6 +1792,24 @@ const icons={
   "U2": 2047.5,
   "V1": 448.5,
   "V2": 511.5
+ },
+ "Spell_Transmutation_Goodberry": {
+  "U1": 512.5,
+  "U2": 575.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_HeatMetal": {
+  "U1": 64.5,
+  "U2": 127.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
+ "Spell_Transmutation_HeatMetal_Reapply": {
+  "U1": 128.5,
+  "U2": 191.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "Spell_Transmutation_Knock": {
   "U1": 128.5,
@@ -1475,11 +1853,23 @@ const icons={
   "V1": 320.5,
   "V2": 383.5
  },
+ "Spell_Transmutation_SpikeGrowth": {
+  "U1": 640.5,
+  "U2": 703.5,
+  "V1": 768.5,
+  "V2": 831.5
+ },
  "Spell_Transmutation_Thaumaturgy": {
   "U1": 512.5,
   "U2": 575.5,
   "V1": 576.5,
   "V2": 639.5
+ },
+ "Spell_Transmutation_ThornWhip": {
+  "U1": 768.5,
+  "U2": 831.5,
+  "V1": 768.5,
+  "V2": 831.5
  },
  "Status_Acid": {
   "U1": 256.5,
@@ -1865,6 +2255,12 @@ const icons={
   "V1": 256.5,
   "V2": 319.5
  },
+ "TadpoleSuperPower_AberrantShape": {
+  "U1": 0.5,
+  "U2": 63.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "TadpoleSuperPower_Called Shout_Repulsor": {
   "U1": 1664.5,
   "U2": 1727.5,
@@ -1931,6 +2327,12 @@ const icons={
   "V1": 704.5,
   "V2": 767.5
  },
+ "statIcons_Bloodlust": {
+  "U1": 1152.5,
+  "U2": 1215.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "statIcons_BugbearAssassin_Sneaking": {
   "U1": 768.5,
   "U2": 831.5,
@@ -1942,6 +2344,12 @@ const icons={
   "U2": 1279.5,
   "V1": 640.5,
   "V2": 703.5
+ },
+ "statIcons_CrossLeggedSitting": {
+  "U1": 832.5,
+  "U2": 895.5,
+  "V1": 704.5,
+  "V2": 767.5
  },
  "statIcons_Dead": {
   "U1": 1344.5,
@@ -2033,6 +2441,12 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "statIcons_HillGiantsMight": {
+  "U1": 1088.5,
+  "U2": 1151.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "statIcons_Levitating": {
   "U1": 1152.5,
   "U2": 1215.5,
@@ -2117,6 +2531,12 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "statIcons_SelunesSeal": {
+  "U1": 1664.5,
+  "U2": 1727.5,
+  "V1": 704.5,
+  "V2": 767.5
+ },
  "statIcons_SilvanusBlessing": {
   "U1": 704.5,
   "U2": 767.5,
@@ -2182,6 +2602,12 @@ const icons={
   "U2": 447.5,
   "V1": 640.5,
   "V2": 703.5
+ },
+ "statIcons_UnderOperation": {
+  "U1": 1216.5,
+  "U2": 1279.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "statIcons_YeenoghusHunger": {
   "U1": 384.5,
