@@ -137,6 +137,24 @@ const icons={
   "V1": 832.5,
   "V2": 895.5
  },
+ "Action_DisarmingAttack_Melee": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Action_DisarmingAttack_Ranged": {
+  "U1": 1664.5,
+  "U2": 1727.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Action_Disengage": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
  "Action_ExhaleFire": {
   "U1": 896.5,
   "U2": 959.5,
@@ -226,6 +244,18 @@ const icons={
   "U2": 1279.5,
   "V1": 0.5,
   "V2": 63.5
+ },
+ "Action_HookHorror_Hook": {
+  "U1": 0.5,
+  "U2": 63.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Action_HookHorror_Multiattack": {
+  "U1": 1984.5,
+  "U2": 2047.5,
+  "V1": 896.5,
+  "V2": 959.5
  },
  "Action_HordeBreaker_Melee": {
   "U1": 320.5,
@@ -1277,6 +1307,42 @@ const icons={
   "V1": 256.5,
   "V2": 319.5
  },
+ "Spell_Enchantment_ReapplyHex_Charisma": {
+  "U1": 1728.5,
+  "U2": 1791.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "Spell_Enchantment_ReapplyHex_Constitution": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "Spell_Enchantment_ReapplyHex_Dexterity": {
+  "U1": 1856.5,
+  "U2": 1919.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "Spell_Enchantment_ReapplyHex_Intelligence": {
+  "U1": 1664.5,
+  "U2": 1727.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "Spell_Enchantment_ReapplyHex_Strenght": {
+  "U1": 1920.5,
+  "U2": 1983.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "Spell_Enchantment_ReapplyHex_Wisdom": {
+  "U1": 1792.5,
+  "U2": 1855.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "Spell_Enchantment_Sleep": {
   "U1": 1216.5,
   "U2": 1279.5,
@@ -1300,6 +1366,12 @@ const icons={
   "U2": 255.5,
   "V1": 512.5,
   "V2": 575.5
+ },
+ "Spell_Enchantment_ViciousMockery": {
+  "U1": 1920.5,
+  "U2": 1983.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "Spell_Evocation_ActivateWitchBolt": {
   "U1": 640.5,
@@ -1594,6 +1666,102 @@ const icons={
   "U2": 1087.5,
   "V1": 512.5,
   "V2": 575.5
+ },
+ "Spell_Illusion_DisguiseSelf_Drow_Female": {
+  "U1": 896.5,
+  "U2": 959.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Drow_Male": {
+  "U1": 960.5,
+  "U2": 1023.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Dwarf_Female": {
+  "U1": 256.5,
+  "U2": 319.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Dwarf_Male": {
+  "U1": 320.5,
+  "U2": 383.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Elf_Female": {
+  "U1": 640.5,
+  "U2": 703.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Elf_Male": {
+  "U1": 704.5,
+  "U2": 767.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Githyanki_Female": {
+  "U1": 384.5,
+  "U2": 447.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Githyanki_Male": {
+  "U1": 448.5,
+  "U2": 511.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_HalfElf_Female": {
+  "U1": 768.5,
+  "U2": 831.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_HalfElf_Male": {
+  "U1": 832.5,
+  "U2": 895.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Halfling_Female": {
+  "U1": 128.5,
+  "U2": 191.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Halfling_Male": {
+  "U1": 192.5,
+  "U2": 255.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Human_Female": {
+  "U1": 1024.5,
+  "U2": 1087.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Human_Male": {
+  "U1": 1088.5,
+  "U2": 1151.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Tiefling_Female": {
+  "U1": 512.5,
+  "U2": 575.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Spell_Illusion_DisguiseSelf_Tiefling_Male": {
+  "U1": 576.5,
+  "U2": 639.5,
+  "V1": 960.5,
+  "V2": 1023.5
  },
  "Spell_Illusion_Invisibility": {
   "U1": 768.5,
@@ -2321,6 +2489,12 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "statIcons_AuraOfLeadership": {
+  "U1": 1792.5,
+  "U2": 1855.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "statIcons_Bloated": {
   "U1": 448.5,
   "U2": 511.5,
@@ -2345,6 +2519,18 @@ const icons={
   "V1": 640.5,
   "V2": 703.5
  },
+ "statIcons_CircletOfFireBuff": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 1152.5,
+  "V2": 1215.5
+ },
+ "statIcons_Confused": {
+  "U1": 1728.5,
+  "U2": 1791.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "statIcons_CrossLeggedSitting": {
   "U1": 832.5,
   "U2": 895.5,
@@ -2356,6 +2542,12 @@ const icons={
   "U2": 1407.5,
   "V1": 256.5,
   "V2": 319.5
+ },
+ "statIcons_DeathWish": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "statIcons_Den_Apprentice_Thorn_1": {
   "U1": 1280.5,
@@ -2374,6 +2566,12 @@ const icons={
   "U2": 1215.5,
   "V1": 576.5,
   "V2": 639.5
+ },
+ "statIcons_Disengage": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "statIcons_DruidicTrance": {
   "U1": 1536.5,
@@ -2417,11 +2615,65 @@ const icons={
   "V1": 640.5,
   "V2": 703.5
  },
+ "statIcons_Ettercap_Infested": {
+  "U1": 1984.5,
+  "U2": 2047.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "statIcons_GLO_Orpheus_Protected": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 1152.5,
+  "V2": 1215.5
+ },
+ "statIcons_GOB_CalmnessInPain": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 1152.5,
+  "V2": 1215.5
+ },
+ "statIcons_GOB_CalmnessInPain_Active": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 1152.5,
+  "V2": 1215.5
+ },
+ "statIcons_GOB_Penitent": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 1152.5,
+  "V2": 1215.5
+ },
  "statIcons_GalesNecroticAura": {
   "U1": 1280.5,
   "U2": 1343.5,
   "V1": 640.5,
   "V2": 703.5
+ },
+ "statIcons_GlowingFlask": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "statIcons_Gnoll_Curse": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "statIcons_Gnoll_Rampage": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
+ "statIcons_Goaded": {
+  "U1": 1856.5,
+  "U2": 1919.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "statIcons_GougedEye": {
   "U1": 576.5,
@@ -2440,6 +2692,12 @@ const icons={
   "U2": 1919.5,
   "V1": 576.5,
   "V2": 639.5
+ },
+ "statIcons_HeavilyEncumbered": {
+  "U1": 64.5,
+  "U2": 127.5,
+  "V1": 960.5,
+  "V2": 1023.5
  },
  "statIcons_HillGiantsMight": {
   "U1": 1088.5,
@@ -2470,6 +2728,12 @@ const icons={
   "U2": 319.5,
   "V1": 704.5,
   "V2": 767.5
+ },
+ "statIcons_MissingPets": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 1152.5,
+  "V2": 1215.5
  },
  "statIcons_Nauseated": {
   "U1": 832.5,
@@ -2513,6 +2777,12 @@ const icons={
   "V1": 640.5,
   "V2": 703.5
  },
+ "statIcons_Regeneration": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 832.5,
+  "V2": 895.5
+ },
  "statIcons_Rotting": {
   "U1": 1408.5,
   "U2": 1471.5,
@@ -2530,6 +2800,12 @@ const icons={
   "U2": 831.5,
   "V1": 576.5,
   "V2": 639.5
+ },
+ "statIcons_ScatteringSpores": {
+  "U1": 1664.5,
+  "U2": 1727.5,
+  "V1": 832.5,
+  "V2": 895.5
  },
  "statIcons_SelunesSeal": {
   "U1": 1664.5,
