@@ -17,11 +17,13 @@ const fileParser = a => {
     return r;
 }
 
-const toCvs = (name, regex, title,re) => {
+const toCvs = (dir,name, regex, title,re) => {
     let s = [];
-    const arr = (fs.readdirSync('./') || [])
+    const p = __dirname+ dir;
+    const arr = (fs.readdirSync(p) || [])
         .filter(a => regex.test(a))
-        .map(a => fileParser(fs.readFileSync(a).toString())
+        .map(a => fileParser(
+            fs.readFileSync(p+'/'+a).toString())
             .reduce((a, b) => a.concat(b), []))
 
     arr.forEach(o => {
@@ -42,13 +44,13 @@ const toCvs = (name, regex, title,re) => {
     const txt = [title].concat(s)
         .map(a => a.join(','))
         .join('\n');
-    if(!fs.existsSync('out')) fs.mkdirSync('out');
-    fs.writeFileSync('out/'+name + '.csv', txt);
+    if(!fs.existsSync(__dirname+'/out')) fs.mkdirSync(__dirname+'/out');
+    fs.writeFileSync(__dirname+'/out/'+name + '.csv', txt);
 }
 
 
 
-// toCvs('spells',/^Spell_/,["name","SpellType","UseCosts","SpellSuccess"]);
-toCvs('armor',/^Armor/,["name","RootTemplate","Rarity","ValueOverride","Boosts"],'RootTemplate');
-toCvs('weapon',/^Weapon/,["name","RootTemplate","Rarity","Damage","Damage Type","ValueOverride","Boosts"],'RootTemplate');
-toCvs('object',/^Object/,["name","RootTemplate","using","Weight"],'RootTemplate');
+// toCvs('/spells','spells',/^Spell_/,["name","SpellType","UseCosts","SpellSuccess"]);
+toCvs('/wpn','armor',/^Armor/,["name","RootTemplate","Rarity","ValueOverride","Boosts"],'RootTemplate');
+toCvs('/wpn','weapon',/^Weapon/,["name","RootTemplate","Rarity","Damage","Damage Type","ValueOverride","Boosts"],'RootTemplate');
+toCvs('/wpn','object',/^Object/,["name","RootTemplate","using","Weight"],'RootTemplate');

@@ -23,6 +23,12 @@ const icons={
   "V1": 448.5,
   "V2": 511.5
  },
+ "Action_Bear_Multiattack": {
+  "U1": 1024.5,
+  "U2": 1087.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "Action_Boar_Charge": {
   "U1": 896.5,
   "U2": 959.5,
@@ -46,6 +52,12 @@ const icons={
   "U2": 703.5,
   "V1": 448.5,
   "V2": 511.5
+ },
+ "Action_Cleave_New": {
+  "U1": 1920.5,
+  "U2": 1983.5,
+  "V1": 960.5,
+  "V2": 1023.5
  },
  "Action_Cleric_BlessingOfTheTrickster": {
   "U1": 1344.5,
@@ -71,6 +83,12 @@ const icons={
   "V1": 256.5,
   "V2": 319.5
  },
+ "Action_ConcussiveSmash": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "Action_ContactMizora": {
   "U1": 64.5,
   "U2": 127.5,
@@ -83,11 +101,23 @@ const icons={
   "V1": 448.5,
   "V2": 511.5
  },
+ "Action_CripplingStrike": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "Action_Dash": {
   "U1": 1152.5,
   "U2": 1215.5,
   "V1": 0.5,
   "V2": 63.5
+ },
+ "Action_Dash_Bonus": {
+  "U1": 1216.5,
+  "U2": 1279.5,
+  "V1": 1088.5,
+  "V2": 1151.5
  },
  "Action_DeepRothe_Charge": {
   "U1": 1216.5,
@@ -155,6 +185,12 @@ const icons={
   "V1": 1024.5,
   "V2": 1087.5
  },
+ "Action_Disengage_Bonus": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "Action_ExhaleFire": {
   "U1": 896.5,
   "U2": 959.5,
@@ -172,6 +208,12 @@ const icons={
   "U2": 639.5,
   "V1": 448.5,
   "V2": 511.5
+ },
+ "Action_FullSwing": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 896.5,
+  "V2": 959.5
  },
  "Action_GiantBadger_Bite": {
   "U1": 1088.5,
@@ -233,6 +275,18 @@ const icons={
   "V1": 640.5,
   "V2": 703.5
  },
+ "Action_HamstringShot": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Action_HeartStopper": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
  "Action_Help": {
   "U1": 512.5,
   "U2": 575.5,
@@ -244,6 +298,12 @@ const icons={
   "U2": 1279.5,
   "V1": 0.5,
   "V2": 63.5
+ },
+ "Action_HinderingStrike": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 960.5,
+  "V2": 1023.5
  },
  "Action_HookHorror_Hook": {
   "U1": 0.5,
@@ -305,11 +365,47 @@ const icons={
   "V1": 128.5,
   "V2": 191.5
  },
+ "Action_MobileShooting": {
+  "U1": 1856.5,
+  "U2": 1919.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Action_OpeningAttack": {
+  "U1": 1728.5,
+  "U2": 1791.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Action_PiercingShot": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
+ "Action_PiercingThrust": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
  "Action_PinDown": {
   "U1": 1280.5,
   "U2": 1343.5,
   "V1": 0.5,
   "V2": 63.5
+ },
+ "Action_PommelStrike": {
+  "U1": 1088.5,
+  "U2": 1151.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "Action_PostureBreaker": {
+  "U1": 1152.5,
+  "U2": 1215.5,
+  "V1": 896.5,
+  "V2": 959.5
  },
  "Action_PushingAttack_Melee": {
   "U1": 768.5,
@@ -407,6 +503,12 @@ const icons={
   "V1": 64.5,
   "V2": 127.5
  },
+ "Action_Rush_New": {
+  "U1": 1984.5,
+  "U2": 2047.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
  "Action_SacrificeToLoviatar": {
   "U1": 1600.5,
   "U2": 1663.5,
@@ -449,6 +551,12 @@ const icons={
   "V1": 0.5,
   "V2": 63.5
  },
+ "Action_Slash_New": {
+  "U1": 1152.5,
+  "U2": 1215.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
  "Action_Smash": {
   "U1": 640.5,
   "U2": 703.5,
@@ -485,17 +593,41 @@ const icons={
   "V1": 448.5,
   "V2": 511.5
  },
+ "Action_Steady": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "Action_Steady_Ranged": {
+  "U1": 256.5,
+  "U2": 319.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
  "Action_Sweep": {
   "U1": 1472.5,
   "U2": 1535.5,
   "V1": 0.5,
   "V2": 63.5
  },
+ "Action_TalkToAmulet": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "Action_Throw": {
   "U1": 384.5,
   "U2": 447.5,
   "V1": 128.5,
   "V2": 191.5
+ },
+ "Action_Topple": {
+  "U1": 1664.5,
+  "U2": 1727.5,
+  "V1": 960.5,
+  "V2": 1023.5
  },
  "Action_Trip": {
   "U1": 1536.5,
@@ -580,6 +712,12 @@ const icons={
   "U2": 255.5,
   "V1": 384.5,
   "V2": 447.5
+ },
+ "PassiveAction_Overwhelm": {
+  "U1": 1792.5,
+  "U2": 1855.5,
+  "V1": 960.5,
+  "V2": 1023.5
  },
  "PassiveAction_RepellingBlast": {
   "U1": 448.5,
@@ -755,6 +893,102 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "Skill_Sorcerer_CreateSorceryPoints_1": {
+  "U1": 896.5,
+  "U2": 959.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_CreateSorceryPoints_2": {
+  "U1": 960.5,
+  "U2": 1023.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_CreateSorceryPoints_3": {
+  "U1": 1024.5,
+  "U2": 1087.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_CreateSorceryPoints_4": {
+  "U1": 1088.5,
+  "U2": 1151.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_CreateSpellSlot_1": {
+  "U1": 1152.5,
+  "U2": 1215.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_CreateSpellSlot_2": {
+  "U1": 1216.5,
+  "U2": 1279.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_CreateSpellSlot_3": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_CreateSpellSlot_4": {
+  "U1": 1344.5,
+  "U2": 1407.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_Metamagic_CarefulSpell": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_Metamagic_DistantSpell": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_Metamagic_ExtendedSpell": {
+  "U1": 1728.5,
+  "U2": 1791.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_Metamagic_HeightenedSpell": {
+  "U1": 1792.5,
+  "U2": 1855.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_Metamagic_QuickenedSpell": {
+  "U1": 1856.5,
+  "U2": 1919.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_Metamagic_SubtleSpell": {
+  "U1": 1920.5,
+  "U2": 1983.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_Metamagic_TwinnedSpell": {
+  "U1": 1984.5,
+  "U2": 2047.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "Skill_Sorcerer_Passive_TidesOfChaos": {
+  "U1": 0.5,
+  "U2": 63.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "Skill_Warlock_BindPactWeapon": {
   "U1": 704.5,
   "U2": 767.5,
@@ -910,6 +1144,12 @@ const icons={
   "U2": 1471.5,
   "V1": 512.5,
   "V2": 575.5
+ },
+ "Spell_Conjuration_CloudOfDaggers": {
+  "U1": 64.5,
+  "U2": 127.5,
+  "V1": 1088.5,
+  "V2": 1151.5
  },
  "Spell_Conjuration_EnsnaringStrikeMelee": {
   "U1": 192.5,
@@ -1192,6 +1432,12 @@ const icons={
   "U2": 2047.5,
   "V1": 512.5,
   "V2": 575.5
+ },
+ "Spell_Enchantment_CrownOfMadness": {
+  "U1": 128.5,
+  "U2": 191.5,
+  "V1": 1088.5,
+  "V2": 1151.5
  },
  "Spell_Enchantment_DissonantWhispers": {
   "U1": 256.5,
@@ -1949,6 +2195,12 @@ const icons={
   "V1": 384.5,
   "V2": 447.5
  },
+ "Spell_Transmutation_EnlargeReduce": {
+  "U1": 1536.5,
+  "U2": 1599.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "Spell_Transmutation_FeatherFall": {
   "U1": 64.5,
   "U2": 127.5,
@@ -2038,6 +2290,12 @@ const icons={
   "U2": 831.5,
   "V1": 768.5,
   "V2": 831.5
+ },
+ "Spell_WildMagic_Teleport_Activate": {
+  "U1": 832.5,
+  "U2": 895.5,
+  "V1": 1024.5,
+  "V2": 1087.5
  },
  "Status_Acid": {
   "U1": 256.5,
@@ -2459,6 +2717,18 @@ const icons={
   "V1": 384.5,
   "V2": 447.5
  },
+ "TadpoleSuperPower_Repulsor": {
+  "U1": 0.5,
+  "U2": 63.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "TadpoleSuperPower_Sorcerer": {
+  "U1": 768.5,
+  "U2": 831.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
  "TadpoleSuperPower_SupernaturalAttraction": {
   "U1": 1792.5,
   "U2": 1855.5,
@@ -2483,6 +2753,12 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "statIcons_Agitated": {
+  "U1": 896.5,
+  "U2": 959.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "statIcons_Ambushing": {
   "U1": 1920.5,
   "U2": 1983.5,
@@ -2494,6 +2770,12 @@ const icons={
   "U2": 1855.5,
   "V1": 832.5,
   "V2": 895.5
+ },
+ "statIcons_BlissSpores": {
+  "U1": 320.5,
+  "U2": 383.5,
+  "V1": 1088.5,
+  "V2": 1151.5
  },
  "statIcons_Bloated": {
   "U1": 448.5,
@@ -2507,11 +2789,35 @@ const icons={
   "V1": 832.5,
   "V2": 895.5
  },
+ "statIcons_BoonOfServitude": {
+  "U1": 64.5,
+  "U2": 127.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_BoooalsFaithful": {
+  "U1": 960.5,
+  "U2": 1023.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "statIcons_BugbearAssassin_Sneaking": {
   "U1": 768.5,
   "U2": 831.5,
   "V1": 704.5,
   "V2": 767.5
+ },
+ "statIcons_ButhirsWrath": {
+  "U1": 320.5,
+  "U2": 383.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_ChestTrauma": {
+  "U1": 192.5,
+  "U2": 255.5,
+  "V1": 1024.5,
+  "V2": 1087.5
  },
  "statIcons_ChickenChase": {
   "U1": 1216.5,
@@ -2531,11 +2837,53 @@ const icons={
   "V1": 832.5,
   "V2": 895.5
  },
+ "statIcons_Crippled": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "statIcons_CrossLeggedSitting": {
   "U1": 832.5,
   "U2": 895.5,
   "V1": 704.5,
   "V2": 767.5
+ },
+ "statIcons_CryingInAlarm": {
+  "U1": 256.5,
+  "U2": 319.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_CurseOfRegret": {
+  "U1": 192.5,
+  "U2": 255.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_DamageThreshold": {
+  "U1": 960.5,
+  "U2": 1023.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_DamageThreshold_Greater": {
+  "U1": 832.5,
+  "U2": 895.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_DamageThreshold_Lesser": {
+  "U1": 896.5,
+  "U2": 959.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_Dazed": {
+  "U1": 1280.5,
+  "U2": 1343.5,
+  "V1": 960.5,
+  "V2": 1023.5
  },
  "statIcons_Dead": {
   "U1": 1344.5,
@@ -2621,6 +2969,18 @@ const icons={
   "V1": 832.5,
   "V2": 895.5
  },
+ "statIcons_EverBurning": {
+  "U1": 448.5,
+  "U2": 511.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_FullSwing": {
+  "U1": 1216.5,
+  "U2": 1279.5,
+  "V1": 960.5,
+  "V2": 1023.5
+ },
  "statIcons_GLO_Orpheus_Protected": {
   "U1": 1280.5,
   "U2": 1343.5,
@@ -2657,6 +3017,18 @@ const icons={
   "V1": 832.5,
   "V2": 895.5
  },
+ "statIcons_Gnoll_BrewingRage": {
+  "U1": 832.5,
+  "U2": 895.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_Gnoll_BrewingRage_Unlock": {
+  "U1": 768.5,
+  "U2": 831.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "statIcons_Gnoll_Curse": {
   "U1": 1280.5,
   "U2": 1343.5,
@@ -2681,17 +3053,53 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "statIcons_Grounded": {
+  "U1": 704.5,
+  "U2": 767.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "statIcons_HagsPawn": {
   "U1": 1984.5,
   "U2": 2047.5,
   "V1": 576.5,
   "V2": 639.5
  },
+ "statIcons_HagsTrickery": {
+  "U1": 128.5,
+  "U2": 191.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_Hamstring": {
+  "U1": 1216.5,
+  "U2": 1279.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "statIcons_HandsOffPetal": {
   "U1": 1856.5,
   "U2": 1919.5,
   "V1": 576.5,
   "V2": 639.5
+ },
+ "statIcons_HardWork": {
+  "U1": 1472.5,
+  "U2": 1535.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_HardWork_Target": {
+  "U1": 1408.5,
+  "U2": 1471.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_HasteSpores": {
+  "U1": 384.5,
+  "U2": 447.5,
+  "V1": 896.5,
+  "V2": 959.5
  },
  "statIcons_HeavilyEncumbered": {
   "U1": 64.5,
@@ -2704,6 +3112,12 @@ const icons={
   "U2": 1151.5,
   "V1": 832.5,
   "V2": 895.5
+ },
+ "statIcons_Hindered": {
+  "U1": 64.5,
+  "U2": 127.5,
+  "V1": 1024.5,
+  "V2": 1087.5
  },
  "statIcons_Levitating": {
   "U1": 1152.5,
@@ -2723,6 +3137,30 @@ const icons={
   "V1": 640.5,
   "V2": 703.5
  },
+ "statIcons_MAG_TemporaryHP": {
+  "U1": 1152.5,
+  "U2": 1215.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_Mag_Attack_Debuff": {
+  "U1": 192.5,
+  "U2": 255.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_Mag_Increased_Damage_Cold": {
+  "U1": 384.5,
+  "U2": 447.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_Merregonmask_Effect": {
+  "U1": 256.5,
+  "U2": 319.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "statIcons_Minotaur_Reckless": {
   "U1": 256.5,
   "U2": 319.5,
@@ -2735,11 +3173,23 @@ const icons={
   "V1": 1152.5,
   "V2": 1215.5
  },
+ "statIcons_MobileFoe": {
+  "U1": 448.5,
+  "U2": 511.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "statIcons_Nauseated": {
   "U1": 832.5,
   "U2": 895.5,
   "V1": 640.5,
   "V2": 703.5
+ },
+ "statIcons_OffBalanced": {
+  "U1": 128.5,
+  "U2": 191.5,
+  "V1": 1024.5,
+  "V2": 1087.5
  },
  "statIcons_OpenWound": {
   "U1": 1472.5,
@@ -2752,6 +3202,18 @@ const icons={
   "U2": 639.5,
   "V1": 640.5,
   "V2": 703.5
+ },
+ "statIcons_Pinned": {
+  "U1": 768.5,
+  "U2": 831.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_PrimeTarget": {
+  "U1": 1600.5,
+  "U2": 1663.5,
+  "V1": 1088.5,
+  "V2": 1151.5
  },
  "statIcons_RapportSpores": {
   "U1": 320.5,
@@ -2813,6 +3275,12 @@ const icons={
   "V1": 704.5,
   "V2": 767.5
  },
+ "statIcons_Sickened": {
+  "U1": 640.5,
+  "U2": 703.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
  "statIcons_SilvanusBlessing": {
   "U1": 704.5,
   "U2": 767.5,
@@ -2843,11 +3311,29 @@ const icons={
   "V1": 640.5,
   "V2": 703.5
  },
+ "statIcons_SovereignSpores": {
+  "U1": 704.5,
+  "U2": 767.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "statIcons_SphereFuel": {
   "U1": 576.5,
   "U2": 639.5,
   "V1": 704.5,
   "V2": 767.5
+ },
+ "statIcons_SpiderQueensWrath": {
+  "U1": 576.5,
+  "U2": 639.5,
+  "V1": 896.5,
+  "V2": 959.5
+ },
+ "statIcons_Stasis": {
+  "U1": 512.5,
+  "U2": 575.5,
+  "V1": 896.5,
+  "V2": 959.5
  },
  "statIcons_Static_Discharge": {
   "U1": 1792.5,
@@ -2867,11 +3353,35 @@ const icons={
   "V1": 576.5,
   "V2": 639.5
  },
+ "statIcons_Steady": {
+  "U1": 0.5,
+  "U2": 63.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_Superheated": {
+  "U1": 1664.5,
+  "U2": 1727.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
  "statIcons_SussurBloom": {
   "U1": 640.5,
   "U2": 703.5,
   "V1": 576.5,
   "V2": 639.5
+ },
+ "statIcons_UND_MyconidAmulet_Evil": {
+  "U1": 1024.5,
+  "U2": 1087.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_UND_MyconidAmulet_Good": {
+  "U1": 1088.5,
+  "U2": 1151.5,
+  "V1": 1088.5,
+  "V2": 1151.5
  },
  "statIcons_UncannySight": {
   "U1": 384.5,
@@ -2884,6 +3394,66 @@ const icons={
   "U2": 1279.5,
   "V1": 832.5,
   "V2": 895.5
+ },
+ "statIcons_WildMagic_Blur": {
+  "U1": 512.5,
+  "U2": 575.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_WildMagic_Burning": {
+  "U1": 576.5,
+  "U2": 639.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_WildMagic_Enchant": {
+  "U1": 448.5,
+  "U2": 511.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_WildMagic_Heal": {
+  "U1": 320.5,
+  "U2": 383.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_WildMagic_Memphit": {
+  "U1": 640.5,
+  "U2": 703.5,
+  "V1": 1088.5,
+  "V2": 1151.5
+ },
+ "statIcons_WildMagic_SorceryPoints": {
+  "U1": 704.5,
+  "U2": 767.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_WildMagic_Swap": {
+  "U1": 640.5,
+  "U2": 703.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_WildMagic_Teleport": {
+  "U1": 384.5,
+  "U2": 447.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_WildMagic_TurnMagic": {
+  "U1": 512.5,
+  "U2": 575.5,
+  "V1": 1024.5,
+  "V2": 1087.5
+ },
+ "statIcons_WildMagic_gasCloud": {
+  "U1": 576.5,
+  "U2": 639.5,
+  "V1": 1088.5,
+  "V2": 1151.5
  },
  "statIcons_YeenoghusHunger": {
   "U1": 384.5,

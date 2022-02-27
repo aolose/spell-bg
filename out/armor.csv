@@ -16,6 +16,7 @@ DEN_HarpyMeal_NestRing,eadad0c4-d4a5-45cb-b4c3-e16a9b3ebe0a,Uncommon,150,UnlockS
 DEN_BearReward_Amulet,c0b04c1c-afb5-4f02-b832-e12043a2d2c4,Uncommon,80,UnlockSpell(Target_DEN_BearReward_LesserRestoration)
 DEN_HellridersPride,db4d4560-dc72-4d64-b552-5caf442c0927,Uncommon,380,
 UNI_Druid_Helmet_Circlet,f4bef44e-57f1-47b5-ab2d-2457ff21c707,Uncommon,,"Skill(Nature, 1)"
+DEN_Druid_Helmet_Leather,e305c00e-a231-41e4-86de-cbb320bafbc8,Uncommon,440,
 FOR_ShadowheartOM_SharCrown,ad3c0c6b-bcc4-488e-a5cf-32b809188633,,,
 FOR_OwlbearCubs_Armor,9ab8b5fa-ba00-44d4-8c4a-50acd5fa62e3,Uncommon,150,
 FOR_OgresForHire_HeadbandOfIntellect,8f4876f1-44d9-4bb8-802e-907c6b0a0dba,Uncommon,250,"AbilityOverrideMinimum(Intelligence,18)"
@@ -42,7 +43,7 @@ UNI_UND_RingOfMindShielding,c8f05ff8-58f9-49f9-8ea7-abda1fea27d6,Rare,400,Tag(TA
 UND_MushroomHunger_RingOfExploration,046598e3-8cb4-497c-bfd2-866ff88b50db,Uncommon,280,"Skill(Nature, 1);Skill(Survival, 1)"
 UND_FairyRing_AntiCharmHelmet,a47c13a1-1a8e-4b3b-9cd9-53cf9c7058f0,Uncommon,310,"ProficiencyBonus(SavingThrow,Wisdom)"
 UND_SocietyOfBrilliance_MagicMissileNecklace,4a9f0479-954f-486c-9534-d7d72c11f919,Rare,810,UnlockSpell(Projectile_UND_MagicMissile_SocietyOfBrilliance_Amulet)
-UND_SocietyOfBrilliance_DarkvisionRing,e8b6eb1d-c4f2-4b46-979c-ad3b9469030e,Uncommon,620,DarkvisionRangeMin(18)
+UND_SocietyOfBrilliance_DarkvisionRing,e8b6eb1d-c4f2-4b46-979c-ad3b9469030e,Uncommon,620,DarkvisionRangeMin(12);ActiveCharacterLight(233033a1-b43a-4ad9-976a-8a062b345e21)
 UND_SocietyOfBrilliance_PullingRing,a6fe2fbc-b0f8-4c35-a3ab-d5deb6aa2978,Uncommon,680,
 UND_Minotaur_BeltAmulet,b96d16dc-da98-4108-9a0e-5e55720dbf5c,Uncommon,540,"Resistance(Slashing, Resistant);Resistance(Bludgeoning, Vulnerable)"
 UND_Bulette_ChainShirt,e6e74ef9-1916-4c6b-a7bb-98fc83e71b62,Rare,690,
