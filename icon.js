@@ -16,4 +16,8 @@ require('fs')
         });
         if(key)icons[key]=o;
     });
-require('fs').writeFileSync('./out/icons.js',`const icons=${JSON.stringify(icons,'',' ')}`);
+require('fs').writeFileSync('./out/icons.js',`icons=${JSON.stringify(icons,'',' ')}`);
+const icon = require('fs').readFileSync('./icon/index.html').toString()
+    .replace('%%',new Date().toLocaleDateString())
+require('fs').writeFileSync('./out/index.html',icon)
+require('fs').copyFileSync('./icon/Icons_Skills.png','./out/Icons_Skills.png')

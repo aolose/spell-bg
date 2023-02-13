@@ -1,5 +1,5 @@
-const data1 = require('./merged0.json')
-const data2 = require('./merged2.json')
+const data1 = require('./_merged.json')
+const data2 = require('./_merged1.json')
 
 
 const fs = require('fs')
@@ -150,4 +150,4 @@ Object.values(All).forEach(items => {
     if (v4) v4 = m[v4] || v4;
     str += `"${v0}","${v1}","${v2}","${v3}","${v6}","${v5}","${v4}"\n`
 });
-require('fs').writeFileSync("./scripts/out/rootTemplate.csv", str)
+require('fs').writeFileSync("./out/rootTemplate.csv", str)
