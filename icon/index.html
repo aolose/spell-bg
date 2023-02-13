@@ -400,6 +400,21 @@
     </div>
 </div>
 <script>
+    const {spells, types} = data;
+    function mg(a) {
+        if(!a)return {}
+        const {Parent} = a
+        if (Parent) {
+            const pp = mg(spells[Parent]);
+            if(pp)Object.keys(pp).forEach(k => {
+                if (!a.hasOwnProperty(k)) {
+                    a[k] = pp[k]
+                }
+            })
+        }
+    }
+
+    Object.values(spells).forEach(mg)
     const cc = t => t===undefined || t === 'unknown'
     const get = (o, k) => {
         let t = o[k]
@@ -440,21 +455,9 @@
 
     e.onclick = ib;
     ib();
-    const {spells, types} = data;
 
-    function mg(a) {
-        const {Parent} = a
-        if (Parent) {
-            const pp = mg(p);
-            Object.keys(pp).forEach(k => {
-                if (!a.hasOwnProperty(k)) {
-                    a[k] = pp[k]
-                }
-            })
-        }
-    }
 
-    mg(spells)
+
 
     function ps(o) {
         const v = Object.keys(o);
