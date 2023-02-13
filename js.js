@@ -46,28 +46,11 @@ const toJS = (name, regex) => {
             });
         }
     }))
-    const js = `const data = ${JSON.stringify({spells,types},'',' ')};
-const parse = o=>{
-const {Parent} = o;
-const p = data.spells[Parent];
-if(p) {
- delete o.Parent;
- const pp = parse(p);
- Object.keys(pp).forEach(k=>{
-    if(!o.hasOwnProperty(k)){
-       o[k]=pp[k]
-    }
- })
-} 
-return o;
-}
-Object.values(data.spells).forEach(parse);
-    `;
+    const js = `data = ${JSON.stringify({spells,types},'',' ')}`;
     const o = __dirname+'/out/'
     if (!fs.existsSync(o)) fs.mkdirSync(o);
     fs.writeFileSync(o + name + '.js', js,{ flag: 'w+' });
 }
-
 
 toJS('spells', /^Spell_/);
 

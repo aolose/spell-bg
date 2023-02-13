@@ -2,9 +2,20 @@ const icons = {};
 const fs = require('fs');
 const path = require('path');
 
-fs
-    .readFileSync('./icon/Icons_Skills.lsx')
-    .toString()
+const fx = (p)=>{
+    p=path.resolve(__dirname,p)
+    const d = path.dirname(p)
+    if(!fs.existsSync(d))fs.mkdirSync(d,{recursive:!0})
+    return p
+}
+const write = (p, d) => {
+    fs.writeFileSync(fx(p), d, {flag: 'w+'})
+}
+const read = (p) => {
+    return fs.readFileSync(fx(p)).toString()
+}
+
+read('./icon/Icons_Skills.lsx')
     .split('<node id="IconUV">')
     .forEach(v => {
         const o = {};
@@ -19,19 +30,6 @@ fs
         });
         if (key) icons[key] = o;
     });
-
-const fx = (p)=>{
-    p=path.resolve(__dirname,p)
-    const d = path.dirname(p)
-    if(!fs.existsSync(d))fs.mkdirSync(d,{recursive:!0})
-    return p
-}
-const write = (p, d) => {
-    fs.writeFileSync(fx(p), d, {flag: 'w+'})
-}
-const read = (p) => {
-    return fs.readFileSync(fx(p)).toString()
-}
 
 write('./out/icons.js', `icons=${JSON.stringify(icons, '', ' ')}`);
 const icon = read('./icon/index.html')
