@@ -4,7 +4,7 @@
   "description": "",
   "main": "csv.js",
   "scripts": {
-    "build": "node ./js & node ./icon.js"
+    "build": "node ./js.js & node ./icon.js"
   },
   "repository": {
     "type": "git",

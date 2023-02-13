@@ -65,7 +65,7 @@ Object.values(data.spells).forEach(parse);
     `;
     const o = __dirname+'/out/'
     if (!fs.existsSync(o)) fs.mkdirSync(o);
-    fs.writeFileSync(o + name + '.js', js);
+    fs.writeFileSync(o + name + '.js', js,{ flag: 'w+' });
 }
 
 
