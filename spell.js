@@ -9,7 +9,7 @@ const fileParser = a => {
             else if (/^using/.test(n)) {
                 e.Parent = n.substr(6).replace(/"/g, '')
             } else if (/^data/.test(n)) {
-                const [, b, c] = /"([ \w-_]+)" "([ ,()a-z0-9-_:><.;]+)"/gi.exec(n) || [];
+                const [, b, c] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
                 if (c) e[b] = /^\d+$/.test(c) ? +c : c;
                 if (/;/.test(c)) arrayName[b] = 1;
             }
