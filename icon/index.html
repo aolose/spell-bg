@@ -120,6 +120,9 @@
             width: 120px;
             color: darkorange
         }
+        #b label._{
+            color: #ffb74d;
+        }
 
         #b {
             height: 100%;
@@ -403,15 +406,18 @@
     const {spells, types} = data;
     function mg(a) {
         if(!a)return {}
+        a._ =new Set()
         const {Parent} = a
         if (Parent) {
             const pp = mg(spells[Parent]);
             if(pp)Object.keys(pp).forEach(k => {
                 if (!a.hasOwnProperty(k)) {
                     a[k] = pp[k]
+                    a._.add(k)
                 }
             })
         }
+        return  a
     }
 
     Object.values(spells).forEach(mg)
@@ -463,6 +469,7 @@
         const v = Object.keys(o);
         let c = "";
         v.forEach((k) => {
+            if(k==='_')return
             const d = o[k];
             let s = "";
 
@@ -470,9 +477,9 @@
                 const ss = d.map((u) => `<li>${u}</li>`).join("");
                 s = `<ul>${ss}</ul>`;
             } else s = `<span>${d}</span>`;
-
+             const cls = o._&&o._.has(k)?'_':''
             c += `<div>
-<label>${k}</label>${s}
+<label class="${cls}">${k}</label>${s}
 </div>`;
         });
         return c;
