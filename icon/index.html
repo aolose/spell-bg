@@ -5,8 +5,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BG3 Spells</title>
-    <script src="./spells.js"></script>
-    <script src="./icons.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, PingFang SC, Helvetica Neue, STHeiti, Microsoft Yahei, Tahoma, Simsun, sans-serif
@@ -120,7 +118,8 @@
             width: 120px;
             color: darkorange
         }
-        #b label._{
+
+        #b label._ {
             color: #ffb74d;
         }
 
@@ -241,8 +240,6 @@
             position: relative;
             cursor: pointer;
             -webkit-box-align: start;
-            -ms-flex-align: start;
-            -ms-grid-row-align: flex-start;
             align-items: flex-start;
             width: 400px;
             border: 3px solid #153049;
@@ -375,9 +372,21 @@
                 top: 10px
             }
         }
+        #z{
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 1px;
+            width: 1%;
+            z-index: 10;
+            transition: 1s ease-in-out;
+            background: darkorange;
+            opacity: .8;
+        }
     </style>
 </head>
 <body>
+<div id="z"></div>
 <div class="r">
     <div class="p">
         <div id="c">
@@ -402,25 +411,53 @@
     </div>
 </div>
 <script>
-    const {spells, types} = data;
+    const all = +0
+    let l= 0
+    const types = "%types%"
+    const spells = {}
+    const cds = [];
+    let icons = {}
+    function ok(){
+        const v = (++l*100)/all
+        z.style.width=v+'%'
+        if(v===100)z.style.opacity='0'
+    }
+    function loadIcon(i) {
+        icons = i
+        cds.forEach(a => a.render())
+    }
+
+    function loadSpell(arr) {
+        arr.forEach(a => {
+            const name = a.Name
+            spells[name] = a
+            cds.push(card(name))
+        })
+        cds.sort((a, b) => {
+            const v = a._nm > b._nm;
+            return v ? 1 : -1;
+        })
+        Object.values(spells).forEach(mg)
+        cds.forEach(c => c.render())
+    }
+
     function mg(a) {
-        if(!a)return {}
-        a._ =new Set()
+        if (!a) return {}
+        a._ = a._ || new Set()
         const {Parent} = a
         if (Parent) {
             const pp = mg(spells[Parent]);
-            if(pp)Object.keys(pp).forEach(k => {
+            if (pp) Object.keys(pp).forEach(k => {
                 if (!a.hasOwnProperty(k)) {
                     a[k] = pp[k]
                     a._.add(k)
                 }
             })
         }
-        return  a
+        return a
     }
 
-    Object.values(spells).forEach(mg)
-    const cc = t => t===undefined || t === 'unknown'
+    const cc = t => t === undefined || t === 'unknown'
     const get = (o, k) => {
         let t = o[k]
         let tt
@@ -433,6 +470,7 @@
         return (cc(tt) ? t : tt) || ''
     }
     const ft = {};
+    const z = document.getElementById("z");
     const a = document.getElementById("a");
     const b = document.getElementById("b");
     const c = document.getElementById("c");
@@ -442,10 +480,8 @@
         b.innerHTML = `<pre>
   Last build at %%
   Input will ignores case.
-
 · Label:
          The Property name of the spell.
-
 · Value:
          The Value of the Property.
          '-' means empty.
@@ -461,22 +497,18 @@
     e.onclick = ib;
     ib();
 
-
-
-
     function ps(o) {
         const v = Object.keys(o);
         let c = "";
         v.forEach((k) => {
-            if(k==='_')return
+            if (k === '_') return
             const d = o[k];
             let s = "";
-
             if (Array.isArray(d)) {
                 const ss = d.map((u) => `<li>${u}</li>`).join("");
                 s = `<ul>${ss}</ul>`;
             } else s = `<span>${d}</span>`;
-             const cls = o._&&o._.has(k)?'_':''
+            const cls = o._ && o._.has(k) ? '_' : ''
             c += `<div>
 <label class="${cls}">${k}</label>${s}
 </div>`;
@@ -485,6 +517,11 @@
     }
 
     let zz = 0
+    const el = (t) => {
+        const e = document.createElement("div");
+        e.innerHTML = t;
+        return e.children[0];
+    };
 
     function ico(k, name) {
         const o = icons[k];
@@ -495,101 +532,91 @@
             const fx = a => (100 * a / (2048 - 64)).toFixed(5) + '%';
             return `background-position:${fx(U1)} ${fx(V1)}`;
         } else console.log('miss icon', name, k)
-
         return "background-image:none";
     }
 
-    const el = (t) => {
-        const e = document.createElement("div");
-        e.innerHTML = t;
-        return e.children[0];
-    };
-
-    const card = (o) => {
-        const SpellType = get(o, 'SpellType')
-        const SpellSuccess = get(o, 'SpellSuccess') || []
-        const SpellProperties = get(o, 'SpellProperties') || []
-        const Icon = get(o, 'Icon')
-        const Level = get(o, 'Level')
-        const Name = get(o, 'Name')
-        const v = el(`
-<div class="c">
-   <i style="${ico(Icon, Name)}" title="${Icon}"></i>
+    const card = (n) => {
+        const v = el(`<div class="c"></div>`);
+        v.render = () => {
+            const o = spells[n]
+            const SpellType = get(o, 'SpellType')
+            const SpellSuccess = [].concat(get(o, 'SpellSuccess') || [])
+            const SpellProperties = [].concat(get(o, 'SpellProperties') || [])
+            const Icon = get(o, 'Icon')
+            const Level = get(o, 'Level')
+            const Name = get(o, 'Name')
+            v.innerHTML = `<i style="${ico(Icon, Name)}" title="${Icon}"></i>
    <span class="lv">LV. ${Level || "-"}</span>
    <span class="tp">${SpellType}</span>
    <div>
    <label>${Name.replace(SpellType + "_", "")
-            .replace(/_/g, " ")
-            .replace(/([a-z0-9])([A-Z])/g, "$1 $2")}</label>
+                .replace(/_/g, " ")
+                .replace(/([a-z0-9])([A-Z])/g, "$1 $2")}</label>
     <div class="u">
      <ul class="po">${SpellProperties.map((p) => "<li>" + p + "</li>").join("")}</ul>
    <ul>${SpellSuccess.map((p) => "<li>" + p + "</li>").join("")}</ul>
 </div>
-    </div>
-</div>
-           `);
-        v.d = o;
-        v.filter = (t, k, l) => {
-            let a = 0;
-            const f = (k, va) => {
-                if (typeof va === 'string') {
-                    va = va.replace(/unknown/gi, '');
-                }
-                if (k) {
-                    if (k === '-') {
-                        if (va) a = 1;
-                    } else if (k === '*') {
-                        if (!va) a = 1;
-                    } else if (/^>\d+$/.test(k)) {
-                        const g = +k.substr(1);
-                        if (!isNaN(g)) {
-                            let n = 0;
-                            [].concat(va).forEach((v) => {
-                                if (/^\d+$/.test(v)) {
-                                    if (+v >= g) n = 1;
-                                } else {
-                                    const r = /DealDamage\((\d+)d(\d+),.*?\)/;
-                                    const [, a, b] = r.exec(v) || [];
-                                    if (b) {
-                                        if (a * b >= g) n = 1;
+    </div>`
+            v.d = o;
+            v.filter = (t, k, l) => {
+                let a = 0;
+                const f = (k, va) => {
+                    if (typeof va === 'string') {
+                        va = va.replace(/unknown/gi, '');
+                    }
+                    if (k) {
+                        if (k === '-') {
+                            if (va) a = 1;
+                        } else if (k === '*') {
+                            if (!va) a = 1;
+                        } else if (/^>\d+$/.test(k)) {
+                            const g = +k.substr(1);
+                            if (!isNaN(g)) {
+                                let n = 0;
+                                [].concat(va).forEach((v) => {
+                                    if (/^\d+$/.test(v)) {
+                                        if (+v >= g) n = 1;
+                                    } else {
+                                        const r = /DealDamage\((\d+)d(\d+),.*?\)/;
+                                        const [, a, b] = r.exec(v) || [];
+                                        if (b) {
+                                            if (a * b >= g) n = 1;
+                                        }
                                     }
-                                }
-                            });
-                            if (!n) a = 1;
+                                });
+                                if (!n) a = 1;
+                            }
+                        } else {
+                            const v0 = (va + '').toLowerCase();
+                            if (v0.indexOf((k + '').toLowerCase()) === -1) a = 1;
                         }
-                    } else {
-                        const v0 = (va + '').toLowerCase();
-                        if (v0.indexOf((k + '').toLowerCase()) === -1) a = 1;
+                    }
+                };
+                if (k && l) {
+                    let ok = 0
+                    Object.keys(o).forEach(kk => {
+                        if (kk.toLowerCase() === k.toLowerCase()) {
+                            ok = 1;
+                            f(l, o[kk])
+                        }
+                    });
+                    if (!ok) {
+                        if (l !== '-') a = 1;
                     }
                 }
+                f(t, SpellType);
+                v.style.display = ["", "none"][a];
             };
-
-            if (k && l) {
-                let ok = 0
-                Object.keys(o).forEach(kk => {
-                    if (kk.toLowerCase() === k.toLowerCase()) {
-                        ok = 1;
-                        f(l, o[kk])
-                    }
-                });
-                if (!ok) {
-                    if (l !== '-') a = 1;
-                }
-            }
-
-            f(t, SpellType);
-            v.style.display = ["", "none"][a];
-        };
-
-        v.onclick = () => {
-            b.className = 's';
-            b.innerHTML = ps(o);
-            e.className = 's';
-        };
-
+            v.onclick = () => {
+                b.className = 's';
+                b.innerHTML = ps(o);
+                e.className = 's';
+            };
+            v._nm = Name.slice(SpellType.length)
+        }
+        a.append(v)
         return v;
     };
-
     const x = (id, key) => {
         const v = document.getElementById(id);
         v.oninput = v.onchange = v.onpaste = v.onblur = function () {
@@ -597,14 +624,6 @@
             filter();
         };
     };
-
-    const cds = [];
-    Object.values(spells)
-        .sort((a, b) => {
-            const v = a.Name.replace(a.SpellType, "") > b.Name.replace(b.SpellType, "");
-            return v ? 1 : -1;
-        })
-        .forEach((o) => cds.push(a.appendChild(card(o))));
     const tbs = [];
 
     function filter() {
@@ -617,26 +636,22 @@
         tbs.forEach((t) => t.act(k));
         filter();
     };
-
-    [""].concat(Object.keys(types)).forEach((t) => {
+    [""].concat(types).forEach((t) => {
         const n = t || "ALL";
         const b = el(`<div>${n.toUpperCase()}</div>`);
-
         b.onclick = () => {
             cg(n, t);
         };
-
         b.act = (k) => {
             b.className = k === n ? "act" : "";
         };
-
         tbs.push(b);
         c.appendChild(b);
     });
     x("v0", "k");
     x("v2", "l");
     cg("ALL", "");
-
 </script>
+%scripts%
 </body>
 </html>
