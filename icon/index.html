@@ -372,7 +372,8 @@
                 top: 10px
             }
         }
-        #z{
+
+        #z {
             position: absolute;
             top: 0;
             left: 0;
@@ -412,16 +413,18 @@
 </div>
 <script>
     const all = +0
-    let l= 0
+    let l = 0
     const types = "%types%"
     const spells = {}
     const cds = [];
     let icons = {}
-    function ok(){
-        const v = (++l*100)/all
-        z.style.width=v+'%'
-        if(v===100)z.style.opacity='0'
+
+    function ok() {
+        const v = (++l * 100) / all
+        z.style.width = v + '%'
+        if (v === 100) z.style.opacity = '0'
     }
+
     function loadIcon(i) {
         icons = i
         cds.forEach(a => a.render())
@@ -432,10 +435,6 @@
             const name = a.Name
             spells[name] = a
             cds.push(card(name))
-        })
-        cds.sort((a, b) => {
-            const v = a._nm > b._nm;
-            return v ? 1 : -1;
         })
         Object.values(spells).forEach(mg)
         cds.forEach(c => c.render())
@@ -522,16 +521,29 @@
         e.innerHTML = t;
         return e.children[0];
     };
+    let t = -1
+
+    function sortItem() {
+        clearTimeout(t)
+        t = setTimeout(function () {
+            cds.sort((a, b) => {
+                const la = a.lv
+                const lb = b.lv
+                if (la === lb) return a._nm > b._nm ? 1 : -1
+                return la > lb ? 1 : -1
+            })
+            a.innerHTML=''
+            cds.forEach(o => a.appendChild(o))
+        }, 300)
+    }
 
     function ico(k, name) {
         const o = icons[k];
         if (o) {
-            zz++
-            console.log('match icon', name, k, zz)
             const {U1, V1} = o;
             const fx = a => (100 * a / (2048 - 64)).toFixed(5) + '%';
             return `background-position:${fx(U1)} ${fx(V1)}`;
-        } else console.log('miss icon', name, k)
+        }
         return "background-image:none";
     }
 
@@ -545,13 +557,14 @@
             const Icon = get(o, 'Icon')
             const Level = get(o, 'Level')
             const Name = get(o, 'Name')
+            const nm = Name.replace(SpellType + "_", "")
+                .replace(/_/g, " ")
+                .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
             v.innerHTML = `<i style="${ico(Icon, Name)}" title="${Icon}"></i>
    <span class="lv">LV. ${Level || "-"}</span>
    <span class="tp">${SpellType}</span>
    <div>
-   <label>${Name.replace(SpellType + "_", "")
-                .replace(/_/g, " ")
-                .replace(/([a-z0-9])([A-Z])/g, "$1 $2")}</label>
+   <label>${nm}</label>
     <div class="u">
      <ul class="po">${SpellProperties.map((p) => "<li>" + p + "</li>").join("")}</ul>
    <ul>${SpellSuccess.map((p) => "<li>" + p + "</li>").join("")}</ul>
@@ -612,9 +625,10 @@
                 b.innerHTML = ps(o);
                 e.className = 's';
             };
-            v._nm = Name.slice(SpellType.length)
+            v._nm = nm.toLowerCase()
+            v.lv = +Level || 99
         }
-        a.append(v)
+        sortItem()
         return v;
     };
     const x = (id, key) => {
