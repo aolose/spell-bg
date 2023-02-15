@@ -1,7 +1,8 @@
 const icons = {};
 const fs = require('fs');
 const path = require('path');
-
+const iconSiz = 50
+const imgSize= iconSiz/64*2048
 const fx = (p)=>{
     p=path.resolve(__dirname,p)
     const d = path.dirname(p)
@@ -33,6 +34,8 @@ read('./icon/Icons_Skills.lsx')
 
 write('./out/icons.js', `icons=${JSON.stringify(icons, '', ' ')}`);
 const icon = read('./icon/index.html')
+    .replace(/2048px/g, imgSize+'px')
+    .replace(/64px/g, iconSiz+'px')
     .replace('%%', new Date().toLocaleDateString())
 write('./out/index.html', icon)
 fs.copyFileSync(fx('./icon/Icons_Skills.png'), fx('./out/Icons_Skills.png'))
