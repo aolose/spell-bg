@@ -5,7 +5,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BG3 Spells</title>
-    <style>html{background: #171829}</style>
+    <style>html {
+        background: #171829
+    }</style>
     <link href="0.css" rel="stylesheet"/>
 </head>
 <body>
@@ -41,6 +43,7 @@
     const task = []
     let syncA = 0
     let icons = {}
+
     function ok() {
         const v = (++l * 100) / all
         z.style.width = v + '%'
@@ -62,12 +65,11 @@
         Object.values(spells).forEach(
             o => o.ico = ico(o.Icon, o.Name)
         )
-        if(tbs.run)tbs.ico()
+        ctx.ico()
     }
 
     function loadSpell(arr) {
         task.push(arr)
-        if(tbs.run)tbs.run()
     }
 
     const ft = {};
@@ -76,6 +78,50 @@
     const b = document.getElementById("b");
     const c = document.getElementById("c");
     const e = document.getElementById("e");
+    const ctx = document.getElementById("v");
+    function ps(o) {
+        const base = ['Parent', 'UseCosts', 'Icon', 'SpellType', 'Level', 'Name']
+        const v = Object.keys(o).filter(a => ['ico', 'nm', '_nm', 'lv'].indexOf(a) === -1);
+        v.sort((a, b) => {
+            const x = base.indexOf(a)
+            const y = base.indexOf(b)
+            if (x === y) return a > b ? 1 : -1
+            return y - x
+        })
+        let c = "";
+        v.forEach((k) => {
+            if (k === '_') return
+            const d = o[k];
+            let s;
+            if (Array.isArray(d)) {
+                const ss = d.map((u) => `<li>${u}</li>`).join("");
+                s = `<ul>${ss}</ul>`;
+            } else s = `<span>${d}</span>`;
+            const cls = o._ && o._.has(k) ? '_' : ''
+            c += `<div>
+<label class="${cls}">${k}</label>${s}
+</div>`;
+        });
+        return c;
+    }
+    ctx.onclick = ev => {
+        const c = ctx.children
+        const t = ev.target
+        const v  = [].find.call(c,(a=>a===c||a.contains(t)))
+        const nm = v&&v.id
+        if (nm) {
+            b.className = 's';
+            e.className = 's';
+            b.innerHTML = ps(spells[nm]);
+        }
+    }
+    ctx.ico = () => {
+        [].forEach.call(ctx.querySelectorAll('i'), a => {
+            const n = a.parentElement.id
+            const o = spells[n]
+            a.style = o.ico
+        })
+    }
     (e.onclick = function () {
         b.className = '';
         e.className = '';
@@ -103,7 +149,6 @@
     const cg = (k, t) => {
         ft.t = t;
         tbs.forEach((t) => t.act(k));
-        if(tbs.run)tbs.run()
     };
     [""].concat(types).forEach((t) => {
         const n = t || "ALL";
@@ -127,6 +172,7 @@
     x("v0", "k");
     x("v2", "l");
     cg("ALL", "");
+
 </script>
 <script src="./r.js" async></script>
 %scripts%

@@ -229,10 +229,6 @@ ul {
 }
 
 .c {
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    visibility: hidden;
     cursor: pointer;
     -webkit-box-align: start;
     align-items: flex-start;
