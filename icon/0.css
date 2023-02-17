@@ -333,6 +333,7 @@ input {
     }
 
     #a {
+        scroll-behavior: smooth;
         max-width: 100%
     }
 

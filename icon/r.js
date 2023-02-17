@@ -72,12 +72,12 @@
     }
 
     function pick() {
-        const v = x * y
+        const v = x * y * 5
         const l = filters.length
         const s = Math.floor(a.scrollTop / h) * x
-        const mi = Math.max(0, s - v * 2)
+        const mi = Math.max(0, s - v)
         fx = mi * h
-        picks = filters.slice(mi, Math.min(l, s + v * 3))
+        picks = filters.slice(mi, Math.min(l, s + v))
     }
 
     const get = (o, k) => {
@@ -166,6 +166,7 @@
         return v;
     };
     const run = () => {
+        requestAnimationFrame(run)
         if (task.length) {
             task.forEach(arr => {
                 arr.forEach(a => {
@@ -188,29 +189,31 @@
             pick()
             render()
         }
-        requestAnimationFrame(run)
     }
 
+
     const render = () => {
+        const rm = []
         ns.forEach((a, i) => {
             const idx = picks.indexOf(a.d)
             if (idx === -1) {
-                ns[i]=0
-                ctx.removeChild(a)
+                ns[i] = 0
+                rm.push(a)
             } else {
-                picks[idx] = 0
+                picks[idx] = a
             }
         })
         picks.forEach((o, i) => {
-            if (!o) return
-            const v = card(o)
-            ns.push(v)
+            const ex = o.d
+            const v = ex ? o : card(o)
+            if (!ex) ns.push(v)
             const s = v.style
             s.left = (i % x) * w + 'px'
             s.top = Math.floor(i / x) * h + fx + 'px'
             ctx.appendChild(v)
         })
-        ns=ns.filter(a=>a)
+        ns = ns.filter(a => a)
+        rm.forEach(a=>ctx.removeChild(a))
     }
     a.onscroll = () => {
         syncA++
