@@ -6,7 +6,7 @@
     const m = 10
     const w = 400 + m
     const h = 160 + m
-    let x = Math.floor((a.offsetWidth - 20) / w)
+    let x = Math.max(1,Math.floor((a.offsetWidth - 20) / w))
     let y = Math.ceil((a.offsetHeight - 20) / h)
     let filters = []
     let picks = []
@@ -170,7 +170,7 @@
         syncA++
     }
     window.onresize = () => {
-        let m = Math.floor((a.offsetWidth - 20) / w)
+        let m =Math.max(1,Math.floor((a.offsetWidth - 20) / w))
         let n = Math.ceil((a.offsetHeight - 20) / h)
         if (x !== m) {
             x = m
