@@ -2,11 +2,11 @@
     const ctx = document.getElementById("v");
     const sty = ctx.style
     let syncB = 0
+    let fx = 0
     const spellArr = []
     const m = 10
     const w = 400 + m
     const h = 160 + m
-    let start = 0
     let x = Math.floor((a.offsetWidth - 20) / w)
     let y = Math.ceil((a.offsetHeight - 20) / h)
     let filters = []
@@ -74,8 +74,10 @@
     function pick() {
         const v = x * y
         const l = filters.length
-        start = Math.floor(a.scrollTop / h) * x
-        picks = filters.slice(Math.max(0, start - v * 2), Math.min(l, start + v * 3))
+        const s = Math.floor(a.scrollTop / h) * x
+        const mi = Math.max(0, s - v * 2)
+        fx = mi * h
+        picks = filters.slice(mi, Math.min(l, s + v * 3))
     }
 
     const get = (o, k) => {
@@ -117,7 +119,7 @@
         const {SpellProperties, SpellSuccess} = a
         if (typeof SpellProperties === 'string') a.SpellProperties = [SpellProperties]
         if (typeof SpellSuccess === 'string') a.SpellSuccess = [SpellSuccess]
-
+        a.ico = ico(a.Icon, a.Name)
         return a
     }
 
@@ -152,12 +154,15 @@
    <ul>${SpellSuccess.map((p) => "<li>" + p + "</li>").join("")}</ul>
 </div>
     </div></div>`);
-
+        v.ico = () => {
+            v.querySelector('i').style = o.ico
+        }
         v.onclick = () => {
             b.className = 's';
             e.className = 's';
             b.innerHTML = ps(o);
         };
+        v.d = o
         return v;
     };
     const run = () => {
@@ -185,17 +190,27 @@
         }
         requestAnimationFrame(run)
     }
+
     const render = () => {
-        const p = a.scrollTop % h
-        const cs = [...ctx.children]
+        ns.forEach((a, i) => {
+            const idx = picks.indexOf(a.d)
+            if (idx === -1) {
+                ns[i]=0
+                ctx.removeChild(a)
+            } else {
+                picks[idx] = 0
+            }
+        })
         picks.forEach((o, i) => {
+            if (!o) return
             const v = card(o)
+            ns.push(v)
             const s = v.style
             s.left = (i % x) * w + 'px'
-            s.top = Math.floor((i + start) / x) * h - p + 'px'
+            s.top = Math.floor(i / x) * h + fx + 'px'
             ctx.appendChild(v)
         })
-        cs.forEach(c => ctx.removeChild(c))
+        ns=ns.filter(a=>a)
     }
     a.onscroll = () => {
         syncA++

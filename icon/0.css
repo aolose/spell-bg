@@ -107,6 +107,7 @@ ul {
 #b label {
     padding: 0 10px;
     width: 120px;
+    flex-shrink: 0;
     color: darkorange
 }
 
