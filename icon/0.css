@@ -229,6 +229,10 @@ ul {
 }
 
 .c {
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    visibility: hidden;
     cursor: pointer;
     -webkit-box-align: start;
     align-items: flex-start;
@@ -238,7 +242,6 @@ ul {
     padding: 10px;
     background: #161d2f;
     position: absolute;
-    display: none;
 }
 
 .c i {

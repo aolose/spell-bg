@@ -189,11 +189,12 @@
             const i = picks.findIndex(a => a.Name === k)
             const s = v.style
             if (i !== -1) {
-                s.display = 'flex   '
-                s.left = (i % x) * w + 'px'
-                s.top = Math.floor(i / x) * h + fx + 'px'
+                s.visibility='visible'
+                s.pointerEvents='all'
+                s.transform=`translate3d(${(i % x) * w}px,${Math.floor(i / x) * h + fx}px,0)`
             } else {
-                s.display = ''
+                s.visibility=''
+                s.pointerEvents=''
             }
         }
     }
