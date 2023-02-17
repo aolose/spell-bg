@@ -1,7 +1,7 @@
 +function () {
+    const cache = {}
     const ctx = document.getElementById("v");
     const sty = ctx.style
-    let syncB = 0
     let fx = 0
     const spellArr = []
     const m = 10
@@ -13,7 +13,6 @@
     let picks = []
     let fts = JSON.stringify(ft)
     const cc = t => t === undefined || t === 'unknown'
-
     function filter() {
         const {t, k, l} = ft;
         filters = spellArr.filter(o => {
@@ -122,9 +121,18 @@
         a.ico = ico(a.Icon, a.Name)
         return a
     }
-
+    tbs.ico=()=>{
+        Object.values(cache).forEach(a=>a.ico())
+    }
     function ps(o) {
-        const v = Object.keys(o);
+        const base = ['Parent', 'UseCosts', 'Icon', 'SpellType', 'Level', 'Name']
+        const v = Object.keys(o).filter(a => ['ico', 'nm', '_nm', 'lv'].indexOf(a) === -1);
+        v.sort((a, b) => {
+            const x = base.indexOf(a)
+            const y = base.indexOf(b)
+            if (x === y) return a > b ? 1 : -1
+            return y - x
+        })
         let c = "";
         v.forEach((k) => {
             if (k === '_') return
@@ -143,8 +151,13 @@
     }
 
     const card = (o) => {
-        const {ico, nm, Level, SpellType, SpellProperties = [], SpellSuccess = []} = o
-        const v = el(`<div class="c"><i style="${ico}" title="${o.Icon}"></i>
+        const {Name} = o
+        let v = cache[Name]
+        if (!v) {
+            v = el(`<div class="c"></div>`);
+            v.render = () => {
+                const {ico, nm, Level, SpellType, SpellProperties = [], SpellSuccess = []} = o
+                v.innerHTML = `<i style="${ico}" title="${o.Icon}"></i>
    <span class="lv">LV. ${Level || "-"}</span>
    <span class="tp">${SpellType}</span>
    <div>
@@ -153,20 +166,38 @@
      <ul class="po">${SpellProperties.map((p) => "<li>" + p + "</li>").join("")}</ul>
    <ul>${SpellSuccess.map((p) => "<li>" + p + "</li>").join("")}</ul>
 </div>
-    </div></div>`);
-        v.ico = () => {
-            v.querySelector('i').style = o.ico
+    </div>`
+            }
+            v.ico = () => {
+                v.querySelector('i').style = o.ico
+            }
+            v.render()
+            v.onclick = () => {
+                b.className = 's';
+                e.className = 's';
+                b.innerHTML = ps(o);
+            };
+            ctx.appendChild(v)
+            cache[Name] = v
         }
-        v.onclick = () => {
-            b.className = 's';
-            e.className = 's';
-            b.innerHTML = ps(o);
-        };
-        v.d = o
         return v;
     };
-    const run = () => {
-        requestAnimationFrame(run)
+    const render = () => {
+        for (const o of spellArr) {
+            const v = card(o)
+            const k = o.Name
+            const i = picks.findIndex(a => a.Name === k)
+            const s = v.style
+            if (i !== -1) {
+                s.display = 'flex   '
+                s.left = (i % x) * w + 'px'
+                s.top = Math.floor(i / x) * h + fx + 'px'
+            } else {
+                s.display = ''
+            }
+        }
+    }
+    const run = tbs.run = () => {
         if (task.length) {
             task.forEach(arr => {
                 arr.forEach(a => {
@@ -184,50 +215,19 @@
             fts = f
             filter()
         }
-        if (syncA !== syncB) {
-            syncB = syncA = 0
-            pick()
-            render()
-        }
-    }
-
-
-    const render = () => {
-        const rm = []
-        ns.forEach((a, i) => {
-            const idx = picks.indexOf(a.d)
-            if (idx === -1) {
-                ns[i] = 0
-                rm.push(a)
-            } else {
-                picks[idx] = a
-            }
-        })
-        picks.forEach((o, i) => {
-            const ex = o.d
-            const v = ex ? o : card(o)
-            if (!ex) ns.push(v)
-            const s = v.style
-            s.left = (i % x) * w + 'px'
-            s.top = Math.floor(i / x) * h + fx + 'px'
-            ctx.appendChild(v)
-        })
-        ns = ns.filter(a => a)
-        rm.forEach(a=>ctx.removeChild(a))
+        pick()
+        render()
     }
     a.onscroll = () => {
-        syncA++
+        run()
     }
     window.onresize = () => {
         let m = Math.floor((a.offsetWidth - 20) / w)
         let n = Math.ceil((a.offsetHeight - 20) / h)
-        if (x !== m) {
+        if (x !== m || n !== y) {
             x = m
-            syncA++
-        }
-        if (n !== y) {
             y = n
-            syncA++
+            run()
         }
     }
     run()

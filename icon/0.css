@@ -238,6 +238,7 @@ ul {
     padding: 10px;
     background: #161d2f;
     position: absolute;
+    display: none;
 }
 
 .c i {
