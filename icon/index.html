@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="g"  role="tabpanel">
+    <div class="g" role="tabpanel">
         <div id="a" role="main">
             <div id="v" role="list"></div>
         </div>
@@ -49,10 +49,12 @@
     const w = 400 + m
     const spellArr = []
     const filters = []
-    function sz(){
+
+    function sz() {
         const y = Math.ceil(filters.length / x)
         sty.height = h * y + 20 + 'px'
     }
+
     function filter() {
         filters.length = 0
         const {t, k, l} = ft;
@@ -101,8 +103,10 @@
             filters.push(i)
         })
         filters.sort((a, b) => {
-            const la = spellArr[a].lv
-            const lb = spellArr[b].lv
+            a = spellArr[a]
+            b = spellArr[b]
+            const la = a.lv
+            const lb = b.lv
             if (la === lb) return a._nm > b._nm ? 1 : -1
             return la > lb ? 1 : -1
         })
@@ -178,6 +182,7 @@
         Object.values(spells).forEach(mg)
         filter()
     }
+
     const ft = {};
     const z = document.getElementById("z");
     const a = document.getElementById("a");
@@ -187,6 +192,7 @@
     const ctx = document.getElementById("v");
     let x = Math.max(1, Math.floor((a.offsetWidth - 20) / w))
     const sty = ctx.style
+
     function ps(o) {
         const base = ['Parent', 'UseCosts', 'Icon', 'SpellType', 'Level', 'Name']
         const v = Object.keys(o).filter(a => ['ico', 'nm', '_nm', 'lv'].indexOf(a) === -1);
@@ -212,6 +218,7 @@
         });
         return c;
     }
+
     ctx.onclick = ev => {
         const c = ctx.children
         const t = ev.target
@@ -251,7 +258,7 @@
         ft.t = t;
         tbs.forEach((t) => t.act(k));
     };
-    [""].concat(types).forEach((t,i) => {
+    [""].concat(types).forEach((t, i) => {
         const n = t || "ALL";
         const b = el(`<div role="tab" aria-selected="true" aria-controls="spell-type" >${n.toUpperCase()}</div>`);
         b.onclick = () => {
