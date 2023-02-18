@@ -40,9 +40,103 @@
     let l = 0
     const types = "%types%"
     const spells = {}
-    const task = []
     let syncA = 0
     let icons = {}
+    const m = 10
+    const h = 160 + m
+    const w = 400 + m
+    const spellArr = []
+    const filters = []
+    function sz(){
+        const y = Math.ceil(filters.length / x)
+        sty.height = h * y + 20 + 'px'
+    }
+    function filter() {
+        filters.length = 0
+        const {t, k, l} = ft;
+        spellArr.forEach((o, i) => {
+            const f = (k, va) => {
+                if (typeof va === 'string') {
+                    va = va.replace(/unknown/gi, '');
+                }
+                if (k) {
+                    if (k === '-') {
+                        if (va) return;
+                    } else if (k === '*') {
+                        if (!va) return;
+                    } else if (/^>\d+$/.test(k)) {
+                        const g = +k.substr(1);
+                        if (!isNaN(g)) {
+                            let n = 0;
+                            [].concat(va).forEach((v) => {
+                                if (/^\d+$/.test(v)) {
+                                    if (+v >= g) n = 1;
+                                } else {
+                                    const r = /DealDamage\((\d+)d(\d+),.*?\)/;
+                                    const [, a, b] = r.exec(v) || [];
+                                    if (b) {
+                                        if (a * b >= g) n = 1;
+                                    }
+                                }
+                            });
+                            if (!n) return;
+                        }
+                    } else {
+                        const v0 = (va + '').toLowerCase();
+                        if (v0.indexOf((k + '').toLowerCase()) === -1) return;
+                    }
+                }
+                return 1
+            };
+            if (t && t !== o.SpellType) return
+            if (k && l) {
+                for (const [kk, v] of Object.entries(o)) {
+                    if (kk.toLowerCase() === k.toLowerCase()) {
+                        if (!f(l, v)) return
+                    }
+                }
+            }
+            filters.push(i)
+        })
+        filters.sort((a, b) => {
+            const la = spellArr[a].lv
+            const lb = spellArr[b].lv
+            if (la === lb) return a._nm > b._nm ? 1 : -1
+            return la > lb ? 1 : -1
+        })
+        sz()
+        syncA++
+    }
+
+    function mg(a) {
+        if (!a) return
+        if (!a._) {
+            Object.keys(a).forEach(k => {
+                if (!a[k]) delete a[k]
+            })
+            a._ = {}
+        }
+        const {Parent} = a
+        if (Parent) {
+            const pp = mg(spells[Parent]);
+            if (pp) Object.keys(pp).forEach(k => {
+                if (!a.hasOwnProperty(k)) {
+                    a[k] = pp[k]
+                    a._[k] = 1
+                }
+            })
+        }
+        a.nm = a.Name.replace(a.SpellType + "_", "")
+            .replace(/_/g, " ")
+            .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+        a._nm = a.nm.toLowerCase()
+        a.lv = +a.Level || 99
+        const {SpellProperties, SpellSuccess} = a
+        if (typeof SpellProperties === 'string') a.SpellProperties = [SpellProperties]
+        if (typeof SpellSuccess === 'string') a.SpellSuccess = [SpellSuccess]
+        a.ico = ico(a.Icon)
+        return a
+    }
 
     function ok() {
         const v = (++l * 100) / all
@@ -50,11 +144,12 @@
         if (v === 100) z.style.opacity = '0'
     }
 
-    function ico(k, name) {
+    const fx = a => (100 * a / (2048 - 64)).toFixed(5) + '%';
+
+    function ico(k) {
         const o = icons[k];
         if (o) {
             const {U1, V1} = o;
-            const fx = a => (100 * a / (2048 - 64)).toFixed(5) + '%';
             return `background-position:${fx(U1)} ${fx(V1)}`;
         }
         return "background-image:none";
@@ -63,15 +158,24 @@
     function loadIcon(i) {
         icons = i
         Object.values(spells).forEach(
-            o => o.ico = ico(o.Icon, o.Name)
-        )
-        ctx.ico()
+            o => o.ico = ico(o.Icon)
+        );
+        [].forEach.call(ctx.querySelectorAll('i'), a => {
+            const n = a.parentElement.id
+            const o = spells[n]
+            a.style = o.ico
+        })
     }
 
     function loadSpell(arr) {
-        task.push(arr)
+        arr.forEach(a => {
+            const name = a.Name
+            spells[name] = a
+            spellArr.push(a)
+        })
+        Object.values(spells).forEach(mg)
+        filter()
     }
-
     const ft = {};
     const z = document.getElementById("z");
     const a = document.getElementById("a");
@@ -79,6 +183,8 @@
     const c = document.getElementById("c");
     const e = document.getElementById("e");
     const ctx = document.getElementById("v");
+    let x = Math.max(1, Math.floor((a.offsetWidth - 20) / w))
+    const sty = ctx.style
     function ps(o) {
         const base = ['Parent', 'UseCosts', 'Icon', 'SpellType', 'Level', 'Name']
         const v = Object.keys(o).filter(a => ['ico', 'nm', '_nm', 'lv'].indexOf(a) === -1);
@@ -97,7 +203,7 @@
                 const ss = d.map((u) => `<li>${u}</li>`).join("");
                 s = `<ul>${ss}</ul>`;
             } else s = `<span>${d}</span>`;
-            const cls = o._ && o._.has(k) ? '_' : ''
+            const cls = o._ && o._[k] ? '_' : ''
             c += `<div>
 <label class="${cls}">${k}</label>${s}
 </div>`;
@@ -107,20 +213,13 @@
     ctx.onclick = ev => {
         const c = ctx.children
         const t = ev.target
-        const v  = [].find.call(c,(a=>a===c||a.contains(t)))
-        const nm = v&&v.id
+        const v = [].find.call(c, (a => a === c || a.contains(t)))
+        const nm = v && v.id
         if (nm) {
             b.className = 's';
             e.className = 's';
             b.innerHTML = ps(spells[nm]);
         }
-    }
-    ctx.ico = () => {
-        [].forEach.call(ctx.querySelectorAll('i'), a => {
-            const n = a.parentElement.id
-            const o = spells[n]
-            a.style = o.ico
-        })
     }
     (e.onclick = function () {
         b.className = '';
@@ -162,15 +261,15 @@
         tbs.push(b);
         c.appendChild(b);
     });
-    const x = (id, key) => {
+    const xx = (id, key) => {
         const v = document.getElementById(id);
         v.oninput = v.onchange = v.onpaste = v.onblur = function () {
             ft[key] = v.value.replace(/^\s+|\s+$/, "");
             syncA++
         };
     };
-    x("v0", "k");
-    x("v2", "l");
+    xx("v0", "k");
+    xx("v2", "l");
     cg("ALL", "");
 
 </script>
