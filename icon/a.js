@@ -21,8 +21,8 @@
                 SpellSuccess = [],
                 Icon
             } = spellArr[filters[s]]
-            tpm += `<div class="c" id="${Name}" style="left:${(s % x) * w}px;top:${Math.floor(s / x) * h}px">
-<i style="${ico}" title="${Icon}"></i><span class="lv">LV. ${Level || "-"}</span><span class="tp">${SpellType}</span>
+            tpm += `<div class="c" role="listitem" id="${Name}" style="left:${(s % x) * w}px;top:${Math.floor(s / x) * h}px">
+<i style="${ico}" role="img" aria-label="icon of the spell ${Name}" title="${Icon}"></i><span class="lv">LV. ${Level || "-"}</span><span class="tp">${SpellType}</span>
    <div><label>${nm}</label><div class="u"><ul class="po">${SpellProperties.map((p) => "<li>" + p + "</li>").join("")}</ul>
    <ul>${SpellSuccess.map((p) => "<li>" + p + "</li>").join("")}</ul>
 </div></div></div>`

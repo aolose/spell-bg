@@ -16,25 +16,25 @@
 <div id="z"></div>
 <div class="r">
     <div class="p">
-        <div id="c">
+        <div id="c" role="tablist">
         </div>
         <div class="f">
-            <div class="v">
+            <div class="v" role="searchbox">
                 <label>Label</label>
-                <input id="v0"/>
+                <input id="v0" role="search"/>
             </div>
-            <div class="v">
+            <div class="v" role="searchbox">
                 <label>Value</label>
-                <input id="v2"/>
+                <input id="v2" role="search"/>
             </div>
         </div>
     </div>
-    <div class="g">
-        <div id="a">
-            <div id="v"></div>
+    <div class="g"  role="tabpanel">
+        <div id="a" role="main">
+            <div id="v" role="list"></div>
         </div>
-        <div id="b"></div>
-        <div id="e">X</div>
+        <div id="b" role="document"></div>
+        <div id="e" role="button">X</div>
     </div>
 </div>
 <script>
@@ -251,9 +251,9 @@
         ft.t = t;
         tbs.forEach((t) => t.act(k));
     };
-    [""].concat(types).forEach((t) => {
+    [""].concat(types).forEach((t,i) => {
         const n = t || "ALL";
-        const b = el(`<div>${n.toUpperCase()}</div>`);
+        const b = el(`<div role="tab" aria-selected="true" aria-controls="spell-type" >${n.toUpperCase()}</div>`);
         b.onclick = () => {
             cg(n, t);
         };
