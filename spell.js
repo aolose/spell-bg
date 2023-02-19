@@ -110,13 +110,12 @@ read('./icon/Icons_Skills.lsx')
             const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
             if (a) key = a;
             if (n) {
-                const x = bgW * n
                 switch (t) {
                     case'U1':
-                        o.x = Math.round(x)
-                    case'V2':
-                        o.n = Math.floor((imgW * n - iconSiz * 0.1) / sliceH)
-                        o.y = Math.round(x % bgH - iconSiz)
+                        o.x = parseFloat((2048 * n * 100 / (2048 - 64)).toFixed(2))
+                    case'V1':
+                        o.n = Math.floor(imgW * n / sliceH)
+                        o.y = parseFloat(((bgW * n % bgH) * 100 / (bgH - iconSiz)).toFixed(2))
                 }
             }
         });
