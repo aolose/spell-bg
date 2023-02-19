@@ -5,7 +5,12 @@ const out = __dirname + '/out/'
 const types = new Set()
 const bk = []
 const size = 80
-const sliceImgHeight = 175
+const sliceH = 125
+const iconSiz = 50
+const imgW = 1000
+const scale = iconSiz / 64
+const bgW = scale * 2048
+const bgH = bgW / imgW * sliceH
 if (!fs.existsSync(out)) fs.mkdirSync(out);
 let scripts = ''
 let s = 0
@@ -82,8 +87,7 @@ parseSpells('spells', /^Spell_/);
 
 const icons = {};
 const path = require('path');
-const iconSiz = 50
-const imgSize = iconSiz / 64 * 2048
+
 const fx = (p) => {
     p = path.resolve(__dirname, p)
     const d = path.dirname(p)
@@ -106,7 +110,14 @@ read('./icon/Icons_Skills.lsx')
             const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
             if (a) key = a;
             if (n) {
-                o[t] = parseFloat((2048 * n).toFixed(2));
+                const x = bgW * n
+                switch (t) {
+                    case'U1':
+                        o.x = Math.round(x)
+                    case'V2':
+                        o.n = Math.floor((imgW * n - iconSiz * 0.1) / sliceH)
+                        o.y = Math.round(x % bgH - iconSiz)
+                }
             }
         });
         if (key) icons[key] = o;
@@ -115,21 +126,16 @@ read('./icon/Icons_Skills.lsx')
 const ico = 'i'
 wJs(ico, `loadIcon(${JSON.stringify(icons, '', ' ')})`)
 const copy = (a, b) => fs.copyFileSync(fx('./icon/' + a), fx('./out/' + (b || a)))
-let img = ''
-fs.readdirSync('./icon/img').forEach((a) => {
-    img += `<img src="${a}" onload="imgLd(this,${a.replace(/\..*/, '') * sliceImgHeight})"/>`
-    copy('img/' + a, a)
-})
+fs.readdirSync('./icon/img').forEach((a) => copy('img/' + a, a))
 const icon = read('./icon/index.tmpl')
     .replace('%scripts%', scripts)
-    .replace('%img%', img)
     .replace('css', read('./icon/0.scss')
-        .replace(/2048px/g, imgSize + 'px')
+        .replace('2048px 2048px', `${bgW}px ${bgH}px`)
         .replace(/64px/g, iconSiz + 'px')
     )
     .replace('js', read('./icon/0.js')
         .replace('%%', new Date().toLocaleDateString())
         .replace('"%types%"', JSON.stringify([...types]))
-        .replace('const all', `const all=${s}`)
+        .replace('9999', `${s}`)
     )
 write('./out/index.html', icon)
