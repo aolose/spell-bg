@@ -5,7 +5,7 @@ const out = __dirname + '/out/'
 const types = new Set()
 const bk = []
 const size = 80
-const sliceImgHeight = 73
+const sliceImgHeight = 175
 if (!fs.existsSync(out)) fs.mkdirSync(out);
 let scripts = ''
 let s = 0
