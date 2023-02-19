@@ -5,10 +5,10 @@ const out = __dirname + '/out/'
 const types = new Set()
 const bk = []
 const size = 80
-
+const sliceImgHeight = 73
 if (!fs.existsSync(out)) fs.mkdirSync(out);
 let scripts = ''
-let s=0
+let s = 0
 const wsc = src => scripts += `<script onload="ok()" src='${src}.js' async></script>`
 const wJs = (name, js) => {
     s++
@@ -114,13 +114,22 @@ read('./icon/Icons_Skills.lsx')
 
 const ico = 'i'
 wJs(ico, `loadIcon(${JSON.stringify(icons, '', ' ')})`)
-const icon = read('./icon/index.html')
-    .replace(/2048px/g, imgSize + 'px')
-    .replace(/64px/g, iconSiz + 'px')
-    .replace('%%', new Date().toLocaleDateString())
-    .replace('"%types%"', JSON.stringify([...types]))
+const copy = (a, b) => fs.copyFileSync(fx('./icon/' + a), fx('./out/' + (b || a)))
+let img = ''
+fs.readdirSync('./icon/img').forEach((a) => {
+    img += `<img src="${a}" onload="imgLd(this,${a.replace(/\..*/, '') * sliceImgHeight})"/>`
+    copy('img/' + a, a)
+})
+const icon = read('./icon/index.tmpl')
     .replace('%scripts%', scripts)
-    .replace('+0', `${s}`)
+    .replace('%img%', img)
+    .replace('css', read('./icon/0.scss')
+        .replace(/2048px/g, imgSize + 'px')
+        .replace(/64px/g, iconSiz + 'px')
+    )
+    .replace('js', read('./icon/0.js')
+        .replace('%%', new Date().toLocaleDateString())
+        .replace('"%types%"', JSON.stringify([...types]))
+        .replace('const all', `const all=${s}`)
+    )
 write('./out/index.html', icon)
-const copy = a=>fs.copyFileSync(fx('./icon/'+a), fx('./out/'+a))
-copy('Icons_Skills.png')
