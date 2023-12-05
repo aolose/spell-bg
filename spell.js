@@ -5,9 +5,9 @@ const out = __dirname + '/out/'
 const types = new Set()
 const bk = []
 const size = 80
-const sliceH = 125
-const iconSiz = 50
-const imgW = 1000
+const sliceH = 128
+const iconSiz = 48
+const imgW = 1024
 const scale = iconSiz / 64
 const bgW = scale * 2048
 const bgH = bgW / imgW * sliceH
@@ -112,14 +112,15 @@ const cIcon = (str, i = 0) => {
                 if (n) {
                     switch (t) {
                         case'U1':
-                            o.x = parseFloat((2048 * n * 100 / (2048 - 64)).toFixed(2))
+                            if (n) o.x = parseFloat((2048 * n * 100 / (2048 - 64)).toFixed(2))
                         case'V1':
-                            o.n = Math.floor(imgW * n / sliceH) + 8 * i
+                            o.n = Math.floor(imgW * n / sliceH)
                             o.y = parseFloat(((bgW * n % bgH) * 100 / (bgH - iconSiz)).toFixed(2))
                     }
                 }
             });
-            if (key) icons[key] = o;
+            if (i) o.n = (+o.n || 0) + (i * 8)
+            if (key && !icons[key]) icons[key] = o;
         });
 }
 const i0 = read('./icon/Icons_Skills.lsx');
