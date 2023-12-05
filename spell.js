@@ -100,27 +100,32 @@ const write = (p, d) => {
 const read = (p) => {
     return fs.readFileSync(fx(p)).toString()
 }
-read('./icon/Icons_Skills.lsx')
-    .split('<node id="IconUV">')
-    .forEach(v => {
-        const o = {};
-        let key = '';
-        v.split(/\r?\n/).forEach(vv => {
-            const [, a] = /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
-            const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
-            if (a) key = a;
-            if (n) {
-                switch (t) {
-                    case'U1':
-                        o.x = parseFloat((2048 * n * 100 / (2048 - 64)).toFixed(2))
-                    case'V1':
-                        o.n = Math.floor(imgW * n / sliceH)
-                        o.y = parseFloat(((bgW * n % bgH) * 100 / (bgH - iconSiz)).toFixed(2))
+const cIcon = (str, i = 0) => {
+    str.split('<node id="IconUV">')
+        .forEach(v => {
+            const o = {};
+            let key = '';
+            v.split(/\r?\n/).forEach(vv => {
+                const [, a] = /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
+                const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
+                if (a) key = a;
+                if (n) {
+                    switch (t) {
+                        case'U1':
+                            o.x = parseFloat((2048 * n * 100 / (2048 - 64)).toFixed(2))
+                        case'V1':
+                            o.n = Math.floor(imgW * n / sliceH) + 8 * i
+                            o.y = parseFloat(((bgW * n % bgH) * 100 / (bgH - iconSiz)).toFixed(2))
+                    }
                 }
-            }
+            });
+            if (key) icons[key] = o;
         });
-        if (key) icons[key] = o;
-    });
+}
+const i0 = read('./icon/Icons_Skills.lsx');
+const i1 = read('./icon/Icons_Skills1.lsx');
+cIcon(i0)
+cIcon(i1, 1)
 
 const ico = 'i'
 wJs(ico, `loadIcon(${JSON.stringify(icons, '', ' ')})`)
