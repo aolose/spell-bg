@@ -119,8 +119,8 @@ const cIcon = (str, i = 0) => {
                     }
                 }
             });
+            if (key) icons[key] = o
             if (i) o.n = (+o.n || 0) + (i * 8)
-            if (key && !icons[key]) icons[key] = o;
         });
 }
 const i0 = read('./icon/Icons_Skills.lsx');
