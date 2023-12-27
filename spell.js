@@ -37,7 +37,7 @@ const fileParser = a => {
                 e.Parent = n.substr(6).replace(/"/g, '')
             } else if (/^data/.test(n)) {
                 const [, b, c] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
-                if (c) e[b] = /^\d+$/.test(c) ? +c : c;
+                if (c) e[b] = /^\d+$/.test(c) ? +c : c === "unknown" ? "" : c;
                 if (/;/.test(c)) arrayName[b] = 1;
             }
         });
