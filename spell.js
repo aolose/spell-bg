@@ -76,8 +76,9 @@ const fileParser = a => {
             else if (/^using/.test(n)) {
                 e.Using = n.slice(6).replace(/"/g, '')
             } else if (/^data/.test(n)) {
-                const [, b, c] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
-                if (c) {
+                const [, b, s] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
+                if (s) {
+                    const c = s.replace(/([a-zA-Z]+\([0-9',.+\-a-zA-Z ()_]*\))/gi,'<b>$1</b>')
                     if (b === 'TooltipUpcastDescription') {
                         e[b] = tooltips[c].Name+'<br>'+tooltips[c].Text
                     } else if (['DisplayName','Description'].includes(b)) {
