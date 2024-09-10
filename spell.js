@@ -45,7 +45,7 @@ const fileParser = a => {
         v.split(/\r?\n/).forEach(n => {
             if (/^new entry/.test(n)) e.Name = JSON.parse(n.replace('new entry ', ''));
             else if (/^using/.test(n)) {
-                e.Parent = n.slice(6).replace(/"/g, '')
+                e.Using = n.slice(6).replace(/"/g, '')
             } else if (/^data/.test(n)) {
                 const [, b, c] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
                 if (c) e[b] = /^\d+$/.test(c) ? +c : c === "unknown" ? "" : c;
