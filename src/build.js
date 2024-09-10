@@ -1,6 +1,3 @@
-import sharp from "sharp";
-import dxt from 'decode-dxt'
-import parse from 'parse-dds'
 import fs from 'fs'
 import xmlParser from 'xml2json'
 import path from 'path'
