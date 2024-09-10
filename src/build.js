@@ -116,7 +116,9 @@ const parseLang = () => {
     str.forEach(a => {
         const [k, v] = a.replace(/[\n\r]/g, '')
             .match(/(?<=contentuid=")(\w+)|(?<=>)(.*?)(?=<\/content)/g)
-        lang[k] = v.replace(/&gt;/g, '<').replace(/&lt;/g, '<')
+        lang[k] = v.replace(/&gt;/g, '>')
+            .replace(/&lt;/g, '<')
+            .replace(/LSTag.*?>/g,'b>')
     })
 }
 
