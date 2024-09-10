@@ -77,7 +77,7 @@ const fileParser = a => {
                     const c = s.replace(/([a-zA-Z]+\([0-9',.+\-a-zA-Z ()_]*\))/gi, '<b>$1</b>')
                     if (b === 'TooltipUpcastDescription') {
                         e[b] = tooltips[c].Name + '<br>' + tooltips[c].Text
-                    } else if (['DisplayName', 'Description'].includes(b)) {
+                    } else if (['DisplayName', 'Description','ExtraDescription'].includes(b)) {
                         const d = c.replace(/;\d+$/, '')
                         e[b] = lang[d] || d
                     } else {
