@@ -1,4 +1,15 @@
 const fs = require('fs');
+const path = require('path');
+const unpackData = 'D:/Program Files (x86)/GOG Galaxy/Games/bg3mmd/UnpackedData/'
+const spells = [
+    'Gustav/Public/GustavDev/Stats/Generated/Data',
+    'Shared/Public/Shared/Stats/Generated/Data',
+    'Gustav/Public/Honour/Stats/Generated/Data'
+]
+const iconsData = [
+    'Shared/Public/Shared/GUI/Icons_Skills.lsx',
+    'Shared/Public/SharedDev/GUI/Icons_Skills.lsx'
+]
 const arrayName = {};
 const out = __dirname + '/out/'
 
@@ -34,7 +45,7 @@ const fileParser = a => {
         v.split(/\r?\n/).forEach(n => {
             if (/^new entry/.test(n)) e.Name = JSON.parse(n.replace('new entry ', ''));
             else if (/^using/.test(n)) {
-                e.Parent = n.substr(6).replace(/"/g, '')
+                e.Parent = n.slice(6).replace(/"/g, '')
             } else if (/^data/.test(n)) {
                 const [, b, c] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
                 if (c) e[b] = /^\d+$/.test(c) ? +c : c === "unknown" ? "" : c;
@@ -46,16 +57,14 @@ const fileParser = a => {
     return r;
 }
 
-const parseSpells = (name, regex) => {
-    const p = __dirname + '/' + name + '/'
-    const arr = (fs.readdirSync(p) || [])
-        .filter(a => {
-            return regex.test(a)
-        })
-        .map(a => {
-            return fileParser(fs.readFileSync(p + a).toString())
-                .reduce((a, b) => a.concat(b), [])
-        })
+const parseSpells = (regex) => {
+    const arr = []
+    spells.forEach((name) => {
+        const p = path.resolve(unpackData, name)
+        fs.readdirSync(p).filter(a => /^Spell_/.test(a))
+            .forEach(a => arr.push(fileParser(fs.readFileSync(path.resolve(p,a)).toString())
+                .reduce((a, b) => a.concat(b), [])))
+    })
     let js = 0
     const ld = (n = size) => {
         if (bk.length >= n) {
@@ -83,13 +92,12 @@ const parseSpells = (name, regex) => {
     ld(1)
 }
 
-parseSpells('spells', /^Spell_/);
+parseSpells();
 
 const icons = {};
-const path = require('path');
 
 const fx = (p) => {
-    p = path.resolve(__dirname, p)
+    p = /:/.test(p) ? p : path.resolve(__dirname, p)
     const d = path.dirname(p)
     if (!fs.existsSync(d)) fs.mkdirSync(d, {recursive: !0})
     return p
@@ -123,11 +131,9 @@ const cIcon = (str, i = 0) => {
             if (i) o.n = (+o.n || 0) + (i * 8)
         });
 }
-const i0 = read('./icon/Icons_Skills.lsx');
-const i1 = read('./icon/Icons_Skills1.lsx');
-cIcon(i0)
-cIcon(i1, 1)
-
+iconsData.forEach((a, i) => {
+    cIcon(read(path.resolve(unpackData, a)), i)
+})
 const ico = 'i'
 wJs(ico, `loadIcon(${JSON.stringify(icons, '', ' ')})`)
 const copy = (a, b) => fs.copyFileSync(fx('./icon/' + a), fx('./out/' + (b || a)))

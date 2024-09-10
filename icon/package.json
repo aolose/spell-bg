@@ -1,0 +1,19 @@
+{
+  "name": "icon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "run": "node parseDDS.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "decode-dxt": "^1.0.1",
+    "dxt-js": "^0.0.3",
+    "parse-dds": "^1.2.1",
+    "sharp": "^0.33.5"
+  }
+}
