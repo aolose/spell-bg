@@ -9168,5 +9168,5125 @@ loadIcon({
   "x": 100.03,
   "n": 14,
   "y": 0.26
+ },
+ "GEN_Armor": {
+  "x": 54.86,
+  "n": 16,
+  "y": 0.26
+ },
+ "GEN_Consumable": {
+  "x": 58.09,
+  "n": 16,
+  "y": 0.26
+ },
+ "GEN_Container": {
+  "x": 61.32,
+  "n": 16,
+  "y": 0.26
+ },
+ "GEN_Loot": {
+  "x": 64.54,
+  "n": 16,
+  "y": 0.26
+ },
+ "GEN_Quest": {
+  "x": 67.77,
+  "n": 16,
+  "y": 0.26
+ },
+ "GEN_Stone": {
+  "x": 70.99,
+  "n": 16,
+  "y": 0.26
+ },
+ "GEN_Weapon": {
+  "x": 74.22,
+  "n": 16,
+  "y": 0.26
+ },
+ "GEN_Wood": {
+  "x": 77.44,
+  "n": 16,
+  "y": 0.26
+ },
+ "ItemLOOT_COINS_Gold_Pile_Big_A": {
+  "x": 29.06,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_ S_DEN_BearReward": {
+  "x": 80.67,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_(ITEM)CONS_GEN_Drink_Cup_Metal_A_Oil": {
+  "x": 54.86,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_(ITEM)CONS_GEN_Drink_Cup_Metal_A_Water": {
+  "x": 45.19,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_AG_PHB_ScarabOfProtection_Amulet": {
+  "x": 74.22,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_ALCH_Extract_OchreJellySlime": {
+  "x": 70.99,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_ARM_Bandit": {
+  "x": 96.8,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_ARM_Boots_Leather": {
+  "x": 54.86,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Boots_Leather_1": {
+  "x": 51.64,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Boots_Leather_Drow": {
+  "x": 6.48,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ARM_Boots_Metal": {
+  "x": 0.03,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Boots_Metal_1": {
+  "x": 64.54,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_BreastPlate_1": {
+  "x": 48.41,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Breastplate": {
+  "x": 100.03,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_ARM_ChainMail": {
+  "x": 45.19,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_ChainMail_1": {
+  "x": 100.03,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_ChainShirt": {
+  "x": 41.96,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_ChainShirt_1": {
+  "x": 38.73,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_ChainShirt_2": {
+  "x": 35.51,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_ChainShirt_Destroyed_Crash": {
+  "x": 6.48,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_ChainShirt_Shar": {
+  "x": 67.77,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ARM_Circlet": {
+  "x": 19.38,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ARM_CircletOfBlasting": {
+  "x": 16.15,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ARM_Gloves_Leather": {
+  "x": 32.28,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Gloves_Leather_1": {
+  "x": 96.8,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Gloves_Leather_Drow": {
+  "x": 3.25,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ARM_Gloves_Metal": {
+  "x": 3.25,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Gloves_Metal_1": {
+  "x": 67.77,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_HalfPlate": {
+  "x": 51.64,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_HalfPlate_1": {
+  "x": 48.41,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_HalfPlate_Githyanki": {
+  "x": 19.38,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_HalfPlate_Githyanki_Destroyed_Crash": {
+  "x": 16.15,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Hat": {
+  "x": 45.19,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Hat_Wizard_A_2": {
+  "x": 93.57,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_ARM_Hat_Wizard_B_2": {
+  "x": 90.35,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_ARM_Hat_Wizard_C_2": {
+  "x": 87.12,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_ARM_HeadbandOfIntellect": {
+  "x": 12.93,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ARM_Helmet_Leather": {
+  "x": 29.06,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Helmet_Leather_1": {
+  "x": 93.57,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Helmet_Leather_B": {
+  "x": 25.83,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Helmet_Leather_Drow": {
+  "x": 0.03,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ARM_Helmet_Metal": {
+  "x": 25.83,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Helmet_Metal_1": {
+  "x": 90.35,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Helmet_Metal_B": {
+  "x": 29.06,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Hide": {
+  "x": 22.61,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Hide_1": {
+  "x": 87.12,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Leather": {
+  "x": 74.22,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_ARM_Leather_1": {
+  "x": 32.28,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Leather_Destroyed_Crash": {
+  "x": 0.03,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Padded": {
+  "x": 22.61,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Padded_1": {
+  "x": 70.99,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_ARM_Padded_Destroyed_Crash": {
+  "x": 3.25,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Plate": {
+  "x": 19.38,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Plate_1": {
+  "x": 83.9,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_RingMail": {
+  "x": 16.15,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_RingMail_1": {
+  "x": 80.67,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Robe": {
+  "x": 12.93,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Robe_1": {
+  "x": 77.44,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_Robe_Destroyed_Crash": {
+  "x": 12.93,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_ScaleMail": {
+  "x": 9.7,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_ScaleMail_1": {
+  "x": 74.22,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_ScaleMail_Destroyed_Crash": {
+  "x": 9.7,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Shar_Crown_A_Broken": {
+  "x": 90.35,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_ARM_Shar_Crown_B_Broken": {
+  "x": 87.12,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_ARM_Shoes": {
+  "x": 35.51,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Splint": {
+  "x": 41.96,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_Splint_1": {
+  "x": 38.73,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_ARM_StuddedLeather": {
+  "x": 6.48,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_StuddedLeather_1": {
+  "x": 70.99,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_ARM_StuddedLeather_Drow": {
+  "x": 100.03,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_ARM_StuddedLeather_Drow_Faded": {
+  "x": 96.8,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_ARR_Arrow_Of_Acid": {
+  "x": 96.8,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_ARR_Arrow_Of_Antimagic": {
+  "x": 19.38,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Antimagic_Broken": {
+  "x": 80.67,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_ARR_Arrow_Of_Detonation": {
+  "x": 3.25,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Dispelling": {
+  "x": 22.61,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Fire": {
+  "x": 93.57,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_ARR_Arrow_Of_Ice": {
+  "x": 6.48,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Lightning": {
+  "x": 16.15,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Piercing": {
+  "x": 25.83,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Ricochet": {
+  "x": 0.03,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Slaying": {
+  "x": 9.7,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_Slaying_Fey_Broken": {
+  "x": 77.44,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_ARR_Arrow_Of_Smoke": {
+  "x": 100.03,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_ARR_Arrow_Of_Smokepowder": {
+  "x": 70.99,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_ARR_Arrow_Of_Teleportation": {
+  "x": 12.93,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_ARR_Arrow_Of_WraithsEmbrace": {
+  "x": 48.41,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_AlchemyIngredient_BearFang": {
+  "x": 100.03,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Gem_Emerald": {
+  "x": 83.9,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Gem_MudMephitHeart": {
+  "x": 74.22,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Gem_RockyCrystal": {
+  "x": 80.67,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_HarpyFeather": {
+  "x": 0.03,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_AlchemyIngredient_Herb_Entrance": {
+  "x": 0.03,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Herb_Forest": {
+  "x": 61.32,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Herb_MagicLichen": {
+  "x": 70.99,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Herb_MountainFlower": {
+  "x": 64.54,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Herb_ShoreFlower": {
+  "x": 100.03,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_AlchemyIngredient_Herb_SunnyFlower": {
+  "x": 67.77,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Herb_Swamp": {
+  "x": 45.19,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Herb_WaterReed": {
+  "x": 96.8,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_AlchemyIngredient_HyenaEar": {
+  "x": 77.44,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_MindFlayerDevice": {
+  "x": 3.25,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_Animal": {
+  "x": 32.28,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_Barrelstalk": {
+  "x": 48.41,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_Corpse": {
+  "x": 41.96,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_DryShady": {
+  "x": 6.48,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_FungiLoving": {
+  "x": 9.7,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_Glowing": {
+  "x": 35.51,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_Rare": {
+  "x": 29.06,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_Road": {
+  "x": 38.73,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_Mushroom_WetShady": {
+  "x": 25.83,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_OwlbearBeak": {
+  "x": 90.35,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_PhaseSpiderLeg": {
+  "x": 87.12,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_SnakeFang": {
+  "x": 93.57,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_SpiderGlands": {
+  "x": 96.8,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_AlchemyIngredient_WorgFang": {
+  "x": 93.57,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_BASE_LOOT_Arrow": {
+  "x": 90.35,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_BLD_GEN_Camp_WoodenStructure_A_Pillar_A_4H_A_Dynamic": {
+  "x": 67.77,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_BLD_GEN_WaypointShrine_A_": {
+  "x": 87.12,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_BLD_MF_Nautiloid_Mind_Draining_Device_Plaque_A": {
+  "x": 70.99,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_BOOK_Book_A_Ketheric_Tome": {
+  "x": 0.03,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_BOOK_Book_A_VoloGBG": {
+  "x": 0.03,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_BOOK_Book_B_VoloCGBN": {
+  "x": 100.03,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_BOOK_Book_F_VoloGSS": {
+  "x": 96.8,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_BOOK_DwarfsPoem": {
+  "x": 90.35,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_BOOK_GEN_Book_A": {
+  "x": 35.51,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_BOOK_GEN_Book_B": {
+  "x": 41.96,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_BOOK_GEN_Book_C": {
+  "x": 67.77,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_BOOK_GEN_Book_D": {
+  "x": 70.99,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_BOOK_GEN_Book_E": {
+  "x": 64.54,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_BOOK_GEN_Book_Rich_A": {
+  "x": 61.32,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_BOOK_GEN_Book_Rich_B": {
+  "x": 58.09,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_BOOK_GEN_Book_Rich_C": {
+  "x": 54.86,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_BOOK_GEN_Envelope_A": {
+  "x": 83.9,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_BOOK_GEN_Paper_Letter_A": {
+  "x": 54.86,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Letter_B": {
+  "x": 48.41,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Letter_C": {
+  "x": 51.64,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Poster_A": {
+  "x": 45.19,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Poster_B": {
+  "x": 41.96,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Poster_C": {
+  "x": 38.73,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Poster_D": {
+  "x": 35.51,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Sheet_A": {
+  "x": 32.28,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Sheet_B": {
+  "x": 29.06,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Sheet_C": {
+  "x": 25.83,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Sheet_D": {
+  "x": 22.61,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Sheet_E": {
+  "x": 19.38,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Sheet_F": {
+  "x": 16.15,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Paper_Sheet_G": {
+  "x": 12.93,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_A_Close": {
+  "x": 19.38,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_A_Open": {
+  "x": 29.06,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_B": {
+  "x": 96.8,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_C_Double_A": {
+  "x": 100.03,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_C_Double_B": {
+  "x": 77.44,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_C_Single_A": {
+  "x": 9.7,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_C_Single_B": {
+  "x": 70.99,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_GEN_Scroll_Parchment_D_Single_A": {
+  "x": 74.22,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_BOOK_Tome_Thayan_Necromancy_A_Gem_A": {
+  "x": 6.48,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Beer_Mug_A": {
+  "x": 38.73,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Beer_Pitcher_A": {
+  "x": 41.96,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Canteen_A": {
+  "x": 45.19,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Coffee_A": {
+  "x": 48.41,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_DemiJohn_A": {
+  "x": 51.64,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_DemiJohn_Stand_A": {
+  "x": 67.77,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Milk_Jug_A": {
+  "x": 3.25,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_CONS_Drink_Mug_Metal_A_Beer": {
+  "x": 77.44,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Potion_A": {
+  "x": 48.41,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Potion_B": {
+  "x": 45.19,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Potion_C": {
+  "x": 41.96,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Potion_D": {
+  "x": 38.73,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Rum_A": {
+  "x": 51.64,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Rum_A_Empty": {
+  "x": 54.86,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Rum_B": {
+  "x": 48.41,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Rum_B_Empty": {
+  "x": 45.19,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Tea_A": {
+  "x": 41.96,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Water_A": {
+  "x": 96.8,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Water_A_Wicker": {
+  "x": 54.86,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Water_B": {
+  "x": 93.57,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Water_B_Wicker": {
+  "x": 45.19,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_CONS_Drink_Water_Bottle_A": {
+  "x": 100.03,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Water_Jug_A": {
+  "x": 0.03,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_CONS_Drink_Wine_A": {
+  "x": 22.61,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Wine_A_Empty": {
+  "x": 25.83,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Wine_A_Wicker": {
+  "x": 58.09,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Wine_Bottle_A": {
+  "x": 48.41,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Wine_Bottle_A_Empty": {
+  "x": 38.73,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Wine_C_Wicker": {
+  "x": 51.64,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Wine_E_Wicker": {
+  "x": 32.28,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Wine_F_Wicker": {
+  "x": 25.83,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Wine_G": {
+  "x": 0.03,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Wine_G_Empty": {
+  "x": 22.61,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Drink_Wine_Glass_A": {
+  "x": 96.8,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_Drink_Wine_Pitcher_D": {
+  "x": 6.48,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_CONS_ElixirOfHealth": {
+  "x": 83.9,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_FOOD_BreadRoll_A": {
+  "x": 80.67,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Cookie_A": {
+  "x": 77.44,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Fruit_Apple_A": {
+  "x": 93.57,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Fruit_Banana_A": {
+  "x": 25.83,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_CONS_FOOD_Fruit_Grapes_A_Green_A": {
+  "x": 64.54,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Fruit_Grapes_A_Purple_A": {
+  "x": 67.77,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Fruit_Lemon_A": {
+  "x": 61.32,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_FOOD_Fruit_Melon_Full_A": {
+  "x": 96.8,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Fruit_Melon_Half_A": {
+  "x": 90.35,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Fruit_Orange_A": {
+  "x": 100.03,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Fruit_Pear_A": {
+  "x": 64.54,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_FOOD_GEN_Vegetable_Garlic_A": {
+  "x": 54.86,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Nuts_Walnut_A": {
+  "x": 32.28,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_CONS_FOOD_Squash_A": {
+  "x": 83.9,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Cabbage_A": {
+  "x": 29.06,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_CONS_FOOD_Vegetable_Carrot_A": {
+  "x": 51.64,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Lettuce_A": {
+  "x": 25.83,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Onion_A": {
+  "x": 48.41,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Pepper_A": {
+  "x": 41.96,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Potato_A": {
+  "x": 45.19,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Pumpkin_A": {
+  "x": 38.73,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_SweetPotato_A": {
+  "x": 93.57,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Tomato_A": {
+  "x": 35.51,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Turnip_A": {
+  "x": 87.12,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_CONS_FOOD_Vegetable_Zucchini_A": {
+  "x": 67.77,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Food_Meat_Grilled_A": {
+  "x": 83.9,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Food_Meat_Grilled_B": {
+  "x": 87.12,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Food_Meat_Grilled_C": {
+  "x": 80.67,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Food_Roasted_Pig_A": {
+  "x": 74.22,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_CONS_Food_SalmonPie_A": {
+  "x": 35.51,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_Food_Tomato_Soup_A": {
+  "x": 16.15,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_Fungi_Mushroom_Agaric_B": {
+  "x": 32.28,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Drink_Cup_Metal_A_Empty": {
+  "x": 29.06,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Drink_Mug_Metal_A_Empty": {
+  "x": 22.61,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_CONS_GEN_FOOD_Vegetable_Potato_A_Boiled": {
+  "x": 29.06,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Bowl_Soup_Mushroom_Rich_A": {
+  "x": 12.93,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONS_GEN_Food_Bowl_Soup_Peas_Rich_A": {
+  "x": 16.15,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONS_GEN_Food_Bowl_Soup_Shrimp_A": {
+  "x": 9.7,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONS_GEN_Food_Bread_Bagel_A": {
+  "x": 64.54,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_CONS_GEN_Food_Bread_Baguette_A": {
+  "x": 22.61,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Bread_Bun_A": {
+  "x": 19.38,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Bread_Loaf_A": {
+  "x": 16.15,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Cheese_A": {
+  "x": 12.93,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Cheese_Goat_Piece_B": {
+  "x": 77.44,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Cheese_Goat_Wheel_A": {
+  "x": 74.22,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Cheese_Piece_A": {
+  "x": 9.7,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Chicken_Hanging_A": {
+  "x": 77.44,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_CONS_GEN_Food_Dinner_A": {
+  "x": 58.09,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Egg_A": {
+  "x": 6.48,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Eggs_A_Rotten": {
+  "x": 3.25,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Fish_A": {
+  "x": 80.67,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Fish_A_Gutted": {
+  "x": 77.44,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Fish_A_Spoiled": {
+  "x": 74.22,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Fries_A": {
+  "x": 6.48,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_GoatMeat_A": {
+  "x": 80.67,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_CONS_GEN_Food_MashedPotato_A": {
+  "x": 3.25,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_MashedPotato_A_Spill": {
+  "x": 0.03,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Meat_PorkHead_A": {
+  "x": 70.99,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Meat_PorkHead_B": {
+  "x": 67.77,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Meat_PorkPiece_A": {
+  "x": 87.12,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Meat_PorkPiece_B": {
+  "x": 90.35,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Meat_PorkPiece_C": {
+  "x": 83.9,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Meat_PorkPiece_D": {
+  "x": 80.67,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Meat_Sausage_A_Individual_A": {
+  "x": 3.25,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_CONS_GEN_Food_Meat_Sausage_A_Individual_B": {
+  "x": 0.03,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_CONS_GEN_Food_Meat_Sausage_A_Piled_A": {
+  "x": 96.8,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Meat_Sausage_B_Individual_A": {
+  "x": 70.99,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_GEN_Food_Meat_Sausage_B_Rope_A": {
+  "x": 96.8,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Meat_Sausage_C": {
+  "x": 100.03,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_PaleMint_A": {
+  "x": 83.9,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_CONS_GEN_Food_Pastrie_Tart_A": {
+  "x": 70.99,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Pastry_Bread_Braided_A": {
+  "x": 41.96,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Pastry_Roll_A": {
+  "x": 29.06,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Pizza_A": {
+  "x": 58.09,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Plate_A": {
+  "x": 19.38,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Porridge_A_Fruits": {
+  "x": 61.32,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Porridge_A_Potatoes": {
+  "x": 64.54,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Poutine_A": {
+  "x": 12.93,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_CONS_GEN_Food_Soup_A_Pumpkin": {
+  "x": 16.15,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_CONS_GEN_Food_Stew_A": {
+  "x": 12.93,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Stew_B": {
+  "x": 9.7,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_GEN_Food_Tart_Treacle_A": {
+  "x": 3.25,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_CONS_GEN_Food_Tart_Treacle_A_Spoiled_A": {
+  "x": 54.86,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_CONS_GEN_Food_Turkey_A": {
+  "x": 70.99,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_CONS_Hag_Lost_Time": {
+  "x": 83.9,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_CONS_Herbs_Autumncrocus_Bundle_A": {
+  "x": 90.35,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONS_Herbs_Balsam_Bundle_A": {
+  "x": 93.57,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONS_Herbs_Belladonna_Bundle_A": {
+  "x": 96.8,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONS_Herbs_Daggeroot_Bundle_A": {
+  "x": 100.03,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONS_Herbs_Mergrass_Bundle_A": {
+  "x": 0.03,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONS_Herbs_Mugwort_Bundle_A": {
+  "x": 3.25,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONS_Herbs_Weavemoss_Bundle_A": {
+  "x": 6.48,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONS_Herbs_Wispweed_Bundle_A": {
+  "x": 9.7,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONS_Oil_Of_Sharpness": {
+  "x": 61.32,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_CONS_Oil_Of_The_Basilisk": {
+  "x": 61.32,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_CONS_Poison_Basic": {
+  "x": 70.99,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONS_Poison_Wyvern": {
+  "x": 64.54,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_CONS_Potion_Acid_Resistance": {
+  "x": 64.54,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Antitoxin": {
+  "x": 87.12,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Cold_Resistance": {
+  "x": 61.32,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Fire_Resistance": {
+  "x": 58.09,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Force_Resistance": {
+  "x": 54.86,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Gaesous_Form_A": {
+  "x": 83.9,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Healing_A": {
+  "x": 29.06,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Healing_A_Greater": {
+  "x": 32.28,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Healing_A_Superior": {
+  "x": 35.51,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Healing_A_Supreme": {
+  "x": 38.73,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Invisible_A": {
+  "x": 93.57,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Invulnerability": {
+  "x": 70.99,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Lightning_Resistance": {
+  "x": 48.41,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Necrotic_Resistance": {
+  "x": 51.64,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Of_Animal_Speaking": {
+  "x": 77.44,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Of_Fire_Breath": {
+  "x": 48.41,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_CONS_Potion_Poison_Resistance": {
+  "x": 45.19,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Psychic_Resistance": {
+  "x": 38.73,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Radiant_Resistance": {
+  "x": 41.96,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Rare_A": {
+  "x": 74.22,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Potion_Rare_A_Bronze": {
+  "x": 77.44,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_CONS_Potion_Resistance": {
+  "x": 67.77,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Shrinking": {
+  "x": 58.09,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_CONS_Potion_Sleep_A": {
+  "x": 90.35,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Speed": {
+  "x": 74.22,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Thunder_Resistance": {
+  "x": 35.51,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Potion_Tribal_A_Greater": {
+  "x": 41.96,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Tribal_A_Small": {
+  "x": 45.19,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Tribal_A_Superior": {
+  "x": 48.41,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Tribal_A_Supreme": {
+  "x": 51.64,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_CONS_Potion_Vitality": {
+  "x": 80.67,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_CONS_Scroll_SpeakWithDead": {
+  "x": 6.48,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_CONT_Barrel_A": {
+  "x": 67.77,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_CONT_Barrel_Acid_A": {
+  "x": 51.64,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_CONT_Barrel_Alcohol_A": {
+  "x": 58.09,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONT_Barrel_D": {
+  "x": 19.38,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_CONT_Barrel_Oil_A": {
+  "x": 48.41,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_CONT_Barrel_Smokepowder_A": {
+  "x": 61.32,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_CONT_Barrel_Water_A": {
+  "x": 45.19,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_CONT_Egg_Owlbear_A": {
+  "x": 83.9,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_CONT_GEN_Chest_Common_A": {
+  "x": 74.22,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_CONT_GEN_Chest_Rich_B": {
+  "x": 61.32,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_CONT_GEN_Chest_Travel_A_Small_A": {
+  "x": 61.32,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_CONT_GEN_Crate_Wood_A": {
+  "x": 70.99,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_CONT_GEN_Crate_Wood_B": {
+  "x": 64.54,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_CONT_GEN_Crate_Wood_C": {
+  "x": 67.77,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CONT_GEN_Pouch_Leather_A": {
+  "x": 3.25,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_CONT_Goblins_Chest_A": {
+  "x": 29.06,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_CONT_MF_Chest_A": {
+  "x": 64.54,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_CONT_Spiders_Cocoon_A_Floor_B": {
+  "x": 54.86,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_CRA_HermitCrab_RingOfIllusion": {
+  "x": 74.22,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_CRE_MAG_Githborn_Amulet": {
+  "x": 48.41,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_CEM_Coffin_Wood_Common_A": {
+  "x": 83.9,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_DEC_CEM_Coffin_Wood_Common_B": {
+  "x": 87.12,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_DEC_CEM_Coffin_Wood_Rich_A": {
+  "x": 80.67,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_DEC_CEM_Coffin_Wood_Rich_B": {
+  "x": 90.35,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_DEC_Druids_Tablet_Stone_A": {
+  "x": 93.57,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_DEC_Dungeon_Skeleton_Ribcage_A": {
+  "x": 96.8,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_DEC_Dungeon_Skeleton_Skull_A": {
+  "x": 16.15,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_DEC_Dungeon_Skeleton_Skull_B": {
+  "x": 12.93,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_DEC_Foundry_Steel_Watcher_Part_Left_Arm_F_Dynamic": {
+  "x": 45.19,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Beholder_Trophy_A": {
+  "x": 80.67,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_BoilingCauldron_Gruel_A": {
+  "x": 100.03,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_BoilingCauldron_Gruel_A_Bad_A": {
+  "x": 0.03,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_BoilingCauldron_Stew_A": {
+  "x": 3.25,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Cards_A": {
+  "x": 41.96,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Clock_Rich_A": {
+  "x": 38.73,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Crate_Wood_Open_A": {
+  "x": 51.64,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Fireworks_Rocket_A": {
+  "x": 35.51,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Fireworks_Rocket_B": {
+  "x": 100.03,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Fireworks_Rocket_C": {
+  "x": 96.8,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Ink_Pot_Open_A": {
+  "x": 32.28,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Ink_Pot_QuillAndPot_A": {
+  "x": 29.06,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Ink_Pot_Quill_A": {
+  "x": 83.9,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_KitchenInstrument_Bowl_A_Wood_A": {
+  "x": 87.12,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_KitchenInstrument_Cup_A_Porcelain_A": {
+  "x": 9.7,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_KitchenInstrument_Cup_C_Metal_A": {
+  "x": 29.06,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_KitchenInstrument_Cup_C_Wood_A": {
+  "x": 6.48,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_KitchenInstrument_Cup_D_Metal_A": {
+  "x": 32.28,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_KitchenInstrument_Cup_E_Metal_A": {
+  "x": 3.25,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_KitchenInstrument_Horn_A_Bone_A": {
+  "x": 0.03,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_KitchenInstrument_Ladle_A_Copper_A": {
+  "x": 90.35,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_KitchenInstrument_MeatFork_A_Metal_A": {
+  "x": 90.35,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_KitchenInstrument_Mortar_A_Stone_A": {
+  "x": 32.28,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_KitchenInstrument_Plate_A_Metal_A": {
+  "x": 6.48,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_DEC_GEN_KitchenInstrument_Plate_B_Porcelain_A": {
+  "x": 83.9,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_KitchenInstrument_Scale_A_Copper_A": {
+  "x": 96.8,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_DEC_GEN_KitchenInstrument_Shears_A_Metal_A": {
+  "x": 90.35,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_DEC_GEN_KitchenInstrument_Spatula_A_Copper_A": {
+  "x": 58.09,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_KitchenInstrument_Spoon_A_Wood_A": {
+  "x": 77.44,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_KitchenInstrument_Strainer_A_Copper_A": {
+  "x": 93.57,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_DEC_GEN_KitchenInstrument_Trivet_A_Cork_A": {
+  "x": 100.03,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_DEC_GEN_Kitchen_Bucket_A": {
+  "x": 61.32,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Cutlery_Glass_Poor_A": {
+  "x": 9.7,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_Kitchen_Cutlery_Plate_Poor_A": {
+  "x": 12.93,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_Kitchen_CuttingBoard_A": {
+  "x": 80.67,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pan_A": {
+  "x": 80.67,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_Kitchen_Pan_B": {
+  "x": 9.7,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_DEC_GEN_Kitchen_Pot_A": {
+  "x": 6.48,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Cauldron_A": {
+  "x": 3.25,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Cauldron_Covered_A": {
+  "x": 100.03,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Cauldron_Covered_B": {
+  "x": 9.7,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Cauldron_Covered_C": {
+  "x": 12.93,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Cauldron_Lid_B": {
+  "x": 80.67,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Covered_B": {
+  "x": 87.12,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Drum_A": {
+  "x": 77.44,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Drum_Covered_A": {
+  "x": 16.15,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Drum_Lid_A": {
+  "x": 19.38,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_Lid_A": {
+  "x": 83.9,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_Kitchen_Pot_MilkCan_A": {
+  "x": 93.57,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_MilkCan_B": {
+  "x": 93.57,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_GEN_Kitchen_Pot_MilkCan_Lid_A": {
+  "x": 22.61,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Kitchen_Pot_MilkCan_Lid_B": {
+  "x": 25.83,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_GEN_Owlbear_Plush_Toy_A": {
+  "x": 74.22,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GEN_Spectator_Trophy_A": {
+  "x": 32.28,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GTY_Eggs_Fetus_A_Shell_A": {
+  "x": 64.54,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_GTY_Eggs_Fetus_A_Shell_A_Empty_A": {
+  "x": 67.77,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DEC_Goblins_Camp_DrumStick_A": {
+  "x": 80.67,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_HAG_Mask_A": {
+  "x": 58.09,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_DEC_HAG_Tea_Pot_A": {
+  "x": 25.83,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_DEC_HAG_Totem_Props_Bowl_A": {
+  "x": 35.51,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_HAG_Totem_Props_Dagger_A": {
+  "x": 67.77,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Bucket_Empty_A": {
+  "x": 41.96,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_DEC_HAR_Bucket_Fish_A": {
+  "x": 0.03,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_DEC_HAR_Bucket_Water_A": {
+  "x": 38.73,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_DEC_HAR_Fish_Big_A": {
+  "x": 38.73,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_DEC_HAR_Fish_Big_A_Headface_A": {
+  "x": 64.54,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_DEC_HAR_Fish_Big_A_Headless_A": {
+  "x": 54.86,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Fish_Small_A": {
+  "x": 70.99,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Fish_Small_B": {
+  "x": 67.77,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Fish_Small_C": {
+  "x": 64.54,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Fish_Small_D": {
+  "x": 61.32,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Fish_Small_E": {
+  "x": 58.09,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Fish_Steak_A": {
+  "x": 6.48,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_FishingRod_A": {
+  "x": 54.86,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_DEC_HAR_Pier_Rope_A": {
+  "x": 41.96,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_DEC_Harbour_Shell_Conch_B": {
+  "x": 16.15,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_DEC_Harbour_Shell_Conch_C": {
+  "x": 19.38,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_DEC_Harbour_Shell_Starfish_A": {
+  "x": 58.09,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_DEC_Harbour_Shell_Venus_A": {
+  "x": 51.64,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_DEC_Underdark_WizardTower_Machinery_B": {
+  "x": 22.61,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_DEN_Apprentice_DaggerOfShar": {
+  "x": 3.25,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_DEN_UNI_Thieflings_BadGruel": {
+  "x": 83.9,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_DEN_UNI_Thieflings_Gruel": {
+  "x": 80.67,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_DEN_UNI_Thieflings_StolenGoodsBag": {
+  "x": 83.9,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_DEN_VoloOperation_ErsatzEye": {
+  "x": 16.15,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_DLC_TWITCH_Camp_Body": {
+  "x": 29.06,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DLC_TWITCH_Camp_Shoes": {
+  "x": 25.83,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DLC_TWITCH_Underwear_A": {
+  "x": 22.61,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_DLC_TWITCH_Underwear_B": {
+  "x": 19.38,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_EQ_ARM_NightWalkers": {
+  "x": 74.22,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_EQ_HUM_M_ARM_BreastPlate_A_0_Body": {
+  "x": 90.35,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_EQ_HUM_M_ARM_BreastPlate_A_0_Footwear": {
+  "x": 80.67,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_EQ_HUM_M_ARM_BreastPlate_A_0_Gloves": {
+  "x": 87.12,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_EQ_HUM_M_ARM_BreastPlate_A_0_Headwear": {
+  "x": 83.9,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Kitchen_Cup_Glass_A": {
+  "x": 100.03,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_FUR_GEN_Kitchen_Cup_Glass_B": {
+  "x": 93.57,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_FUR_GEN_Painting_A_PlainCanvas": {
+  "x": 16.15,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_FUR_GEN_Painting_Landscape_A": {
+  "x": 48.41,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_B": {
+  "x": 45.19,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_C": {
+  "x": 41.96,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_D": {
+  "x": 38.73,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_E": {
+  "x": 35.51,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_F": {
+  "x": 32.28,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_G": {
+  "x": 29.06,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_H": {
+  "x": 25.83,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_I": {
+  "x": 22.61,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Landscape_J": {
+  "x": 19.38,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_FUR_GEN_Painting_Portrait_A": {
+  "x": 93.57,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_FUR_GEN_Painting_Portrait_B": {
+  "x": 90.35,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_FUR_GEN_Painting_Portrait_C": {
+  "x": 64.54,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_D": {
+  "x": 61.32,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_E": {
+  "x": 58.09,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_F": {
+  "x": 54.86,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_G": {
+  "x": 51.64,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_H": {
+  "x": 48.41,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_I": {
+  "x": 45.19,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_J": {
+  "x": 41.96,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_K": {
+  "x": 38.73,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_L": {
+  "x": 35.51,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_M": {
+  "x": 32.28,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_N": {
+  "x": 29.06,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_O": {
+  "x": 25.83,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_P": {
+  "x": 22.61,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_Q": {
+  "x": 19.38,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_FUR_GEN_Painting_Portrait_R": {
+  "x": 16.15,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_GOB_DrowCommander_Mace": {
+  "x": 12.93,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_GOB_GoblinKing_Warhammer": {
+  "x": 70.99,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_GRN_AcidBottle_A": {
+  "x": 3.25,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_GRN_Alchemy_Device_B": {
+  "x": 38.73,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_GRN_BallBearings_A": {
+  "x": 6.48,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_GRN_Bomb_A": {
+  "x": 100.03,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_GRN_FireFlask_A": {
+  "x": 0.03,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_GRN_GreaseBottle_A": {
+  "x": 32.28,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_GRN_Poison_vial_A": {
+  "x": 58.09,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_GRN_Poison_vial_B": {
+  "x": 54.86,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_GRN_Poison_vial_C": {
+  "x": 96.8,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_GRN_Poison_vial_D_Sheathe": {
+  "x": 51.64,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_HAG_HagLair_EyeballNecklace": {
+  "x": 87.12,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_HAG_HagsRing": {
+  "x": 64.54,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_Headband of Intellect": {
+  "x": 22.61,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_INGR_Seashell_Conch_A": {
+  "x": 22.61,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_Item_TOOL_GEN_Pitchfork_A": {
+  "x": 38.73,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LAB_GEN_Bottle_A": {
+  "x": 3.25,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_LAB_GEN_Bottle_B": {
+  "x": 74.22,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_LAB_GEN_Bottle_C": {
+  "x": 6.48,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_LAB_GEN_Bottle_D": {
+  "x": 51.64,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_LAB_GEN_Bottle_E": {
+  "x": 48.41,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_LOOT_Alchemy_Miscellaneous_MortarPestle_Generic_A": {
+  "x": 35.51,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_LOOT_Alchemy_Miscellaneous_MortarPestle_Rich_A": {
+  "x": 38.73,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_LOOT_Bag_Blackpowder": {
+  "x": 90.35,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_Bag_Smokepowder": {
+  "x": 77.44,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_Belt_001": {
+  "x": 58.09,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_LOOT_Belt_001_1": {
+  "x": 54.86,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_LOOT_COINS_Copper_Pile_Single_A": {
+  "x": 54.86,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Copper_Pile_Small_A": {
+  "x": 51.64,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Electrum_Pile_Single_A": {
+  "x": 48.41,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Electrum_Pile_Small_A": {
+  "x": 32.28,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Gold_Pile_Big_A": {
+  "x": 29.06,
+  "n": 16,
+  "y": 66.93
+ },
+ "Item_LOOT_COINS_Gold_Pile_Medium_A": {
+  "x": 25.83,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Gold_Pile_Single_A": {
+  "x": 58.09,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Gold_Pile_Small_A": {
+  "x": 61.32,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Platinum_Pile_Single_A": {
+  "x": 45.19,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Platinum_Pile_Small_A": {
+  "x": 41.96,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Silver_Pile_Single_A": {
+  "x": 38.73,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Silver_Pile_Small_A": {
+  "x": 35.51,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_COINS_Silver_Pile_Small_B": {
+  "x": 41.96,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEM_Agate_A": {
+  "x": 41.96,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Amethyst_A": {
+  "x": 32.28,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Bloodstone_A": {
+  "x": 35.51,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Diamond_A": {
+  "x": 12.93,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_GEM_Diamond_A_Dark": {
+  "x": 16.15,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_GEM_Jacinth_A": {
+  "x": 16.15,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Jade_A": {
+  "x": 45.19,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Malachite_A": {
+  "x": 19.38,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_GEM_Onyx_A": {
+  "x": 38.73,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Pearl_A": {
+  "x": 29.06,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Peridot_A": {
+  "x": 22.61,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Ruby_A": {
+  "x": 22.61,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_LOOT_GEM_Sapphire_A": {
+  "x": 19.38,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEM_Topaz_A": {
+  "x": 25.83,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Amulet_Absolute_A": {
+  "x": 0.03,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Absolute_B": {
+  "x": 100.03,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_A_Bronze_A": {
+  "x": 12.93,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_A_Bronze_A_1": {
+  "x": 9.7,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_A_Gold_A": {
+  "x": 96.8,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_A_Gold_A_1": {
+  "x": 32.28,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_A_Silver_A": {
+  "x": 9.7,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_A_Silver_A_1": {
+  "x": 12.93,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Bronze_A": {
+  "x": 93.57,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Bronze_A_1": {
+  "x": 25.83,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Copper": {
+  "x": 3.25,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Gold": {
+  "x": 0.03,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Gold_A": {
+  "x": 90.35,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Gold_A_1": {
+  "x": 29.06,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Silver": {
+  "x": 100.03,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Silver_A": {
+  "x": 87.12,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_B_Silver_A_1": {
+  "x": 22.61,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_C_Bronze_A": {
+  "x": 45.19,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_C_Gold_A": {
+  "x": 48.41,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_C_Silver_A": {
+  "x": 51.64,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_E_Pearl_A": {
+  "x": 54.86,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_E_Pearl_B": {
+  "x": 58.09,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_E_Pearl_C": {
+  "x": 61.32,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_F_Bronze_A": {
+  "x": 64.54,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_F_Gold_A": {
+  "x": 67.77,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_F_Silver_A": {
+  "x": 70.99,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Necklace_Magic_A_Blue": {
+  "x": 74.22,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Amulet_Wulbren_A_Posed_A": {
+  "x": 74.22,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Amulet_Wulbren_A_Posed_A_Blood_Speckeled_A": {
+  "x": 77.44,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_AnimalSkin_A": {
+  "x": 67.77,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Backpack_A_Posed_A": {
+  "x": 58.09,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Backpack_C_Posed_A": {
+  "x": 16.15,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Bedlinen_A_Folded": {
+  "x": 32.28,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Charcoal_A": {
+  "x": 80.67,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_DryBone_A": {
+  "x": 70.99,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Feather_Token_A": {
+  "x": 3.25,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Heart_A": {
+  "x": 83.9,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Hourglass_A": {
+  "x": 87.12,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_IcePick_A": {
+  "x": 90.35,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Idol_Eldath_Gold_A": {
+  "x": 90.35,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Idol_Selune_Silver_A": {
+  "x": 93.57,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Incense_A": {
+  "x": 19.38,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Incense_Bundle_A": {
+  "x": 96.8,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_KeepsakeLocket_A": {
+  "x": 67.77,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Kitchen_Bowl_Ceramic_Rich_A": {
+  "x": 35.51,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Kitchen_Cutlery_Fork_Poor_A": {
+  "x": 16.15,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Kitchen_Cutlery_Fork_Rich_A": {
+  "x": 29.06,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Kitchen_Cutlery_Knife_Poor_A": {
+  "x": 22.61,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Kitchen_Cutlery_Knife_Rich_A": {
+  "x": 25.83,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Kitchen_Cutlery_Plate_Rich_A": {
+  "x": 22.61,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Kitchen_Cutlery_Spoon_Poor_A": {
+  "x": 19.38,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Kitchen_Cutlery_Spoon_Rich_A": {
+  "x": 32.28,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Locket_Mayrina_Closed_A": {
+  "x": 100.03,
+  "n": 23,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Metalbar_Bronze_A": {
+  "x": 0.03,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Metalbar_Gold_A": {
+  "x": 3.25,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Metalbar_Silver_A": {
+  "x": 6.48,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_MusicBox_A": {
+  "x": 35.51,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Necklace_A": {
+  "x": 96.8,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Necklace_B": {
+  "x": 93.57,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Necklace_C": {
+  "x": 90.35,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Necklace_D": {
+  "x": 87.12,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Necklace_Pearl_A": {
+  "x": 83.9,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Necklace_Pearl_B": {
+  "x": 80.67,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Necklace_Pearl_C": {
+  "x": 77.44,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Needle_A": {
+  "x": 9.7,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Poop_A": {
+  "x": 12.93,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Poop_B": {
+  "x": 16.15,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Pot_Ceramic_A": {
+  "x": 32.28,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Pot_Ceramic_B": {
+  "x": 29.06,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Pot_Ceramic_C": {
+  "x": 25.83,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Ring_A_Gem_A_Gold": {
+  "x": 19.38,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_A_Gem_A_Gold_1": {
+  "x": 87.12,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_A_Simple_Gold": {
+  "x": 83.9,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_A_Simple_Gold_1": {
+  "x": 19.38,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_B": {
+  "x": 77.44,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_B_1": {
+  "x": 16.15,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_B_Gem_A_Gold": {
+  "x": 70.99,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_B_Gem_A_Gold_1": {
+  "x": 54.86,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_B_Gem_B_Gold": {
+  "x": 16.15,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_B_Gem_B_Gold_1": {
+  "x": 90.35,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_B_Gold_A": {
+  "x": 74.22,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_B_Gold_A_1": {
+  "x": 12.93,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_B_Silver_A": {
+  "x": 80.67,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_B_Silver_A_1": {
+  "x": 9.7,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_C": {
+  "x": 58.09,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_C_1": {
+  "x": 51.64,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_C_Gold_A": {
+  "x": 61.32,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_C_Gold_A_1": {
+  "x": 48.41,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_C_Silver_A": {
+  "x": 64.54,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_C_Silver_A_1": {
+  "x": 45.19,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_Copper_A": {
+  "x": 12.93,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Ring_D": {
+  "x": 67.77,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_D_1": {
+  "x": 41.96,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_D_Gold_A": {
+  "x": 54.86,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_D_Gold_A_1": {
+  "x": 38.73,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_D_Silver_A": {
+  "x": 51.64,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_D_Silver_A_1": {
+  "x": 35.51,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_E": {
+  "x": 48.41,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_E_1": {
+  "x": 80.67,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_E_Gold_A": {
+  "x": 45.19,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_E_Gold_A_1": {
+  "x": 83.9,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_E_Silver_A": {
+  "x": 41.96,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_E_Silver_A_1": {
+  "x": 77.44,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_F": {
+  "x": 38.73,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_F_1": {
+  "x": 74.22,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_F_Gold_A": {
+  "x": 35.51,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_F_Gold_A_1": {
+  "x": 70.99,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_F_Silver_A": {
+  "x": 32.28,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_F_Silver_A_1": {
+  "x": 67.77,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_G": {
+  "x": 25.83,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_G_1": {
+  "x": 64.54,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_G_Gold_A": {
+  "x": 29.06,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_G_Gold_A_1": {
+  "x": 61.32,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_G_Silver_A": {
+  "x": 22.61,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_G_Silver_A_1": {
+  "x": 58.09,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_Gold_A": {
+  "x": 6.48,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Ring_H": {
+  "x": 19.38,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_H_1": {
+  "x": 6.48,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Ring_H_Gold_A": {
+  "x": 16.15,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_H_Gold_A_1": {
+  "x": 3.25,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Ring_H_Silver_A": {
+  "x": 12.93,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_H_Silver_A_1": {
+  "x": 0.03,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Ring_I": {
+  "x": 9.7,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_I_1": {
+  "x": 100.03,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_I_Gold_A": {
+  "x": 6.48,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_I_Gold_A_1": {
+  "x": 96.8,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_I_Silver_A": {
+  "x": 3.25,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Ring_I_Silver_A_1": {
+  "x": 93.57,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Ring_Silver_A": {
+  "x": 9.7,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_LOOT_GEN_Selune_Brooch_A": {
+  "x": 25.83,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Selune_Earring_A": {
+  "x": 93.57,
+  "n": 21,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Severed_Hand_A": {
+  "x": 16.15,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Throwable_Caltrops_Pack_A": {
+  "x": 96.8,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Throwable_Iron_Flask_A": {
+  "x": 87.12,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_LOOT_GEN_Throwable_Net_A": {
+  "x": 58.09,
+  "n": 21,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Throwable_Oil_Flask_A": {
+  "x": 70.99,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_GEN_Toy_TeddyBear_A_Clean": {
+  "x": 19.38,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Toy_TeddyBear_A_Worn": {
+  "x": 22.61,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Toy_WoodenBlock_A": {
+  "x": 70.99,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Toy_WoodenBlock_B": {
+  "x": 67.77,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Toy_WoodenBlock_C": {
+  "x": 64.54,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Toy_WoodenBlock_D": {
+  "x": 61.32,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_LOOT_GEN_Wheat_A": {
+  "x": 41.96,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_HAG_Throwable_Goo_Ball_A_Fire_A": {
+  "x": 38.73,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_HAG_Throwable_Goo_Ball_A_Poison_A": {
+  "x": 35.51,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_A": {
+  "x": 25.83,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_A_Empty_A": {
+  "x": 29.06,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_B": {
+  "x": 32.28,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_B_Empty_A": {
+  "x": 35.51,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_C": {
+  "x": 38.73,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_C_Empty_A": {
+  "x": 41.96,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_D": {
+  "x": 45.19,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_D_Empty_A": {
+  "x": 48.41,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_E": {
+  "x": 51.64,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_E_Empty_A": {
+  "x": 54.86,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_F": {
+  "x": 58.09,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_Laboratory_Flask_Glass_F_Empty_A": {
+  "x": 61.32,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_LOOT_MF_StrangeLoot_A": {
+  "x": 51.64,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_MF_StrangeLoot_B": {
+  "x": 48.41,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_MF_StrangeLoot_C": {
+  "x": 45.19,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_AcidArrow": {
+  "x": 32.28,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_Aid": {
+  "x": 29.06,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_AnimalFriendship": {
+  "x": 51.64,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_ArmorOfAgathys": {
+  "x": 25.83,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_ArtistryOfWar": {
+  "x": 54.86,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Bane": {
+  "x": 22.61,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_BestialCommunion": {
+  "x": 58.09,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Bless": {
+  "x": 35.51,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_Blindness": {
+  "x": 19.38,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Blur": {
+  "x": 38.73,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_BurningHands": {
+  "x": 41.96,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_CharmPerson": {
+  "x": 45.19,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_ChillTouch": {
+  "x": 16.15,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_ChromaticOrb": {
+  "x": 48.41,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_ColorSpray": {
+  "x": 25.83,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_CureWounds": {
+  "x": 22.61,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_DetectThoughts": {
+  "x": 16.15,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_Dethrone": {
+  "x": 61.32,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_DisguiseSelf": {
+  "x": 12.93,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_FalseLife": {
+  "x": 9.7,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_FeatherFall": {
+  "x": 12.93,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_FireBolt": {
+  "x": 9.7,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_Fireball": {
+  "x": 12.93,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_FogCloud": {
+  "x": 6.48,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_Grease": {
+  "x": 3.25,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_GuidingBolt": {
+  "x": 0.03,
+  "n": 20,
+  "y": 0.26
+ },
+ "Item_LOOT_SCROLL_GustOfWind": {
+  "x": 9.7,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_HealingWord": {
+  "x": 6.48,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_HoldPerson": {
+  "x": 100.03,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_InflictWounds": {
+  "x": 3.25,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Invisibility": {
+  "x": 96.8,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Knock": {
+  "x": 0.03,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_LesserRestauration": {
+  "x": 93.57,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_MageArmor": {
+  "x": 90.35,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_MagicMissile": {
+  "x": 87.12,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_MirrorImage": {
+  "x": 100.03,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_SCROLL_MistyStep": {
+  "x": 83.9,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_PrayerOfHealing": {
+  "x": 96.8,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_SCROLL_ProtectionFromEvilAndGood": {
+  "x": 80.67,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_RayOfEnfeeblement": {
+  "x": 77.44,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_RayOfFrost": {
+  "x": 74.22,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_RayOfSickness": {
+  "x": 93.57,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_SCROLL_Resistance": {
+  "x": 90.35,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_SCROLL_Resurrection": {
+  "x": 51.64,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_RunepowderDetonator": {
+  "x": 51.64,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_ShockingGrasp": {
+  "x": 70.99,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Silence": {
+  "x": 67.77,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Sleep": {
+  "x": 87.12,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_SCROLL_SpeakWithDead": {
+  "x": 64.54,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_LOOT_SCROLL_Thunderwave": {
+  "x": 83.9,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_SCROLL_Web": {
+  "x": 77.44,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LOOT_SCROLL_WitchBolt": {
+  "x": 80.67,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_LTS_DUN_Candles_C": {
+  "x": 67.77,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_MAG_OfTheDevout_Amulet": {
+  "x": 3.25,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_MAG_PHB_OfEvasion_Ring": {
+  "x": 0.03,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_MAG_PHB_OfFreeAction_Ring": {
+  "x": 100.03,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_MAG_PHB_OfRegeneration_Ring": {
+  "x": 93.57,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_MAG_PHB_OfSpeed_Scimitar": {
+  "x": 90.35,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_MAG_PHB_ofPower_Pearl_Amulet": {
+  "x": 96.8,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_MAG_ofGreaterHealth_Amulet": {
+  "x": 6.48,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_ORI_Wyll_Infernal_Rapier": {
+  "x": 87.12,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_ORI_Wyll_WyllsEyeball": {
+  "x": 100.03,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_PUZ_GEN_Key_Gold_A": {
+  "x": 100.03,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_PUZ_GEN_Key_Silver_A": {
+  "x": 0.03,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_PUZ_GEN_Map_World_A": {
+  "x": 67.77,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_PUZ_GEN_Map_World_B": {
+  "x": 61.32,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_PUZ_GEN_Map_World_C": {
+  "x": 64.54,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_PUZ_GOB_Sapper_Barrel_A": {
+  "x": 64.54,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_PUZ_MF_Explosive_Contraption_A": {
+  "x": 22.61,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_PUZ_MF_Explosive_Contraption_B": {
+  "x": 19.38,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_PUZ_Trap_Gortash_ControlPanel": {
+  "x": 83.9,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_PUZ_Underdark_Mushroom_Bibberbang_A": {
+  "x": 12.93,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_PUZ_Underdark_Mushroom_Noblestalk_A": {
+  "x": 16.15,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_PUZ_Underdark_Mushroom_Timmask_B": {
+  "x": 19.38,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_QUEST_Ball": {
+  "x": 77.44,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_QUEST_FOR_SussurDagger": {
+  "x": 25.83,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_QUEST_FOR_SussurGreatsword": {
+  "x": 32.28,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_QUEST_FOR_SussurSickle": {
+  "x": 29.06,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_QUEST_FOR_TomeKey": {
+  "x": 58.09,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_QUEST_FireOrb": {
+  "x": 74.22,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_QUEST_GLO_CursedIronFlask": {
+  "x": 83.9,
+  "n": 18,
+  "y": 0.26
+ },
+ "Item_QUEST_GLO_SoulCoin": {
+  "x": 67.77,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_QUEST_HermitCrab": {
+  "x": 12.93,
+  "n": 17,
+  "y": 100.26
+ },
+ "Item_QUEST_IRN_Submersible": {
+  "x": 80.67,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_QUEST_LOOT_Human_Bodypart_Hand_A_Stone": {
+  "x": 93.57,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_QUEST_ShellKid_Amulet": {
+  "x": 96.8,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_QUEST_ShellKid_Diamond": {
+  "x": 100.03,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_QUEST_WYR_GemlessRing": {
+  "x": 77.44,
+  "n": 23,
+  "y": 100.26
+ },
+ "Item_Quest_CMB_ThrowingRock": {
+  "x": 74.22,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_Quest_FOR_BrokenSpear_Head": {
+  "x": 58.09,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_Quest_FOR_BrokenSpear_Repaired": {
+  "x": 51.64,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_Quest_FOR_BrokenSpear_Shaft": {
+  "x": 54.86,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_Quest_GOB_DrunkGoblin_Ring": {
+  "x": 77.44,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_Quest_GOB_WolfPens_AmuletOfBeastmaster": {
+  "x": 6.48,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_Quest_Mysterious_Puzzlebox": {
+  "x": 93.57,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_Quest_WLD_Amulet_ConqueringGod": {
+  "x": 70.99,
+  "n": 18,
+  "y": 33.59
+ },
+ "Item_S_CHA_OutpostJewelry": {
+  "x": 90.35,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_S_CHA_Weapon_Spear_CompassSpear": {
+  "x": 87.12,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_DEN_CharmedHalflingBoots": {
+  "x": 9.7,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_DEN_IrritatedReward": {
+  "x": 93.57,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_DEN_TunnelStaff": {
+  "x": 6.48,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_FOR_Armor_OwlbearReward": {
+  "x": 93.57,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_S_FOR_Bottomless_BadBook": {
+  "x": 61.32,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_FOR_IncompleteMasterwork_CellarKey": {
+  "x": 45.19,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_FOR_IncompleteMasterwork_Journal": {
+  "x": 38.73,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_FOR_IncompleteMasterwork_Plans": {
+  "x": 35.51,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_GOB_PenancePiercing": {
+  "x": 67.77,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_S_GOB_PenanceScourge": {
+  "x": 61.32,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_S_GOB_PenanceSlashing": {
+  "x": 64.54,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_S_HAG_HagLair_EyeballRing": {
+  "x": 19.38,
+  "n": 18,
+  "y": 100.26
+ },
+ "Item_S_HAG_HagLair_WPN_HagStaff": {
+  "x": 87.12,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_S_HAG_Wand_Rigged_SummonZombie": {
+  "x": 77.44,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_S_HAG_Wand_SummonHusband": {
+  "x": 80.67,
+  "n": 18,
+  "y": 66.93
+ },
+ "Item_TOOL_Camp_Bedroll_Closed_A": {
+  "x": 3.25,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_TOOL_GEN_Broom_A": {
+  "x": 54.86,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Broom_B": {
+  "x": 9.7,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Disam_Toolkit_A": {
+  "x": 32.28,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_TOOL_GEN_DisguiseKit_A_Open": {
+  "x": 35.51,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_TOOL_GEN_ForgeryKit_Opened_A": {
+  "x": 12.93,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Hammer_Repair_A": {
+  "x": 38.73,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_TOOL_GEN_Identifying_Glass_A": {
+  "x": 90.35,
+  "n": 19,
+  "y": 66.93
+ },
+ "Item_TOOL_GEN_Mine_Pickaxe_A": {
+  "x": 41.96,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_TOOL_GEN_Music_Bagpipes_A": {
+  "x": 41.96,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Drum_Big_A": {
+  "x": 38.73,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Drum_Small_A": {
+  "x": 35.51,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Drum_Sticks_A": {
+  "x": 32.28,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Dulcimer_A": {
+  "x": 29.06,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Flute_A": {
+  "x": 25.83,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Guitar_Lute_A": {
+  "x": 22.61,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Guitar_Lute_A_Broken": {
+  "x": 74.22,
+  "n": 20,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Horn_A": {
+  "x": 12.93,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Lyre_A": {
+  "x": 9.7,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_PanFlute_A": {
+  "x": 58.09,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Shawm_A": {
+  "x": 54.86,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Viol_A": {
+  "x": 51.64,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Music_Viol_Bow_A": {
+  "x": 48.41,
+  "n": 19,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Shovel_A": {
+  "x": 0.03,
+  "n": 21,
+  "y": 100.26
+ },
+ "Item_TOOL_GEN_Siege_Harpoon_Magic_Arrow_A": {
+  "x": 70.99,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_TOOL_GEN_Telescope_A": {
+  "x": 45.19,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_TOOL_GEN_ThievesTools_A_Closed_A": {
+  "x": 6.48,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_TOOL_GEN_Tong_A": {
+  "x": 35.51,
+  "n": 19,
+  "y": 33.59
+ },
+ "Item_TOOL_GOB_Branding_Tool_A": {
+  "x": 48.41,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_TOOL_Wand_Fireballs": {
+  "x": 74.22,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_UND_MushroomHunter_RingOfExploration": {
+  "x": 77.44,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_UND_StoneFigure": {
+  "x": 80.67,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_UNI_ARM_MartyrAmulet": {
+  "x": 83.9,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_UNI_Apprentice_Antidote": {
+  "x": 87.12,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_UNI_Astarion_StarterArmor": {
+  "x": 93.57,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_UNI_BurnerHandaxe": {
+  "x": 22.61,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_UNI_DEN_KanonsHandkerchief": {
+  "x": 87.12,
+  "n": 23,
+  "y": 33.59
+ },
+ "Item_UNI_DoomAxe": {
+  "x": 29.06,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_UNI_Druid_Helmet_Circlet": {
+  "x": 9.7,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_UNI_FOR_SpiderstepShoes": {
+  "x": 61.32,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_UNI_FOR_ThayanTome_Socketed": {
+  "x": 61.32,
+  "n": 21,
+  "y": 66.93
+ },
+ "Item_UNI_FOR_ThayanTome_Unsocketed": {
+  "x": 64.54,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_UNI_GOB_Scroll_GoblinDrawingBook": {
+  "x": 6.48,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_UNI_Gob_Priest_Shield": {
+  "x": 67.77,
+  "n": 22,
+  "y": 66.93
+ },
+ "Item_UNI_HAG_Wand_SummonHusband": {
+  "x": 90.35,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_UNI_MassHealRing": {
+  "x": 19.38,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_UNI_ORI_Gale_DeathPouch": {
+  "x": 0.03,
+  "n": 22,
+  "y": 33.59
+ },
+ "Item_UNI_OUT_Books_GreenCard_A": {
+  "x": 96.8,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_UNI_RepeatStaff": {
+  "x": 25.83,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_UNI_RobeOfSummer": {
+  "x": 64.54,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_UNI_ShadowheartCirclet": {
+  "x": 70.99,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_Unknown": {
+  "x": 32.28,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_Dagger_Shar": {
+  "x": 54.86,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_WPN_GNOLL_Sword_A": {
+  "x": 54.86,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_GNO_Flail_A": {
+  "x": 58.09,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_GOB_Bow_A": {
+  "x": 70.99,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_WPN_GOB_Mace_A": {
+  "x": 74.22,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_WPN_GOB_Scimitar_A": {
+  "x": 77.44,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_WPN_GOB_Shield_A_0": {
+  "x": 51.64,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_GOB_Shield_C_0": {
+  "x": 51.64,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_WPN_GOB_Shield_D_0": {
+  "x": 48.41,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_WPN_GOB_Shield_E_0": {
+  "x": 45.19,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_WPN_GOB_Spear_A": {
+  "x": 74.22,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_GOB_Staff_A": {
+  "x": 61.32,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Battleaxe_A_0": {
+  "x": 9.7,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Battleaxe_A_0_Broken": {
+  "x": 74.22,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Battleaxe_A_1": {
+  "x": 6.48,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_CleaverAxe_A": {
+  "x": 83.9,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Club_A_0": {
+  "x": 0.03,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Club_Broken_A": {
+  "x": 41.96,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Dagger_A_0": {
+  "x": 80.67,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Dagger_A_1": {
+  "x": 25.83,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Dagger_A_2": {
+  "x": 0.03,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Dart_A_0": {
+  "x": 80.67,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Dart_A_1": {
+  "x": 77.44,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Flail_A_0": {
+  "x": 3.25,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Flail_A_1": {
+  "x": 22.61,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Flail_A_2": {
+  "x": 100.03,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Glaive_A_0": {
+  "x": 90.35,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Glaive_A_0_Broken": {
+  "x": 70.99,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Glaive_A_1": {
+  "x": 3.25,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Glaive_A_2": {
+  "x": 96.8,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Greataxe_A_0": {
+  "x": 19.38,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Greataxe_A_1": {
+  "x": 16.15,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Greataxe_B_0": {
+  "x": 9.7,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Greataxe_B_1": {
+  "x": 12.93,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Greatclub_A_0": {
+  "x": 6.48,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Greatclub_A_1": {
+  "x": 12.93,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Greatclub_A_2": {
+  "x": 87.12,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Greatsword_A_0": {
+  "x": 9.7,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Greatsword_A_1": {
+  "x": 6.48,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Greatsword_A_2": {
+  "x": 83.9,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Greatsword_B_0": {
+  "x": 3.25,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Greatsword_B_1": {
+  "x": 0.03,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Halberd_A_0": {
+  "x": 100.03,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Halberd_A_1": {
+  "x": 96.8,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Halberd_A_2": {
+  "x": 80.67,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_HandCrossbow_A_0": {
+  "x": 93.57,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_HandCrossbow_A_1": {
+  "x": 90.35,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Handaxe_A_0": {
+  "x": 83.9,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Handaxe_A_1": {
+  "x": 87.12,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_HeavyCrossbow_A_1_Broken": {
+  "x": 67.77,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Javelin_A_0": {
+  "x": 74.22,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Javelin_A_0_Broken": {
+  "x": 64.54,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Javelin_A_1": {
+  "x": 70.99,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Javelin_A_2": {
+  "x": 77.44,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Lance_A_0": {
+  "x": 67.77,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_LightCrossbow_A_0": {
+  "x": 83.9,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_LightCrossbow_A_1": {
+  "x": 64.54,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_LightHammer_A_0": {
+  "x": 9.7,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_LightHammer_A_1": {
+  "x": 61.32,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_LightHammer_A_2": {
+  "x": 74.22,
+  "n": 20,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_LightHammer_B_0": {
+  "x": 58.09,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_LightHammer_B_1": {
+  "x": 54.86,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Longbow_A_0": {
+  "x": 87.12,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Longbow_A_1": {
+  "x": 51.64,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Longbow_Broken_A": {
+  "x": 38.73,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Longsword_A_0": {
+  "x": 48.41,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Longsword_A_1": {
+  "x": 45.19,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Longsword_Broken_A": {
+  "x": 35.51,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Mace_A_0": {
+  "x": 12.93,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Mace_A_1": {
+  "x": 41.96,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Magicstaff_A_0": {
+  "x": 38.73,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Magicstaff_B_0": {
+  "x": 35.51,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Magicstaff_Broken_A": {
+  "x": 32.28,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Magicstaff_C_0": {
+  "x": 29.06,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Magicstaff_D_0": {
+  "x": 32.28,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Magicstaff_E_0": {
+  "x": 25.83,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Maul_A_0": {
+  "x": 16.15,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Maul_A_1": {
+  "x": 22.61,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Maul_B_0": {
+  "x": 29.06,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Moonblade_A": {
+  "x": 25.83,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Morningstar_A_0": {
+  "x": 19.38,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Morningstar_A_1": {
+  "x": 19.38,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Pike_A_0": {
+  "x": 93.57,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Pike_A_0_Broken": {
+  "x": 61.32,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Pike_A_1": {
+  "x": 16.15,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Pike_Broken_A": {
+  "x": 58.09,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Quarterstaff_A_0": {
+  "x": 100.03,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Quarterstaff_A_1": {
+  "x": 96.8,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Quarterstaff_B_0": {
+  "x": 51.64,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Quarterstaff_Broken_A": {
+  "x": 48.41,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Rapier_A_0": {
+  "x": 12.93,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Rapier_A_0_Broken": {
+  "x": 58.09,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Rapier_A_1": {
+  "x": 9.7,
+  "n": 16,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Scimitar_A_0": {
+  "x": 29.06,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Scimitar_A_1": {
+  "x": 25.83,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_A_0": {
+  "x": 22.61,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_A_1": {
+  "x": 19.38,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_B_0": {
+  "x": 16.15,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_B_1": {
+  "x": 0.03,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_Broken_A": {
+  "x": 45.19,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Shield_C_0": {
+  "x": 12.93,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_C_0_Broken": {
+  "x": 54.86,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shield_C_1": {
+  "x": 9.7,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_D_0": {
+  "x": 6.48,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_D_1": {
+  "x": 3.25,
+  "n": 17,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Shield_E_0": {
+  "x": 100.03,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortbow_A_0": {
+  "x": 96.8,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortbow_A_1": {
+  "x": 93.57,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortbow_A_1_Broken": {
+  "x": 51.64,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortsword_A_0": {
+  "x": 90.35,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortsword_A_0_Broken": {
+  "x": 45.19,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortsword_A_1": {
+  "x": 87.12,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortsword_A_1_Broken": {
+  "x": 48.41,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortsword_A_2": {
+  "x": 41.96,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Shortsword_A_2_Broken": {
+  "x": 38.73,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Sickle_A_0": {
+  "x": 87.12,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Sickle_A_0_Broken": {
+  "x": 35.51,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Sling_A_0": {
+  "x": 83.9,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Spear_A_0": {
+  "x": 80.67,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Spear_A_0_1": {
+  "x": 35.51,
+  "n": 22,
+  "y": 100.26
+ },
+ "Item_WPN_HUM_Spear_A_1": {
+  "x": 77.44,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Sword_Shar_A": {
+  "x": 45.19,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Torch_A": {
+  "x": 3.25,
+  "n": 20,
+  "y": 66.93
+ },
+ "Item_WPN_HUM_Toy_Shield_A": {
+  "x": 22.61,
+  "n": 22,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Trident_A_0": {
+  "x": 0.03,
+  "n": 16,
+  "y": 33.59
+ },
+ "Item_WPN_HUM_Trident_A_1": {
+  "x": 74.22,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_A_0": {
+  "x": 70.99,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_A_1": {
+  "x": 67.77,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_B_0": {
+  "x": 64.54,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_C_0": {
+  "x": 61.32,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_C_0_Broken": {
+  "x": 32.28,
+  "n": 19,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_D_0": {
+  "x": 58.09,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_E_0": {
+  "x": 54.86,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_F_0": {
+  "x": 51.64,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_G_0": {
+  "x": 48.41,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_H_0": {
+  "x": 41.96,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_I_0": {
+  "x": 45.19,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_J_0": {
+  "x": 38.73,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Wand_K_0": {
+  "x": 35.51,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_WarHammer_A_0": {
+  "x": 22.61,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_WarHammer_A_1": {
+  "x": 29.06,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Warpick_A_0": {
+  "x": 25.83,
+  "n": 16,
+  "y": 0.26
+ },
+ "Item_WPN_HUM_Warpick_A_1": {
+  "x": 32.28,
+  "n": 17,
+  "y": 0.26
+ },
+ "Item_WPN_MINOTAUR_Greatclub_A": {
+  "x": 41.96,
+  "n": 23,
+  "y": 66.93
+ },
+ "Item_WPN_Ogre_Greatclub_A": {
+  "x": 64.54,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item_WPN_Ogre_Greatclub_B": {
+  "x": 67.77,
+  "n": 17,
+  "y": 66.93
+ },
+ "Item__FOR_Bottomless_MurderWeap": {
+  "x": 54.86,
+  "n": 18,
+  "y": 100.26
+ },
+ "Items_CONS_Drink_Bottle_Small_A": {
+  "x": 19.38,
+  "n": 17,
+  "y": 66.93
+ },
+ "Items_CONS_Drink_Bottle_Small_C": {
+  "x": 16.15,
+  "n": 17,
+  "y": 66.93
+ },
+ "Items_CONS_Drink_Wine_B": {
+  "x": 87.12,
+  "n": 19,
+  "y": 33.59
+ },
+ "Items_CONS_Drink_Wine_B_Empty": {
+  "x": 77.44,
+  "n": 19,
+  "y": 33.59
+ },
+ "Items_CONS_Drink_Wine_C": {
+  "x": 90.35,
+  "n": 19,
+  "y": 33.59
+ },
+ "Items_CONS_Drink_Wine_C_Empty": {
+  "x": 74.22,
+  "n": 19,
+  "y": 33.59
+ },
+ "Items_CONS_Drink_Wine_D": {
+  "x": 54.86,
+  "n": 17,
+  "y": 66.93
+ },
+ "Items_CONS_Drink_Wine_D_Empty": {
+  "x": 64.54,
+  "n": 19,
+  "y": 33.59
+ },
+ "Items_CONS_Drink_Wine_F": {
+  "x": 61.32,
+  "n": 19,
+  "y": 33.59
+ },
+ "Items_CONS_Drink_Wine_F_Empty": {
+  "x": 58.09,
+  "n": 19,
+  "y": 33.59
+ },
+ "Items_CONS_FOOD_Fruit_Kiwi_A": {
+  "x": 61.32,
+  "n": 18,
+  "y": 33.59
+ },
+ "WPN_HUM_HeavyCrossbow_A_0": {
+  "x": 80.67,
+  "n": 16,
+  "y": 100.26
+ },
+ "WPN_HUM_HeavyCrossbow_A_1": {
+  "x": 77.44,
+  "n": 16,
+  "y": 100.26
  }
 })

@@ -60,10 +60,10 @@ const parseTooltip = () => {
         })
     })
 }
-const fileParser = a => {
+const fileParser = (a,flag) => {
     const r = [];
     a.split(/\r?\n\r?\n/).forEach(v => {
-        const e = {};
+        const e = {_flag:flag};
         v.split(/\r?\n/).forEach(n => {
             if (/^new entry/.test(n)) e.Name = JSON.parse(n.replace('new entry ', ''));
             else if (/^using/.test(n)) {
@@ -100,18 +100,21 @@ const parseLang = () => {
     str.forEach(a => {
         const [k, v] = a.replace(/[\n\r]/g, '')
             .match(/(?<=contentuid=")(\w+)|(?<=>)(.*?)(?=<\/content)/g)
-        lang[k] = v.replace(/&gt;/g, '>')
+        lang[k] = v
+            .replace(/(&lt;br&gt;)+/g,'<br>')
+            .replace(/&gt;/g, '>')
             .replace(/&lt;/g, '<')
+            .replace(/LSTag.*?\/>/g, '')
             .replace(/LSTag.*?>/g, 'b>')
     })
 }
 
-const parseSpells = (regex) => {
+const parseSpells = () => {
     const arr = []
-    spells.forEach((name) => {
+    spells.forEach(([name,flag]) => {
         const p = path.resolve(unpackDir, name)
         fs.readdirSync(p).filter(a => /^Spell_/.test(a))
-            .forEach(a => arr.push(fileParser(fs.readFileSync(path.resolve(p, a)).toString())
+            .forEach(a => arr.push(fileParser(fs.readFileSync(path.resolve(p, a)).toString(),flag)
                 .reduce((a, b) => a.concat(b), [])))
     })
     let js = 0
