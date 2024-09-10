@@ -1,8 +1,10 @@
 {
   "name": "scripts",
   "version": "1.0.0",
-  "description": "",
-  "main": "csv.js",
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aolose/spell-bg.git"
@@ -15,6 +17,10 @@
   },
   "homepage": "https://github.com/aolose/spell-bg#readme",
   "dependencies": {
+    "decode-dxt": "^1.0.1",
+    "dxt-js": "^0.0.3",
+    "parse-dds": "^1.2.1",
+    "sharp": "^0.33.5",
     "xml2json": "^0.12.0"
   }
 }

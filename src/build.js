@@ -1,21 +1,18 @@
-const fs = require('fs');
-const xmlParser = require('xml2json');
-const path = require('path');
-const unpackData = 'D:/Program Files (x86)/GOG Galaxy/Games/bg3mmd/UnpackedData/'
-const langFile = 'English/Localization/English/english.loca.xml'
+import sharp from "sharp";
+import dxt from 'decode-dxt'
+import parse from 'parse-dds'
+import fs from 'fs'
+import xmlParser from 'xml2json'
+import path from 'path'
+import {createWebP, resizeImage} from './dds.js'
+import cfg from "../cfg.js";
+
+const {unpackDir,english,spells} = cfg
 const tooltips = {}
 const lang = {}
-const spells = [
-    'Gustav/Public/GustavDev/Stats/Generated/Data',
-    'Shared/Public/Shared/Stats/Generated/Data',
-    'Gustav/Public/Honour/Stats/Generated/Data'
-]
-const iconsData = [
-    'Shared/Public/Shared/GUI/Icons_Skills.lsx',
-    'Shared/Public/SharedDev/GUI/Icons_Skills.lsx'
-]
+
 const arrayName = {};
-const out = __dirname + '/out/'
+const dist = 'dist/'
 const types = new Set()
 const bk = []
 const size = 80
@@ -25,25 +22,24 @@ const imgW = 1024
 const scale = iconSiz / 64
 const bgW = scale * 2048
 const bgH = bgW / imgW * sliceH
-if (!fs.existsSync(out)) fs.mkdirSync(out);
+if (!fs.existsSync(dist)) fs.mkdirSync(dist);
 let scripts = ''
 let s = 0
 const wsc = src => scripts += `<script onload="ok()" src='${src}.js' async></script>`
 const wJs = (name, js) => {
     s++
-    fs.writeFileSync(out + name + '.js', js, {flag: 'w+'});
+    fs.writeFileSync(dist + name + '.js', js, {flag: 'w+'});
     wsc(name)
 }
 try {
-    fs.readdirSync(out).forEach(a => {
-        fs.unlinkSync(out + a)
+    fs.readdirSync(dist).forEach(a => {
+        fs.unlinkSync(dist + a)
     })
 } catch (e) {
     console.warn(e)
 }
 
 const fx = (p) => {
-    p = /:/.test(p) ? p : path.resolve(__dirname, p)
     const d = path.dirname(p)
     if (!fs.existsSync(d)) fs.mkdirSync(d, {recursive: !0})
     return p
@@ -57,7 +53,7 @@ const read = (p) => {
 const parseTooltip = () => {
     const o = JSON.parse(xmlParser
         .toJson(fs.readFileSync(
-            path.resolve(unpackData, 'Shared/Public/Shared/TooltipExtras/TooltipUpcastDescriptions.lsx')
+            path.resolve(unpackDir, 'Shared/Public/Shared/TooltipExtras/TooltipUpcastDescriptions.lsx')
         ).toString(), {}))
     o.save.region.node.children.node.forEach(a => {
         const d = {}
@@ -78,10 +74,10 @@ const fileParser = a => {
             } else if (/^data/.test(n)) {
                 const [, b, s] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
                 if (s) {
-                    const c = s.replace(/([a-zA-Z]+\([0-9',.+\-a-zA-Z ()_]*\))/gi,'<b>$1</b>')
+                    const c = s.replace(/([a-zA-Z]+\([0-9',.+\-a-zA-Z ()_]*\))/gi, '<b>$1</b>')
                     if (b === 'TooltipUpcastDescription') {
-                        e[b] = tooltips[c].Name+'<br>'+tooltips[c].Text
-                    } else if (['DisplayName','Description'].includes(b)) {
+                        e[b] = tooltips[c].Name + '<br>' + tooltips[c].Text
+                    } else if (['DisplayName', 'Description'].includes(b)) {
                         const d = c.replace(/;\d+$/, '')
                         e[b] = lang[d] || d
                     } else {
@@ -96,20 +92,38 @@ const fileParser = a => {
     return r;
 }
 
+const buildImg = () => {
+    cfg.dds.forEach(async ([p, f = 0]) => {
+        const buf = fs.readFileSync(path.resolve(unpackDir, p))
+        const ddsData = parse(buf.buffer)
+        const image = ddsData.images[0],
+            imageWidth = image.shape[0],
+            imageHeight = image.shape[1],
+            imageDataView = new DataView(buf.buffer, image.offset, image.length)
+        const dds = dxt(imageDataView, imageWidth, imageHeight, ddsData.format);
+        await createWebP(f, await resizeImage(sharp(dds, {
+            raw: {
+                width: imageWidth,
+                height: imageHeight,
+                channels: 4
+            }
+        })))
+    })
+}
 const parseLang = () => {
-    const str = fs.readFileSync(path.resolve(unpackData, langFile)).toString().split('<content')
+    const str = fs.readFileSync(path.resolve(unpackDir, english)).toString().split('<content')
         .filter(a => /contentuid/.test(a))
     str.forEach(a => {
-        const [k, v] = a.replace(/[\n\r]/g,'')
+        const [k, v] = a.replace(/[\n\r]/g, '')
             .match(/(?<=contentuid=")(\w+)|(?<=>)(.*?)(?=<\/content)/g)
-        lang[k] = v.replace(/&gt;/g,'<').replace(/&lt;/g,'<')
+        lang[k] = v.replace(/&gt;/g, '<').replace(/&lt;/g, '<')
     })
 }
 
 const parseSpells = (regex) => {
     const arr = []
     spells.forEach((name) => {
-        const p = path.resolve(unpackData, name)
+        const p = path.resolve(unpackDir, name)
         fs.readdirSync(p).filter(a => /^Spell_/.test(a))
             .forEach(a => arr.push(fileParser(fs.readFileSync(path.resolve(p, a)).toString())
                 .reduce((a, b) => a.concat(b), [])))
@@ -170,22 +184,23 @@ const cIcon = (str, i = 0) => {
             if (i) o.n = (+o.n || 0) + (i * 8)
         });
 }
-iconsData.forEach((a, i) => {
-    cIcon(read(path.resolve(unpackData, a)), i)
+cfg.icons.forEach((a, i) => {
+    cIcon(read(path.resolve(unpackDir, a)), i)
 })
 const ico = 'i'
 wJs(ico, `loadIcon(${JSON.stringify(icons, '', ' ')})`)
-const copy = (a, b) => fs.copyFileSync(fx('./icon/' + a), fx('./out/' + (b || a)))
-fs.readdirSync('./icon/img').forEach((a) => copy('img/' + a, a))
-const icon = read('./icon/index.tmpl')
+const copy = (a, b) => fs.copyFileSync(fx('./src/' + a), fx('./dist/' + (b || a)))
+fs.readdirSync('./src/img').forEach((a) => copy('img/' + a, a))
+const icon = read('./src/index.tmpl')
     .replace('%scripts%', scripts)
-    .replace('css', read('./icon/0.scss')
+    .replace('css', read('./src/0.scss')
         .replace('2048px 2048px', `${bgW}px ${bgH}px`)
         .replace(/64px/g, iconSiz + 'px')
     )
-    .replace('js', read('./icon/0.js')
+    .replace('js', read('./src/0.js')
         .replace('%%', new Date().toLocaleDateString())
         .replace('"%types%"', JSON.stringify([...types]))
         .replace('9999', `${s}`)
     )
-write('./out/index.html', icon)
+write('./dist/index.html', icon)
+buildImg()
