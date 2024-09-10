@@ -1,5 +1,5 @@
 export default {
-    unpackDir: 'D:/Program Files (x86)/GOG Galaxy/Games/bg3mmd/UnpackedData/',
+    unpackDir: 'D:/Program Files (x86)/GOG Galaxy/Games/bg3mmd/UnpackedData',
     english: 'English/Localization/English/english.loca.xml',
     spells: [
         'Gustav/Public/GustavDev/Stats/Generated/Data',

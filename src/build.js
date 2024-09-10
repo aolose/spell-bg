@@ -4,10 +4,10 @@ import parse from 'parse-dds'
 import fs from 'fs'
 import xmlParser from 'xml2json'
 import path from 'path'
-import {createWebP, resizeImage} from './dds.js'
+import {createWebP, readDDS, resizeImage, save} from './dds.js'
 import cfg from "../cfg.js";
 
-const {unpackDir,english,spells} = cfg
+const {unpackDir, english, spells} = cfg
 const tooltips = {}
 const lang = {}
 
@@ -77,12 +77,12 @@ const fileParser = a => {
                     const c = s.replace(/([a-zA-Z]+\([0-9',.+\-a-zA-Z ()_]*\))/gi, '<b>$1</b>')
                     if (b === 'TooltipUpcastDescription') {
                         e[b] = tooltips[c].Name + '<br>' + tooltips[c].Text
-                    } else if (['DisplayName', 'Description','ExtraDescription'].includes(b)) {
+                    } else if (['DisplayName', 'Description', 'ExtraDescription'].includes(b)) {
                         const d = c.replace(/;\d+$/, '')
                         e[b] = lang[d] || d
                     } else {
                         if (/;/.test(c)) arrayName[b] = 1;
-                        e[b] = /^\d+$/.test(c) ? +c : c === "unknown" ? "" : c;
+                        e[b] = /^\d+$/.test(c) ? +c : c === "unknown" ? '' : c || '';
                     }
                 }
             }
@@ -94,20 +94,7 @@ const fileParser = a => {
 
 const buildImg = () => {
     cfg.dds.forEach(async ([p, f = 0]) => {
-        const buf = fs.readFileSync(path.resolve(unpackDir, p))
-        const ddsData = parse(buf.buffer)
-        const image = ddsData.images[0],
-            imageWidth = image.shape[0],
-            imageHeight = image.shape[1],
-            imageDataView = new DataView(buf.buffer, image.offset, image.length)
-        const dds = dxt(imageDataView, imageWidth, imageHeight, ddsData.format);
-        await createWebP(f, await resizeImage(sharp(dds, {
-            raw: {
-                width: imageWidth,
-                height: imageHeight,
-                channels: 4
-            }
-        })))
+        await createWebP(f, await resizeImage(readDDS(p)))
     })
 }
 const parseLang = () => {
@@ -118,7 +105,7 @@ const parseLang = () => {
             .match(/(?<=contentuid=")(\w+)|(?<=>)(.*?)(?=<\/content)/g)
         lang[k] = v.replace(/&gt;/g, '>')
             .replace(/&lt;/g, '<')
-            .replace(/LSTag.*?>/g,'b>')
+            .replace(/LSTag.*?>/g, 'b>')
     })
 }
 
