@@ -13,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/aolose/spell-bg/issues"
   },
-  "homepage": "https://github.com/aolose/spell-bg#readme"
+  "homepage": "https://github.com/aolose/spell-bg#readme",
+  "dependencies": {
+    "xml2json": "^0.12.0"
+  }
 }

@@ -1,6 +1,10 @@
 const fs = require('fs');
+const xmlParser = require('xml2json');
 const path = require('path');
 const unpackData = 'D:/Program Files (x86)/GOG Galaxy/Games/bg3mmd/UnpackedData/'
+const langFile = 'English/Localization/English/english.loca.xml'
+const tooltips = {}
+const lang = {}
 const spells = [
     'Gustav/Public/GustavDev/Stats/Generated/Data',
     'Shared/Public/Shared/Stats/Generated/Data',
@@ -12,7 +16,6 @@ const iconsData = [
 ]
 const arrayName = {};
 const out = __dirname + '/out/'
-
 const types = new Set()
 const bk = []
 const size = 80
@@ -38,6 +41,32 @@ try {
 } catch (e) {
     console.warn(e)
 }
+
+const fx = (p) => {
+    p = /:/.test(p) ? p : path.resolve(__dirname, p)
+    const d = path.dirname(p)
+    if (!fs.existsSync(d)) fs.mkdirSync(d, {recursive: !0})
+    return p
+}
+const write = (p, d) => {
+    fs.writeFileSync(fx(p), d, {flag: 'w+'})
+}
+const read = (p) => {
+    return fs.readFileSync(fx(p)).toString()
+}
+const parseTooltip = () => {
+    const o = JSON.parse(xmlParser
+        .toJson(fs.readFileSync(
+            path.resolve(unpackData, 'Shared/Public/Shared/TooltipExtras/TooltipUpcastDescriptions.lsx')
+        ).toString(), {}))
+    o.save.region.node.children.node.forEach(a => {
+        const d = {}
+        a.attribute.forEach(({id, value, handle}) => {
+            if (id === 'UUID') tooltips[value] = d
+            else d[id] = value || lang[handle] || handle
+        })
+    })
+}
 const fileParser = a => {
     const r = [];
     a.split(/\r?\n\r?\n/).forEach(v => {
@@ -48,8 +77,17 @@ const fileParser = a => {
                 e.Using = n.slice(6).replace(/"/g, '')
             } else if (/^data/.test(n)) {
                 const [, b, c] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
-                if (c) e[b] = /^\d+$/.test(c) ? +c : c === "unknown" ? "" : c;
-                if (/;/.test(c)) arrayName[b] = 1;
+                if (c) {
+                    if (b === 'TooltipUpcastDescription') {
+                        e[b] = tooltips[c].Name+'<br>'+tooltips[c].Text
+                    } else if (['DisplayName','Description'].includes(b)) {
+                        const d = c.replace(/;\d+$/, '')
+                        e[b] = lang[d] || d
+                    } else {
+                        if (/;/.test(c)) arrayName[b] = 1;
+                        e[b] = /^\d+$/.test(c) ? +c : c === "unknown" ? "" : c;
+                    }
+                }
             }
         });
         if (e.Name) r.push(e);
@@ -57,12 +95,22 @@ const fileParser = a => {
     return r;
 }
 
+const parseLang = () => {
+    const str = fs.readFileSync(path.resolve(unpackData, langFile)).toString().split('<content')
+        .filter(a => /contentuid/.test(a))
+    str.forEach(a => {
+        const [k, v] = a.replace(/[\n\r]/g,'')
+            .match(/(?<=contentuid=")(\w+)|(?<=>)(.*?)(?=<\/content)/g)
+        lang[k] = v.replace(/&gt;/g,'<').replace(/&lt;/g,'<')
+    })
+}
+
 const parseSpells = (regex) => {
     const arr = []
     spells.forEach((name) => {
         const p = path.resolve(unpackData, name)
         fs.readdirSync(p).filter(a => /^Spell_/.test(a))
-            .forEach(a => arr.push(fileParser(fs.readFileSync(path.resolve(p,a)).toString())
+            .forEach(a => arr.push(fileParser(fs.readFileSync(path.resolve(p, a)).toString())
                 .reduce((a, b) => a.concat(b), [])))
     })
     let js = 0
@@ -92,22 +140,12 @@ const parseSpells = (regex) => {
     ld(1)
 }
 
-parseSpells();
+parseLang()
+parseTooltip()
+parseSpells()
 
 const icons = {};
 
-const fx = (p) => {
-    p = /:/.test(p) ? p : path.resolve(__dirname, p)
-    const d = path.dirname(p)
-    if (!fs.existsSync(d)) fs.mkdirSync(d, {recursive: !0})
-    return p
-}
-const write = (p, d) => {
-    fs.writeFileSync(fx(p), d, {flag: 'w+'})
-}
-const read = (p) => {
-    return fs.readFileSync(fx(p)).toString()
-}
 const cIcon = (str, i = 0) => {
     str.split('<node id="IconUV">')
         .forEach(v => {
