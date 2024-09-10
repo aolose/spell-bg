@@ -5,7 +5,7 @@
 
 ![screen](screen.png)
 
-### build local
+### Local build
 1. `pnpm i`
 2. use [BG3-Modders-Multitool](https://github.com/ShinyHobo/BG3-Modders-Multitool) extract files.
 3. edit `cfg.js`
