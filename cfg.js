@@ -1,4 +1,6 @@
 export default {
+    output: 'dist',
+    version: 'Patch 7',
     unpackDir: 'D:/Program Files (x86)/GOG Galaxy/Games/bg3mmd/UnpackedData',
     english: 'English/Localization/English/english.loca.xml',
     spells: [

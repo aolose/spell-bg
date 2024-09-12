@@ -1,15 +1,15 @@
 import fs from 'fs'
 import xmlParser from 'xml2json'
 import path from 'path'
-import {createWebP, readDDS, resizeImage, save} from './dds.js'
 import cfg from "../cfg.js";
 
+const {resolve} = path
 const {unpackDir, english, spells} = cfg
 const tooltips = {}
 const lang = {}
 
 const arrayName = {};
-const dist = 'dist/'
+const dist = cfg.output
 const types = new Set()
 const bk = []
 const size = 80
@@ -25,12 +25,12 @@ let s = 0
 const wsc = src => scripts += `<script onload="ok()" src='${src}.js' async></script>`
 const wJs = (name, js) => {
     s++
-    fs.writeFileSync(dist + name + '.js', js, {flag: 'w+'});
+    fs.writeFileSync(resolve(dist, name + '.js'), js, {flag: 'w+'});
     wsc(name)
 }
 try {
     fs.readdirSync(dist).forEach(a => {
-        fs.unlinkSync(dist + a)
+        if (!/\d\.webp/.test(a)) fs.unlinkSync(resolve(dist, a))
     })
 } catch (e) {
     console.warn(e)
@@ -50,7 +50,7 @@ const read = (p) => {
 const parseTooltip = () => {
     const o = JSON.parse(xmlParser
         .toJson(fs.readFileSync(
-            path.resolve(unpackDir, 'Shared/Public/Shared/TooltipExtras/TooltipUpcastDescriptions.lsx')
+            resolve(unpackDir, 'Shared/Public/Shared/TooltipExtras/TooltipUpcastDescriptions.lsx')
         ).toString(), {}))
     o.save.region.node.children.node.forEach(a => {
         const d = {}
@@ -60,10 +60,10 @@ const parseTooltip = () => {
         })
     })
 }
-const fileParser = (a,flag) => {
+const fileParser = (a, flag) => {
     const r = [];
     a.split(/\r?\n\r?\n/).forEach(v => {
-        const e = {_flag:flag};
+        const e = {_flag: flag};
         v.split(/\r?\n/).forEach(n => {
             if (/^new entry/.test(n)) e.Name = JSON.parse(n.replace('new entry ', ''));
             else if (/^using/.test(n)) {
@@ -89,19 +89,14 @@ const fileParser = (a,flag) => {
     return r;
 }
 
-const buildImg = () => {
-    cfg.dds.forEach(async ([p, f = 0]) => {
-        await createWebP(f, await resizeImage(readDDS(p)))
-    })
-}
 const parseLang = () => {
-    const str = fs.readFileSync(path.resolve(unpackDir, english)).toString().split('<content')
+    const str = fs.readFileSync(resolve(unpackDir, english)).toString().split('<content')
         .filter(a => /contentuid/.test(a))
     str.forEach(a => {
         const [k, v] = a.replace(/[\n\r]/g, '')
             .match(/(?<=contentuid=")(\w+)|(?<=>)(.*?)(?=<\/content)/g)
         lang[k] = v
-            .replace(/(&lt;br&gt;)+/g,'<br>')
+            .replace(/(&lt;br&gt;)+/g, '<br>')
             .replace(/&gt;/g, '>')
             .replace(/&lt;/g, '<')
             .replace(/LSTag.*?\/>/g, '')
@@ -111,10 +106,10 @@ const parseLang = () => {
 
 const parseSpells = () => {
     const arr = []
-    spells.forEach(([name,flag]) => {
-        const p = path.resolve(unpackDir, name)
+    spells.forEach(([name, flag]) => {
+        const p = resolve(unpackDir, name)
         fs.readdirSync(p).filter(a => /^Spell_/.test(a))
-            .forEach(a => arr.push(fileParser(fs.readFileSync(path.resolve(p, a)).toString(),flag)
+            .forEach(a => arr.push(fileParser(fs.readFileSync(resolve(p, a)).toString(), flag)
                 .reduce((a, b) => a.concat(b), [])))
     })
     let js = 0
@@ -174,11 +169,11 @@ const cIcon = (str, i = 0) => {
         });
 }
 cfg.icons.forEach((a, i) => {
-    cIcon(read(path.resolve(unpackDir, a)), i)
+    cIcon(read(resolve(unpackDir, a)), i)
 })
 const ico = 'i'
 wJs(ico, `loadIcon(${JSON.stringify(icons, '', ' ')})`)
-const copy = (a, b) => fs.copyFileSync(fx('./src/' + a), fx('./dist/' + (b || a)))
+const copy = (a, b) => fs.copyFileSync(fx('src/' + a), fx(resolve(dist, b || a)))
 fs.readdirSync('./src/img').forEach((a) => copy('img/' + a, a))
 const icon = read('./src/index.tmpl')
     .replace('%scripts%', scripts)
@@ -187,9 +182,8 @@ const icon = read('./src/index.tmpl')
         .replace(/64px/g, iconSiz + 'px')
     )
     .replace('js', read('./src/0.js')
-        .replace('%%', new Date().toLocaleDateString())
+        .replace('%%', cfg.version)
         .replace('"%types%"', JSON.stringify([...types]))
         .replace('9999', `${s}`)
     )
-write('./dist/index.html', icon)
-buildImg()
+write(resolve(dist, 'index.html'), icon)

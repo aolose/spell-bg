@@ -5,7 +5,7 @@ import dxt from "decode-dxt";
 import cfg from "../cfg.js";
 import sharp from "sharp";
 
-export const resizeImage = async (sharpImage) => {
+const resizeImage = async (sharpImage) => {
     let a = 0
     const images = []
     while (a < 2048) {
@@ -20,14 +20,14 @@ export const resizeImage = async (sharpImage) => {
     return images
 }
 
-export const createWebP = async (base, images) => {
+const createWebP = async (base, images) => {
     for (const a of images) {
         const i = images.indexOf(a);
         await save(a, base + i)
     }
 };
 
-export const save = async (a, name) => {
+const save = async (a, name) => {
     await a.webp({
         quality: 1,
         alphaQuality: 0,
@@ -35,7 +35,7 @@ export const save = async (a, name) => {
 }
 
 
-export const readDDS = (p) => {
+const readDDS = (p) => {
     const buf = fs.readFileSync(path.resolve(cfg.unpackDir, p))
     const ddsData = parse(buf.buffer)
     const image = ddsData.images[0],
@@ -50,3 +50,17 @@ export const readDDS = (p) => {
         }
     })
 }
+
+const buildImg = () => {
+    cfg.dds.forEach(async ([p, f = 0]) => {
+        await createWebP(f, await resizeImage(readDDS(p)))
+    })
+}
+try {
+    fs.readdirSync(cfg.output).forEach(a => {
+        if(/\d\.webp/.test(a))fs.unlinkSync(path.resolve(cfg.output , a))
+    })
+} catch (e) {
+    console.warn(e)
+}
+buildImg()
