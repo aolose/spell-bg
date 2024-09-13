@@ -44,7 +44,8 @@ const regexIfy = (e) => {
   if (t)
     try {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {}
+    } catch (e) {
+    }
 };
 
 function filter() {
@@ -73,7 +74,7 @@ function filter() {
                 c && s * c + (+o || 0) >= n && (e = 1);
               }
             }),
-            !e)
+              !e)
           )
             return;
         }
@@ -131,12 +132,12 @@ function merge(spell) {
   if (z && z !== spell) {
     const parent = merge(z);
     parent &&
-      Object.keys(parent).forEach((t) => {
-        if (!spell.hasOwnProperty(t)) {
-          spell[t] = parent[t];
-          spell._[t] = 1;
-        }
-      });
+    Object.keys(parent).forEach((t) => {
+      if (!spell.hasOwnProperty(t)) {
+        spell[t] = parent[t];
+        spell._[t] = 1;
+      }
+    });
   }
   spell.nm = spell.Name.replace(spell.SpellType + '_', '')
     .replace(/_/g, ' ')
@@ -225,9 +226,9 @@ function ps(e) {
       t !== '_flag' && (!isNaN(n) || n?.length)
         ? Array.isArray(n)
           ? `<ul>${n
-              .filter(Boolean)
-              .map((e) => `<li>${e}</li>`)
-              .join('')}</ul>`
+            .filter(Boolean)
+            .map((e) => `<li>${e}</li>`)
+            .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
     const c = e._ && e._[t] ? '_' : '';
@@ -248,7 +249,7 @@ ctx.onclick = (t) => {
     if (spells[f + c].Name !== act) b.innerHTML = ps(spells[f + c]);
   }
 };
-e.onclick = function () {
+e.onclick = function() {
   act = '';
   syncA++;
   b.className = '';
@@ -310,15 +311,15 @@ const xx = (e, t, f = (a) => a) => {
   let l = -1;
   n.oninput =
     n.onchange =
-    n.onpaste =
-    n.onblur =
-      function () {
-        clearTimeout(l);
-        l = setTimeout(() => {
-          ft[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-          syncA++;
-        }, 200);
-      };
+      n.onpaste =
+        n.onblur =
+          function() {
+            clearTimeout(l);
+            l = setTimeout(() => {
+              ft[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+              syncA++;
+            }, 200);
+          };
 };
 xx('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
 xx('v2', 'l');
@@ -367,9 +368,9 @@ const run = () => {
     <span class="tp">${SpellType}</span>
     <div class="l">
         <label>${DisplayName || nm}</label>
-        <p>${Description}</p>
         <div class="u">
             <div class="w">
+                <p>${Description}</p>
                 <ul class="po">${SpellProperties.map((e) => '<li>' + e + '</li>').join('')}</ul>
                 <ul>${SpellSuccess.map((e) => '<li>' + e + '</li>').join('')}</ul>
             </div>

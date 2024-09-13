@@ -53,15 +53,15 @@ const readDDS = (p) => {
   });
 };
 
-export const buildImg = () => {
-  cfg.dds.forEach(async ([p, f = 0]) => {
+export const buildImg = async () => {
+  try {
+    fs.readdirSync(cfg.assets).forEach((a) => {
+      if (/^\d+\.webp/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
+    });
+  } catch (e) {
+    console.warn(e);
+  }
+  for (const [p, f = 0] of cfg.dds) {
     await createWebP(f, await resizeImage(readDDS(p)));
-  });
+  }
 };
-try {
-  fs.readdirSync(cfg.assets).forEach((a) => {
-    if (/^\d+\.webp/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
-  });
-} catch (e) {
-  console.warn(e);
-}

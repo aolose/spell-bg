@@ -1,3 +1,6 @@
+html {
+  overscroll-behavior: none;
+}
 #b img,
 #e,
 #tt {
@@ -34,7 +37,6 @@
   font-size: 12px;
 }
 
-.c li,
 .tp,
 [title='Honour'] {
   font-size: 10px;
@@ -132,7 +134,7 @@ input {
   width: 100%;
 }
 
-body {
+* {
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -374,6 +376,7 @@ input {
     list-style: disc;
     line-height: 1.6;
     color: #42a5f5;
+    font-size: 12px;
   }
 
   label {
@@ -381,12 +384,13 @@ input {
   }
 
   p {
-    margin: 4px 0;
+    margin-bottom: 8px;
     color: #cedae4;
+    font-size: 14px;
   }
 
   .w {
-    inset: 5px 0 24px;
+    inset: 8px 0 24px;
     height: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;

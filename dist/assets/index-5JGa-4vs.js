@@ -38,9 +38,9 @@ Name:
     <span class="tp">${V}</span>
     <div class="l">
         <label>${d||c}</label>
-        <p>${f}</p>
         <div class="u">
             <div class="w">
+                <p>${f}</p>
                 <ul class="po">${Z.map($=>"<li>"+$+"</li>").join("")}</ul>
                 <ul>${J.map($=>"<li>"+$+"</li>").join("")}</ul>
             </div>
