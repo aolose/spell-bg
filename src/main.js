@@ -152,26 +152,28 @@ function merge(spell) {
   return spell;
 }
 
-const ok = ({ default: a }, isIcon) => {
-  if (isIcon) loadIcon(a);
-  else loadSpell(a);
-  const e = (100 * ++l) / all;
-  z.style.width = e + '%';
-  100 === e && (z.style.opacity = '0');
-};
-
 function ico(e) {
   const t = icons[e];
   if (t) {
-    const { x, y, n } = t;
+    const [x, n, y] = t;
     return `background-position:${x}% ${y}%;background-image:url(${n}.webp)`;
   }
   return 'background-size:cover';
 }
 
-const loadIcon = (e) => {
-  icons = e;
-  Object.values(spells).forEach((e) => (e.ico = ico(e.Icon)));
+window.ok = () => {
+  const e = (100 * ++l) / all;
+  z.style.width = e + '%';
+  100 === e && (z.style.opacity = '0');
+};
+
+window.loadIcon = (arr) => {
+  const n = arr.length / 4;
+  const [ks, vs] = [arr.slice(0, n), arr.slice(n)];
+  ks.forEach((k, i) => {
+    icons[k] = vs.slice(i * 3, (i + 1) * 3);
+  });
+  Object.values(spells).forEach(spell => (spell.ico = ico(spell.Icon)));
   ctx.querySelectorAll('i').forEach((e) => {
     const t = e.parentElement.id;
     const n = spells[t];
@@ -179,11 +181,17 @@ const loadIcon = (e) => {
   });
 };
 
-const loadSpell = (e) => {
-  e.forEach((e) => {
-    const t = (e._flag || '') + e.Name;
-    spells[t] = e;
-    spellArr.push(e);
+window.loadSpell = (items) => {
+  items.forEach((fields) => {
+    const n = fields.length / 2;
+    const [ks, vs] = [fields.slice(0, n), fields.slice(n)];
+    const o = {};
+    ks.forEach((a, b) => {
+      o[sk[a]] = vs[b];
+    });
+    const t = (o._flag || '') + o.Name;
+    spells[t] = o;
+    spellArr.push(o);
   });
   Object.values(spells).forEach((a) => {
     merge(a);
