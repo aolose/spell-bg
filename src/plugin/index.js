@@ -5,8 +5,8 @@ export function bg3SpellBuildPlugin() {
   return {
     name: 'bg3-spell-build,plugin',
     transformIndexHtml: {
-      enforce: 'pre',
-      transform(html) {
+      order: 'pre',
+      handler(html) {
         return html.replace(
           '%style%',
           `--bgW:${bgW}px;--bgH:${bgH}px;--iconSiz:${iconSiz}px`
