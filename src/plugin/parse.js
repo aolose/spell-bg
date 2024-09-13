@@ -36,7 +36,7 @@ export const parseData = () => {
   const assets = 'public';
   const types = new Set();
   const bk = [];
-  const size = 80;
+  const size = 300;
   const sliceH = 128;
   const iconSiz = 48;
   const imgW = 1024;
@@ -185,6 +185,14 @@ export const parseData = () => {
     );
     ld(1);
   };
+
+  try {
+    fs.readdirSync('public').forEach((a) => {
+      if (/^\d+\.js/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
+    });
+  } catch (e) {
+    console.warn(e);
+  }
 
   parseLang();
   parseTooltip();
