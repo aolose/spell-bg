@@ -9,6 +9,22 @@
   <title>Baldur's Gate 3 Spells</title>
   <link rel="icon" href="/logo.webp" />
   <link rel="stylesheet" type="text/css" href="./src/style.scss" />
+  <script>
+    let ts = [];
+    let ti;
+    let to = 0
+    function ok(){
+      to++
+    }
+    function loadSpell(a) {
+      ts.push(a);
+    }
+    function loadIcon(a) {
+      ti = a;
+    }
+  </script>
+  <script type="module" src="./src/main.js" async></script>
+  %script%
 </head>
 <body style="%style%">
 <div id="z"></div>
@@ -38,21 +54,5 @@
     <div id="e" role="button">X</div>
   </div>
 </div>
-<script>
-  let ts = [];
-  let ti;
-  let to = 0
-  function ok(){
-    to++
-  }
-  function loadSpell(a) {
-    ts.push(a);
-  }
-  function loadIcon(a) {
-    ti = a;
-  }
-</script>
-<script type="module" src="./src/main.js" async></script>
-%script%
 </body>
 </html>
