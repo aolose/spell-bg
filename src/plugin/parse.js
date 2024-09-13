@@ -2,6 +2,18 @@ import fs from 'fs';
 import xmlParser from 'xml2json';
 import path from 'path';
 import cfg from '../../cfg.js';
+
+const hash = str=> {
+  let h = 0, i, chr;
+  if (str.length === 0) return '0000';
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    h = ((h << 5) - h) + chr;
+    h |= 0;
+  }
+  return h.toString(32).replace(/-/g,'').slice(0,5);
+}
+
 const spellKeys = []
 const miniIco = (o)=>{
   return Object.keys(o).concat(Object.values(o)).flat().join()
@@ -47,13 +59,15 @@ export const parseData = () => {
   if (!fs.existsSync(assets)) fs.mkdirSync(assets);
   let scripts = '';
   let total = 0;
-  const wsc = (src, isIcon) =>
-    (scripts += `<script src='${src}.js' onload='ok()' async></script>`);
+  const wsc = (src) =>
+    scripts += `<script src='${src}' onload='ok()' async></script>`;
 
   const wJs = (name, js) => {
     total++;
-    fs.writeFileSync(resolve(assets, name + '.js'), js, { flag: 'w+' });
-    wsc(name, name === 'i');
+    const hs = hash(js)
+    name=`${name}.${hs}.js`
+    fs.writeFileSync(resolve(assets, name), js, { flag: 'w+' });
+    wsc(name);
   };
   const fx = (p) => {
     const d = path.dirname(p);
@@ -188,7 +202,7 @@ export const parseData = () => {
 
   try {
     fs.readdirSync('public').forEach((a) => {
-      if (/^\d+\.js/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
+      if (/^\d+\.\w+\.js/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
     });
   } catch (e) {
     console.warn(e);

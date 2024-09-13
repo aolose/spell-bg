@@ -10,17 +10,17 @@
   <link rel="icon" href="/logo.webp" />
   <link rel="stylesheet" type="text/css" href="./src/style.scss" />
   <script>
-    let ts = [];
-    let ti;
-    let to = 0
+    let _spells = [];
+    let _icons;
+    let _ok = 0
     function ok(){
-      to++
+      _ok++
     }
     function loadSpell(a) {
-      ts.push(a);
+      _spells.push(a);
     }
     function loadIcon(a) {
-      ti = a;
+      _icons = a;
     }
   </script>
   <script type="module" src="./src/main.js"></script>

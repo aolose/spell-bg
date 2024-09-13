@@ -16,8 +16,8 @@ function patchParams(e) {
 }
 
 const all = 9999;
-let l = to;
-to=null
+let l = _ok;
+_ok=null
 const types = '%types%',
   spells = {};
 let syncA = 0,
@@ -401,11 +401,11 @@ window.onresize = () => {
 };
 onresize(null);
 run();
-if(ti){
-  loadIcon(ti)
-  ti=null
+if(_icons){
+  loadIcon(_icons)
+  _icons=null
 }
-if(ts){
-  ts.forEach(loadSpell)
-  ts=null
+if(_spells){
+  _spells.forEach(loadSpell)
+  _spells=null
 }
