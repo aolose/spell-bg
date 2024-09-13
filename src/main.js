@@ -1,5 +1,3 @@
-import './style.scss';
-
 let act = '';
 
 function rd() {
@@ -153,7 +151,9 @@ function merge(spell) {
   return spell;
 }
 
-window.ok = () => {
+const ok = ({ default: a }, isIcon) => {
+  if (isIcon) loadIcon(a);
+  else loadSpell(a);
   const e = (100 * ++l) / all;
   z.style.width = e + '%';
   100 === e && (z.style.opacity = '0');
@@ -168,7 +168,7 @@ function ico(e) {
   return 'background-size:cover';
 }
 
-window.loadIcon = (e) => {
+const loadIcon = (e) => {
   icons = e;
   Object.values(spells).forEach((e) => (e.ico = ico(e.Icon)));
   ctx.querySelectorAll('i').forEach((e) => {
@@ -178,7 +178,7 @@ window.loadIcon = (e) => {
   });
 };
 
-window.loadSpell = (e) => {
+const loadSpell = (e) => {
   e.forEach((e) => {
     const t = (e._flag || '') + e.Name;
     spells[t] = e;
