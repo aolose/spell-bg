@@ -36,6 +36,7 @@ const h = 170,
   ctx = document.getElementById('v');
 
 let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / w));
+const sty = ctx.style;
 function resetListHeight() {
   const e = Math.ceil(filters.length / columns);
   sty.height = h * e + 20 + 'px';
@@ -208,7 +209,6 @@ if(ts){
   ts.forEach(loadSpell)
   ts=null
 }
-const sty = ctx.style;
 
 function ps(e) {
   act = e.Name;
