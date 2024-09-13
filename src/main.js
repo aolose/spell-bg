@@ -174,7 +174,7 @@ window.loadIcon = (arr) => {
   const n = arr.length / 4;
   const [ks, vs] = [arr.slice(0, n), arr.slice(n)];
   ks.forEach((k, i) => {
-    icons[k] = vs.slice(i * 3, (i + 1) * 3);
+    icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
   });
   Object.values(spells).forEach(spell => (spell.ico = ico(spell.Icon)));
   ctx.querySelectorAll('i').forEach((e) => {
@@ -201,15 +201,6 @@ window.loadSpell = (items) => {
   });
   filter();
 };
-if(ti){
-  loadIcon(ti)
-  ti=null
-}
-if(ts){
-  ts.forEach(loadSpell)
-  ts=null
-}
-
 function ps(e) {
   act = e.Name;
   syncA++;
@@ -410,3 +401,11 @@ window.onresize = () => {
 };
 onresize(null);
 run();
+if(ti){
+  loadIcon(ti)
+  ti=null
+}
+if(ts){
+  ts.forEach(loadSpell)
+  ts=null
+}

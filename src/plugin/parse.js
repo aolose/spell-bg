@@ -214,6 +214,7 @@ export const parseData = () => {
             case 'U1':
               if (n)
                 o[0] = parseFloat(((2048 * n * 100) / (2048 - 64)).toFixed(2));
+              break
             case 'V1':
               o[1] = Math.floor((imgW * n) / sliceH);
               o[2] = parseFloat(
@@ -223,7 +224,7 @@ export const parseData = () => {
         }
       });
       if (key) icons[key] = o;
-      if (i) o[2] = (+o[2] || 0) + i * 8;
+      if (i) o[1] = (+o[1] || 0) + i * 8;
     });
   };
   cfg.icons.forEach((a, i) => {
