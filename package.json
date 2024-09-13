@@ -1,11 +1,14 @@
 {
-  "name": "scripts",
-  "version": "1.0.0",
+  "name": "spell-bg",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build html": "node src/build.js",
-    "build img": "node src/dds.js",
-    "build": "node src/build.js && node src/dds.js"
+    "format": "prettier --write ./src",
+    "dev": "vite",
+    "lint": "eslint",
+    "build": "vite build -c vite.pro.config.js",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -13,16 +16,21 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/aolose/spell-bg/issues"
   },
   "homepage": "https://github.com/aolose/spell-bg#readme",
-  "dependencies": {
-    "decode-dxt": "^1.0.1",
-    "dxt-js": "^0.0.3",
+  "devDependencies": {
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "parse-dds": "^1.2.1",
-    "sharp": "^0.33.5",
-    "xml2json": "^0.12.0"
+    "prettier": "^3.3.3",
+    "sass-embedded": "^1.78.0",
+    "vite": "^5.4.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-minify": "^2.0.0",
+    "vite-plugin-pwa": "^0.20.5"
   }
 }

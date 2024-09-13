@@ -1,0 +1,11 @@
+{
+  "name": "spell-plugin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "devDependencies": {
+    "decode-dxt": "^1.0.1",
+    "sharp": "^0.33.5",
+    "xml2json": "^0.12.0"
+  }
+}
