@@ -2,7 +2,6 @@ import fs from 'fs';
 import xmlParser from 'xml2json';
 import path from 'path';
 import cfg from '../../cfg.js';
-const k = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const spellKeys = []
 const miniIco = (o)=>{
   return Object.keys(o).concat(Object.values(o)).flat().join()
