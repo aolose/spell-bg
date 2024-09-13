@@ -32,5 +32,8 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-minify": "^2.0.0",
     "vite-plugin-pwa": "^0.20.5"
+  },
+  "engines": {
+    "node": ">= 18"
   }
 }
