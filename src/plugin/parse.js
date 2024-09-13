@@ -48,7 +48,7 @@ export const parseData = () => {
   let scripts = '';
   let total = 0;
   const wsc = (src, isIcon) =>
-    (scripts += `<script src='${src}.js' onload='ok()' defer></script>`);
+    (scripts += `<script src='${src}.js' onload='ok()' async></script>`);
 
   const wJs = (name, js) => {
     total++;

@@ -16,7 +16,8 @@ function patchParams(e) {
 }
 
 const all = 9999;
-let l = 0;
+let l = to;
+to=null
 const types = '%types%',
   spells = {};
 let syncA = 0,
@@ -180,7 +181,6 @@ window.loadIcon = (arr) => {
     e.style = n.ico;
   });
 };
-
 window.loadSpell = (items) => {
   items.forEach((fields) => {
     const n = fields.length / 2;
@@ -199,7 +199,14 @@ window.loadSpell = (items) => {
   });
   filter();
 };
-
+if(ti){
+  loadIcon(ti)
+  ti=null
+}
+if(ts){
+  ts.forEach(loadSpell)
+  ts=null
+}
 let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / w));
 const sty = ctx.style;
 

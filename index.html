@@ -38,7 +38,21 @@
     <div id="e" role="button">X</div>
   </div>
 </div>
-<script type="module" src="./src/main.js" defer></script>
+<script>
+  let ts = [];
+  let ti;
+  let to = 0
+  function ok(){
+    to++
+  }
+  function loadSpell(a) {
+    ts.push(a);
+  }
+  function loadIcon(a) {
+    ti = a;
+  }
+</script>
+<script type="module" src="./src/main.js" async></script>
 %script%
 </body>
 </html>
