@@ -25,3 +25,4 @@ dist-ssr
 /dev-dist/
 /src/plugin/pnpm-lock.yaml
 /vite.config.js.timestamp-1*
+/dist/
