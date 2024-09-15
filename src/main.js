@@ -1,7 +1,7 @@
 let act = '';
 
-function rd() {
-  tt.textContent = `${filters.length}`;
+function setCount() {
+  currentSpellLen.textContent = `${filters.length}`;
 }
 
 function patchParams(e) {
@@ -17,29 +17,31 @@ function patchParams(e) {
 
 const all = 9999;
 let l = _ok;
-_ok=null
-const types = '%types%',
-  spells = {};
-let syncA = 0,
-  icons = {};
-const h = 170,
-  w = 330,
-  spellArr = [],
-  filters = [],
-  ft = {},
-  z = document.getElementById('z'),
-  list = document.querySelector('.ri'),
-  tt = document.getElementById('tt'),
-  b = document.getElementById('b'),
-  c = document.getElementById('c'),
-  e = document.getElementById('e'),
-  ctx = document.getElementById('v');
-
-let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / w));
+const types = '%types%';
+const spells = {};
+let syncA = 0;
+const icons = {};
+_ok = null;
+const cardHeight = 170;
+const cardWidth = 330;
+const spellArr = [];
+const filters = [];
+const ft = {};
+const z = document.getElementById('z');
+const list = document.querySelector('.ri');
+const currentSpellLen = document.getElementById('tt');
+const b = document.getElementById('b');
+const c = document.getElementById('c');
+const e = document.getElementById('e');
+const ipt = document.getElementById('cp');
+const ctx = document.getElementById('v');
+let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth));
 const sty = ctx.style;
+let copped = '';
+
 function resetListHeight() {
   const e = Math.ceil(filters.length / columns);
-  sty.height = h * e + 20 + 'px';
+  sty.height = cardHeight * e + 20 + 'px';
 }
 
 const regexIfy = (e) => {
@@ -47,9 +49,26 @@ const regexIfy = (e) => {
   if (t)
     try {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {
-    }
+    } catch (e) {}
 };
+
+function copy(flag, key) {
+  const spell = spells[key];
+  const name = spell.Name;
+  const type = flag === '+' ? 'AddSpell' : 'RemoveSpell';
+  ipt.value = `${type}(GetHostCharacter(),'${name}')`;
+  ipt.select();
+  ipt.setSelectionRange(0, 1000);
+  clearTimeout(spell._.t);
+  navigator.clipboard.writeText(ipt.value).then(() => {
+    const v = (s) => {
+      const a = document.getElementById(key).querySelector('.cp span');
+      if (a) a.innerText = s;
+    };
+    v(`${type.replace('S', ' S')} Copied!`);
+    spell._.t = setTimeout(v, 3e3, '');
+  });
+}
 
 function filter() {
   filters.length = 0;
@@ -77,7 +96,7 @@ function filter() {
                 c && s * c + (+o || 0) >= n && (e = 1);
               }
             }),
-              !e)
+            !e)
           )
             return;
         }
@@ -118,7 +137,7 @@ function filter() {
     return n === l ? (e._nm > t._nm ? 1 : -1) : n > l ? 1 : -1;
   });
   resetListHeight();
-  rd();
+  setCount();
   syncA++;
 }
 
@@ -135,12 +154,12 @@ function merge(spell) {
   if (z && z !== spell) {
     const parent = merge(z);
     parent &&
-    Object.keys(parent).forEach((t) => {
-      if (!spell.hasOwnProperty(t)) {
-        spell[t] = parent[t];
-        spell._[t] = 1;
-      }
-    });
+      Object.keys(parent).forEach((t) => {
+        if (!spell.hasOwnProperty(t)) {
+          spell[t] = parent[t];
+          spell._[t] = 1;
+        }
+      });
   }
   spell.nm = spell.Name.replace(spell.SpellType + '_', '')
     .replace(/_/g, ' ')
@@ -176,7 +195,7 @@ window.loadIcon = (arr) => {
   ks.forEach((k, i) => {
     icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
   });
-  Object.values(spells).forEach(spell => (spell.ico = ico(spell.Icon)));
+  Object.values(spells).forEach((spell) => (spell.ico = ico(spell.Icon)));
   ctx.querySelectorAll('i').forEach((e) => {
     const t = e.parentElement.id;
     const n = spells[t];
@@ -201,6 +220,7 @@ window.loadSpell = (items) => {
   });
   filter();
 };
+
 function ps(e) {
   act = e.Name;
   syncA++;
@@ -224,38 +244,41 @@ function ps(e) {
     return l === s ? (e > n ? 1 : -1) : s - l;
   });
   let cpm = '';
-  n.forEach((t) => {
-    if ('-' === t) return;
-    const n = e[t];
-    let s;
-    s =
-      t !== '_flag' && (!isNaN(n) || n?.length)
+  n.forEach((key) => {
+    if ('-' === key) return;
+    const n = e[key];
+    let value;
+    value =
+      key !== '_flag' && (!isNaN(n) || n?.length)
         ? Array.isArray(n)
           ? `<ul>${n
-            .filter(Boolean)
-            .map((e) => `<li>${e}</li>`)
-            .join('')}</ul>`
+              .filter(Boolean)
+              .map((e) => `<li>${e}</li>`)
+              .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
-    const c = e._ && e._[t] ? '_' : '';
-    if (s) cpm += `<div>\n<label class="${c}">${t}</label>${s}\n</div>`;
+    const cls = e._ && e._[key] ? '_' : '';
+    if (value)
+      cpm += `<div>\n<label class="${cls}">${key}</label>${value}\n</div>`;
   });
   return cpm;
 }
 
-ctx.onclick = (t) => {
-  const n = ctx.children,
-    l = t.target,
-    s = [].find.call(n, (e) => e === n || e.contains(l)),
-    f = (s && s._flag) || '',
-    c = s && s.id;
-  if (c) {
+ctx.onclick = ({ target }) => {
+  const n = ctx.children;
+  const card = [].find.call(n, (e) => e === n || e.contains(target));
+  const key = card && card.id;
+  if ('B' === target.tagName[0]) {
+    copy(target.textContent, key);
+    return;
+  }
+  if (key) {
     b.className = 's';
     e.className = 's';
-    if (spells[f + c].Name !== act) b.innerHTML = ps(spells[f + c]);
+    if (spells[key].Name !== act) b.innerHTML = ps(spells[key]);
   }
 };
-e.onclick = function() {
+e.onclick = function () {
   act = '';
   syncA++;
   b.className = '';
@@ -317,15 +340,15 @@ const xx = (e, t, f = (a) => a) => {
   let l = -1;
   n.oninput =
     n.onchange =
-      n.onpaste =
-        n.onblur =
-          function() {
-            clearTimeout(l);
-            l = setTimeout(() => {
-              ft[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-              syncA++;
-            }, 200);
-          };
+    n.onpaste =
+    n.onblur =
+      function () {
+        clearTimeout(l);
+        l = setTimeout(() => {
+          ft[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+          syncA++;
+        }, 200);
+      };
 };
 xx('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
 xx('v2', 'l');
@@ -345,7 +368,7 @@ const run = () => {
     {
       const end = columns * rows,
         total = filters.length,
-        start = Math.floor(list.scrollTop / h) * columns,
+        start = Math.floor(list.scrollTop / cardHeight) * columns,
         viewStart = Math.max(0, start - end),
         viewEnd = Math.min(total, start + 2 * end);
       let tmpl = '';
@@ -366,12 +389,13 @@ const run = () => {
 <div class="c${act === Name ? ' a' : ''}" 
      role="listitem" 
      id="${_flag + Name}" 
-     style="left:${(idx % columns) * w}px;top:${Math.floor(idx / columns) * h}px"
+     style="left:${(idx % columns) * cardWidth}px;top:${Math.floor(idx / columns) * cardHeight}px"
 >
     <span title="${_flag}" hidden>H</span>
     <i style="${ico}" role="img" aria-label="icon of the spell ${Name}" title="${DisplayName || Description}"></i>
     <span class="lv">level ${Level || '-'}</span>
     <span class="tp">${SpellType}</span>
+    <span class="cp"><span></span><button>+</button><button>-</button></span>
     <div class="l">
         <label>${DisplayName || nm}</label>
         <div class="u">
@@ -390,8 +414,8 @@ const run = () => {
 };
 list.onscroll = () => syncA++;
 window.onresize = () => {
-  let e = Math.max(1, Math.floor((list.offsetWidth - 20) / w)),
-    n = Math.ceil((list.offsetHeight - 20) / h);
+  let e = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth)),
+    n = Math.ceil((list.offsetHeight - 20) / cardHeight);
   if (columns !== e || rows !== n) {
     columns = e;
     rows = n;
@@ -401,11 +425,11 @@ window.onresize = () => {
 };
 onresize(null);
 run();
-if(_icons){
-  loadIcon(_icons)
-  _icons=null
+if (_icons) {
+  loadIcon(_icons);
+  _icons = null;
 }
-if(_spells){
-  _spells.forEach(loadSpell)
-  _spells=null
+if (_spells) {
+  _spells.forEach(loadSpell);
+  _spells = null;
 }

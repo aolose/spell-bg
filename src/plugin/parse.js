@@ -3,41 +3,43 @@ import xmlParser from 'xml2json';
 import path from 'path';
 import cfg from '../../cfg.js';
 
-const hash = str=> {
-  let h = 0, i, chr;
+const hash = (str) => {
+  let h = 0,
+    i,
+    chr;
   if (str.length === 0) return '0000';
   for (i = 0; i < str.length; i++) {
     chr = str.charCodeAt(i);
-    h = ((h << 5) - h) + chr;
+    h = (h << 5) - h + chr;
     h |= 0;
   }
-  return h.toString(32).replace(/-/g,'').slice(0,5);
-}
+  return h.toString(32).replace(/-/g, '').slice(0, 5);
+};
 
-const spellKeys = []
-const miniIco = (o)=>{
-  return Object.keys(o).concat(Object.values(o)).flat().join()
-}
-const miniSpell = (o)=>{
-    if(Array.isArray(o)){
-      const b = []
-      o.forEach(n=>{
-        const x = []
-        const m = []
-        for(const [k,v] of Object.entries(n)){
-          const i = spellKeys.indexOf(k)
-          if(i>-1)x.push(i)
-          else {
-            x.push(spellKeys.length)
-            spellKeys.push(k)
-          }
-          m.push(v)
+const spellKeys = [];
+const miniIco = (o) => {
+  return Object.keys(o).concat(Object.values(o)).flat().join();
+};
+const miniSpell = (o) => {
+  if (Array.isArray(o)) {
+    const b = [];
+    o.forEach((n) => {
+      const x = [];
+      const m = [];
+      for (const [k, v] of Object.entries(n)) {
+        const i = spellKeys.indexOf(k);
+        if (i > -1) x.push(i);
+        else {
+          x.push(spellKeys.length);
+          spellKeys.push(k);
         }
-        b.push(x.concat(m))
-      })
-      return JSON.stringify(b)
-    }
-}
+        m.push(v);
+      }
+      b.push(x.concat(m));
+    });
+    return JSON.stringify(b);
+  }
+};
 
 export const parseData = () => {
   const { resolve } = path;
@@ -60,12 +62,12 @@ export const parseData = () => {
   let scripts = '';
   let total = 0;
   const wsc = (src) =>
-    scripts += `<script src='${src}' onload='ok()' async></script>`;
+    (scripts += `<script src='${src}' onload='ok()' async></script>`);
 
   const wJs = (name, js) => {
     total++;
-    const hs = hash(js)
-    name=`${name}.${hs}.js`
+    const hs = hash(js);
+    name = `${name}.${hs}.js`;
     fs.writeFileSync(resolve(assets, name), js, { flag: 'w+' });
     wsc(name);
   };
@@ -220,7 +222,7 @@ export const parseData = () => {
       let key = '';
       v.split(/\r?\n/).forEach((vv) => {
         const [, a] =
-        /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
+          /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
         const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
         if (a) key = a;
         if (n) {
@@ -228,7 +230,7 @@ export const parseData = () => {
             case 'U1':
               if (n)
                 o[0] = parseFloat(((2048 * n * 100) / (2048 - 64)).toFixed(2));
-              break
+              break;
             case 'V1':
               o[1] = Math.floor((imgW * n) / sliceH);
               o[2] = parseFloat(
@@ -246,13 +248,16 @@ export const parseData = () => {
   });
   const ico = 'i';
   wJs(ico, `loadIcon('${miniIco(icons)}'.split(','))`);
-  fs.writeFileSync('src/plugin/patch.js', `export default ${JSON.stringify({
-    scripts,
-    bgW,
-    bgH,
-    iconSiz,
-    total,
-    spellKeys:spellKeys.join(),
-    types: [...types]
-  }).replace(/"(\w+?)":/g,'$1:')}`);
+  fs.writeFileSync(
+    'src/plugin/patch.js',
+    `export default ${JSON.stringify({
+      scripts,
+      bgW,
+      bgH,
+      iconSiz,
+      total,
+      spellKeys: spellKeys.join(),
+      types: [...types]
+    }).replace(/"(\w+?)":/g, '$1:')}`
+  );
 };

@@ -5,6 +5,7 @@
   "type": "module",
   "devDependencies": {
     "decode-dxt": "^1.0.1",
+    "parse-dds": "^1.2.1",
     "sharp": "^0.33.5",
     "xml2json": "^0.12.0"
   }

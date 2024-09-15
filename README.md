@@ -16,7 +16,7 @@ The build files will be list at the `dist` folder.
 
 
 ### Usage
-
+#### Filter Spells
 The upper right filter supports Regex and is case-insensitive.
 
 - Name 
@@ -41,3 +41,10 @@ Name: _flag   Value: *
 -- List Spells with Damage > 500:
 Name: spell*   Value: >500
 ```
+
+
+#### Copy command
+Click in the lower right corner of the card, 
+you can copy the `AddSpell` and `RemoveSpell` commands
+
+![copy](copy.webp)
