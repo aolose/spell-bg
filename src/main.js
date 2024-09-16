@@ -50,10 +50,11 @@ function gesture(e) {
   const t = Date.now();
   sidePanel.ontouchcancel = cancel;
   sidePanel.ontouchend = (e) => {
+    e.preventDefault()
     const my = Math.abs(e.changedTouches[0].clientY - y);
     if (
       Date.now() - t < 600 &&
-      e.changedTouches[0].clientX - x > Math.max(100, y)
+      e.changedTouches[0].clientX - x > Math.max(100, my)
     ) {
       closeBtn.onclick();
     }
