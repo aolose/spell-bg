@@ -20,7 +20,6 @@ html {
 
 #b > div,
 #c,
-#e.s,
 .c,
 .c div,
 .f,
@@ -136,16 +135,15 @@ input {
 }
 
 * {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    PingFang SC,
-    Helvetica Neue,
-    STHeiti,
-    Microsoft Yahei,
-    Tahoma,
-    Simsun,
-    sans-serif;
+  font-family: -apple-system,
+  BlinkMacSystemFont,
+  PingFang SC,
+  Helvetica Neue,
+  STHeiti,
+  Microsoft Yahei,
+  Tahoma,
+  Simsun,
+  sans-serif;
 }
 
 * {
@@ -341,7 +339,6 @@ ul {
   color: #9e9548;
 }
 
-#e:hover,
 .f,
 .tp,
 input {
@@ -396,6 +393,7 @@ input {
     height: auto;
     overflow: hidden;
     display: block;
+
     p {
       height: auto;
       display: -webkit-box;
@@ -448,13 +446,8 @@ input {
   gap: 20px;
 }
 
-#e:hover {
-  background: #1c93ff;
-}
-
 #e {
   border: 1px solid #1a2e50;
-  display: none;
   color: #ffc107;
   top: 0;
   -webkit-box-align: center;
@@ -466,6 +459,22 @@ input {
   z-index: 9000;
   width: 30px;
   height: 30px;
+  display: none;
+  &:before{
+    content: '?';
+  }
+  &:active {
+    background: #1c93ff;
+  }
+  &.s{
+    display: flex;
+    &:before{
+      content: 'X';
+    }
+  }
+  @media only screen and (max-width: 640px){
+    display: flex;
+  }
 }
 
 @media only screen and (max-width: 640px) {
