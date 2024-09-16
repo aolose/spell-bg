@@ -1,4 +1,5 @@
-let act = '';
+let act = null;
+let spellKeyMap = {};
 
 function setCount() {
   currentSpellLen.textContent = `${filters.length}`;
@@ -18,7 +19,6 @@ function patchParams(e) {
 const all = 9999;
 let l = _ok;
 const types = '%types%';
-const spells = {};
 let syncA = 0;
 const icons = {};
 _ok = null;
@@ -26,7 +26,7 @@ const cardHeight = 170;
 const cardWidth = 330;
 const spellArr = [];
 const filters = [];
-const ft = {};
+const filterOption = {};
 const z = document.getElementById('z');
 const list = document.querySelector('.ri');
 const currentSpellLen = document.getElementById('tt');
@@ -51,29 +51,30 @@ const regexIfy = (e) => {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
     } catch (e) {}
 };
+let cpField;
 
-function copy(flag, key) {
-  const spell = spells[key];
+function copy(flag, spell) {
   const name = spell.Name;
   const type = flag === '+' ? 'AddSpell' : 'RemoveSpell';
   ipt.value = `${type}(GetHostCharacter(),'${name}')`;
   ipt.select();
   ipt.setSelectionRange(0, 1000);
-  clearTimeout(spell._.t);
+  clearTimeout(cpField?.t);
   navigator.clipboard.writeText(ipt.value).then(() => {
     const v = (s) => {
-      const a = document.getElementById(key).querySelector('.cp span');
-      if (a) a.innerText = s;
+      if (cpField) cpField.textContent = '';
+      cpField = spell._el.querySelector('.cp span');
+      cpField.innerText = s;
     };
     v(`${type.replace('S', ' S')} Copied!`);
-    spell._.t = setTimeout(v, 3e3, '');
+    cpField.t = setTimeout(v, 3e3, '');
   });
 }
 
 function filter() {
   filters.length = 0;
-  const { t: e, k: t, l: n } = ft;
-  spellArr.forEach((l, s) => {
+  const { t: type, k: prop, l: value } = filterOption;
+  spellArr.forEach((spell, s) => {
     const check = (e, t) => {
       const regExp = regexIfy(e);
       if (regExp) return regExp.test(t);
@@ -86,40 +87,44 @@ function filter() {
       } else if (/^>\d+$/.test(e)) {
         const n = +e.slice(1);
         if (!isNaN(n)) {
-          let e = 0;
-          if (
-            ([].concat(t).forEach((t) => {
-              if (/^\d+$/.test(t)) +t >= n && (e = 1);
-              else {
-                const l = /DealDamage\((\d+)d(\d+)\+?(\d*),.*?\)/,
-                  [, s, c, o] = l.exec(t) || [];
-                c && s * c + (+o || 0) >= n && (e = 1);
+          let match = 0;
+          [].concat(t).forEach((t) => {
+            if (/^\d+$/.test(t)) {
+              if (+t >= n) {
+                match = 1;
+                debugger;
               }
-            }),
-            !e)
-          )
-            return;
+            } else {
+              const l = /DealDamage\((\d+)d?(\d*)\+?(\d*),.*?\)/;
+              const [, max, multi = 1, base = 0] = l.exec(t) || [];
+              if (max * multi + +base >= n) {
+                debugger;
+                match = 1;
+              }
+            }
+          });
+          if (!match) return;
         }
       } else if (-1 === (t + '').toLowerCase().indexOf((e + '').toLowerCase()))
         return;
       return 1;
     };
-    if (!e || e === l.SpellType) {
-      if (t && n) {
-        if (!l.hasOwnProperty(t)) {
-          if ('*' === n) return;
-          else if ('-' === n) return filters.push(s);
+    if (!type || type === spell.SpellType) {
+      if (prop && value) {
+        if (!spell.hasOwnProperty(prop)) {
+          if ('*' === value) return;
+          else if ('-' === value) return filters.push(s);
         }
         let e = 0;
-        for (const [s, o] of Object.entries(l)) {
-          const l = regexIfy(t);
-          if (
-            (l?.test(s) ||
-              s.toLowerCase() === t.toLowerCase() ||
-              (/\*/.test(t) &&
-                new RegExp(t.replace(/\*/g, '.*'), 'gi').test(s))) &&
-            check(n, o)
-          ) {
+        for (const [spellProp, spellValue] of Object.entries(spell)) {
+          if ('_flag' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
+          const regExp = regexIfy(prop);
+          const keyMatch =
+            regExp?.test(spellProp) ||
+            spellProp.toLowerCase() === prop.toLowerCase() ||
+            (/\*/.test(prop) &&
+              new RegExp(prop.replace(/\*/g, '.*'), 'gi').test(spellProp));
+          if (keyMatch && check(value, spellValue)) {
             e = 1;
             break;
           }
@@ -129,17 +134,21 @@ function filter() {
       filters.push(s);
     }
   });
-  filters.sort((e, t) => {
-    e = spellArr[e];
-    t = spellArr[t];
-    const n = e.lv,
-      l = t.lv;
-    return n === l ? (e._nm > t._nm ? 1 : -1) : n > l ? 1 : -1;
-  });
   resetListHeight();
   setCount();
   syncA++;
 }
+
+const getParentSpell = (spell) => {
+  const { Using } = spell;
+  const list = [].concat(spellKeyMap[Using]);
+  for (const k of list) {
+    if (k !== undefined) {
+      const p = spellArr[k];
+      if (p !== spell) return p;
+    }
+  }
+};
 
 function merge(spell) {
   if (!spell) return;
@@ -149,15 +158,16 @@ function merge(spell) {
     });
     spell._ = {};
   }
-  const { Using: t, _flag: f = '' } = spell;
-  const z = t && (spells[t] || spells[f + t]);
-  if (z && z !== spell) {
-    const parent = merge(z);
+  let parent = getParentSpell(spell);
+  if (parent) {
+    parent = merge(parent);
     parent &&
       Object.keys(parent).forEach((t) => {
-        if (!spell.hasOwnProperty(t)) {
-          spell[t] = parent[t];
-          spell._[t] = 1;
+        if (/[A-Z]/.test(t)) {
+          if (!spell.hasOwnProperty(t)) {
+            spell[t] = parent[t];
+            spell._[t] = 1;
+          }
         }
       });
   }
@@ -186,7 +196,10 @@ function ico(e) {
 window.ok = () => {
   const e = (100 * ++l) / all;
   z.style.width = e + '%';
-  100 === e && (z.style.opacity = '0');
+  if (100 === e) {
+    z.style.opacity = '0';
+    window.ok = null;
+  }
 };
 
 window.loadIcon = (arr) => {
@@ -195,10 +208,9 @@ window.loadIcon = (arr) => {
   ks.forEach((k, i) => {
     icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
   });
-  Object.values(spells).forEach((spell) => (spell.ico = ico(spell.Icon)));
+  spellArr.forEach((spell) => (spell.ico = ico(spell.Icon)));
   ctx.querySelectorAll('i').forEach((e) => {
-    const t = e.parentElement.id;
-    const n = spells[t];
+    const n = e.parentElement.spell;
     e.style = n.ico;
   });
 };
@@ -210,19 +222,33 @@ window.loadSpell = (items) => {
     ks.forEach((a, b) => {
       o[sk[a]] = vs[b];
     });
-    const t = (o._flag || '') + o.Name;
-    spells[t] = o;
     spellArr.push(o);
   });
-  Object.values(spells).forEach((a) => {
+  spellArr.forEach((a) => {
     merge(a);
     patchParams(a);
+  });
+  spellArr.sort((e, t) => {
+    const n = e.lv,
+      l = t.lv;
+    return n === l ? (e._nm > t._nm ? 1 : -1) : n > l ? 1 : -1;
+  });
+  spellKeyMap = {};
+  spellArr.forEach((a, i) => {
+    a._k = i;
+    const t = a.Name;
+    const v = spellKeyMap[t];
+    if (v !== undefined) {
+      spellKeyMap[t] = [v, i];
+    } else spellKeyMap[t] = i;
   });
   filter();
 };
 
 function ps(e) {
-  act = e.Name;
+  if (act) act.classList.remove('a');
+  act = e._el;
+  act.classList.add('a');
   syncA++;
   const t = [
     'SpellType',
@@ -249,7 +275,7 @@ function ps(e) {
     const n = e[key];
     let value;
     value =
-      key !== '_flag' && (!isNaN(n) || n?.length)
+      /[A-Z]/.test(key[0]) && (!isNaN(n) || n?.length)
         ? Array.isArray(n)
           ? `<ul>${n
               .filter(Boolean)
@@ -265,21 +291,25 @@ function ps(e) {
 }
 
 ctx.onclick = ({ target }) => {
-  const n = ctx.children;
-  const card = [].find.call(n, (e) => e === n || e.contains(target));
-  const key = card && card.id;
-  if ('B' === target.tagName[0]) {
-    copy(target.textContent, key);
+  const children = ctx.children;
+  const card = [].find.call(
+    children,
+    (child) => child === children || child.contains(target)
+  );
+  if (!card) return;
+  if ('BUTTON' === target.tagName) {
+    copy(target.textContent, card.spell);
     return;
   }
-  if (key) {
-    b.className = 's';
-    e.className = 's';
-    if (spells[key].Name !== act) b.innerHTML = ps(spells[key]);
-  }
+  b.className = 's';
+  e.className = 's';
+  if (card !== act) b.innerHTML = ps(card.spell);
 };
 e.onclick = function () {
-  act = '';
+  if (act) {
+    act.classList.remove('a');
+    act = null;
+  }
   syncA++;
   b.className = '';
   e.className = '';
@@ -317,7 +347,7 @@ const el = (e) => {
 let t = -1;
 const tbs = [];
 const cg = (e, t) => {
-  ft.t = t;
+  filterOption.t = t;
   tbs.forEach((t) => t.act(e));
 };
 [''].concat(types).forEach((e, t) => {
@@ -331,6 +361,7 @@ const cg = (e, t) => {
   };
   l.act = (e) => {
     l.className = e === n ? 'act' : '';
+    list.scrollTop = 0;
   };
   tbs.push(l);
   c.appendChild(l);
@@ -345,7 +376,7 @@ const xx = (e, t, f = (a) => a) => {
       function () {
         clearTimeout(l);
         l = setTimeout(() => {
-          ft[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+          filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
           syncA++;
         }, 200);
       };
@@ -358,7 +389,7 @@ let syncB,
   n = '';
 const run = () => {
   requestAnimationFrame(run);
-  const s = JSON.stringify(ft);
+  const s = JSON.stringify(filterOption);
   if (n !== s) {
     n = s;
     filter();
@@ -371,25 +402,44 @@ const run = () => {
         start = Math.floor(list.scrollTop / cardHeight) * columns,
         viewStart = Math.max(0, start - end),
         viewEnd = Math.min(total, start + 2 * end);
-      let tmpl = '';
+      const frm = document.createDocumentFragment();
       for (let idx = viewStart; idx < viewEnd; idx++) {
-        const {
-          nm,
-          ico,
-          DisplayName,
-          Description = '',
-          Name,
-          _flag = '',
-          Level,
-          SpellType,
-          SpellProperties = [],
-          SpellSuccess = []
-        } = spellArr[filters[idx]];
-        tmpl += `
-<div class="c${act === Name ? ' a' : ''}" 
+        spellCard(spellArr[filters[idx]], idx, frm);
+      }
+      displayed.forEach((a) => a.remove());
+      displayed = added;
+      added = new Set();
+      ctx.appendChild(frm);
+    }
+  }
+};
+let displayed = new Set();
+let added = new Set();
+const spellCard = (spell, idx, frm) => {
+  const left = `${(idx % columns) * cardWidth}px`;
+  const top = `${Math.floor(idx / columns) * cardHeight}px`;
+  let elm = spell._el;
+  if (elm) {
+    elm.style.left = left;
+    elm.style.top = top;
+    if (!displayed.delete(elm)) frm.appendChild(elm);
+  } else {
+    const {
+      Name,
+      _flag = '',
+      nm,
+      ico,
+      DisplayName,
+      Description = '',
+      Level,
+      SpellType,
+      SpellProperties = [],
+      SpellSuccess = []
+    } = spell;
+    elm = el(`
+<div class="c" 
      role="listitem" 
-     id="${_flag + Name}" 
-     style="left:${(idx % columns) * cardWidth}px;top:${Math.floor(idx / columns) * cardHeight}px"
+     style="left:${left};top:${top}"
 >
     <span title="${_flag}" hidden>H</span>
     <i style="${ico}" role="img" aria-label="icon of the spell ${Name}" title="${DisplayName || Description}"></i>
@@ -406,11 +456,12 @@ const run = () => {
             </div>
         </div>
     </div>
-</div>`;
-      }
-      ctx.innerHTML = tmpl;
-    }
+</div>`);
+    frm.appendChild(elm);
+    spell._el = elm;
+    elm.spell = spell;
   }
+  added.add(elm);
 };
 list.onscroll = () => syncA++;
 window.onresize = () => {

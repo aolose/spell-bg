@@ -1,6 +1,7 @@
 html {
   overscroll-behavior: none;
 }
+
 #b img,
 #e,
 #tt {
@@ -263,34 +264,9 @@ ul {
   gap: 13px;
 }
 
-#b li {
-  list-style: none;
-}
-
-#b > div {
-  color: #fff;
-  padding: 3px 46px 3px 5px;
-}
-
-#b pre {
-  white-space: pre-wrap;
-  padding: 30px 50px;
-  color: #9eb3c2;
-}
-
 #b label,
 .p {
   padding: 0 10px;
-}
-
-#b label {
-  width: 177px;
-  flex-shrink: 0;
-  color: #ff8c00;
-}
-
-#b label._ {
-  color: #9e8259;
 }
 
 #b {
@@ -299,6 +275,35 @@ ul {
   padding: 10px 0 30px;
   line-height: 2;
   width: 500px;
+
+  li {
+    list-style: none;
+
+    & + li {
+      border-top: 1px dashed #1a2e50;
+    }
+  }
+
+  & > div {
+    color: #fff;
+    padding: 3px 46px 3px 5px;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    padding: 30px 50px;
+    color: #9eb3c2;
+  }
+
+  label {
+    width: 177px;
+    flex-shrink: 0;
+    color: #ff8c00;
+
+    &._ {
+      color: #9e8259;
+    }
+  }
 }
 
 .p {
@@ -353,10 +358,6 @@ input {
   color: #607d8b;
 }
 
-.w::-webkit-scrollbar {
-  display: none;
-}
-
 .u {
   flex: 1;
 }
@@ -393,9 +394,15 @@ input {
   .w {
     inset: 8px 0 24px;
     height: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    flex-direction: column;
+    overflow: hidden;
+    display: block;
+    p {
+      height: auto;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 
   i {
@@ -573,21 +580,25 @@ p b {
   color: #c4c8e0;
   z-index: 23;
 }
+
 #ipt {
   width: 0;
   height: 0;
   position: absolute;
 }
+
 .cp {
   position: absolute;
   bottom: 10px;
   right: 10px;
   z-index: 1;
+
   span {
     font-size: 12px;
     color: #78a378;
     padding-right: 10px;
   }
+
   button {
     transition: 0.2s;
     opacity: 0.6;
@@ -598,9 +609,11 @@ p b {
     display: inline-block;
     border: 1px solid currentColor;
     color: #595a93;
+
     &:active {
       background: #2e3542;
     }
+
     &:hover {
       opacity: 1;
       color: #8bc34a;
