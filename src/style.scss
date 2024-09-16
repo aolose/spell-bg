@@ -135,15 +135,16 @@ input {
 }
 
 * {
-  font-family: -apple-system,
-  BlinkMacSystemFont,
-  PingFang SC,
-  Helvetica Neue,
-  STHeiti,
-  Microsoft Yahei,
-  Tahoma,
-  Simsun,
-  sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    PingFang SC,
+    Helvetica Neue,
+    STHeiti,
+    Microsoft Yahei,
+    Tahoma,
+    Simsun,
+    sans-serif;
 }
 
 * {
@@ -460,19 +461,19 @@ input {
   width: 30px;
   height: 30px;
   display: none;
-  &:before{
+  &:before {
     content: '?';
   }
   &:active {
     background: #1c93ff;
   }
-  &.s{
+  &.s {
     display: flex;
-    &:before{
+    &:before {
       content: 'X';
     }
   }
-  @media only screen and (max-width: 640px){
+  @media only screen and (max-width: 768px) {
     display: flex;
   }
 }
@@ -497,6 +498,9 @@ input {
     height: auto;
     justify-content: center;
     padding: 10px;
+  }
+  #b {
+    width: 100%;
   }
 }
 

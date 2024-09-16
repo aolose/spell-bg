@@ -73,8 +73,7 @@ const regexIfy = (e) => {
   if (t)
     try {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {
-    }
+    } catch (e) {}
 };
 let cpField;
 
@@ -187,14 +186,14 @@ function merge(spell) {
   if (parent) {
     parent = merge(parent);
     parent &&
-    Object.keys(parent).forEach((t) => {
-      if (/[A-Z]/.test(t)) {
-        if (!spell.hasOwnProperty(t)) {
-          spell[t] = parent[t];
-          spell._[t] = 1;
+      Object.keys(parent).forEach((t) => {
+        if (/[A-Z]/.test(t)) {
+          if (!spell.hasOwnProperty(t)) {
+            spell[t] = parent[t];
+            spell._[t] = 1;
+          }
         }
-      }
-    });
+      });
   }
   spell.nm = spell.Name.replace(spell.SpellType + '_', '')
     .replace(/_/g, ' ')
@@ -303,9 +302,9 @@ function ps(e) {
       /[A-Z]/.test(key[0]) && (!isNaN(n) || n?.length)
         ? Array.isArray(n)
           ? `<ul>${n
-            .filter(Boolean)
-            .map((e) => `<li>${e}</li>`)
-            .join('')}</ul>`
+              .filter(Boolean)
+              .map((e) => `<li>${e}</li>`)
+              .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
     const cls = e._ && e._[key] ? '_' : '';
@@ -330,12 +329,12 @@ ctx.onclick = ({ target }) => {
   closeBtn.className = 's';
   if (card !== act) sidePanel.innerHTML = ps(card.spell);
 };
-closeBtn.onclick = function() {
+closeBtn.onclick = function () {
   if (act) {
     act.classList.remove('a');
     act = null;
   }
-  const cls = isMobile ? sidePanel.className ? '' : 's' : '';
+  const cls = isMobile ? (sidePanel.className ? '' : 's') : '';
   sidePanel.className = closeBtn.className = cls;
   sidePanel.innerHTML = `<pre>
 Content based on %%.
@@ -395,15 +394,15 @@ const xx = (e, t, f = (a) => a) => {
   let l = -1;
   n.oninput =
     n.onchange =
-      n.onpaste =
-        n.onblur =
-          function() {
-            clearTimeout(l);
-            l = setTimeout(() => {
-              filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-              syncA++;
-            }, 200);
-          };
+    n.onpaste =
+    n.onblur =
+      function () {
+        clearTimeout(l);
+        l = setTimeout(() => {
+          filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+          syncA++;
+        }, 200);
+      };
 };
 xx('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
 xx('v2', 'l');
@@ -489,7 +488,7 @@ const spellCard = (spell, idx, frm) => {
 };
 list.onscroll = () => syncA++;
 window.onresize = () => {
-  isMobile = window.innerWidth <= 640;
+  isMobile = window.innerWidth <= 768;
   let e = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth)),
     n = Math.ceil((list.offsetHeight - 20) / cardHeight);
   if (columns !== e || rows !== n) {
