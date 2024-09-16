@@ -30,14 +30,31 @@ const filterOption = {};
 const z = document.getElementById('z');
 const list = document.querySelector('.ri');
 const currentSpellLen = document.getElementById('tt');
-const b = document.getElementById('b');
-const c = document.getElementById('c');
-const e = document.getElementById('e');
+const sidePanel = document.getElementById('b');
+const menu = document.getElementById('c');
+const closeBtn = document.getElementById('e');
 const ipt = document.getElementById('cp');
 const ctx = document.getElementById('v');
 let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth));
 const sty = ctx.style;
-let copped = '';
+
+sidePanel.ontouchstart = gesture;
+
+function gesture(e) {
+  if (closeBtn.className !== 's') return;
+  const x = e.touches[0].clientX;
+  const t = Date.now();
+  const cancel = () => {
+    sidePanel.ontouchcancel = sidePanel.ontouchend = null;
+  };
+  sidePanel.ontouchcancel = cancel;
+  sidePanel.ontouchend = (e) => {
+    if (Date.now() - t < 500 && e.changedTouches[0].clientX - x > 100) {
+      closeBtn.onclick();
+    }
+    cancel();
+  };
+}
 
 function resetListHeight() {
   const e = Math.ceil(filters.length / columns);
@@ -301,19 +318,19 @@ ctx.onclick = ({ target }) => {
     copy(target.textContent, card.spell);
     return;
   }
-  b.className = 's';
-  e.className = 's';
-  if (card !== act) b.innerHTML = ps(card.spell);
+  sidePanel.className = 's';
+  closeBtn.className = 's';
+  if (card !== act) sidePanel.innerHTML = ps(card.spell);
 };
-e.onclick = function () {
+closeBtn.onclick = function () {
   if (act) {
     act.classList.remove('a');
     act = null;
   }
   syncA++;
-  b.className = '';
-  e.className = '';
-  b.innerHTML = `<pre>
+  sidePanel.className = '';
+  closeBtn.className = '';
+  sidePanel.innerHTML = `<pre>
 Content based on %%.
 The filter supports regular expressions
 and is case insensitive.
@@ -338,7 +355,7 @@ Name:
  </pre><a href='https://github.com/aolose/spell-bg' target='_blank'>
  <img alt='github' src='https://github.githubassets.com/favicons/favicon.svg'/></a>`;
 };
-e.onclick(null);
+closeBtn.onclick(null);
 const el = (e) => {
   const t = document.createElement('div');
   t.innerHTML = e;
@@ -364,7 +381,7 @@ const cg = (e, t) => {
     list.scrollTop = 0;
   };
   tbs.push(l);
-  c.appendChild(l);
+  menu.appendChild(l);
 });
 const xx = (e, t, f = (a) => a) => {
   const n = document.getElementById(e);
