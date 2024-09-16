@@ -42,14 +42,19 @@ sidePanel.ontouchstart = gesture;
 
 function gesture(e) {
   if (closeBtn.className !== 's') return;
-  const x = e.touches[0].clientX;
-  const t = Date.now();
   const cancel = () => {
     sidePanel.ontouchcancel = sidePanel.ontouchend = null;
   };
+  const x = e.touches[0].clientX;
+  const y = e.touches[0].clientY;
+  const t = Date.now();
   sidePanel.ontouchcancel = cancel;
   sidePanel.ontouchend = (e) => {
-    if (Date.now() - t < 500 && e.changedTouches[0].clientX - x > 100) {
+    if (
+      Date.now() - t < 500 &&
+      Math.abs(e.changedTouches[0].clientY - y) < 100 &&
+      e.changedTouches[0].clientX - x > 200
+    ) {
       closeBtn.onclick();
     }
     cancel();
