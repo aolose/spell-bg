@@ -24,7 +24,7 @@ let syncA = 0;
 const icons = {};
 _ok = null;
 const cardHeight = 170;
-const cardWidth = 330;
+const cardWidth = 320;
 const spellArr = [];
 const filters = [];
 const filterOption = {};
@@ -32,6 +32,7 @@ const z = document.getElementById('z');
 const list = document.querySelector('.ri');
 const currentSpellLen = document.getElementById('tt');
 const sidePanel = document.getElementById('b');
+const sidePanelInner = document.getElementById('i');
 const menu = document.getElementById('c');
 const closeBtn = document.getElementById('e');
 const ipt = document.getElementById('cp');
@@ -116,13 +117,11 @@ function filter() {
             if (/^\d+$/.test(t)) {
               if (+t >= n) {
                 match = 1;
-                debugger;
               }
             } else {
               const l = /DealDamage\((\d+)d?(\d*)\+?(\d*),.*?\)/;
               const [, max, multi = 1, base = 0] = l.exec(t) || [];
               if (max * multi + +base >= n) {
-                debugger;
                 match = 1;
               }
             }
@@ -233,7 +232,7 @@ window.loadIcon = (arr) => {
     icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
   });
   spellArr.forEach((spell) => (spell.ico = ico(spell.Icon)));
-  ctx.querySelectorAll('i').forEach((e) => {
+  ctx.querySelectorAll('.c>i').forEach((e) => {
     const n = e.parentElement.spell;
     e.style = n.ico;
   });
@@ -327,7 +326,7 @@ ctx.onclick = ({ target }) => {
   }
   sidePanel.className = 's';
   closeBtn.className = 's';
-  if (card !== act) sidePanel.innerHTML = ps(card.spell);
+  if (card !== act) sidePanelInner.innerHTML = ps(card.spell);
 };
 closeBtn.onclick = function () {
   if (act) {
@@ -336,7 +335,7 @@ closeBtn.onclick = function () {
   }
   const cls = isMobile ? (sidePanel.className ? '' : 's') : '';
   sidePanel.className = closeBtn.className = cls;
-  sidePanel.innerHTML = `<pre>
+  sidePanelInner.innerHTML = `<pre>
 Content based on %%.
 The filter supports regular expressions
 and is case insensitive.
@@ -357,9 +356,7 @@ Name:
      Honour spells:
      Name: _flag   Value: *
      Spells Damage > 500:
-     Name: spell*   Value: >500
- </pre><a href='https://github.com/aolose/spell-bg' target='_blank'>
- <img alt='github' src='https://github.githubassets.com/favicons/favicon.svg'/></a>`;
+     Name: spell*   Value: >500`;
 };
 
 const el = (e) => {
@@ -375,9 +372,19 @@ const cg = (e, t) => {
 };
 [''].concat(types).forEach((e, t) => {
   const n = e || 'ALL';
+  const ph =
+    'M17.337 9.99h-.414l-.222-.146-3.186-3.187C13.092 6.234 ' +
+    '12.598 6 12 6H0V5h12c.861 0 1.613.341 2.222.95l2.87 2.87 2.335-2.334.707' +
+    '.707-2.797 2.797ZM34 6H23c-.861 0-1.516-.36-2.124-.97l-2.87-2.87-2.335 ' +
+    '2.335-.707-.707L17.76.99h.414l.221.147 3.187 3.186c.423.423.82.677 ' +
+    '1.417.677h11v1Z';
   const l = el(`
 <div role="tab" aria-selected="true" aria-controls="spell-type" >
-    ${n.toUpperCase()}
+    <span>${n.toUpperCase()}</span>
+    <span class="dc"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34 10" height="10" width="34" data-v-f1544235="">
+    <path fill="#ddc9a7" d="${ph}"> 
+    </path>
+    </svg></span>
 </div>`);
   l.onclick = () => {
     cg(n, e);
@@ -464,6 +471,7 @@ const spellCard = (spell, idx, frm) => {
      role="listitem" 
      style="left:${left};top:${top}"
 >
+    <div class="bd"><i></i><i></i><i></i><i></i></div>
     <span title="${_flag}" hidden>H</span>
     <i style="${ico}" role="img" aria-label="icon of the spell ${Name}" title="${DisplayName || Description}"></i>
     <span class="lv">level ${Level || '-'}</span>
