@@ -17,7 +17,10 @@ export function bg3SpellBuildPlugin() {
       }
     },
     transform(src, id) {
-      if (/main/.test(id)) {
+      if (/\/worker/.test(id)) {
+        src = `const sk='${spellKeys}'.split(',');` + src;
+      }
+      if (/\/main/.test(id)) {
         src =
           `const sk='${spellKeys}'.split(',');` +
           src

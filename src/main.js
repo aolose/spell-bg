@@ -1,289 +1,114 @@
-let act = '';
+import Worker from './worker.js?worker';
 
-function setCount() {
-  currentSpellLen.textContent = `${filters.length}`;
-}
-
-function patchParams(e) {
-  ['TooltipUpcastDescriptionParams', 'DescriptionParams'].forEach((a) => {
-    if (!e[a]) return;
-    const d = a.replace(/Params$/, '');
-    if (!e[d]) return delete e[a];
-    []
-      .concat(e[a])
-      .forEach((a, i) => (e[d] = e[d].replace(`[${i + 1}]`, `${a}`)));
-  });
-}
-
-const all = 9999;
-let l = _ok;
-const types = '%types%';
-const spells = {};
-let syncA = 0;
-const icons = {};
-_ok = null;
-const cardHeight = 170;
-const cardWidth = 330;
-const spellArr = [];
-const filters = [];
-const ft = {};
-const z = document.getElementById('z');
-const list = document.querySelector('.ri');
 const currentSpellLen = document.getElementById('tt');
-const b = document.getElementById('b');
-const c = document.getElementById('c');
-const e = document.getElementById('e');
-const ipt = document.getElementById('cp');
-const ctx = document.getElementById('v');
-let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth));
-const sty = ctx.style;
-let copped = '';
+const elementB = document.getElementById('b');
+const elementC = document.getElementById('c');
+const elementE = document.getElementById('e');
+const elementInput = document.getElementById('cp');
+const elementCtx = document.getElementById('v');
+const elementZ = document.getElementById('z');
+const list = document.querySelector('.ri');
+const types = '%types%';
+const all = 9999;
+const checkAct = 0;
+const setAct = 1;
+const refresh = 2;
+const resize = 3;
+const loadIco = 4;
+const setSpells = 5;
+const render = 6;
+const filterOption = 0;
+let l = _ok;
+_ok = null;
 
-function resetListHeight() {
-  const e = Math.ceil(filters.length / columns);
-  sty.height = cardHeight * e + 20 + 'px';
-}
-
-const regexIfy = (e) => {
-  const t = /^\/(.+?)\/([giy]*$)/.exec(e);
-  if (t)
-    try {
-      return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {}
+const sty = elementCtx.style;
+const msgFields = [currentSpellLen, sty, elementB, elementCtx];
+const fns = [setIco];
+const myWorker = new Worker();
+myWorker.onmessage = function ({ data }) {
+  const { prop, val, target, fn, args } = JSON.parse(data);
+  if (target !== undefined) {
+    msgFields[target][prop] = val;
+  } else {
+    fns[fn](...args);
+  }
 };
+const set = (target, prop, val) => {
+  myWorker.postMessage(
+    JSON.stringify({
+      target,
+      prop,
+      val
+    })
+  );
+};
+const invoke = (fn, ...args) => {
+  myWorker.postMessage(
+    JSON.stringify({
+      fn,
+      args
+    })
+  );
+};
+const timer = {};
 
 function copy(flag, key) {
-  const spell = spells[key];
-  const name = spell.Name;
+  const name = key.replace(/^Honor/, '');
   const type = flag === '+' ? 'AddSpell' : 'RemoveSpell';
-  ipt.value = `${type}(GetHostCharacter(),'${name}')`;
-  ipt.select();
-  ipt.setSelectionRange(0, 1000);
-  clearTimeout(spell._.t);
-  navigator.clipboard.writeText(ipt.value).then(() => {
+  elementInput.value = `${type}(GetHostCharacter(),'${name}')`;
+  elementInput.select();
+  elementInput.setSelectionRange(0, 1000);
+  clearTimeout(timer[key]);
+  navigator.clipboard.writeText(elementInput.value).then(() => {
     const v = (s) => {
-      const a = document.getElementById(key).querySelector('.cp span');
+      const a = document.getElementById(key)?.querySelector('.cp span');
       if (a) a.innerText = s;
     };
     v(`${type.replace('S', ' S')} Copied!`);
-    spell._.t = setTimeout(v, 3e3, '');
+    timer[key] = setTimeout(v, 3e3, '');
   });
-}
-
-function filter() {
-  filters.length = 0;
-  const { t: e, k: t, l: n } = ft;
-  spellArr.forEach((l, s) => {
-    const check = (e, t) => {
-      const regExp = regexIfy(e);
-      if (regExp) return regExp.test(t);
-      if (/.\*|\*./.test(e))
-        return new RegExp(e.replace(/\*/g, '.*'), 'ig').test(t);
-      if ('-' === e) {
-        if (t) return;
-      } else if ('*' === e) {
-        if (!t) return;
-      } else if (/^>\d+$/.test(e)) {
-        const n = +e.slice(1);
-        if (!isNaN(n)) {
-          let e = 0;
-          if (
-            ([].concat(t).forEach((t) => {
-              if (/^\d+$/.test(t)) +t >= n && (e = 1);
-              else {
-                const l = /DealDamage\((\d+)d(\d+)\+?(\d*),.*?\)/,
-                  [, s, c, o] = l.exec(t) || [];
-                c && s * c + (+o || 0) >= n && (e = 1);
-              }
-            }),
-            !e)
-          )
-            return;
-        }
-      } else if (-1 === (t + '').toLowerCase().indexOf((e + '').toLowerCase()))
-        return;
-      return 1;
-    };
-    if (!e || e === l.SpellType) {
-      if (t && n) {
-        if (!l.hasOwnProperty(t)) {
-          if ('*' === n) return;
-          else if ('-' === n) return filters.push(s);
-        }
-        let e = 0;
-        for (const [s, o] of Object.entries(l)) {
-          const l = regexIfy(t);
-          if (
-            (l?.test(s) ||
-              s.toLowerCase() === t.toLowerCase() ||
-              (/\*/.test(t) &&
-                new RegExp(t.replace(/\*/g, '.*'), 'gi').test(s))) &&
-            check(n, o)
-          ) {
-            e = 1;
-            break;
-          }
-        }
-        if (!e) return;
-      }
-      filters.push(s);
-    }
-  });
-  filters.sort((e, t) => {
-    e = spellArr[e];
-    t = spellArr[t];
-    const n = e.lv,
-      l = t.lv;
-    return n === l ? (e._nm > t._nm ? 1 : -1) : n > l ? 1 : -1;
-  });
-  resetListHeight();
-  setCount();
-  syncA++;
-}
-
-function merge(spell) {
-  if (!spell) return;
-  if (!spell._) {
-    Object.keys(spell).forEach((t) => {
-      spell[t] || delete spell[t];
-    });
-    spell._ = {};
-  }
-  const { Using: t, _flag: f = '' } = spell;
-  const z = t && (spells[t] || spells[f + t]);
-  if (z && z !== spell) {
-    const parent = merge(z);
-    parent &&
-      Object.keys(parent).forEach((t) => {
-        if (!spell.hasOwnProperty(t)) {
-          spell[t] = parent[t];
-          spell._[t] = 1;
-        }
-      });
-  }
-  spell.nm = spell.Name.replace(spell.SpellType + '_', '')
-    .replace(/_/g, ' ')
-    .replace(/([a-z0-9])([A-Z])/g, '$1 $2');
-  spell._nm = spell.nm.toLowerCase();
-  spell.lv = +spell.Level || 99;
-  spell.ico = ico(spell.Icon);
-  const { SpellProperties, SpellSuccess } = spell;
-  if ('string' == typeof SpellProperties)
-    spell.SpellProperties = [SpellProperties];
-  if ('string' == typeof SpellSuccess) spell.SpellSuccess = [SpellSuccess];
-  return spell;
-}
-
-function ico(e) {
-  const t = icons[e];
-  if (t) {
-    const [x, n, y] = t;
-    return `background-position:${x}% ${y}%;background-image:url(${n}.webp)`;
-  }
-  return 'background-size:cover';
 }
 
 window.ok = () => {
   const e = (100 * ++l) / all;
-  z.style.width = e + '%';
-  100 === e && (z.style.opacity = '0');
+  elementZ.style.width = e + '%';
+  100 === e && (elementZ.style.opacity = '0');
 };
 
-window.loadIcon = (arr) => {
-  const n = arr.length / 4;
-  const [ks, vs] = [arr.slice(0, n), arr.slice(n)];
-  ks.forEach((k, i) => {
-    icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
-  });
-  Object.values(spells).forEach((spell) => (spell.ico = ico(spell.Icon)));
-  ctx.querySelectorAll('i').forEach((e) => {
+function setIco(o) {
+  elementCtx.querySelectorAll('i').forEach((e) => {
     const t = e.parentElement.id;
-    const n = spells[t];
-    e.style = n.ico;
+    e.style = o[t]?.ico;
   });
-};
-window.loadSpell = (items) => {
-  items.forEach((fields) => {
-    const n = fields.length / 2;
-    const [ks, vs] = [fields.slice(0, n), fields.slice(n)];
-    const o = {};
-    ks.forEach((a, b) => {
-      o[sk[a]] = vs[b];
-    });
-    const t = (o._flag || '') + o.Name;
-    spells[t] = o;
-    spellArr.push(o);
-  });
-  Object.values(spells).forEach((a) => {
-    merge(a);
-    patchParams(a);
-  });
-  filter();
-};
-
-function ps(e) {
-  act = e.Name;
-  syncA++;
-  const t = [
-    'SpellType',
-    'UseCosts',
-    'Icon',
-    'Level',
-    'ExtraDescription',
-    'Description',
-    'DisplayName',
-    'Using',
-    'Name'
-  ];
-  const n = Object.keys(e).filter(
-    (e) => -1 === ['ico', 'nm', '_nm', 'lv'].indexOf(e)
-  );
-  n.sort((e, n) => {
-    const l = t.indexOf(e);
-    const s = t.indexOf(n);
-    return l === s ? (e > n ? 1 : -1) : s - l;
-  });
-  let cpm = '';
-  n.forEach((key) => {
-    if ('-' === key) return;
-    const n = e[key];
-    let value;
-    value =
-      key !== '_flag' && (!isNaN(n) || n?.length)
-        ? Array.isArray(n)
-          ? `<ul>${n
-              .filter(Boolean)
-              .map((e) => `<li>${e}</li>`)
-              .join('')}</ul>`
-          : `<span>${n}</span>`
-        : '';
-    const cls = e._ && e._[key] ? '_' : '';
-    if (value)
-      cpm += `<div>\n<label class="${cls}">${key}</label>${value}\n</div>`;
-  });
-  return cpm;
 }
 
-ctx.onclick = ({ target }) => {
-  const n = ctx.children;
+window.loadIcon = (arr) => {
+  invoke(loadIco, arr);
+};
+
+window.loadSpell = (items) => {
+  invoke(setSpells, items);
+};
+
+elementCtx.onclick = async ({ target }) => {
+  const n = elementCtx.children;
   const card = [].find.call(n, (e) => e === n || e.contains(target));
   const key = card && card.id;
-  if ('B' === target.tagName[0]) {
+  if ('BUTTON' === target.tagName) {
     copy(target.textContent, key);
     return;
   }
   if (key) {
-    b.className = 's';
-    e.className = 's';
-    if (spells[key].Name !== act) b.innerHTML = ps(spells[key]);
+    elementB.className = 's';
+    elementE.className = 's';
+    invoke(checkAct, key);
   }
 };
-e.onclick = function () {
-  act = '';
-  syncA++;
-  b.className = '';
-  e.className = '';
-  b.innerHTML = `<pre>
+elementE.onclick = function () {
+  invoke(setAct, '');
+  elementB.className = '';
+  elementE.className = '';
+  elementB.innerHTML = `<pre>
 Content based on %%.
 The filter supports regular expressions
 and is case insensitive.
@@ -308,18 +133,19 @@ Name:
  </pre><a href='https://github.com/aolose/spell-bg' target='_blank'>
  <img alt='github' src='https://github.githubassets.com/favicons/favicon.svg'/></a>`;
 };
-e.onclick(null);
+elementE.onclick(null);
 const el = (e) => {
   const t = document.createElement('div');
   t.innerHTML = e;
   return t.children[0];
 };
-let t = -1;
+
 const tbs = [];
-const cg = (e, t) => {
-  ft.t = t;
-  tbs.forEach((t) => t.act(e));
+const setCategory = (name, type) => {
+  set(filterOption, 't', type);
+  tbs.forEach((t) => t.act(name));
 };
+
 [''].concat(types).forEach((e, t) => {
   const n = e || 'ALL';
   const l = el(`
@@ -327,104 +153,40 @@ const cg = (e, t) => {
     ${n.toUpperCase()}
 </div>`);
   l.onclick = () => {
-    cg(n, e);
+    setCategory(n, e);
   };
   l.act = (e) => {
     l.className = e === n ? 'act' : '';
   };
   tbs.push(l);
-  c.appendChild(l);
+  elementC.appendChild(l);
 });
-const xx = (e, t, f = (a) => a) => {
-  const n = document.getElementById(e);
-  let l = -1;
+
+const setInputEl = (id, prop, fixProp = (a) => a) => {
+  const n = document.getElementById(id);
+  let timer = -1;
   n.oninput =
     n.onchange =
     n.onpaste =
     n.onblur =
       function () {
-        clearTimeout(l);
-        l = setTimeout(() => {
-          ft[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-          syncA++;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          set(filterOption, prop, fixProp(n.value.replace(/^\s+|\s+$/, '')));
+          invoke(refresh);
         }, 200);
       };
 };
-xx('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
-xx('v2', 'l');
-cg('ALL', '');
-let syncB,
-  rows,
-  n = '';
-const run = () => {
-  requestAnimationFrame(run);
-  const s = JSON.stringify(ft);
-  if (n !== s) {
-    n = s;
-    filter();
-  }
-  if (syncA !== syncB) {
-    syncB = syncA = 0;
-    {
-      const end = columns * rows,
-        total = filters.length,
-        start = Math.floor(list.scrollTop / cardHeight) * columns,
-        viewStart = Math.max(0, start - end),
-        viewEnd = Math.min(total, start + 2 * end);
-      let tmpl = '';
-      for (let idx = viewStart; idx < viewEnd; idx++) {
-        const {
-          nm,
-          ico,
-          DisplayName,
-          Description = '',
-          Name,
-          _flag = '',
-          Level,
-          SpellType,
-          SpellProperties = [],
-          SpellSuccess = []
-        } = spellArr[filters[idx]];
-        tmpl += `
-<div class="c${act === Name ? ' a' : ''}" 
-     role="listitem" 
-     id="${_flag + Name}" 
-     style="left:${(idx % columns) * cardWidth}px;top:${Math.floor(idx / columns) * cardHeight}px"
->
-    <span title="${_flag}" hidden>H</span>
-    <i style="${ico}" role="img" aria-label="icon of the spell ${Name}" title="${DisplayName || Description}"></i>
-    <span class="lv">level ${Level || '-'}</span>
-    <span class="tp">${SpellType}</span>
-    <span class="cp"><span></span><button>+</button><button>-</button></span>
-    <div class="l">
-        <label>${DisplayName || nm}</label>
-        <div class="u">
-            <div class="w">
-                <p>${Description}</p>
-                <ul class="po">${SpellProperties.map((e) => '<li>' + e + '</li>').join('')}</ul>
-                <ul>${SpellSuccess.map((e) => '<li>' + e + '</li>').join('')}</ul>
-            </div>
-        </div>
-    </div>
-</div>`;
-      }
-      ctx.innerHTML = tmpl;
-    }
-  }
+setInputEl('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
+setInputEl('v2', 'l');
+setCategory('ALL', '');
+
+list.onscroll = () => invoke(refresh);
+const ons = () => {
+  invoke(resize, list.offsetWidth, list.offsetHeight);
 };
-list.onscroll = () => syncA++;
-window.onresize = () => {
-  let e = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth)),
-    n = Math.ceil((list.offsetHeight - 20) / cardHeight);
-  if (columns !== e || rows !== n) {
-    columns = e;
-    rows = n;
-    syncA++;
-    resetListHeight();
-  }
-};
-onresize(null);
-run();
+ons();
+window.onresize = ons;
 if (_icons) {
   loadIcon(_icons);
   _icons = null;
@@ -433,3 +195,8 @@ if (_spells) {
   _spells.forEach(loadSpell);
   _spells = null;
 }
+const run = () => {
+  requestAnimationFrame(run);
+  invoke(render, list.scrollTop);
+};
+run();

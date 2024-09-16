@@ -263,42 +263,40 @@ ul {
   gap: 13px;
 }
 
-#b li {
-  list-style: none;
-}
-
-#b > div {
-  color: #fff;
-  padding: 3px 46px 3px 5px;
-}
-
-#b pre {
-  white-space: pre-wrap;
-  padding: 30px 50px;
-  color: #9eb3c2;
-}
-
-#b label,
-.p {
-  padding: 0 10px;
-}
-
-#b label {
-  width: 177px;
-  flex-shrink: 0;
-  color: #ff8c00;
-}
-
-#b label._ {
-  color: #9e8259;
-}
-
 #b {
   z-index: 1;
   position: relative;
   padding: 10px 0 30px;
   line-height: 2;
   width: 500px;
+  li {
+    list-style: none;
+    & + li {
+      border-top: 1px dashed #1a2e50;
+    }
+  }
+  & > div {
+    color: #fff;
+    padding: 3px 46px 3px 5px;
+  }
+  pre {
+    white-space: pre-wrap;
+    padding: 30px 50px;
+    color: #9eb3c2;
+  }
+  label {
+    width: 177px;
+    flex-shrink: 0;
+    color: #ff8c00;
+    &._ {
+      color: #9e8259;
+    }
+  }
+}
+
+#b label,
+.p {
+  padding: 0 10px;
 }
 
 .p {
