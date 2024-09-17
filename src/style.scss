@@ -1,10 +1,24 @@
+body, pre {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Helvetica, Arial, sans-serif;
+}
+#a {
+  scroll-behavior: smooth;
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: 0 0;
+}
+
 html {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
   overscroll-behavior: none;
-  background: #57442a url(/public/bg.webp) center / cover;
+  background: #17130d url(/public/bg.webp) center / cover;
 }
+
 @keyframes lp {
   0% {
     background-position-x: 0;
@@ -13,15 +27,18 @@ html {
     background-position: 2080px;
   }
 }
+
 #e,
 #tt {
   right: 16px;
 }
-#b img {
+
+#b a {
   left: 16px;
   mix-blend-mode: color-dodge;
 }
-#b img,
+
+#b a,
 #tt {
   bottom: 20px;
 }
@@ -58,6 +75,7 @@ html {
 .bd {
   transition: 0.3s;
   opacity: 0.5;
+
   i {
     position: absolute;
     pointer-events: none;
@@ -115,6 +133,7 @@ html {
         right: 0;
       }
     }
+
     &:nth-child(3),
     &:nth-child(4) {
       &:before,
@@ -124,44 +143,46 @@ html {
         height: 16px;
       }
     }
+
     &:nth-child(3) {
       &:before,
       &:after {
         left: 0;
       }
+
       &:after {
         transform: rotate(90deg);
       }
     }
+
     &:nth-child(4) {
       &:before,
       &:after {
         right: 0;
       }
+
       &:before {
         transform: rotate(270deg);
       }
+
       &:after {
         transform: rotate(180deg);
       }
     }
+
     &:nth-child(3),
     &:nth-child(4) {
       &:before {
         top: 0;
       }
+
       &:after {
         bottom: 0;
       }
     }
   }
 }
-.c.a {
-  background: rgba(12, 8, 5, 0.66);
-  .bd {
-    opacity: 1;
-  }
-}
+
 #b *,
 .c label {
   word-break: break-all;
@@ -239,28 +260,15 @@ html {
   width: 100%;
 }
 
-* {
-  font-family:
-          QuadraatOffcPro Demibold,
-          sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background: 0 0;
-}
-
 .lo {
   position: relative;
   top: 10px;
-  height: 60px;
-  margin: 0 10px -10px;
+  height: 64px;
+  margin: 0 10px -14px;
   filter: drop-shadow(2px 4px 6px black);
 }
 
-#b img,
+#b a,
 #e,
 #tt,
 #z,
@@ -287,11 +295,13 @@ ul {
 .r {
   display: flex;
 }
-.s {
+
+.g:has(.c.a) .s {
   a {
     display: none;
   }
 }
+
 .r {
   bottom: 0;
   right: 0;
@@ -304,6 +314,7 @@ ul {
                   rgb(19, 16, 11) 40%,
                   rgb(0, 0, 0)
   );
+
   &:before {
     animation: lp infinite 100s linear;
     content: '';
@@ -329,8 +340,8 @@ ul {
 }
 
 .ri {
-  inset: 16px;
-  padding: 16px;
+  inset: 10px 16px 16px;
+  padding: 22px 16px;
 }
 
 #a,
@@ -379,6 +390,7 @@ ul {
   color: #fbcea0;
 
   div {
+    font-family: serif;
     min-width: 48px;
     position: relative;
     text-align: center;
@@ -387,6 +399,7 @@ ul {
   div:hover,
   .act {
     color: #fff;
+
     .dc {
       opacity: 1;
     }
@@ -397,7 +410,9 @@ ul {
 .p {
   padding: 0 10px;
 }
+
 #i {
+  user-select: none;
   position: absolute;
   inset: 10px;
   overflow: auto;
@@ -405,6 +420,11 @@ ul {
   border: none;
   padding: 10px 0 30px;
   line-height: 2;
+
+  b {
+    pointer-events: none;
+  }
+
   & > div {
     border: 1px solid rgba(113, 91, 71, 0.5);
     margin-top: -1px;
@@ -412,6 +432,7 @@ ul {
     padding: 3px 6px 3px 5px;
   }
 }
+
 #b {
   z-index: 1;
   position: relative;
@@ -421,6 +442,7 @@ ul {
   border-radius: 10px;
   border: 1px solid #a6896c9c;
   box-shadow: rgba(0, 0, 0, 0.5) -10px 10px 31px;
+
   li {
     list-style: none;
 
@@ -428,6 +450,7 @@ ul {
       border-top: 1px dashed #503d1a;
     }
   }
+
   pre {
     white-space: pre-wrap;
     padding: 30px 50px;
@@ -484,7 +507,7 @@ ul {
 
 .lv {
   top: 68px;
-  color: #9e9548;
+  color: #ae8341;
 }
 
 .f,
@@ -494,9 +517,8 @@ input {
 }
 
 .tp {
-  bottom: 10px;
-  text-transform: uppercase;
-  color: #674d3d;
+  bottom: 11px;
+  color: #8a755f;
 }
 
 .po li {
@@ -513,12 +535,12 @@ input {
   width: 310px;
   height: 160px;
   padding: 16px 20px;
-  border: 1px solid transparent;
-  background-clip: border-box;
-  &:hover {
-    background: rgba(21, 16, 2, 0.8);
+  &.a ,&:hover {
+    background: rgba(18, 14, 1, 0.7);
+    .bd {
+      opacity: 1;
+    }
   }
-
   li {
     margin-left: 12px;
     list-style: disc;
@@ -631,6 +653,7 @@ input {
     display: flex;
   }
 }
+
 .dc {
   opacity: 0;
   display: flex;
@@ -642,6 +665,7 @@ input {
   bottom: -8px;
   left: 0;
   right: 0;
+
   &:before,
   &:after {
     content: '';
@@ -649,6 +673,7 @@ input {
     width: 50%;
     height: 1px;
   }
+
   &:before {
     left: 0;
     background: linear-gradient(-90deg, #b78f6d 0, #ddc9a7, transparent);
@@ -658,11 +683,13 @@ input {
     right: 0;
     background: linear-gradient(90deg, #b78f6d 0, #ddc9a7, transparent);
   }
+
   svg {
     fill: currentColor;
     width: 24px;
   }
 }
+
 @media only screen and (max-width: 640px) {
   .r {
     background: radial-gradient(
@@ -674,6 +701,7 @@ input {
   }
   .dc {
     bottom: -1px;
+
     svg {
       width: 20px;
     }
@@ -723,9 +751,6 @@ input {
   .c {
     max-width: 100%;
   }
-  #a {
-    scroll-behavior: smooth;
-  }
   #b.s {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
@@ -763,14 +788,21 @@ p b {
   color: #877a6b;
 }
 
-#b img:hover {
+#b a:hover {
   opacity: 1;
 }
 
-#b img {
+#b a {
+  height: 24px;
   opacity: 0.5;
   width: 24px;
+  display: block;
   filter: invert(1);
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 [title='Honour'] {
@@ -810,7 +842,6 @@ p b {
   span {
     font-size: 12px;
     color: #98918b;
-    padding-right: 10px;
   }
 
   button {
@@ -818,9 +849,13 @@ p b {
     opacity: 0.6;
     cursor: pointer;
     line-height: 1;
-    padding: 0 4px;
+    font-size: 14px;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin-left: 5px;
-    display: inline-block;
     border: 1px solid currentColor;
     color: #937859;
 
@@ -834,9 +869,28 @@ p b {
     }
   }
 }
+
 #cp {
   width: 0;
   height: 0;
   visibility: hidden;
   position: absolute;
+}
+
+.cm {
+  position: relative;
+  margin: 0;
+
+  span {
+    height: 0;
+    color: #a58776;
+    position: absolute;
+    font-size: 12px;
+    top: -3px;
+  }
+}
+.v{
+  input {
+    background: rgba(81, 78, 77, 0.3);
+  }
 }

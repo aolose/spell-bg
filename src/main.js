@@ -52,7 +52,6 @@ function gesture(e) {
   const t = Date.now();
   sidePanel.ontouchcancel = cancel;
   sidePanel.ontouchend = (e) => {
-    e.preventDefault();
     const my = Math.abs(e.changedTouches[0].clientY - y);
     if (
       Date.now() - t < 600 &&
@@ -78,14 +77,18 @@ const regexIfy = (e) => {
 };
 let cpField;
 
-function copy(flag, spell) {
-  const name = spell.Name;
-  const type = flag === '+' ? 'AddSpell' : 'RemoveSpell';
-  ipt.value = `${type}(GetHostCharacter(),'${name}')`;
+function copy(str, cb) {
+  ipt.value = str;
   ipt.select();
   ipt.setSelectionRange(0, 1000);
+  navigator.clipboard.writeText(ipt.value).then(cb);
+}
+
+function copySpell(flag, spell) {
+  const name = spell.Name;
+  const type = flag === '+' ? 'AddSpell' : 'RemoveSpell';
   clearTimeout(cpField?.t);
-  navigator.clipboard.writeText(ipt.value).then(() => {
+  copy(`${type}(GetHostCharacter(),'${name}')`, () => {
     const v = (s) => {
       if (cpField) cpField.textContent = '';
       cpField = spell._el.querySelector('.cp span');
@@ -321,7 +324,7 @@ ctx.onclick = ({ target }) => {
   );
   if (!card) return;
   if ('BUTTON' === target.tagName) {
-    copy(target.textContent, card.spell);
+    copySpell(target.textContent, card.spell);
     return;
   }
   sidePanel.className = 's';
@@ -399,6 +402,10 @@ const cg = (e, t) => {
 const xx = (e, t, f = (a) => a) => {
   const n = document.getElementById(e);
   let l = -1;
+  n.onfocus = () => {
+    n.select();
+    n.setSelectionRange(0, 9999);
+  };
   n.oninput =
     n.onchange =
     n.onpaste =
@@ -517,3 +524,22 @@ if (_spells) {
   _spells.forEach(loadSpell);
   _spells = null;
 }
+const cpMark = el('<span class="cm"><span>✔</span></span>');
+const cpSly = cpMark.children[0].style;
+sidePanelInner.onclick = function ({ target }) {
+  const tag = target.tagName;
+  if (/label|span|li/gi.test(tag)) {
+    clearTimeout(cpMark.t);
+    cpMark.remove();
+    const isLabel = tag[1] === 'A';
+    copy(target.textContent, () => {
+      cpSly[!isLabel ? 'right' : 'left'] = 'auto';
+      cpSly[isLabel ? 'right' : 'left'] = '-13px';
+      target.insertAdjacentElement(
+        isLabel ? 'beforeend' : 'afterbegin',
+        cpMark
+      );
+      cpMark.t = setTimeout(() => cpMark.remove(), 3e3);
+    });
+  }
+};
