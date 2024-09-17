@@ -13,12 +13,14 @@ html {
     background-position: 2080px;
   }
 }
-#b img,
 #e,
 #tt {
   right: 16px;
 }
-
+#b img {
+  left: 16px;
+  mix-blend-mode: color-dodge;
+}
 #b img,
 #tt {
   bottom: 20px;
