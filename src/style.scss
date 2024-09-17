@@ -1,4 +1,5 @@
 body, pre {
+  font-size: 13px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Helvetica, Arial, sans-serif;
 }
 #a {
@@ -220,11 +221,6 @@ html {
   backdrop-filter: blur(8px);
 }
 
-#e,
-* {
-  font-size: 13px;
-}
-
 #c div,
 #e,
 .c {
@@ -334,7 +330,7 @@ ul {
 }
 
 .ri {
-  inset: 10px 16px 16px;
+  inset: 10px 16px 4px;
   padding: 22px 16px;
 }
 
@@ -369,11 +365,12 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #9e734d;
+  background: linear-gradient(rgba(35, 27, 7, 0.7),transparent, rgba(37, 28, 8, 0.7)),url("/public/a.webp") fixed;
 }
 
 #c {
@@ -433,7 +430,7 @@ ul {
   position: relative;
   width: 440px;
   margin: 10px;
-  height: calc(100% - 20px);
+  height: calc(100% - 40px);
   border-radius: 10px;
   border: 1px solid #a6896c9c;
   box-shadow: rgba(0, 0, 0, 0.5) -10px 10px 31px;
@@ -448,7 +445,7 @@ ul {
 
   pre {
     white-space: pre-wrap;
-    padding: 30px 50px;
+    padding: 30px 50px 10px;
     color: #c7a168;
   }
 
@@ -598,6 +595,7 @@ input {
 
 .f label {
   white-space: nowrap;
+  color: antiquewhite;
 }
 
 .f {
@@ -723,7 +721,8 @@ input {
   }
   #b {
     margin-top: 0;
-    width: calc(100% - 20px);
+    width: calc(100% - 16px);
+    height: calc(100% - 10px);
   }
 }
 
@@ -737,6 +736,7 @@ input {
     justify-content: center;
   }
   #c div {
+    min-width: 0;
     padding: 5px;
     font-size: 12px;
   }
@@ -746,7 +746,6 @@ input {
     max-width: 100%;
   }
   #b.s {
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
   #b {
@@ -891,6 +890,6 @@ p b {
 }
 .v{
   input {
-    background: rgba(81, 78, 77, 0.3);
+    background:rgb(24 21 21 / 30%);
   }
 }
