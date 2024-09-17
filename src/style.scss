@@ -157,7 +157,7 @@ html {
   }
 }
 .c.a {
-  background: #000000;
+  background: rgba(12, 8, 5, 0.66);
   .bd {
     opacity: 1;
   }
@@ -759,8 +759,8 @@ p b {
   font-weight: 400;
 }
 
-._ + span {
-  color: #9f8a6e;
+._ + * {
+  color: #877a6b;
 }
 
 #b img:hover {
@@ -809,7 +809,7 @@ p b {
 
   span {
     font-size: 12px;
-    color: #78a378;
+    color: #98918b;
     padding-right: 10px;
   }
 
