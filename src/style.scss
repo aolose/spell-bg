@@ -384,6 +384,7 @@ ul {
   color: #fbcea0;
 
   div {
+    transition: .3s;
     font-family: serif;
     min-width: 48px;
     position: relative;
@@ -395,7 +396,7 @@ ul {
     color: #fff;
 
     .dc {
-      opacity: 1;
+      transform: scaleX(1);
     }
   }
 }
@@ -649,11 +650,11 @@ input {
 }
 
 .dc {
-  opacity: 0;
+  transform: scaleX(0);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.3s;
+  transition: 0.3s  ease-in-out;
   height: 1px;
   position: absolute;
   bottom: -8px;
@@ -695,13 +696,12 @@ input {
   }
   .dc {
     bottom: -1px;
-
     svg {
       width: 20px;
     }
   }
   #c {
-    gap: 1px;
+    gap: 0;
   }
   input {
     width: 100px;
@@ -710,7 +710,7 @@ input {
     height: 36px;
   }
   .ri {
-    padding: 10px 15px;
+    padding: 10px 13px;
     inset: 3px 8px;
   }
   .c {
