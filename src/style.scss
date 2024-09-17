@@ -75,12 +75,12 @@ html {
       &:before {
         top: 0;
         background: linear-gradient(
-          90deg,
-          #bf9875,
-          #604b38 25%,
-          rgba(236, 197, 164, 0.62),
-          #604b38 75%,
-          #bf9875
+                        90deg,
+                        #bf9875,
+                        #604b38 25%,
+                        rgba(236, 197, 164, 0.62),
+                        #604b38 75%,
+                        #bf9875
         );
       }
 
@@ -239,8 +239,8 @@ html {
 
 * {
   font-family:
-    QuadraatOffcPro Demibold,
-    sans-serif;
+          QuadraatOffcPro Demibold,
+          sans-serif;
 }
 
 * {
@@ -297,10 +297,10 @@ ul {
   flex-direction: column;
   color: #aaa;
   background: radial-gradient(
-    at 30% 30%,
-    transparent,
-    rgb(19, 16, 11) 40%,
-    rgb(0, 0, 0)
+                  at 30% 30%,
+                  transparent,
+                  rgb(19, 16, 11) 40%,
+                  rgb(0, 0, 0)
   );
   &:before {
     animation: lp infinite 100s linear;
@@ -407,7 +407,7 @@ ul {
     border: 1px solid rgba(113, 91, 71, 0.5);
     margin-top: -1px;
     color: #fff;
-    padding: 3px 46px 3px 5px;
+    padding: 3px 6px 3px 5px;
   }
 }
 #b {
@@ -449,11 +449,11 @@ ul {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.6),
-    rgba(0, 0, 0, 0.2) 40%,
-    transparent 60%,
-    transparent
+                  180deg,
+                  rgba(0, 0, 0, 0.6),
+                  rgba(0, 0, 0, 0.2) 40%,
+                  transparent 60%,
+                  transparent
   );
 }
 
@@ -494,7 +494,7 @@ input {
 .tp {
   bottom: 10px;
   text-transform: uppercase;
-  color: #595a93;
+  color: #674d3d;
 }
 
 .po li {
@@ -636,10 +636,6 @@ input {
   justify-content: center;
   transition: 0.3s;
   height: 1px;
-  svg {
-    fill: currentColor;
-    width: 24px;
-  }
   position: absolute;
   bottom: -8px;
   left: 0;
@@ -660,24 +656,28 @@ input {
     right: 0;
     background: linear-gradient(90deg, #b78f6d 0, #ddc9a7, transparent);
   }
+  svg {
+    fill: currentColor;
+    width: 24px;
+  }
 }
 @media only screen and (max-width: 640px) {
   .r {
     background: radial-gradient(
-      at 30% 30%,
-      transparent,
-      rgb(19, 16, 11) 80%,
-      rgb(0, 0, 0)
+                    at 30% 30%,
+                    transparent,
+                    rgb(19, 16, 11) 80%,
+                    rgb(0, 0, 0)
     );
   }
   .dc {
-    bottom: -3px;
+    bottom: -1px;
     svg {
       width: 20px;
     }
   }
   #c {
-    gap: 5px;
+    gap: 1px;
   }
   input {
     width: 100px;
@@ -698,6 +698,7 @@ input {
     padding: 10px;
   }
   #b {
+    margin-top: 0;
     width: calc(100% - 20px);
   }
 }
@@ -771,8 +772,8 @@ p b {
 }
 
 [title='Honour'] {
-  right: 10px;
-  top: 10px;
+  right: 16px;
+  top: 16px;
   display: block;
   visibility: visible;
   color: #fff;
@@ -783,6 +784,7 @@ p b {
 }
 
 #tt {
+  display: none;
   padding: 2px 8px;
   font-size: 12px;
   background: #120e09;
@@ -800,7 +802,7 @@ p b {
 .cp {
   position: absolute;
   bottom: 10px;
-  right: 10px;
+  right: 16px;
   z-index: 1;
 
   span {
@@ -818,15 +820,15 @@ p b {
     margin-left: 5px;
     display: inline-block;
     border: 1px solid currentColor;
-    color: #595a93;
+    color: #937859;
 
     &:active {
-      background: #2e3542;
+      background: #423c2e;
     }
 
     &:hover {
       opacity: 1;
-      color: #8bc34a;
+      color: #c3994a;
     }
   }
 }
