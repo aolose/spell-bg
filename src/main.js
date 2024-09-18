@@ -199,8 +199,11 @@ function sameSpellMerge(spellA, spellB) {
   const oA = orders.indexOf(spellA.mod);
   const oB = orders.indexOf(spellB.mod);
   if (oA > oB) {
-    if (spellA.__proto__.mod) {
-      spellB = sameSpellMerge(spellA.__proto__, spellB);
+    const parent = spellA.__proto__
+    if (parent.mod) {
+      const spell = sameSpellMerge(parent, spellB);
+      if(spell===parent)return spellA
+      else spellB = parent
     }
     const ns = (spellA._nodes || []).concat(spellB._nodes || []);
     ns.forEach(k=>{
