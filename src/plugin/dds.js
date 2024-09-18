@@ -29,7 +29,7 @@ const createClip = async (base, images) => {
 const save = async (a, name) => {
   await a
     .avif({
-      quality: 5,
+      quality: 5
     })
     .toFile(path.resolve(cfg.assets, `${name}.avif`));
 };
@@ -47,13 +47,16 @@ const readDDS = (p) => {
       height: imageHeight,
       channels: 4
     }
-  }).resize({ width: 1536 }).removeAlpha()
+  })
+    .resize({ width: 1536 })
+    .removeAlpha();
 };
 
 export const buildImg = async () => {
   try {
     fs.readdirSync(cfg.assets).forEach((a) => {
-      if (/^\d+\.(webp|avif)/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
+      if (/^\d+\.(webp|avif)/.test(a))
+        fs.unlinkSync(path.resolve(cfg.assets, a));
     });
   } catch (e) {
     console.warn(e);

@@ -1,5 +1,21 @@
 let act = null;
-let spellKeyMap = {};
+const skOrder = [
+  'SpellType',
+  'UseCosts',
+  'Icon',
+  'Level',
+  'ExtraDescription',
+  'Description',
+  'DisplayName',
+  'Using',
+  'Name'
+];
+const spellProps = sk.slice();
+spellProps.sort((e, n) => {
+  const l = skOrder.indexOf(e);
+  const s = skOrder.indexOf(n);
+  return l === s ? (e > n ? 1 : -1) : s - l;
+});
 
 function setCount() {
   currentSpellLen.textContent = `${filters.length}`;
@@ -12,7 +28,9 @@ function patchParams(spell) {
     if (!spell[d]) return delete spell[key];
     []
       .concat(spell[key])
-      .forEach((a, i) => spell[d] = spell[d].replace(`[${i + 1}]`, `${a}`));
+      .forEach(
+        (a, i) => (spell[d] = spell[d]?.replace?.(`[${i + 1}]`, `${a}`))
+      );
   });
 }
 
@@ -39,7 +57,7 @@ const ipt = document.getElementById('cp');
 const ctx = document.getElementById('v');
 let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth));
 const sty = ctx.style;
-const github = sidePanel.querySelector('a').style
+const github = sidePanel.querySelector('a').style;
 
 sidePanel.ontouchstart = gesture;
 
@@ -74,8 +92,7 @@ const regexIfy = (e) => {
   if (t)
     try {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {
-    }
+    } catch (e) {}
 };
 let cpField;
 
@@ -104,7 +121,8 @@ function copySpell(flag, spell) {
 function filter() {
   filters.length = 0;
   const { t: type, k: prop, l: value } = filterOption;
-  spellArr.forEach((spell, s) => {
+  spellArr.forEach((spellNAme) => {
+    const spell = spells[spellNAme];
     const check = (e, t) => {
       const regExp = regexIfy(e);
       if (regExp) return regExp.test(t);
@@ -139,13 +157,14 @@ function filter() {
     };
     if (!type || type === spell.SpellType) {
       if (prop && value) {
-        if (!spell.hasOwnProperty(prop)) {
+        if ((!prop) in spell) {
           if ('*' === value) return;
-          else if ('-' === value) return filters.push(s);
+          else if ('-' === value) return filters.push(spellNAme);
         }
         let e = 0;
-        for (const [spellProp, spellValue] of Object.entries(spell)) {
-          if ('_flag' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
+        for (const spellProp in spell) {
+          if ('mod' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
+          const spellValue = spell[spellProp];
           const regExp = regexIfy(prop);
           const keyMatch =
             regExp?.test(spellProp) ||
@@ -159,7 +178,7 @@ function filter() {
         }
         if (!e) return;
       }
-      filters.push(s);
+      filters.push(spellNAme);
     }
   });
   resetListHeight();
@@ -167,49 +186,92 @@ function filter() {
   syncA++;
 }
 
-const getParentSpell = (spell) => {
-  const { Using } = spell;
-  const list = [].concat(spellKeyMap[Using]);
-  for (const k of list) {
-    if (k !== undefined) {
-      const p = spellArr[k];
-      if (p !== spell) return p;
-    }
-  }
-};
-
-function merge(spell) {
-  if (!spell) return;
-  if (!spell._) {
-    Object.keys(spell).forEach((t) => {
-      spell[t] || delete spell[t];
-    });
-    spell._ = {};
-  }
-  let parent = getParentSpell(spell);
-  if (parent) {
-    parent = merge(parent);
-    parent &&
-    Object.keys(parent).forEach((t) => {
-      if (/[A-Z]/.test(t)) {
-        if (!spell.hasOwnProperty(t)) {
-          spell[t] = parent[t];
-          spell._[t] = 1;
-        }
-      }
-    });
-  }
-  spell.nm = spell.Name.replace(spell.SpellType + '_', '')
-    .replace(/_/g, ' ')
-    .replace(/([a-z0-9])([A-Z])/g, '$1 $2');
-  spell._nm = spell.nm.toLowerCase();
-  spell.lv = +spell.Level || 99;
-  spell.ico = ico(spell.Icon);
+const waitMerge = {};
+const updates = new Set();
+const patchSpell = (spell) => {
   const { SpellProperties, SpellSuccess } = spell;
   if ('string' == typeof SpellProperties)
     spell.SpellProperties = [SpellProperties];
   if ('string' == typeof SpellSuccess) spell.SpellSuccess = [SpellSuccess];
-  return spell;
+};
+
+function sameSpellMerge(spellA, spellB) {
+  const oA = orders.indexOf(spellA.mod);
+  const oB = orders.indexOf(spellB.mod);
+  if (oA > oB) {
+    if (spellA.__proto__.mod) {
+      spellB = sameSpellMerge(spellA.__proto__, spellB);
+    }
+    const ns = (spellA._nodes || []).concat(spellB._nodes || []);
+    spellA._nodes = ns.length ? ns : null;
+    spellA._el = spellB._el;
+    spellA.__proto__ = spellB;
+    delete spellB._el;
+    delete spellB._nodes;
+    return spellA;
+  } else {
+    return sameSpellMerge(spellB, spellA);
+  }
+}
+
+function merge(spell) {
+  const { Name } = spell;
+  spell._nodes = null;
+  spell._el = null;
+  const old = spells[Name];
+  if (old) {
+    spell = sameSpellMerge(spell, old);
+  }
+  patchSpell(spell);
+  if (spell === old) return spell.emit();
+  spells[Name] = spell;
+  spell.nm = spell.Name.replace(spell.SpellType + '_', '')
+    .replace(/_/g, ' ')
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+  spell._nm = spell.nm.toLowerCase();
+  spell.emit = function () {
+    if (spell._el) updates.add(spell.Name);
+    spell._nodes?.forEach((k) => {
+      spells[k].emit();
+    });
+  };
+  spell.update = function () {
+    this._el?.update?.();
+  };
+  Object.defineProperties(spell, {
+    lv: {
+      get() {
+        return +this.Level || 99;
+      }
+    },
+    ico: {
+      get() {
+        return ico(this.Icon);
+      }
+    }
+  });
+  const { Using } = spell;
+  const setParent = (parent, child) => {
+    child.__proto__ = parent;
+    (parent._nodes = parent._nodes || []).push(child.Name);
+  };
+  if (Using && Using !== Name) {
+    const p = spells[Using];
+    if (p) {
+      setParent(p, spell);
+    } else (waitMerge[Using] = waitMerge[Using] || []).push(Name);
+  }
+  const waits = waitMerge[Name];
+  if (waits) {
+    waits.forEach((nm) => {
+      const child = spells[nm];
+      setParent(spell, child);
+      child.emit();
+    });
+    delete waitMerge[Name];
+  }
+  spell.emit();
+  if (!old) return spell;
 }
 
 function ico(e) {
@@ -236,12 +298,13 @@ window.loadIcon = (arr) => {
   ks.forEach((k, i) => {
     icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
   });
-  spellArr.forEach((spell) => (spell.ico = ico(spell.Icon)));
   ctx.querySelectorAll('.c>i').forEach((e) => {
     const n = e.parentElement.spell;
     e.style = n.ico;
   });
 };
+const orders = ['Shared', 'Gustav', 'SharedDev', 'GustavDev', 'Honour'];
+const spells = {};
 window.loadSpell = (str) => {
   const items = str.split('\x01');
   items.forEach((str) => {
@@ -253,69 +316,46 @@ window.loadSpell = (str) => {
       const v = vs[b].split('\x02');
       o[sk[a]] = v[1] === undefined ? v[0] : v;
     });
-    spellArr.push(o);
+    if (merge(o)) {
+      patchParams(o);
+      spellArr.push(o.Name);
+    }
   });
-  spellArr.forEach((a) => {
-    merge(a);
-    patchParams(a);
-  });
-  spellArr.sort((e, t) => {
-    const n = e.lv,
-      l = t.lv;
-    return n === l ? (e._nm > t._nm ? 1 : -1) : n > l ? 1 : -1;
-  });
-  spellKeyMap = {};
-  spellArr.forEach((a, i) => {
-    a._k = i;
-    const t = a.Name;
-    const v = spellKeyMap[t];
-    if (v !== undefined) {
-      spellKeyMap[t] = [v, i];
-    } else spellKeyMap[t] = i;
+  spellArr.sort((spellName0, spellName1) => {
+    const [spell0, spell2] = [spells[spellName0], spells[spellName1]];
+    const n = spell0.lv,
+      l = spell2.lv;
+    return n === l ? (spell0._nm > spell2._nm ? 1 : -1) : n > l ? 1 : -1;
   });
   filter();
+  if (updates.size) {
+    updates.forEach((a) => {
+      spells[a].update();
+    });
+    updates.clear();
+  }
 };
 
 function ps(e) {
   if (act) act.classList.remove('a');
   act = e._el;
   act.classList.add('a');
-  github.display = 'none'
+  github.display = 'none';
   syncA++;
-  const t = [
-    'SpellType',
-    'UseCosts',
-    'Icon',
-    'Level',
-    'ExtraDescription',
-    'Description',
-    'DisplayName',
-    'Using',
-    'Name'
-  ];
-  const n = Object.keys(e).filter(
-    (e) => -1 === ['ico', 'nm', '_nm', 'lv'].indexOf(e)
-  );
-  n.sort((e, n) => {
-    const l = t.indexOf(e);
-    const s = t.indexOf(n);
-    return l === s ? (e > n ? 1 : -1) : s - l;
-  });
   let cpm = '';
-  n.forEach((key) => {
-    if ('-' === key) return;
+  spellProps.forEach((key) => {
     const n = e[key];
     let value;
     value =
       /[A-Z]/.test(key[0]) && (!isNaN(n) || n?.length)
         ? Array.isArray(n)
           ? `<ul>${n
-            .filter(Boolean)
-            .map((e) => `<li>${e}</li>`)
-            .join('')}</ul>`
+              .filter(Boolean)
+              .map((e) => `<li>${e}</li>`)
+              .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
-    const cls = e._ && e._[key] ? '_' : '';
+    const cls = e.hasOwnProperty(key) ? '' : '_';
     if (value)
       cpm += `<div>\n<label class="${cls}">${key}</label>${value}\n</div>`;
   });
@@ -337,11 +377,11 @@ ctx.onclick = ({ target }) => {
   closeBtn.className = 's';
   if (card !== act) sidePanelInner.innerHTML = ps(card.spell);
 };
-closeBtn.onclick = function() {
+closeBtn.onclick = function () {
   if (act) {
     act.classList.remove('a');
     act = null;
-    github.display = ''
+    github.display = '';
   }
   const cls = isMobile ? (sidePanel.className ? '' : 's') : '';
   sidePanel.className = closeBtn.className = cls;
@@ -364,7 +404,7 @@ Name:
      No level limit spells:
      Name: level   Value: -
      Honour spells:
-     Name: _flag   Value: *
+     Name: mod   Value: ho
      Spells Damage > 500:
      Name: spell*   Value: >500`;
 };
@@ -415,15 +455,15 @@ const xx = (e, t, f = (a) => a) => {
   };
   n.oninput =
     n.onchange =
-      n.onpaste =
-        n.onblur =
-          function() {
-            clearTimeout(l);
-            l = setTimeout(() => {
-              filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-              syncA++;
-            }, 200);
-          };
+    n.onpaste =
+    n.onblur =
+      function () {
+        clearTimeout(l);
+        l = setTimeout(() => {
+          filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+          syncA++;
+        }, 200);
+      };
 };
 xx('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
 xx('v2', 'l');
@@ -448,7 +488,7 @@ const run = () => {
         viewEnd = Math.min(total, start + 2 * end);
       const frm = document.createDocumentFragment();
       for (let idx = viewStart; idx < viewEnd; idx++) {
-        spellCard(spellArr[filters[idx]], idx, frm);
+        spellCard(spells[filters[idx]], idx, frm);
       }
       displayed.forEach((a) => a.remove());
       displayed = added;
@@ -462,31 +502,27 @@ let added = new Set();
 const spellCard = (spell, idx, frm) => {
   const left = `${(idx % columns) * cardWidth}px`;
   const top = `${Math.floor(idx / columns) * cardHeight}px`;
+  const trans = `translate3d(${left},${top},0)`;
   let elm = spell._el;
   if (elm) {
-    elm.style.left = left;
-    elm.style.top = top;
+    elm.style.transform = trans;
     if (!displayed.delete(elm)) frm.appendChild(elm);
   } else {
-    const {
-      Name,
-      _flag = '',
-      nm,
-      ico,
-      DisplayName,
-      Description = '',
-      Level,
-      SpellType,
-      SpellProperties = [],
-      SpellSuccess = []
-    } = spell;
-    elm = el(`
-<div class="c" 
-     role="listitem" 
-     style="left:${left};top:${top}"
->
-    <div class="bd"><i></i><i></i><i></i><i></i></div>
-    <span title="${_flag}" hidden>H</span>
+    const inner = (spell) => {
+      const {
+        Name,
+        mod = '',
+        nm,
+        ico,
+        DisplayName,
+        Description = '',
+        Level,
+        SpellType,
+        SpellProperties = [],
+        SpellSuccess = []
+      } = spell;
+      return `<div class="bd"><i></i><i></i><i></i><i></i></div>
+    <span title="${mod}" hidden>H</span>
     <i style="${ico}" role="img" aria-label="icon of the spell ${Name}" title="${DisplayName || Description}"></i>
     <span class="lv">level ${Level || '-'}</span>
     <span class="tp">${SpellType}</span>
@@ -500,8 +536,16 @@ const spellCard = (spell, idx, frm) => {
                 <ul>${SpellSuccess.map((e) => '<li>' + e + '</li>').join('')}</ul>
             </div>
         </div>
-    </div>
-</div>`);
+    </div>`;
+    };
+    elm = el(`
+<div class="c" 
+     role="listitem" 
+     style="transform:translate3d(${left},${top},0)"
+>${inner(spell)}</div>`);
+    elm.update = () => {
+      elm.innerHTML = inner(spell);
+    };
     frm.appendChild(elm);
     spell._el = elm;
     elm.spell = spell;
@@ -533,7 +577,7 @@ if (_spells) {
 }
 const cpMark = el('<span class="cm"><span>✔</span></span>');
 const cpSly = cpMark.children[0].style;
-sidePanelInner.onclick = function({ target }) {
+sidePanelInner.onclick = function ({ target }) {
   const tag = target.tagName;
   if (/label|span|li/gi.test(tag)) {
     clearTimeout(cpMark.t);

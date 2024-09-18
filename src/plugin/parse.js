@@ -27,7 +27,7 @@ const miniSpell = (o) => {
       const x = [];
       const m = [];
       for (const [k, c] of Object.entries(n)) {
-        const v = [].concat(c).join('\x02')
+        const v = [].concat(c).join('\x02');
         const i = spellKeys.indexOf(k);
         if (i > -1) x.push(i);
         else {
@@ -38,7 +38,7 @@ const miniSpell = (o) => {
       }
       b.push(x.concat(m).join('\x00'));
     });
-    return '"'+b.join('\x01').replace(/"/g,'\\"')+'"';
+    return '"' + b.join('\x01').replace(/"/g, '\\"') + '"';
   }
 };
 
@@ -105,7 +105,7 @@ export const parseData = () => {
   const fileParser = (a, flag) => {
     const r = [];
     a.split(/\r?\n\r?\n/).forEach((v) => {
-      const e = { _flag: flag };
+      const e = { mod: flag };
       v.split(/\r?\n/).forEach((n) => {
         if (/^new entry/.test(n))
           e.Name = JSON.parse(n.replace('new entry ', ''));

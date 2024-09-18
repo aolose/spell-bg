@@ -5,11 +5,11 @@ Display and filter the stats of spells
 
 ![screen](screen.webp)
 
-### Local build
+### build
 1. `pnpm i`
 2. use [BG3-Modders-Multitool](https://github.com/ShinyHobo/BG3-Modders-Multitool) extract files.
 3. edit `cfg.js`
-4. run `pnpm run dev` to generate static js and images
+4. run `pnpm run 'update spells'` to generate static js and images
 5. run `pnpm run build`
 
 The build files will be list at the `dist` folder.
@@ -36,7 +36,7 @@ e.g
 Name: level   Value: -
 
 -- List Honour spells:
-Name: _flag   Value: *
+Name: mod   Value: ho
 
 -- List Spells with Damage > 500:
 Name: spell*   Value: >500

@@ -1,11 +1,17 @@
-body, pre {
+body,
+pre {
   font-size: 13px;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    segoe ui,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
 }
-#a {
-  scroll-behavior: smooth;
-}
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -96,12 +102,12 @@ html {
       &:before {
         top: 0;
         background: linear-gradient(
-                        90deg,
-                        #bf9875,
-                        #604b38 25%,
-                        rgba(236, 197, 164, 0.62),
-                        #604b38 75%,
-                        #bf9875
+          90deg,
+          #bf9875,
+          #604b38 25%,
+          rgba(236, 197, 164, 0.62),
+          #604b38 75%,
+          #bf9875
         );
       }
 
@@ -299,10 +305,10 @@ ul {
   flex-direction: column;
   color: #aaa;
   background: radial-gradient(
-                  at 30% 30%,
-                  transparent,
-                  rgb(19, 16, 11) 40%,
-                  rgb(0, 0, 0)
+    at 30% 30%,
+    transparent,
+    rgb(19, 16, 11) 40%,
+    rgb(0, 0, 0)
   );
 
   &:before {
@@ -332,6 +338,7 @@ ul {
 .ri {
   inset: 10px 16px 4px;
   padding: 22px 16px;
+  scroll-behavior: smooth;
 }
 
 #a,
@@ -369,7 +376,9 @@ ul {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(rgba(35, 27, 7, 0.7),transparent, rgba(37, 28, 8, 0.7)),url("/public/a.webp") fixed;
+  background:
+    linear-gradient(rgba(35, 27, 7, 0.7), transparent, rgba(37, 28, 8, 0.7)),
+    url('/public/a.webp') fixed;
 }
 
 #c {
@@ -380,7 +389,7 @@ ul {
   color: #fbcea0;
 
   div {
-    transition: .3s;
+    transition: 0.3s;
     font-family: serif;
     min-width: 48px;
     position: relative;
@@ -465,11 +474,11 @@ ul {
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   background: linear-gradient(
-                  180deg,
-                  rgba(0, 0, 0, 0.6),
-                  rgba(0, 0, 0, 0.2) 40%,
-                  transparent 60%,
-                  transparent
+    180deg,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.2) 40%,
+    transparent 60%,
+    transparent
   );
 }
 
@@ -521,12 +530,17 @@ input {
 }
 
 .c {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  left: 0;
+  right: 0;
   border-radius: 30px;
   align-items: flex-start;
   width: 310px;
   height: 160px;
   padding: 16px 20px;
-  &.a ,&:hover {
+  &.a,
+  &:hover {
     background: rgba(16, 12, 0, 0.77);
     .bd {
       opacity: 1;
@@ -541,6 +555,7 @@ input {
   }
 
   label {
+    padding-right: 10px;
     color: #ff9800;
     background: linear-gradient(135deg, #fff, #fbcea0 50%, #fbcfa0);
     background-clip: text;
@@ -651,7 +666,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.3s  ease-in-out;
+  transition: 0.3s ease-in-out;
   height: 1px;
   position: absolute;
   bottom: -8px;
@@ -685,10 +700,10 @@ input {
 @media only screen and (max-width: 640px) {
   .r {
     background: radial-gradient(
-                    at 30% 30%,
-                    transparent,
-                    rgb(19, 16, 11) 80%,
-                    rgb(0, 0, 0)
+      at 30% 30%,
+      transparent,
+      rgb(19, 16, 11) 80%,
+      rgb(0, 0, 0)
     );
   }
   .dc {
@@ -881,8 +896,8 @@ p b {
     top: -3px;
   }
 }
-.v{
+.v {
   input {
-    background:rgb(24 21 21 / 30%);
+    background: rgb(24 21 21 / 30%);
   }
 }
