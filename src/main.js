@@ -1,37 +1,28 @@
 let act = null;
 const skOrder = [
-  'SpellType',
-  'UseCosts',
-  'Icon',
-  'Level',
-  'ExtraDescription',
-  'Description',
-  'DisplayName',
+  'SpellID',
   'Using',
-  'Name'
+  'DisplayName',
+  'Description',
+  'ExtraDescription',
+  'Level',
+  'Icon',
+  'UseCosts',
+  'SpellType'
 ];
-const spellProps = sk.slice();
-spellProps.sort((e, n) => {
-  const l = skOrder.indexOf(e);
-  const s = skOrder.indexOf(n);
-  return l === s ? (e > n ? 1 : -1) : s - l;
-});
 
 function setCount() {
   currentSpellLen.textContent = `${filters.length}`;
 }
 
-function patchParams(spell) {
-  ['TooltipUpcastDescriptionParams', 'DescriptionParams'].forEach((key) => {
-    if (!spell[key]) return;
-    const d = key.replace(/Params$/, '');
-    if (!spell[d]) return delete spell[key];
-    []
-      .concat(spell[key])
-      .forEach(
-        (a, i) => (spell[d] = spell[d]?.replace?.(`[${i + 1}]`, `${a}`))
-      );
+function getDesc(spell, field) {
+  const params = spell[field + 'Params'];
+  let s = spell[field];
+  if (!s) return '';
+  [].concat(params).forEach((a, i) => {
+    s = s?.replace?.(`[${i + 1}]`, `${a}`);
   });
+  return s;
 }
 
 let isMobile = 0;
@@ -104,7 +95,7 @@ function copy(str, cb) {
 }
 
 function copySpell(flag, spell) {
-  const name = spell.Name;
+  const name = spell.SpellID;
   const type = flag === '+' ? 'AddSpell' : 'RemoveSpell';
   clearTimeout(cpField?.t);
   copy(`${type}(GetHostCharacter(),'${name}')`, () => {
@@ -195,50 +186,48 @@ const patchSpell = (spell) => {
   if ('string' == typeof SpellSuccess) spell.SpellSuccess = [SpellSuccess];
 };
 
-function sameSpellMerge(spellA, spellB) {
-  const oA = orders.indexOf(spellA.mod);
-  const oB = orders.indexOf(spellB.mod);
-  if (oA > oB) {
-    const parent = spellA.__proto__
-    if (parent.mod) {
-      const spell = sameSpellMerge(parent, spellB);
-      if(spell===parent)return spellA
-      else spellB = spell
-    }
-    const ns = (spellA._nodes || []).concat(spellB._nodes || []);
-    ns.forEach(k=>{
-      const parent = spells[k]
-      if(parent)parent.__proto__ = spellA
-    })
-    spellA._nodes = ns.length ? ns : null;
-    spellA._el = spellB._el;
-    spellA.__proto__ = spellB;
-    delete spellB._el;
-    delete spellB._nodes;
-    return spellA;
-  } else {
-    return sameSpellMerge(spellB, spellA);
+function getLeafSpell(leaf, node) {
+  const oA = orders.indexOf(leaf.mod);
+  const oB = orders.indexOf(node.mod);
+  if (oA < oB) return getLeafSpell(node, leaf);
+  const currentNode = leaf.__proto__;
+  if (currentNode === node) return leaf;
+  if (currentNode.mod) {
+    const spell = getLeafSpell(currentNode, node);
+    if (spell === currentNode) return leaf;
+    else node = spell;
   }
+  const refs = (leaf.refs || []).concat(node.refs || []);
+  refs.forEach((ref) => {
+    if (ref === leaf.SpellID) return;
+    const child = spells[ref];
+    if (child) child.__proto__ = leaf;
+  });
+  leaf.refs = refs.length ? refs : null;
+  leaf._el = node._el;
+  leaf.__proto__ = node;
+  delete node._el;
+  delete node.refs;
+  return leaf;
 }
 
 function merge(spell) {
-  const { Name } = spell;
-  spell._nodes = null;
+  const { SpellID } = spell;
+  spell.refs = null;
   spell._el = null;
-  const old = spells[Name];
+  const old = spells[SpellID];
   if (old) {
-    spell = sameSpellMerge(spell, old);
+    spell = getLeafSpell(spell, old);
   }
   patchSpell(spell);
   if (spell === old) return spell.emit();
-  spells[Name] = spell;
-  spell.nm = spell.Name.replace(spell.SpellType + '_', '')
+  spell.nm = spell.SpellID.replace(spell.SpellType + '_', '')
     .replace(/_/g, ' ')
     .replace(/([a-z0-9])([A-Z])/g, '$1 $2');
   spell._nm = spell.nm.toLowerCase();
   spell.emit = function () {
-    if (spell._el) updates.add(spell.Name);
-    spell._nodes?.forEach((k) => {
+    if (spell._el) updates.add(SpellID);
+    spell.refs?.forEach((k) => {
       spells[k].emit();
     });
   };
@@ -258,24 +247,28 @@ function merge(spell) {
     }
   });
   const { Using } = spell;
-  const setParent = (parent, child) => {
-    child.__proto__ = parent;
-    (parent._nodes = parent._nodes || []).push(child.Name);
+  const setPrototype = (proto, target) => {
+    target.__proto__ = proto;
+    (proto.refs = proto.refs || []).push(target.SpellID);
   };
-  if (Using && Using !== Name) {
-    const p = spells[Using];
-    if (p) {
-      setParent(p, spell);
-    } else (waitMerge[Using] = waitMerge[Using] || []).push(Name);
+  if (Using && Using !== SpellID) {
+    const proto = spells[Using];
+    if (proto) {
+      setPrototype(proto, spell);
+    } else (waitMerge[Using] = waitMerge[Using] || new Set()).add(SpellID);
   }
-  const waits = waitMerge[Name];
+  spells[SpellID] = spell;
+  const waits = waitMerge[SpellID];
   if (waits) {
-    waits.forEach((nm) => {
-      const child = spells[nm];
-      setParent(spell, child);
+    waits.forEach((SpellID) => {
+      const child = spells[SpellID];
+      if (child && child !== spell) {
+        child.__proto__ = spell;
+        waits.delete(SpellID);
+      }
       child.emit();
     });
-    delete waitMerge[Name];
+    if (!waits.size) delete waitMerge[SpellID];
   }
   spell.emit();
   if (!old) return spell;
@@ -312,7 +305,7 @@ window.loadIcon = (arr) => {
 };
 const orders = ['Shared', 'Gustav', 'SharedDev', 'GustavDev', 'Honour'];
 const spells = {};
-window.loadSpell = (str) => {
+window.loadSpell = async (str) => {
   const items = str.split('\x01');
   items.forEach((str) => {
     const fields = str.split('\x00');
@@ -324,8 +317,7 @@ window.loadSpell = (str) => {
       o[sk[a]] = v[1] === undefined ? v[0] : v;
     });
     if (merge(o)) {
-      patchParams(o);
-      spellArr.push(o.Name);
+      spellArr.push(o.SpellID);
     }
   });
   spellArr.sort((spellName0, spellName1) => {
@@ -343,18 +335,24 @@ window.loadSpell = (str) => {
   }
 };
 
-function ps(e) {
+function ps(spell) {
   if (act) act.classList.remove('a');
-  act = e._el;
+  act = spell._el;
   act.classList.add('a');
   github.display = 'none';
-  syncA++;
   let cpm = '';
-  spellProps.forEach((key) => {
-    const n = e[key];
+  const render = (key) => {
+    if (!/[A-Z]/.test(key[0])) return;
+    let n;
+    if (key === 'TooltipUpcastDescription') n = getDesc(spell, 'Description');
+    else if (key === 'TooltipUpcastDescription')
+      n = getDesc(spell, 'TooltipUpcastDescription');
+    else {
+      n = spell[key];
+    }
     let value;
     value =
-      /[A-Z]/.test(key[0]) && (!isNaN(n) || n?.length)
+      !isNaN(n) || n?.length
         ? Array.isArray(n)
           ? `<ul>${n
               .filter(Boolean)
@@ -362,10 +360,14 @@ function ps(e) {
               .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
-    const cls = e.hasOwnProperty(key) ? '' : '_';
+    const cls = spell.hasOwnProperty(key) ? '' : '_';
     if (value)
       cpm += `<div>\n<label class="${cls}">${key}</label>${value}\n</div>`;
-  });
+  };
+  skOrder.forEach(render);
+  for (const i in spell) {
+    if (!skOrder.includes(i)) render(i);
+  }
   return cpm;
 }
 
@@ -397,7 +399,7 @@ Content based on %%.
 The filter supports regular expressions
 and is case insensitive.
 
-Name:
+SpellID:
          The Property name of spell's data.
          'spell*' means start width spell.
          Or, you can type /^spell/.
@@ -409,11 +411,11 @@ Name:
         
  e.g
      No level limit spells:
-     Name: level   Value: -
+     SpellID: level   Value: -
      Honour spells:
-     Name: mod   Value: ho
+     SpellID: mod   Value: ho
      Spells Damage > 500:
-     Name: spell*   Value: >500`;
+     SpellID: spell*   Value: >500`;
 };
 
 const el = (e) => {
@@ -517,20 +519,21 @@ const spellCard = (spell, idx, frm) => {
   } else {
     const inner = (spell) => {
       const {
-        Name,
+        SpellID,
         mod = '',
         nm,
         ico,
         DisplayName,
-        Description = '',
+        Icon,
         Level,
         SpellType,
         SpellProperties = [],
         SpellSuccess = []
       } = spell;
+      const desc = getDesc(spell, 'Description');
       return `<div class="bd"><i></i><i></i><i></i><i></i></div>
     <span title="${mod}" hidden>H</span>
-    <i style="${ico}" role="img" aria-label="icon of the spell ${Name}" title="${DisplayName || Description}"></i>
+    <i style="${ico}" role="img" aria-label="icon of the spell ${SpellID}" title="${Icon}"></i>
     <span class="lv">level ${Level || '-'}</span>
     <span class="tp">${SpellType}</span>
     <span class="cp"><span></span><button>+</button><button>-</button></span>
@@ -538,7 +541,7 @@ const spellCard = (spell, idx, frm) => {
         <label>${DisplayName || nm}</label>
         <div class="u">
             <div class="w">
-                <p>${Description}</p>
+                <p>${desc}</p>
                 <ul class="po">${SpellProperties.map((e) => '<li>' + e + '</li>').join('')}</ul>
                 <ul>${SpellSuccess.map((e) => '<li>' + e + '</li>').join('')}</ul>
             </div>

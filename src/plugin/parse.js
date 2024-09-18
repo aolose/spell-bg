@@ -108,7 +108,7 @@ export const parseData = () => {
       const e = { mod: flag };
       v.split(/\r?\n/).forEach((n) => {
         if (/^new entry/.test(n))
-          e.Name = JSON.parse(n.replace('new entry ', ''));
+          e.SpellID = JSON.parse(n.replace('new entry ', ''));
         else if (/^using/.test(n)) {
           e.Using = n.slice(6).replace(/"/g, '');
         } else if (/^data/.test(n)) {
@@ -132,7 +132,7 @@ export const parseData = () => {
           }
         }
       });
-      if (e.Name) r.push(e);
+      if (e.SpellID) r.push(e);
     });
     return r;
   };
