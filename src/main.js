@@ -203,6 +203,10 @@ function sameSpellMerge(spellA, spellB) {
       spellB = sameSpellMerge(spellA.__proto__, spellB);
     }
     const ns = (spellA._nodes || []).concat(spellB._nodes || []);
+    ns.forEach(k=>{
+      const parent = spells[k]
+      if(parent)parent.__proto__ = spellA
+    })
     spellA._nodes = ns.length ? ns : null;
     spellA._el = spellB._el;
     spellA.__proto__ = spellB;
