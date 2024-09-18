@@ -242,7 +242,7 @@ function merge(spell) {
     },
     ico: {
       get() {
-        return ico(this.Icon);
+        return ico(this);
       }
     }
   });
@@ -273,13 +273,13 @@ function merge(spell) {
   spell.emit();
   if (!old) return spell;
 }
-
-function ico(e) {
-  const t = icons[e];
+function ico(spell) {
+  const t = icons[spell.Icon];
   if (t) {
     const [x, n, y] = t;
     return `background-position:${x}% ${y}%;background-image:url(${n}.avif)`;
   }
+  emptyIconSpells.add(spell.SpellID)
   return 'background-size:cover';
 }
 
@@ -291,17 +291,14 @@ window.ok = () => {
     window.ok = null;
   }
 };
-
+const emptyIconSpells=new Set()
 window.loadIcon = (arr) => {
   const n = arr.length / 4;
   const [ks, vs] = [arr.slice(0, n), arr.slice(n)];
   ks.forEach((k, i) => {
     icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
   });
-  ctx.querySelectorAll('.c>i').forEach((e) => {
-    const n = e.parentElement.spell;
-    e.style = n.ico;
-  });
+  emptyIconSpells.forEach(a=>spells[a].update())
 };
 const orders = ['Shared', 'Gustav', 'SharedDev', 'GustavDev', 'Honour'];
 const spells = {};
@@ -553,7 +550,10 @@ const spellCard = (spell, idx, frm) => {
      role="listitem" 
      style="transform:translate3d(${left},${top},0)"
 >${inner(spell)}</div>`);
+    const id = spell.SpellID
     elm.update = () => {
+      const spell = spells[id]
+      elm.spell = spell;
       elm.innerHTML = inner(spell);
     };
     frm.appendChild(elm);
