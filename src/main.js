@@ -203,7 +203,7 @@ function sameSpellMerge(spellA, spellB) {
     if (parent.mod) {
       const spell = sameSpellMerge(parent, spellB);
       if(spell===parent)return spellA
-      else spellB = parent
+      else spellB = spell
     }
     const ns = (spellA._nodes || []).concat(spellB._nodes || []);
     ns.forEach(k=>{
