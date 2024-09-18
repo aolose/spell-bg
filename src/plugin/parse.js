@@ -26,7 +26,8 @@ const miniSpell = (o) => {
     o.forEach((n) => {
       const x = [];
       const m = [];
-      for (const [k, v] of Object.entries(n)) {
+      for (const [k, c] of Object.entries(n)) {
+        const v = [].concat(c).join('\x02')
         const i = spellKeys.indexOf(k);
         if (i > -1) x.push(i);
         else {
@@ -35,9 +36,9 @@ const miniSpell = (o) => {
         }
         m.push(v);
       }
-      b.push(x.concat(m));
+      b.push(x.concat(m).join('\x00'));
     });
-    return JSON.stringify(b);
+    return '"'+b.join('\x01').replace(/"/g,'\\"')+'"';
   }
 };
 
@@ -75,9 +76,6 @@ export const parseData = () => {
     const d = path.dirname(p);
     if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: !0 });
     return p;
-  };
-  const write = (p, d) => {
-    fs.writeFileSync(fx(p), d, { flag: 'w+' });
   };
   const read = (p) => {
     return fs.readFileSync(fx(p)).toString();

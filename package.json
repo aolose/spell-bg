@@ -7,6 +7,7 @@
     "format": "prettier --write ./src",
     "dev": "vite",
     "lint": "eslint",
+    "update spells": "node ./src/plugin/genAssets.js",
     "build": "vite build -c vite.pro.config.js",
     "preview": "vite preview"
   },

@@ -5,14 +5,14 @@ function setCount() {
   currentSpellLen.textContent = `${filters.length}`;
 }
 
-function patchParams(e) {
-  ['TooltipUpcastDescriptionParams', 'DescriptionParams'].forEach((a) => {
-    if (!e[a]) return;
-    const d = a.replace(/Params$/, '');
-    if (!e[d]) return delete e[a];
+function patchParams(spell) {
+  ['TooltipUpcastDescriptionParams', 'DescriptionParams'].forEach((key) => {
+    if (!spell[key]) return;
+    const d = key.replace(/Params$/, '');
+    if (!spell[d]) return delete spell[key];
     []
-      .concat(e[a])
-      .forEach((a, i) => (e[d] = e[d].replace(`[${i + 1}]`, `${a}`)));
+      .concat(spell[key])
+      .forEach((a, i) => spell[d] = spell[d].replace(`[${i + 1}]`, `${a}`));
   });
 }
 
@@ -39,6 +39,7 @@ const ipt = document.getElementById('cp');
 const ctx = document.getElementById('v');
 let columns = Math.max(1, Math.floor((list.offsetWidth - 20) / cardWidth));
 const sty = ctx.style;
+const github = sidePanel.querySelector('a').style
 
 sidePanel.ontouchstart = gesture;
 
@@ -73,7 +74,8 @@ const regexIfy = (e) => {
   if (t)
     try {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {}
+    } catch (e) {
+    }
 };
 let cpField;
 
@@ -188,14 +190,14 @@ function merge(spell) {
   if (parent) {
     parent = merge(parent);
     parent &&
-      Object.keys(parent).forEach((t) => {
-        if (/[A-Z]/.test(t)) {
-          if (!spell.hasOwnProperty(t)) {
-            spell[t] = parent[t];
-            spell._[t] = 1;
-          }
+    Object.keys(parent).forEach((t) => {
+      if (/[A-Z]/.test(t)) {
+        if (!spell.hasOwnProperty(t)) {
+          spell[t] = parent[t];
+          spell._[t] = 1;
         }
-      });
+      }
+    });
   }
   spell.nm = spell.Name.replace(spell.SpellType + '_', '')
     .replace(/_/g, ' ')
@@ -214,7 +216,7 @@ function ico(e) {
   const t = icons[e];
   if (t) {
     const [x, n, y] = t;
-    return `background-position:${x}% ${y}%;background-image:url(${n}.webp)`;
+    return `background-position:${x}% ${y}%;background-image:url(${n}.avif)`;
   }
   return 'background-size:cover';
 }
@@ -240,13 +242,16 @@ window.loadIcon = (arr) => {
     e.style = n.ico;
   });
 };
-window.loadSpell = (items) => {
-  items.forEach((fields) => {
+window.loadSpell = (str) => {
+  const items = str.split('\x01');
+  items.forEach((str) => {
+    const fields = str.split('\x00');
     const n = fields.length / 2;
     const [ks, vs] = [fields.slice(0, n), fields.slice(n)];
     const o = {};
     ks.forEach((a, b) => {
-      o[sk[a]] = vs[b];
+      const v = vs[b].split('\x02');
+      o[sk[a]] = v[1] === undefined ? v[0] : v;
     });
     spellArr.push(o);
   });
@@ -275,6 +280,7 @@ function ps(e) {
   if (act) act.classList.remove('a');
   act = e._el;
   act.classList.add('a');
+  github.display = 'none'
   syncA++;
   const t = [
     'SpellType',
@@ -304,9 +310,9 @@ function ps(e) {
       /[A-Z]/.test(key[0]) && (!isNaN(n) || n?.length)
         ? Array.isArray(n)
           ? `<ul>${n
-              .filter(Boolean)
-              .map((e) => `<li>${e}</li>`)
-              .join('')}</ul>`
+            .filter(Boolean)
+            .map((e) => `<li>${e}</li>`)
+            .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
     const cls = e._ && e._[key] ? '_' : '';
@@ -331,10 +337,11 @@ ctx.onclick = ({ target }) => {
   closeBtn.className = 's';
   if (card !== act) sidePanelInner.innerHTML = ps(card.spell);
 };
-closeBtn.onclick = function () {
+closeBtn.onclick = function() {
   if (act) {
     act.classList.remove('a');
     act = null;
+    github.display = ''
   }
   const cls = isMobile ? (sidePanel.className ? '' : 's') : '';
   sidePanel.className = closeBtn.className = cls;
@@ -408,15 +415,15 @@ const xx = (e, t, f = (a) => a) => {
   };
   n.oninput =
     n.onchange =
-    n.onpaste =
-    n.onblur =
-      function () {
-        clearTimeout(l);
-        l = setTimeout(() => {
-          filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-          syncA++;
-        }, 200);
-      };
+      n.onpaste =
+        n.onblur =
+          function() {
+            clearTimeout(l);
+            l = setTimeout(() => {
+              filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+              syncA++;
+            }, 200);
+          };
 };
 xx('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
 xx('v2', 'l');
@@ -526,7 +533,7 @@ if (_spells) {
 }
 const cpMark = el('<span class="cm"><span>✔</span></span>');
 const cpSly = cpMark.children[0].style;
-sidePanelInner.onclick = function ({ target }) {
+sidePanelInner.onclick = function({ target }) {
   const tag = target.tagName;
   if (/label|span|li/gi.test(tag)) {
     clearTimeout(cpMark.t);

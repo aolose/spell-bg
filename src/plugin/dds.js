@@ -8,19 +8,18 @@ import sharp from 'sharp';
 const resizeImage = async (sharpImage) => {
   let a = 0;
   const images = [];
-  while (a < 2048) {
+  while (a < 1536) {
     const top = a;
-    a += 256;
+    a += 192;
     const sharp = sharpImage
       .clone()
-      .extract({ left: 0, top, height: 256, width: 2048 })
-      .resize({ width: 1024 });
+      .extract({ left: 0, top, height: 192, width: 1536 });
     images.push(sharp);
   }
   return images;
 };
 
-const createWebP = async (base, images) => {
+const createClip = async (base, images) => {
   for (const a of images) {
     const i = images.indexOf(a);
     await save(a, base + i);
@@ -29,20 +28,18 @@ const createWebP = async (base, images) => {
 
 const save = async (a, name) => {
   await a
-    .webp({
-      quality: 1,
-      alphaQuality: 0
+    .avif({
+      quality: 5,
     })
-    .trim()
-    .toFile(path.resolve(cfg.assets, `${name}.webp`));
+    .toFile(path.resolve(cfg.assets, `${name}.avif`));
 };
 
 const readDDS = (p) => {
   const buf = fs.readFileSync(path.resolve(cfg.unpackDir, p));
   const ddsData = parse(buf.buffer);
   const image = ddsData.images[0],
-    imageWidth = image.shape[0],
-    imageHeight = image.shape[1],
+    imageWidth = +image.shape[0],
+    imageHeight = +image.shape[1],
     imageDataView = new DataView(buf.buffer, image.offset, image.length);
   return sharp(dxt(imageDataView, imageWidth, imageHeight, ddsData.format), {
     raw: {
@@ -50,18 +47,18 @@ const readDDS = (p) => {
       height: imageHeight,
       channels: 4
     }
-  });
+  }).resize({ width: 1536 }).removeAlpha()
 };
 
 export const buildImg = async () => {
   try {
     fs.readdirSync(cfg.assets).forEach((a) => {
-      if (/^\d+\.webp/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
+      if (/^\d+\.(webp|avif)/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
     });
   } catch (e) {
     console.warn(e);
   }
   for (const [p, f = 0] of cfg.dds) {
-    await createWebP(f, await resizeImage(readDDS(p)));
+    await createClip(f, await resizeImage(readDDS(p)));
   }
 };
