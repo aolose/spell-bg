@@ -212,7 +212,7 @@ window.loadSpell = async (str) => {
     return n === l ? (spell0._nm > spell2._nm ? 1 : -1) : n > l ? 1 : -1;
   });
   filter();
-  update()
+  update();
 };
 
 function detail(spell) {

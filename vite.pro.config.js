@@ -7,12 +7,13 @@ export default defineConfig({
   plugins: [
     bg3SpellBuildPlugin(),
     VitePWA({
-      registerType: 'autoUpdate' ,
+      includeAssets:['*.avif','mu.webp','bg.avif','a.webp','h.webp','logo.webp','c.svg'],
       manifest: {
         name: 'Baldur\'s Gate 3 Spells',
         short_name: 'BG3 Spells',
         description: 'The Stats of Baldur\'s Gate 3 Spells',
         theme_color: '#0a0c17',
+        background_color:"#241c10",
         icons: [
           {
             src: 'i192.webp',

@@ -23,7 +23,6 @@ html {
   width: 100vw;
   overflow: hidden;
   overscroll-behavior: none;
-  background: #17130d url(/public/bg.webp) center / cover;
 }
 
 @keyframes lp {
@@ -38,11 +37,6 @@ html {
 #e,
 #tt {
   right: 16px;
-}
-
-#b a {
-  left: 16px;
-  mix-blend-mode: color-dodge;
 }
 
 #b a,
@@ -321,7 +315,7 @@ ul {
     top: 0;
     width: 100%;
     height: 500px;
-    background: url(/public/mu.webp) 0 0 repeat-x;
+    background: url(/mu.webp) 0 0 repeat-x;
     background-size: 2080px 100%;
   }
 }
@@ -377,7 +371,7 @@ ul {
 ::-webkit-scrollbar-thumb {
   background:
     linear-gradient(rgba(35, 27, 7, 0.7), transparent, rgba(37, 28, 8, 0.7)),
-    url('/public/a.webp') fixed;
+    url('/a.webp') fixed;
 }
 
 #c {
@@ -798,13 +792,13 @@ p b {
 }
 
 #b a {
+  left: 16px;
   height: 24px;
   opacity: 0.5;
   width: 24px;
   display: block;
-  filter: invert(1);
-
-  img {
+  svg {
+    color: #78664b;
     width: 100%;
     height: 100%;
   }

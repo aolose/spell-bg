@@ -23,7 +23,7 @@ function sameIdSpell(spellA, spellB) {
     if (ref) ref.__proto__ = spellA;
   });
   spellA.refs = refs.length ? refs : null;
-  if(spellB._el)spellA._el = spellB._el;
+  if (spellB._el) spellA._el = spellB._el;
   spellA.__proto__ = spellB;
   spellB._el = null;
   spellB.refs = null;
@@ -39,14 +39,14 @@ const patchSpell = (spell) => {
 
 export function merge(spell) {
   const { SpellID } = spell;
-  const exist = spells[SpellID]
+  const exist = spells[SpellID];
   spell.refs = null;
   spell._el = null;
-  let addToSpells = 1
-  if(exist){
-    const lef=sameIdSpell(exist,spell)
+  let addToSpells = 1;
+  if (exist) {
+    const lef = sameIdSpell(exist, spell);
     if (lef === exist) {
-      addToSpells = 0
+      addToSpells = 0;
       exist.emit();
     }
   }
@@ -87,10 +87,10 @@ export function merge(spell) {
       setPrototype(proto, spell);
     } else (waitMerge[Using] = waitMerge[Using] || new Set()).add(spell);
   }
-  if(addToSpells)spells[SpellID] = spell;
+  if (addToSpells) spells[SpellID] = spell;
   const waits = waitMerge[SpellID];
   if (waits) {
-    waits.forEach(child => {
+    waits.forEach((child) => {
       if (child && child !== spell) {
         child.__proto__ = spell;
         waits.delete(child);
@@ -100,7 +100,7 @@ export function merge(spell) {
     if (!waits.size) delete waitMerge[SpellID];
   }
   if (!exist) return spell;
-  else spell.emit()
+  else spell.emit();
 }
 
 export function loadIcon(arr) {
@@ -111,12 +111,12 @@ export function loadIcon(arr) {
   });
   emptyIconSpells.forEach((a) => spells[a].update());
 }
-export const update = ()=>{
+export const update = () => {
   if (updates.size) {
     updates.forEach((a) => {
       spells[a].update();
     });
     updates.clear();
   }
-}
+};
 export const spells = {};
