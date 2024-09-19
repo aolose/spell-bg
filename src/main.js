@@ -1,3 +1,5 @@
+import { loadIcon, spells, merge, update } from './spells.js';
+
 let act = null;
 const skOrder = [
   'SpellID',
@@ -30,7 +32,7 @@ const all = 9999;
 let l = _ok;
 const types = '%types%';
 let syncA = 0;
-const icons = {};
+
 _ok = null;
 const cardHeight = 170;
 const cardWidth = 320;
@@ -177,112 +179,6 @@ function filter() {
   syncA++;
 }
 
-const waitMerge = {};
-const updates = new Set();
-const patchSpell = (spell) => {
-  const { SpellProperties, SpellSuccess } = spell;
-  if ('string' == typeof SpellProperties)
-    spell.SpellProperties = [SpellProperties];
-  if ('string' == typeof SpellSuccess) spell.SpellSuccess = [SpellSuccess];
-};
-
-function getLeafSpell(leaf, node) {
-  const oA = orders.indexOf(leaf.mod);
-  const oB = orders.indexOf(node.mod);
-  if (oA < oB) return getLeafSpell(node, leaf);
-  const currentNode = leaf.__proto__;
-  if (currentNode === node) return leaf;
-  if (currentNode.mod) {
-    const spell = getLeafSpell(currentNode, node);
-    if (spell === currentNode) return leaf;
-    else node = spell;
-  }
-  const refs = (leaf.refs || []).concat(node.refs || []);
-  refs.forEach((ref) => {
-    if (ref === leaf.SpellID) return;
-    const child = spells[ref];
-    if (child) child.__proto__ = leaf;
-  });
-  leaf.refs = refs.length ? refs : null;
-  leaf._el = node._el;
-  leaf.__proto__ = node;
-  delete node._el;
-  delete node.refs;
-  return leaf;
-}
-
-function merge(spell) {
-  const { SpellID } = spell;
-  spell.refs = null;
-  spell._el = null;
-  const old = spells[SpellID];
-  if (old) {
-    spell = getLeafSpell(spell, old);
-  }
-  patchSpell(spell);
-  if (spell === old) return spell.emit();
-  spell.nm = spell.SpellID.replace(spell.SpellType + '_', '')
-    .replace(/_/g, ' ')
-    .replace(/([a-z0-9])([A-Z])/g, '$1 $2');
-  spell._nm = spell.nm.toLowerCase();
-  spell.emit = function () {
-    if (spell._el) updates.add(SpellID);
-    spell.refs?.forEach((k) => {
-      spells[k].emit();
-    });
-  };
-  spell.update = function () {
-    this._el?.update?.();
-  };
-  Object.defineProperties(spell, {
-    lv: {
-      get() {
-        return +this.Level || 99;
-      }
-    },
-    ico: {
-      get() {
-        return ico(this);
-      }
-    }
-  });
-  const { Using } = spell;
-  const setPrototype = (proto, target) => {
-    target.__proto__ = proto;
-    (proto.refs = proto.refs || []).push(target.SpellID);
-  };
-  if (Using && Using !== SpellID) {
-    const proto = spells[Using];
-    if (proto) {
-      setPrototype(proto, spell);
-    } else (waitMerge[Using] = waitMerge[Using] || new Set()).add(SpellID);
-  }
-  spells[SpellID] = spell;
-  const waits = waitMerge[SpellID];
-  if (waits) {
-    waits.forEach((SpellID) => {
-      const child = spells[SpellID];
-      if (child && child !== spell) {
-        child.__proto__ = spell;
-        waits.delete(SpellID);
-      }
-      child.emit();
-    });
-    if (!waits.size) delete waitMerge[SpellID];
-  }
-  spell.emit();
-  if (!old) return spell;
-}
-function ico(spell) {
-  const t = icons[spell.Icon];
-  if (t) {
-    const [x, n, y] = t;
-    return `background-position:${x}% ${y}%;background-image:url(${n}.avif)`;
-  }
-  emptyIconSpells.add(spell.SpellID)
-  return 'background-size:cover';
-}
-
 window.ok = () => {
   const e = (100 * ++l) / all;
   z.style.width = e + '%';
@@ -291,17 +187,9 @@ window.ok = () => {
     window.ok = null;
   }
 };
-const emptyIconSpells=new Set()
-window.loadIcon = (arr) => {
-  const n = arr.length / 4;
-  const [ks, vs] = [arr.slice(0, n), arr.slice(n)];
-  ks.forEach((k, i) => {
-    icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
-  });
-  emptyIconSpells.forEach(a=>spells[a].update())
-};
-const orders = ['Shared', 'Gustav', 'SharedDev', 'GustavDev', 'Honour'];
-const spells = {};
+
+window.loadIcon = loadIcon;
+
 window.loadSpell = async (str) => {
   const items = str.split('\x01');
   items.forEach((str) => {
@@ -324,12 +212,7 @@ window.loadSpell = async (str) => {
     return n === l ? (spell0._nm > spell2._nm ? 1 : -1) : n > l ? 1 : -1;
   });
   filter();
-  if (updates.size) {
-    updates.forEach((a) => {
-      spells[a].update();
-    });
-    updates.clear();
-  }
+  update()
 };
 
 function ps(spell) {
@@ -550,9 +433,9 @@ const spellCard = (spell, idx, frm) => {
      role="listitem" 
      style="transform:translate3d(${left},${top},0)"
 >${inner(spell)}</div>`);
-    const id = spell.SpellID
+    const id = spell.SpellID;
     elm.update = () => {
-      const spell = spells[id]
+      const spell = spells[id];
       elm.spell = spell;
       elm.innerHTML = inner(spell);
     };
