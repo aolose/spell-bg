@@ -472,7 +472,7 @@ const cpMark = el('<span class="cm"><span>✔</span></span>');
 const cpSly = cpMark.children[0].style;
 sidePanelInner.onclick = function ({ target }) {
   const tag = target.tagName;
-  if (/label|span|li/gi.test(tag)) {
+  if ('LABEL'===tag) {
     clearTimeout(cpMark.t);
     cpMark.remove();
     const isLabel = tag[1] === 'A';
