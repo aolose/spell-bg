@@ -215,7 +215,7 @@ window.loadSpell = async (str) => {
   update()
 };
 
-function ps(spell) {
+function detail(spell) {
   if (act) act.classList.remove('a');
   act = spell._el;
   act.classList.add('a');
@@ -224,7 +224,7 @@ function ps(spell) {
   const render = (key) => {
     if (!/[A-Z]/.test(key[0])) return;
     let n;
-    if (key === 'TooltipUpcastDescription') n = getDesc(spell, 'Description');
+    if (key === 'Description') n = getDesc(spell, 'Description');
     else if (key === 'TooltipUpcastDescription')
       n = getDesc(spell, 'TooltipUpcastDescription');
     else {
@@ -264,7 +264,7 @@ ctx.onclick = ({ target }) => {
   }
   sidePanel.className = 's';
   closeBtn.className = 's';
-  if (card !== act) sidePanelInner.innerHTML = ps(card.spell);
+  if (card !== act) sidePanelInner.innerHTML = detail(card.spell);
 };
 closeBtn.onclick = function () {
   if (act) {
