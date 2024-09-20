@@ -1,10 +1,10 @@
 import { genSpells } from './data.js';
-import { spells, merge } from '../spells.js';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
+import { merge, spellsCache } from '../plugin/spells.js';
 
 describe('merge spell test', () => {
   let SpellBase, SpellDev, SpellDev1, SpellHonour, SpellHonour1;
-
+  const spells = spellsCache;
   beforeEach(() => {
     Object.keys(spells).forEach((a) => delete spells[a]);
     const data = genSpells();

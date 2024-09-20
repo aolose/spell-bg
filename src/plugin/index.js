@@ -1,8 +1,18 @@
 import cfg from '../../cfg.js';
 
 export function bg3SpellBuildPlugin() {
-  const { scripts, bgW, bgH, iconSiz, total, types, spellKeys } =
-    require('./patch.js')?.default;
+  const {
+    scripts,
+    bgW,
+    dic,
+    bgH,
+    icons,
+    iconSiz,
+    total,
+    types,
+    spellKeys,
+    spellIds
+  } = require('./patch.js')?.default;
   return {
     name: 'bg3-spell-build,plugin',
     transformIndexHtml: {
@@ -18,12 +28,14 @@ export function bg3SpellBuildPlugin() {
     },
     transform(src, id) {
       if (/main/.test(id)) {
-        src =
-          `const sk='${spellKeys}'.split(',');` +
-          src
-            .replace('%%', cfg.version)
-            .replace("'%types%'", JSON.stringify([...types]))
-            .replace('9999', `${total}`);
+        src = src
+          .replace('%spellKeys%', spellKeys)
+          .replace('%dic%', dic)
+          .replace('%spellIds%', spellIds)
+          .replace('%icons%', icons)
+          .replace('%%', cfg.version)
+          .replace('%types%', types)
+          .replace('9999', `${total}`);
       }
       return {
         code: src

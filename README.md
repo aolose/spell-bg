@@ -32,8 +32,8 @@ The upper right filter supports Regex and is case-insensitive.
 e.g
 
 ```
--- List No level limit spells:
-Name: level   Value: -
+-- List No Icon spells:
+Name: icon   Value: -
 
 -- List Honour spells:
 Name: mod   Value: ho

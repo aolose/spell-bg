@@ -61,7 +61,6 @@ html {
   display: -ms-flexbox;
 }
 
-#b li,
 .c li,
 .c p,
 .lv {
@@ -139,7 +138,7 @@ html {
     &:nth-child(4) {
       &:before,
       &:after {
-        background: url('/public/c.svg');
+        background: url('/c.svg');
         width: 16px;
         height: 16px;
       }
@@ -411,17 +410,26 @@ ul {
   background: none;
   border: none;
   padding: 10px 5px 10px 0;
-  line-height: 2;
+  line-height: 1.8;
 
   b {
     pointer-events: none;
   }
 
+  li {
+    list-style: none;
+    padding: 4px 0;
+    & + li {
+      border-top: 1px dashed #503d1a;
+    }
+  }
+
   & > div {
+    font-size: 12px;
     border: 1px solid rgba(113, 91, 71, 0.5);
     margin-top: -1px;
     color: #fff;
-    padding: 3px 6px 3px 5px;
+    padding: 4px 6px;
   }
 }
 
@@ -435,14 +443,6 @@ ul {
   border: 1px solid #a6896c9c;
   box-shadow: rgba(0, 0, 0, 0.5) -10px 10px 31px;
 
-  li {
-    list-style: none;
-
-    & + li {
-      border-top: 1px dashed #503d1a;
-    }
-  }
-
   pre {
     white-space: pre-wrap;
     padding: 30px 50px 10px;
@@ -450,7 +450,7 @@ ul {
   }
 
   label {
-    width: 160px;
+    width: 152px;
     flex-shrink: 0;
     color: #edd382;
 
@@ -581,7 +581,7 @@ input {
     display: block;
     width: var(--iconSiz);
     height: var(--iconSiz);
-    background: url('/public/un.webp') rgba(255, 87, 34, 0.04);
+    background: url('/un.webp') rgba(255, 87, 34, 0.04);
     background-size: var(--bgW) var(--bgH);
   }
 }

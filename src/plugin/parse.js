@@ -2,6 +2,23 @@ import fs from 'fs';
 import xmlParser from 'xml2json';
 import path from 'path';
 import cfg from '../../cfg.js';
+import { merge } from './spells.js';
+
+const dic = [];
+const counter = {};
+const splitWorlds = (str) => str.split(/(?=[^a-zA-Z]+)|(?<=[^a-zA-Z]+)/);
+const strZip = (str) => {
+  const words = splitWorlds(str);
+  words.forEach((a, i) => {
+    const idx = dic.indexOf(a);
+    if (idx !== -1) words[i] = `$${idx.toString(36)}`;
+  });
+  const ss = words.join('');
+  console.log(
+    `compressed: ${(((str.length - ss.length) * 100) / str.length).toFixed(2)}%`
+  );
+  return ss;
+};
 
 const hash = (str) => {
   let h = 0,
@@ -15,8 +32,9 @@ const hash = (str) => {
   }
   return h.toString(32).replace(/-/g, '').slice(0, 5);
 };
-
+const spellIds = [];
 const spellKeys = [];
+const usedIcons = new Set();
 const miniIco = (o) => {
   return Object.keys(o).concat(Object.values(o)).flat().join();
 };
@@ -41,6 +59,7 @@ const miniSpell = (o) => {
     return '"' + b.join('\x01').replace(/"/g, '\\"') + '"';
   }
 };
+const task = [];
 
 export const parseData = () => {
   const { resolve } = path;
@@ -62,14 +81,13 @@ export const parseData = () => {
   if (!fs.existsSync(assets)) fs.mkdirSync(assets);
   let scripts = '';
   let total = 0;
-  const wsc = (src) =>
-    (scripts += `<script src='${src}' onload='ok()' async></script>`);
+  const wsc = (src) => (scripts += `<script src='${src}' async></script>`);
 
   const wJs = (name, js) => {
     total++;
     const hs = hash(js);
     name = `${name}.${hs}.js`;
-    fs.writeFileSync(resolve(assets, name), js, { flag: 'w+' });
+    task.push([resolve(assets, name), js]);
     wsc(name);
   };
   const fx = (p) => {
@@ -171,49 +189,102 @@ export const parseData = () => {
           )
         );
     });
+
+    const cache = [];
+    arr.flat().forEach((a) => {
+      const o = merge(a);
+      if (o) cache.push(o);
+    });
+
+    cache.sort((spell0, spell2) => {
+      const n = spell0.Level || 99,
+        l = spell2.Level || 99;
+      return n === l
+        ? spell0.SpellID.replace(spell0.SpellType + '_', '').toLowerCase() >
+          spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
+          ? 1
+          : -1
+        : n > l
+          ? 1
+          : -1;
+    });
+    const extra = [];
+    const pt = {}.__proto__;
+    const len = cache.length;
+
+    const patchUsing = (a) => {
+      if ('string' !== typeof a.Using) return;
+      const p = a.__proto__;
+      if (p.mod) {
+        let idx = cache.indexOf(p);
+        if (idx === -1) {
+          p.i = spellIds.indexOf(p.SpellID);
+          const b = extra.indexOf(p);
+          if (b === -1) {
+            idx = len + extra.length;
+            extra.push(p);
+          } else {
+            idx = len + b;
+          }
+        }
+        a.Using = idx.toString(36);
+        a.__proto__ = pt;
+        patchUsing(p);
+      }
+    };
+
+    cache.forEach((a) => {
+      spellIds.push(a.SpellID);
+      delete a.SpellID;
+    });
+    cache.forEach(patchUsing);
+    extra.forEach((a) => {
+      if (a.i === -1 || a.i === undefined)
+        throw new Error('not Found Key ' + a.SpellID);
+      delete a.SpellID;
+    });
     let js = 0;
+    let idx = 0;
     const ld = (n = size) => {
       if (bk.length >= n) {
         const nm = `${js++}`;
-        wJs(nm, `loadSpell(${miniSpell(bk)})`);
+        wJs(nm, `${idx},${miniSpell(bk)})`);
+        idx += bk.length;
         bk.length = 0;
       }
     };
 
-    arr.forEach((ar) =>
-      ar.forEach((o) => {
-        if (o) {
-          const { SpellType } = o;
-          types.add(SpellType);
-          bk.push(o);
-          ld();
-          Object.keys(o).forEach((k) => {
-            if (arrayName[k]) {
-              if (o[k].split) {
-                o[k] = o[k].split(';').filter((a) => a.replace(/[, ]/g, ''));
-              }
-            }
-          });
+    cache.concat(extra).forEach((o) => {
+      const { SpellType } = o;
+      if (o.Icon) usedIcons.add(o.Icon);
+      delete o.refs;
+      types.add(SpellType);
+      bk.push(o);
+      Object.keys(o).forEach((k) => {
+        if (arrayName[k]) {
+          if (o[k].split) {
+            o[k] = o[k].split(';').filter((a) => a.replace(/[, ]/g, ''));
+          }
         }
-      })
-    );
+      });
+      ld();
+    });
     ld(1);
+    Object.keys(icons).forEach((a) => {
+      if (!usedIcons.has(a)) delete icons[a];
+    });
   };
 
   try {
     fs.readdirSync('public').forEach((a) => {
-      if (/^\d+\.\w+\.js/.test(a)) fs.unlinkSync(path.resolve(cfg.assets, a));
+      if (/^(\d+|i)\.\w+\.js/.test(a))
+        fs.unlinkSync(path.resolve(cfg.assets, a));
     });
   } catch (e) {
     console.warn(e);
   }
 
-  parseLang();
-  parseTooltip();
-  parseSpells();
-
   const icons = {};
-
   const cIcon = (str, i = 0) => {
     str.split('<node id="IconUV">').forEach((v) => {
       const o = [];
@@ -244,8 +315,45 @@ export const parseData = () => {
   cfg.icons.forEach((a, i) => {
     cIcon(read(resolve(unpackDir, a)), i);
   });
-  const ico = 'i';
-  wJs(ico, `loadIcon('${miniIco(icons)}'.split(','))`);
+  parseLang();
+  parseTooltip();
+  parseSpells();
+
+  const parsWord = (str) => {
+    splitWorlds(str).forEach((k) => {
+      if (k.length > 2) counter[k] = (counter[k] || 0) + 1;
+    });
+  };
+  const sk = spellKeys.join();
+  const si = spellIds.join();
+  const ic = miniIco(icons);
+  const tp = [...types].join();
+  parsWord(tp);
+  parsWord(si);
+  parsWord(si);
+  parsWord(ic);
+  task.forEach((a) => {
+    parsWord(a[1]);
+  });
+
+  const kvs = Object.entries(counter);
+  kvs.sort((a, b) => {
+    return b[1] - a[1];
+  });
+
+  let base = dic.length.toString(32).length;
+
+  kvs.forEach(([str, num]) => {
+    if (num > 1 && str.length > base + 1) {
+      dic.push(str);
+      base = dic.length.toString(36).length;
+    }
+  });
+
+  task.forEach(([p, d]) => {
+    fs.writeFileSync(p, 'loadSpell(' + strZip(d), { flag: 'w+' });
+  });
+
   fs.writeFileSync(
     'src/plugin/patch.js',
     `export default ${JSON.stringify({
@@ -254,8 +362,11 @@ export const parseData = () => {
       bgH,
       iconSiz,
       total,
-      spellKeys: spellKeys.join(),
-      types: [...types]
+      spellIds: strZip(si),
+      spellKeys: strZip(sk),
+      icons: strZip(ic),
+      dic: dic.join(),
+      types: strZip(tp)
     }).replace(/"(\w+?)":/g, '$1:')}`
   );
 };
