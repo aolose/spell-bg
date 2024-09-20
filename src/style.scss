@@ -402,7 +402,60 @@ ul {
 .p {
   padding: 0 10px;
 }
-
+#k{
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  transform: translate3d(calc(-20px - 100%),0,1px);
+  transition: .2s ease-in-out;
+  position: fixed;
+  z-index: 5;
+  left: 0;
+  bottom: 0;
+  margin: 40px 20px;
+  padding: 8px 10px;
+  background: rgba(27, 23, 18, 0.8);
+  color: #c8b6a1;
+  border: rgba(203, 177, 132, 0.51) 1px solid;
+  backdrop-filter: blur(6px);
+  box-shadow: rgba(0, 0, 0, 0.9) 0 15px 40px;
+  line-height: 1.8;
+  &.a{
+    transform: translate3d(0,0,1px);
+  }
+  @media screen and (max-width: 768px) {
+    transform: translate3d(-100%,0,1px);
+    margin: 32px 0;
+    width: 90vw;
+    &.a{
+      transform: translate3d(calc(5vw - 4px),0,1px);
+    }
+  }
+  button{
+    outline: #423c2e 1px solid;
+    opacity: .9;
+    border: 0;
+    padding: 3px 4px;
+    font-size: 12px;
+    color: #000;
+    background: #b49f68;
+    cursor: pointer;
+    &:active{
+      opacity: 1;
+    }
+    &+button{
+      color: #c4baab;
+      background: transparent;
+      border: 1px solid;
+    }
+  }
+  div {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
 #i {
   position: absolute;
   inset: 10px 5px 10px 8px;

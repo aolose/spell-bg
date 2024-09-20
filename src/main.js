@@ -1,3 +1,21 @@
+import { registerSW} from 'virtual:pwa-register'
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    const prompt = document.getElementById('k')
+    prompt.classList.add('a')
+    prompt.firstElementChild.firstElementChild.focus()
+    prompt.onclick=({target})=>{
+      if('B'===target.tagName[0]){
+        if(target.textContent[0]==='R'){
+          setTimeout(updateSW,200)
+        }
+        prompt.classList.remove('a')
+      }
+    }
+  }
+})
+
 const dic = '%dic%'.split(',');
 const unZipStr = (str) =>
   str.replace(/\$([0-9a-zA-Z]+)/g, (_, a) => dic[parseInt(a, 36)]);
@@ -106,7 +124,8 @@ const regexIfy = (e) => {
   if (t)
     try {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {}
+    } catch (e) {
+    }
 };
 let cpField;
 
@@ -143,9 +162,9 @@ function filter() {
       if (/.\*|\*./.test(e))
         return new RegExp(e.replace(/\*/g, '.*'), 'ig').test(t);
       if ('-' === e) {
-        if (t===0||t) return;
+        if (t === 0 || t) return;
       } else if ('*' === e) {
-        if (t===undefined||t==='') return;
+        if (t === undefined || t === '') return;
       } else if (/^>\d+$/.test(e)) {
         const n = +e.slice(1);
         if (!isNaN(n)) {
@@ -171,7 +190,7 @@ function filter() {
     if (!type || type === spell.SpellType) {
       if (prop && value) {
         let e = 0;
-        let mc = 0
+        let mc = 0;
         for (const spellProp in spell) {
           if ('mod' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
           const spellValue = spell[spellProp];
@@ -182,8 +201,8 @@ function filter() {
             (/\*/.test(prop) &&
               new RegExp(prop.replace(/\*/g, '.*'), 'gi').test(spellProp));
           if (keyMatch) {
-            mc = 1
-            if(check(value, spellValue)){
+            mc = 1;
+            if (check(value, spellValue)) {
               e = 1;
               break;
             }
@@ -191,7 +210,7 @@ function filter() {
         }
         if (!e) {
           if (!mc && '-' === value) return filters.push(spell);
-          return
+          return;
         }
       }
       filters.push(spell);
@@ -243,7 +262,7 @@ window.loadSpell = async (idx, str) => {
         waitUpdate[id] = (waitUpdate[id] || []).concat(o);
       }
     }
-    o.update = function () {
+    o.update = function() {
       if (this.el) this.el.update();
       if (this.refs) this.refs.forEach((a) => a.update());
     };
@@ -283,9 +302,9 @@ function detail(spell) {
       !isNaN(n) || n?.length
         ? Array.isArray(n)
           ? `<ul>${n
-              .filter(Boolean)
-              .map((e) => `<li>${e}</li>`)
-              .join('')}</ul>`
+            .filter(Boolean)
+            .map((e) => `<li>${e}</li>`)
+            .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
     const cls = spell.hasOwnProperty(key) ? '' : '_';
@@ -314,7 +333,7 @@ ctx.onclick = ({ target }) => {
   closeBtn.className = 's';
   if (card !== act) sidePanelInner.innerHTML = detail(card.spell);
 };
-closeBtn.onclick = function () {
+closeBtn.onclick = function() {
   if (act) {
     act.el.classList.remove('a');
     act = null;
@@ -392,17 +411,17 @@ const xx = (e, t, f = (a) => a) => {
   };
   n.oninput =
     n.onchange =
-    n.onpaste =
-    n.onblur =
-      function () {
-        clearTimeout(l);
-        l = setTimeout(() => {
-          filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-          syncA++;
-        }, 200);
-      };
+      n.onpaste =
+        n.onblur =
+          function() {
+            clearTimeout(l);
+            l = setTimeout(() => {
+              filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+              syncA++;
+            }, 200);
+          };
 };
-xx('v0', 'k', a =>  a?.toLowerCase());
+xx('v0', 'k', a => a?.toLowerCase());
 xx('v2', 'l');
 cg('ALL', '');
 let syncB,
@@ -435,10 +454,10 @@ const run = () => {
       if (wait.length) {
         const [spell, i] = wait.pop();
         const el = s.el;
-        const sp = el.spell
-        if(sp){
-          sp.el.spell = null
-          sp.el = null
+        const sp = el.spell;
+        if (sp) {
+          sp.el.spell = null;
+          sp.el = null;
         }
         el.spell = spell;
         spell.el = el;
@@ -446,7 +465,7 @@ const run = () => {
         el.pos(i);
         added.add(spell);
       } else {
-        s.el.spell=null
+        s.el.spell = null;
         s.el.remove();
         s.el = null;
       }
@@ -460,7 +479,7 @@ const run = () => {
     }
     displayed = added;
     added = new Set();
-    if(act?.el)act.el.classList.add('a')
+    if (act?.el) act.el.classList.add('a');
   }
 };
 let displayed = new Set();
@@ -498,7 +517,7 @@ const spellCard = (spell, idx, frm) => {
     const top = `${Math.floor(idx / columns) * cardHeight}px`;
     elm.style.transform = `translate3d(${left},${top},0)`;
   };
-  elm.update = function () {
+  elm.update = function() {
     const old = (this._ = this._ || {});
     const spell = this.spell;
     const {
@@ -506,7 +525,7 @@ const spellCard = (spell, idx, frm) => {
       mod = '',
       nm,
       DisplayName,
-      Icon='',
+      Icon = '',
       Level,
       SpellType,
       SpellProperties = [],
@@ -529,7 +548,7 @@ const spellCard = (spell, idx, frm) => {
     }
     if (old.Level !== Level) {
       old.Level = Level;
-      lvEl.textContent = `level ${Level??'-'}`;
+      lvEl.textContent = `level ${Level ?? '-'}`;
     }
     if (SpellType !== old.SpellType) {
       old.SpellType = tpEl.textContent = SpellType;
@@ -577,7 +596,7 @@ if (_spells) {
 }
 const cpMark = el('<span class="cm"><span>✔</span></span>');
 const cpSly = cpMark.children[0].style;
-sidePanelInner.onclick = function ({ target }) {
+sidePanelInner.onclick = function({ target }) {
   const tag = target.tagName;
   if ('LABEL' === tag) {
     clearTimeout(cpMark.t);

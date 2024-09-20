@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     bg3SpellBuildPlugin(),
     VitePWA({
-      includeAssets:['*.avif','mu.webp','bg.avif','a.webp','h.webp','logo.webp','c.svg'],
+      includeAssets:['*.avif','mu.webp','bg.avif','a.webp','h.webp','logo.webp','c.svg','un.webp'],
       manifest: {
         name: 'Baldur\'s Gate 3 Spells',
         short_name: 'BG3 Spells',
