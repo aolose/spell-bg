@@ -150,6 +150,7 @@ export const parseData = () => {
           }
         }
       });
+      if(e.SpellType)types.add(e.SpellType);
       if (e.SpellID) r.push(e);
     });
     return r;
@@ -255,10 +256,8 @@ export const parseData = () => {
     };
 
     cache.concat(extra).forEach((o) => {
-      const { SpellType } = o;
       if (o.Icon) usedIcons.add(o.Icon);
       delete o.refs;
-      types.add(SpellType);
       bk.push(o);
       Object.keys(o).forEach((k) => {
         if (arrayName[k]) {
