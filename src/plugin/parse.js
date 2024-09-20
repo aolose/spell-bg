@@ -197,8 +197,8 @@ export const parseData = () => {
     });
 
     cache.sort((spell0, spell2) => {
-      const n = spell0.Level || 99,
-        l = spell2.Level || 99;
+      const n = +(spell0.Level ?? 99),
+        l = +(spell2.Level ?? 99);
       return n === l
         ? spell0.SpellID.replace(spell0.SpellType + '_', '').toLowerCase() >
           spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()

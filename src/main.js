@@ -143,9 +143,9 @@ function filter() {
       if (/.\*|\*./.test(e))
         return new RegExp(e.replace(/\*/g, '.*'), 'ig').test(t);
       if ('-' === e) {
-        if (t) return;
+        if (t===0||t) return;
       } else if ('*' === e) {
-        if (!t) return;
+        if (t===undefined||t==='') return;
       } else if (/^>\d+$/.test(e)) {
         const n = +e.slice(1);
         if (!isNaN(n)) {
@@ -165,32 +165,34 @@ function filter() {
           });
           if (!match) return;
         }
-      } else if (-1 === (t + '').toLowerCase().indexOf((e + '').toLowerCase()))
-        return;
+      } else if (-1 === (t + '').toLowerCase().indexOf((e + ''))) return;
       return 1;
     };
     if (!type || type === spell.SpellType) {
       if (prop && value) {
-        if ((!prop) in spell) {
-          if ('*' === value) return;
-          else if ('-' === value) return filters.push(spell);
-        }
         let e = 0;
+        let mc = 0
         for (const spellProp in spell) {
           if ('mod' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
           const spellValue = spell[spellProp];
           const regExp = regexIfy(prop);
           const keyMatch =
             regExp?.test(spellProp) ||
-            spellProp.toLowerCase() === prop.toLowerCase() ||
+            spellProp.toLowerCase() === prop ||
             (/\*/.test(prop) &&
               new RegExp(prop.replace(/\*/g, '.*'), 'gi').test(spellProp));
-          if (keyMatch && check(value, spellValue)) {
-            e = 1;
-            break;
+          if (keyMatch) {
+            mc = 1
+            if(check(value, spellValue)){
+              e = 1;
+              break;
+            }
           }
         }
-        if (!e) return;
+        if (!e) {
+          if (!mc && '-' === value) return filters.push(spell);
+          return
+        }
       }
       filters.push(spell);
     }
@@ -400,7 +402,7 @@ const xx = (e, t, f = (a) => a) => {
         }, 200);
       };
 };
-xx('v0', 'k', (a) => (a ? a.replace(a[0], a[0].toUpperCase()) : a));
+xx('v0', 'k', a =>  a?.toLowerCase());
 xx('v2', 'l');
 cg('ALL', '');
 let syncB,
@@ -468,7 +470,7 @@ const spellCard = (spell, idx, frm) => {
 <div class="bd"><i></i><i></i><i></i><i></i></div>
     <span hidden>H</span>
     <i role="img"></i>
-    <span class="lv"></span>
+    <span class="lv">level -</span>
     <span class="tp"></span>
     <span class="cp"><span></span><button>+</button><button>-</button></span>
     <div class="l">
@@ -505,7 +507,7 @@ const spellCard = (spell, idx, frm) => {
       nm,
       DisplayName,
       Icon,
-      Level = null,
+      Level,
       SpellType,
       SpellProperties = [],
       SpellSuccess = []
@@ -527,7 +529,7 @@ const spellCard = (spell, idx, frm) => {
     }
     if (old.Level !== Level) {
       old.Level = Level;
-      lvEl.textContent = `level ${Level}`;
+      lvEl.textContent = `level ${Level??'-'}`;
     }
     if (SpellType !== old.SpellType) {
       old.SpellType = tpEl.textContent = SpellType;
