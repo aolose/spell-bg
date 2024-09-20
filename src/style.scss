@@ -402,13 +402,13 @@ ul {
 .p {
   padding: 0 10px;
 }
-#k{
+#k {
   justify-content: space-between;
   align-items: center;
   display: flex;
   gap: 20px;
-  transform: translate3d(calc(-20px - 100%),0,1px);
-  transition: .2s ease-in-out;
+  transform: translate3d(calc(-20px - 100%), 0, 1px);
+  transition: 0.2s ease-in-out;
   position: fixed;
   z-index: 5;
   left: 0;
@@ -421,30 +421,30 @@ ul {
   backdrop-filter: blur(6px);
   box-shadow: rgba(0, 0, 0, 0.9) 0 15px 40px;
   line-height: 1.8;
-  &.a{
-    transform: translate3d(0,0,1px);
+  &.a {
+    transform: translate3d(0, 0, 1px);
   }
   @media screen and (max-width: 768px) {
-    transform: translate3d(-100%,0,1px);
+    transform: translate3d(-100%, 0, 1px);
     margin: 32px 0;
     width: 90vw;
-    &.a{
-      transform: translate3d(calc(5vw - 4px),0,1px);
+    &.a {
+      transform: translate3d(calc(5vw - 4px), 0, 1px);
     }
   }
-  button{
+  button {
     outline: #423c2e 1px solid;
-    opacity: .9;
+    opacity: 0.9;
     border: 0;
     padding: 3px 4px;
     font-size: 12px;
     color: #000;
     background: #b49f68;
     cursor: pointer;
-    &:active{
+    &:active {
       opacity: 1;
     }
-    &+button{
+    & + button {
       color: #c4baab;
       background: transparent;
       border: 1px solid;
