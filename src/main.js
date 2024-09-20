@@ -506,7 +506,7 @@ const spellCard = (spell, idx, frm) => {
       mod = '',
       nm,
       DisplayName,
-      Icon,
+      Icon='',
       Level,
       SpellType,
       SpellProperties = [],
