@@ -25,7 +25,7 @@ if ('serviceWorker' in navigator) {
   const untilWaitingFound = () => {
     if (register.waiting) {
       worker = register.waiting;
-      if (untilWaitingInstalled()){
+      if (untilWaitingInstalled()) {
         worker.removeEventListener('statechange', untilWaitingInstalled);
         worker.addEventListener('statechange', untilWaitingInstalled);
       }
@@ -45,7 +45,7 @@ if ('serviceWorker' in navigator) {
     if (r) register = r;
     if (!register) return;
     checkUpdate();
-    if (untilWaitingFound()){
+    if (untilWaitingFound()) {
       register.removeEventListener('updatefound', untilWaitingFound);
       register.addEventListener('updatefound', untilWaitingFound);
     }

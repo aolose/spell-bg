@@ -106,8 +106,7 @@ const regexIfy = (e) => {
   if (t)
     try {
       return new RegExp(t[1], (t[2] || '').replace('i', '') + 'i');
-    } catch (e) {
-    }
+    } catch (e) {}
 };
 let cpField;
 
@@ -135,7 +134,8 @@ function copySpell(flag, spell) {
 
 function filter() {
   filters.length = 0;
-  const { t: type, k: prop, l: value } = filterOption;
+  const { t: type, k: prop, l = '' } = filterOption;
+  const value = l.toLowerCase();
   spellArr.forEach((spell) => {
     if (spell.hasOwnProperty('i')) return;
     const check = (e, t) => {
@@ -166,7 +166,7 @@ function filter() {
           });
           if (!match) return;
         }
-      } else if (-1 === (t + '').toLowerCase().indexOf(e + '')) return;
+      } else if (-1 === (t + '').indexOf(e + '')) return;
       return 1;
     };
     if (!type || type === spell.SpellType) {
@@ -175,7 +175,8 @@ function filter() {
         let mc = 0;
         for (const spellProp in spell) {
           if ('mod' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
-          const spellValue = spell[spellProp];
+          const v = spell[spellProp];
+          const spellValue = typeof v === 'string' ? v.toLowerCase() : v;
           const regExp = regexIfy(prop);
           const keyMatch =
             regExp?.test(spellProp) ||
@@ -244,7 +245,7 @@ window.loadSpell = async (idx, str) => {
         waitUpdate[id] = (waitUpdate[id] || []).concat(o);
       }
     }
-    o.update = function() {
+    o.update = function () {
       if (this.el) this.el.update();
       if (this.refs) this.refs.forEach((a) => a.update());
     };
@@ -284,9 +285,9 @@ function detail(spell) {
       !isNaN(n) || n?.length
         ? Array.isArray(n)
           ? `<ul>${n
-            .filter(Boolean)
-            .map((e) => `<li>${e}</li>`)
-            .join('')}</ul>`
+              .filter(Boolean)
+              .map((e) => `<li>${e}</li>`)
+              .join('')}</ul>`
           : `<span>${n}</span>`
         : '';
     const cls = spell.hasOwnProperty(key) ? '' : '_';
@@ -315,7 +316,7 @@ ctx.onclick = ({ target }) => {
   closeBtn.className = 's';
   if (card !== act) sidePanelInner.innerHTML = detail(card.spell);
 };
-closeBtn.onclick = function() {
+closeBtn.onclick = function () {
   if (act) {
     act.el.classList.remove('a');
     act = null;
@@ -394,15 +395,15 @@ const xx = (e, t, f = (a) => a) => {
   };
   n.oninput =
     n.onchange =
-      n.onpaste =
-        n.onblur =
-          function() {
-            clearTimeout(l);
-            l = setTimeout(() => {
-              filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
-              syncA++;
-            }, 200);
-          };
+    n.onpaste =
+    n.onblur =
+      function () {
+        clearTimeout(l);
+        l = setTimeout(() => {
+          filterOption[t] = f(n.value.replace(/^\s+|\s+$/, ''));
+          syncA++;
+        }, 200);
+      };
 };
 xx('v0', 'k', (a) => a?.toLowerCase());
 xx('v2', 'l');
@@ -500,7 +501,7 @@ const spellCard = (spell, idx, frm) => {
     const top = `${Math.floor(idx / columns) * cardHeight}px`;
     elm.style.transform = `translate3d(${left},${top},0)`;
   };
-  elm.update = function() {
+  elm.update = function () {
     const old = (this._ = this._ || {});
     const spell = this.spell;
     const {
@@ -579,7 +580,7 @@ if (_spells) {
 }
 const cpMark = el('<span class="cm"><span>✔</span></span>');
 const cpSly = cpMark.children[0].style;
-sidePanelInner.onclick = function({ target }) {
+sidePanelInner.onclick = function ({ target }) {
   const tag = target.tagName;
   if ('LABEL' === tag) {
     clearTimeout(cpMark.t);
