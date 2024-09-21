@@ -39,7 +39,7 @@ if ('serviceWorker' in navigator) {
         .update()
         .then(() => handle())
         .catch(checkUpdate);
-    }, 4e3); // 5min loop
+    }, 5e3); // 5min loop
   };
 
   const handle = (r) => {
