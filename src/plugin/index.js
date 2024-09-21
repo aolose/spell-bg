@@ -29,6 +29,7 @@ export function bg3SpellBuildPlugin() {
     transform(src, id) {
       if (/main/.test(id)) {
         src = src
+          .replace('%time%', new Date().toLocaleString())
           .replace('%spellKeys%', spellKeys)
           .replace('%dic%', dic)
           .replace('%spellIds%', spellIds)

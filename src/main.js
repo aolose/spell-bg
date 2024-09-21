@@ -383,6 +383,7 @@ closeBtn.onclick = function () {
   const cls = isMobile ? (sidePanel.className ? '' : 's') : '';
   sidePanel.className = closeBtn.className = cls;
   sidePanelInner.innerHTML = `<pre>
+<small>Last built on %time%</small>
 Content based on %%.
 The filter supports regular expressions
 and is case insensitive.

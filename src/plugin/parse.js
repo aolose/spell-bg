@@ -7,6 +7,8 @@ import { merge } from './spells.js';
 const dic = [];
 const counter = {};
 const splitWorlds = (str) => str.split(/(?=[^a-zA-Z]+)|(?<=[^a-zA-Z]+)/);
+let ori = 0
+let reduce = 0
 const strZip = (str) => {
   const words = splitWorlds(str);
   words.forEach((a, i) => {
@@ -14,8 +16,10 @@ const strZip = (str) => {
     if (idx !== -1) words[i] = `$${idx.toString(36)}`;
   });
   const ss = words.join('');
+  ori+=str.length
+  reduce += str.length - ss.length
   console.log(
-    `compressed: ${(((str.length - ss.length) * 100) / str.length).toFixed(2)}%`
+    `compressed: ${((reduce * 100) / ori).toFixed(2)}%`
   );
   return ss;
 };
