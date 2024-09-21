@@ -220,7 +220,7 @@ html {
   backdrop-filter: blur(8px);
 }
 
-#c div,
+#c button,
 #e,
 .c {
   cursor: pointer;
@@ -258,6 +258,7 @@ html {
 .lo {
   position: relative;
   top: 10px;
+  width: auto;
   height: 64px;
   margin: 0 10px -14px;
   filter: drop-shadow(2px 4px 6px black);
@@ -380,18 +381,19 @@ ul {
   gap: 13px;
   color: #fbcea0;
 
-  div {
+  button {
     transition: 0.3s;
     font-family: serif;
     min-width: 48px;
     position: relative;
     text-align: center;
+    border: none;
+    color: inherit;
   }
 
-  div:hover,
+  button:hover,
   .act {
     color: #fff;
-
     .dc {
       transform: scaleX(1);
     }
@@ -794,7 +796,7 @@ input {
     padding: 10px 0;
     justify-content: center;
   }
-  #c div {
+  #c button {
     min-width: 0;
     padding: 5px;
     font-size: 12px;
@@ -887,13 +889,14 @@ p b {
 
 .cp {
   position: absolute;
-  bottom: 10px;
-  right: 16px;
+  bottom: 6px;
+  right: 10px;
   z-index: 1;
 
   span {
     font-size: 12px;
     color: #98918b;
+    padding-right: 4px;
   }
 
   button {
@@ -902,13 +905,14 @@ p b {
     cursor: pointer;
     line-height: 1;
     font-size: 14px;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-left: 5px;
-    border: 1px solid currentColor;
+    border: none;
+    outline: 1px solid currentColor;
+    outline-offset: -5px;
     color: #937859;
 
     &:active {

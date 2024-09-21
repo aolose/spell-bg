@@ -368,13 +368,13 @@ const cg = (e, t) => {
     '2.335-.707-.707L17.76.99h.414l.221.147 3.187 3.186c.423.423.82.677 ' +
     '1.417.677h11v1Z';
   const menu = el(`
-<div role="tab" aria-selected="true" aria-controls="spell-type" >
+<button aria-label="${n}" role="menuitem">
     <span>${n.toUpperCase()}</span>
     <span class="dc"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 34 10" height="10" width="34" data-v-f1544235="">
     <path fill="#ddc9a7" d="${ph}"> 
     </path>
     </svg></span>
-</div>`);
+</button>`);
   menu.onclick = () => {
     cg(n, e);
   };
