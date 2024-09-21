@@ -1,38 +1,58 @@
 if ('serviceWorker' in navigator) {
   let register;
-  const ws =
-    import.meta.env.MODE === 'production' ? '/sw.js' : '/dev-sw.js?dev-sw';
-  const prompt = document.getElementById('k');
+  let worker;
   let promptTimer = -1;
+
+  const prompt = document.getElementById('k');
   prompt.onclick = ({ target }) => {
     if ('B' === target.tagName[0]) {
-      clearInterval(promptTimer);
       prompt.classList.remove('a');
       if (target.textContent[0] === 'R') {
-        register?.waiting?.postMessage?.({ type: 'SKIP_WAITING' });
         setTimeout(() => {
           location.reload();
         }, 200);
       }
     }
   };
-  const waitUpdate = (r) => {
-    if (r.active && r.waiting) {
-      prompt.classList.add('a');
-    } else {
-      promptTimer = setTimeout(() => {
-        r.update()
-          .then(() => waitUpdate(r))
-          .catch(console.error);
-      }, 6e5);
-    }
+
+  const untilWaitingInstalled = () => {
+    if (worker.state !== 'installed') return true;
+    clearInterval(promptTimer);
+    worker.postMessage?.({ type: 'SKIP_WAITING' });
+    prompt.classList.add('a');
   };
+
+  const untilWaitingFound = () => {
+    if (register.active && register.waiting) {
+      worker = register.waiting;
+      if (untilWaitingInstalled())
+        worker.addEventListener('statechange', untilWaitingInstalled);
+    } else return true;
+  };
+
+  const checkUpdate = () => {
+    promptTimer = setTimeout(() => {
+      register
+        .update()
+        .then(() => handle())
+        .catch(checkUpdate);
+    }, 3e5); // 5min loop
+  };
+
+  const handle = (r) => {
+    if (r) register = r;
+    if (!register) return;
+    checkUpdate();
+    if (untilWaitingFound())
+      register.addEventListener('updatefound', untilWaitingFound);
+  };
+
   navigator.serviceWorker
-    .register(ws, { scope: '/' })
-    .then((r) => {
-      register = r;
-      waitUpdate(r);
-    })
+    .register(
+      import.meta.env.MODE === 'production' ? '/sw.js' : '/dev-sw.js?dev-sw',
+      { scope: '/' }
+    )
+    .then(handle)
     .catch(() => {
       clearTimeout(promptTimer);
       register?.waiting?.postMessage?.({ type: 'SKIP_WAITING' });

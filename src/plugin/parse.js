@@ -150,7 +150,7 @@ export const parseData = () => {
           }
         }
       });
-      if(e.SpellType)types.add(e.SpellType);
+      if (e.SpellType) types.add(e.SpellType);
       if (e.SpellID) r.push(e);
     });
     return r;
