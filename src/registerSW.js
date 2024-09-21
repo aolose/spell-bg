@@ -16,7 +16,6 @@ if ('serviceWorker' in navigator) {
   };
 
   const untilWaitingInstalled = () => {
-    console.log('worker.state:', worker.state);
     if (worker.state !== 'installed') return true;
     clearInterval(promptTimer);
     worker.postMessage({ type: 'SKIP_WAITING' });
@@ -24,7 +23,6 @@ if ('serviceWorker' in navigator) {
   };
 
   const untilWaitingFound = () => {
-    console.log('waiting',register.waiting)
     register.removeEventListener('updatefound', untilWaitingFound);
     if (register.waiting) {
       worker = register.waiting;
