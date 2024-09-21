@@ -23,11 +23,12 @@ if ('serviceWorker' in navigator) {
   };
 
   const untilWaitingFound = () => {
-    register.removeEventListener('updatefound', untilWaitingFound);
     if (register.waiting) {
       worker = register.waiting;
-      if (untilWaitingInstalled())
+      if (untilWaitingInstalled()){
+        worker.removeEventListener('statechange', untilWaitingInstalled);
         worker.addEventListener('statechange', untilWaitingInstalled);
+      }
     } else return true;
   };
 
@@ -44,8 +45,10 @@ if ('serviceWorker' in navigator) {
     if (r) register = r;
     if (!register) return;
     checkUpdate();
-    if (untilWaitingFound())
+    if (untilWaitingFound()){
+      register.removeEventListener('updatefound', untilWaitingFound);
       register.addEventListener('updatefound', untilWaitingFound);
+    }
   };
 
   navigator.serviceWorker
