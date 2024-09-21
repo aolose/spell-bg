@@ -16,7 +16,7 @@ const { serviceWorker } = navigator;
         import.meta.env.MODE === 'production' ? '/sw.js' : '/dev-sw.js?dev-sw';
       register = await serviceWorker.register(sw, { scope: '/' });
       let updated;
-      register.onupdatefound = (e) => {
+      register.onupdatefound = () => {
         if (updated) prompt.classList.add('a');
         updated = 1;
       };

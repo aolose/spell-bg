@@ -318,7 +318,7 @@ ctx.onclick = ({ target }) => {
 };
 closeBtn.onclick = function () {
   if (act) {
-    act.el.classList.remove('a');
+    act.el?.classList.remove('a');
     act = null;
     github.display = '';
   }
