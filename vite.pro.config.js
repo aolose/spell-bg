@@ -2,11 +2,13 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { bg3SpellBuildPlugin } from './src/plugin/index.js';
 import { ViteMinifyPlugin } from 'vite-plugin-minify'
+import path from 'path';
 
 export default defineConfig({
   plugins: [
     bg3SpellBuildPlugin(),
     VitePWA({
+      injectRegister:null,
       includeAssets:['*.avif','mu.webp','bg.avif','a.webp','h.webp','logo.webp','c.svg','un.webp'],
       manifest: {
         name: 'Baldur\'s Gate 3 Spells',
@@ -31,6 +33,19 @@ export default defineConfig({
     ViteMinifyPlugin({})
   ],
   build: {
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        registerSW: path.resolve(__dirname, 'src/registerSW.js'),
+      },
+      output:{
+        entryFileNames:({name})=>{
+          if('registerSW'===name)return '[name].js'
+          return  '[name]-[hash].js'
+        },
+        assetFileNames:'[name]-[hash].[ext]'
+      }
+    },
     minify: true
   }
 });
