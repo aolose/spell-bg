@@ -3,17 +3,18 @@ import xmlParser from 'xml2json';
 import path from 'path';
 import cfg from '../../cfg.js';
 import { merge } from './spells.js';
+import { n2s } from './utils.js';
 
 const dic = [];
 const counter = {};
-const splitWorlds = (str) => str.split(/(?=[^a-zA-Z]+)|(?<=[^a-zA-Z]+)/);
+const splitWords = (str) => str.split(/(?=[^a-zA-Z]+)|(?<=[^a-zA-Z]+)/);
 let ori = 0;
 let reduce = 0;
 const strZip = (str) => {
-  const words = splitWorlds(str);
+  const words = splitWords(str);
   words.forEach((a, i) => {
     const idx = dic.indexOf(a);
-    if (idx !== -1) words[i] = `$${idx.toString(36)}`;
+    if (idx !== -1) words[i] = n2s(idx);
   });
   const ss = words.join('');
   ori += str.length;
@@ -41,25 +42,23 @@ const miniIco = (o) => {
   return Object.keys(o).concat(Object.values(o)).flat().join();
 };
 const miniSpell = (o) => {
-  if (Array.isArray(o)) {
-    const b = [];
-    o.forEach((n) => {
-      const x = [];
-      const m = [];
-      for (const [k, c] of Object.entries(n)) {
-        const v = [].concat(c).join('\x02');
-        const i = spellKeys.indexOf(k);
-        if (i > -1) x.push(i);
-        else {
-          x.push(spellKeys.length);
-          spellKeys.push(k);
-        }
-        m.push(v);
+  const b = [];
+  o.forEach((n) => {
+    let x = '';
+    const m = [];
+    for (const [k, c] of Object.entries(n)) {
+      const v = [].concat(c).join('\x02');
+      let i = spellKeys.indexOf(k);
+      if (i === -1) {
+        i = spellKeys.length;
+        spellKeys.push(k);
       }
-      b.push(x.concat(m).join('\x00'));
-    });
-    return '"' + b.join('\x01').replace(/"/g, '\\"') + '"';
-  }
+      x += n2s(i);
+      m.push(v);
+    }
+    b.push([x].concat(m).join('\x00'));
+  });
+  return '"' + b.join('\x01').replace(/"/g, '\\"') + '"';
 };
 const task = [];
 
@@ -321,7 +320,7 @@ export const parseData = () => {
   parseSpells();
 
   const parsWord = (str) => {
-    splitWorlds(str).forEach((k) => {
+    splitWords(str).forEach((k) => {
       if (k.length > 2) counter[k] = (counter[k] || 0) + 1;
     });
   };

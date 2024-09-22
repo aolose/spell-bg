@@ -1,6 +1,8 @@
+import { s2n } from './plugin/utils.js';
+
 const dic = '%dic%'.split(',');
 const unZipStr = (str) =>
-  str.replace(/\$([0-9a-zA-Z]+)/g, (_, a) => dic[parseInt(a, 36)]);
+  str.replace(/[\x03-\x07\x0e-\x1f\x7f-\xff]+/g, (a) => dic[s2n(a)]);
 const spellProps = unZipStr('%spellKeys%').split(',');
 const spellIds = unZipStr('%spellIds%').split(',');
 let act = null;
@@ -217,7 +219,7 @@ window.ok = () => {
 const waitUpdate = {};
 window.loadSpell = async (idx, str) => {
   ok();
-  const items = unZipStr(str).split('\x01');
+  const items = str.split('\x01');
   const setProto = (o, p) => {
     o.__proto__ = p;
     p.refs = (p.refs || []).concat(o);
@@ -226,11 +228,13 @@ window.loadSpell = async (idx, str) => {
   };
   items.forEach((str, i) => {
     const fields = str.split('\x00');
-    const n = fields.length / 2;
-    const [ks, vs] = [fields.slice(0, n), fields.slice(n)];
+    const [ks, vs] = [
+      fields.match(/[\x03-\x12]?[\x13-\x1f\x7f-\xff]/g),
+      fields.slice(1)
+    ];
     const o = {};
     ks.forEach((a, b) => {
-      const v = vs[b].split('\x02');
+      const v = unZipStr(vs[b]).split('\x02');
       o[spellProps[a]] = v[1] === undefined ? v[0] : v;
     });
     o.refs = null;
