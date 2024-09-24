@@ -13,6 +13,8 @@ export function bg3SpellBuildPlugin() {
             ? 'src="/registerSW.js"'
             : 'src="./src/registerSW.js" type="module"';
         return html
+          .replace('%version%', cfg.version)
+          .replace('%date%', new Date().toISOString())
           .replace('rel=registerSW', registerSW)
           .replace('%script%', scripts);
       }
@@ -20,12 +22,10 @@ export function bg3SpellBuildPlugin() {
     transform(src, id) {
       if (/main/.test(id)) {
         src = src
-          .replace('%time%', Date.now())
           .replace('%spellKeys%', spellKeys)
           .replace('%dic%', dic)
           .replace('%spellIds%', spellIds)
           .replace('%icons%', icons)
-          .replace('%%', cfg.version)
           .replace('%types%', types)
           .replace("'%total%'", `${total}`);
       }

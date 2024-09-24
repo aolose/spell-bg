@@ -317,6 +317,7 @@ ctx.onclick = ({ target }) => {
   closeBtn.className = 's';
   if (card !== act) sidePanelInner.innerHTML = detail(card.spell);
 };
+const pre = sidePanelInner.innerHTML;
 closeBtn.onclick = function () {
   if (act) {
     act.el?.classList.remove('a');
@@ -325,29 +326,7 @@ closeBtn.onclick = function () {
   }
   const cls = isMobile ? (sidePanel.className ? '' : 's') : '';
   sidePanel.className = closeBtn.className = cls;
-  sidePanelInner.innerHTML = `<pre>
-<small>Last built on ${new Date(+'%time%').toLocaleString()}</small>
-Content based on %%.
-The filter supports regular expressions
-and is case insensitive.
-
-SpellID:
-         The Property name of spell's data.
-         'spell*' means start width spell.
-         Or, you can type /^spell/.
- Value:
-         The Property Value of spell's data .
-         '-' means empty.
-         '*' means not empty.
-         '>5' means equal or bigger than 5.
-        
- e.g
-     No Icon spells:
-     Name : icon   Value: -
-     Honour spells:
-     Name : mod   Value: ho
-     Spells Damage > 500:
-     Name : spell*   Value: >500`;
+  sidePanelInner.innerHTML = pre;
 };
 
 const el = (e) => {
@@ -584,7 +563,6 @@ window.onresize = () => {
   }
 };
 onresize();
-if (!isMobile) closeBtn.onclick();
 run();
 if (_spells) {
   _spells.forEach(([a, b]) => loadSpell(a, b));
