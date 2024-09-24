@@ -5,10 +5,7 @@ import cfg from '../../cfg.js';
 import { merge } from './spells.js';
 import { compressor, n2s } from './utils.js';
 
-const splitWords = str => {
-  if (!str.split) debugger
-  return str.split(/(?=[^a-zA-Z0-9\-])|(?<=[^a-zA-Z0-9\-])/);
-};
+const splitWords = str => str.split(/(?=[^a-zA-Z0-9\-])|(?<=[^a-zA-Z0-9\-])/);
 const { parse, zip, sort, dic } = compressor(splitWords);
 
 const hash = (str) => {
