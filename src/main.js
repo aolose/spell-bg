@@ -18,16 +18,7 @@ const skOrder = [
   'SpellType'
 ];
 
-function loadIcon(arr) {
-  const n = arr.length / 4;
-  const [ks, vs] = [arr.slice(0, n), arr.slice(n)];
-  ks.forEach((k, i) => {
-    icons[k] = vs.slice(i * 3, (i + 1) * 3).map(Number);
-  });
-}
-
-const icons = {};
-loadIcon(unZipStr('%icons%').split(','));
+const icons = unZipStr('%icons%').split(',');
 
 function setCount() {
   currentSpellLen.textContent = `${filters.length}`;
@@ -229,16 +220,21 @@ window.loadSpell = async (idx, str) => {
   items.forEach((str, i) => {
     const fields = str.split('\x00');
     const [ks, vs] = [
-      fields.match(/[\x03-\x12]?[\x13-\x1f\x7f-\xff]/g),
+      fields[0].match(/[\xfd-\xff]?[\xd7-\xfc]?[\x03-\x07\x0e-\x1f\x7f-\xd6]/g)
+        .map(a=>spellProps[s2n(a)]),
       fields.slice(1)
     ];
     const o = {};
     ks.forEach((a, b) => {
       const v = unZipStr(vs[b]).split('\x02');
-      o[spellProps[a]] = v[1] === undefined ? v[0] : v;
+      o[a] = v[1] === undefined ? v[0] : v;
     });
     o.refs = null;
     o.el = null;
+    if(/^\d+$/.test(o.Icon)){
+      o.ico = o.Icon
+      o.Icon = icons[o.Icon]
+    }
     const x = idx + i;
     if (o.Using) {
       const id = parseInt(o.Using, 36);
@@ -476,7 +472,7 @@ const spellCard = (spell, idx, frm) => {
   const elm = el(`<div class="c" role="listitem" >
 <div class="bd"><i></i><i></i><i></i><i></i></div>
     <span hidden>H</span>
-    <i role="img"></i>
+    <img decoding="async"/>
     <span class="lv">level -</span>
     <span class="tp"></span>
     <span class="cp"><span></span><button>+</button><button>-</button></span>
@@ -512,6 +508,7 @@ const spellCard = (spell, idx, frm) => {
       SpellID,
       mod = '',
       nm,
+      ico='',
       DisplayName,
       Icon = '',
       Level,
@@ -530,9 +527,10 @@ const spellCard = (spell, idx, frm) => {
       }
       nmEl.textContent = DisplayName || nm;
     }
-    if (old.Icon !== Icon) {
+    if (old.ico !== ico) {
       old.Icon = Icon;
-      iconEl.style = ico(Icon);
+      iconEl.src= ico?`/${ico}.webp`:'/un.webp';
+      iconEl.alt= Icon
     }
     if (old.Level !== Level) {
       old.Level = Level;
