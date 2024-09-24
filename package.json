@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
+    "xx": "node aaa",
     "format": "prettier --write ./src",
     "dev": "vite",
     "lint": "eslint",

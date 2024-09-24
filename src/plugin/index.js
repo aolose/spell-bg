@@ -20,10 +20,6 @@ export function bg3SpellBuildPlugin() {
       handler(html) {
         return html
           .replace('%script%', scripts)
-          .replace(
-            '%style%',
-            `--bgW:${bgW}px;--bgH:${bgH}px;--iconSiz:${iconSiz}px`
-          );
       }
     },
     transform(src, id) {

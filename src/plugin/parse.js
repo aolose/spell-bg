@@ -3,24 +3,13 @@ import xmlParser from 'xml2json';
 import path from 'path';
 import cfg from '../../cfg.js';
 import { merge } from './spells.js';
+import { compressor, n2s } from './utils.js';
 
-const dic = [];
-const counter = {};
-const splitWorlds = (str) => str.split(/(?=[^a-zA-Z]+)|(?<=[^a-zA-Z]+)/);
-let ori = 0;
-let reduce = 0;
-const strZip = (str) => {
-  const words = splitWorlds(str);
-  words.forEach((a, i) => {
-    const idx = dic.indexOf(a);
-    if (idx !== -1) words[i] = `$${idx.toString(36)}`;
-  });
-  const ss = words.join('');
-  ori += str.length;
-  reduce += str.length - ss.length;
-  console.log(`compressed: ${((reduce * 100) / ori).toFixed(2)}%`);
-  return ss;
+const splitWords = str => {
+  if (!str.split) debugger
+  return str.split(/(?=[^a-zA-Z0-9\-])|(?<=[^a-zA-Z0-9\-])/);
 };
+const { parse, zip, sort, dic } = compressor(splitWords);
 
 const hash = (str) => {
   let h = 0,
@@ -36,30 +25,25 @@ const hash = (str) => {
 };
 const spellIds = [];
 const spellKeys = [];
-const usedIcons = new Set();
-const miniIco = (o) => {
-  return Object.keys(o).concat(Object.values(o)).flat().join();
-};
+const usedIcons = [];
 const miniSpell = (o) => {
-  if (Array.isArray(o)) {
-    const b = [];
-    o.forEach((n) => {
-      const x = [];
-      const m = [];
-      for (const [k, c] of Object.entries(n)) {
-        const v = [].concat(c).join('\x02');
-        const i = spellKeys.indexOf(k);
-        if (i > -1) x.push(i);
-        else {
-          x.push(spellKeys.length);
-          spellKeys.push(k);
-        }
-        m.push(v);
+  const b = [];
+  o.forEach((n) => {
+    let x = '';
+    const m = [];
+    for (const [k, c] of Object.entries(n)) {
+      const v = [].concat(c).join('\x02');
+      let i = spellKeys.indexOf(k);
+      if (i === -1) {
+        i = spellKeys.length;
+        spellKeys.push(k);
       }
-      b.push(x.concat(m).join('\x00'));
-    });
-    return '"' + b.join('\x01').replace(/"/g, '\\"') + '"';
-  }
+      x += n2s(i);
+      m.push(v);
+    }
+    b.push([x].concat(m).join('\x00'));
+  });
+  return '"' + b.join('\x01').replace(/"/g, '\\"') + '"';
 };
 const task = [];
 
@@ -72,7 +56,7 @@ export const parseData = () => {
   const assets = 'public';
   const types = new Set();
   const bk = [];
-  const size = 300;
+  const size = 500;
   const sliceH = 128;
   const iconSiz = 48;
   const imgW = 1024;
@@ -89,6 +73,7 @@ export const parseData = () => {
     total++;
     const hs = hash(js);
     name = `${name}.${hs}.js`;
+    parse(js);
     task.push([resolve(assets, name), js]);
     wsc(name);
   };
@@ -195,6 +180,15 @@ export const parseData = () => {
 
     const cache = [];
     arr.flat().forEach((a) => {
+      const ic = a.Icon;
+      if (ic && 'unkown' !== ic && icons[ic]) {
+        let i = usedIcons.indexOf(ic);
+        if (i === -1) {
+          i = usedIcons.length;
+          usedIcons.push(ic);
+        }
+        a.Icon = i;
+      }
       const o = merge(a);
       if (o) cache.push(o);
     });
@@ -204,7 +198,7 @@ export const parseData = () => {
         l = +(spell2.Level ?? 99);
       return n === l
         ? spell0.SpellID.replace(spell0.SpellType + '_', '').toLowerCase() >
-          spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
+        spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
           ? 1
           : -1
         : n > l
@@ -258,7 +252,6 @@ export const parseData = () => {
     };
 
     cache.concat(extra).forEach((o) => {
-      if (o.Icon) usedIcons.add(o.Icon);
       delete o.refs;
       bk.push(o);
       Object.keys(o).forEach((k) => {
@@ -271,9 +264,6 @@ export const parseData = () => {
       ld();
     });
     ld(1);
-    Object.keys(icons).forEach((a) => {
-      if (!usedIcons.has(a)) delete icons[a];
-    });
   };
 
   try {
@@ -286,88 +276,75 @@ export const parseData = () => {
   }
 
   const icons = {};
-  const cIcon = (str, i = 0) => {
+  const parseIcon = (str, i = 0) => {
     str.split('<node id="IconUV">').forEach((v) => {
-      const o = [];
+      const o = [0, 0, i];
       let key = '';
       v.split(/\r?\n/).forEach((vv) => {
         const [, a] =
-          /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
+        /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
         const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
         if (a) key = a;
         if (n) {
           switch (t) {
             case 'U1':
               if (n)
-                o[0] = parseFloat(((2048 * n * 100) / (2048 - 64)).toFixed(2));
+                o[0] = Math.floor(n * 2048 / 64);
               break;
             case 'V1':
-              o[1] = Math.floor((imgW * n) / sliceH);
-              o[2] = parseFloat(
-                ((((bgW * n) % bgH) * 100) / (bgH - iconSiz)).toFixed(2)
-              );
+              o[1] = Math.floor(n * 2048 / 64);
           }
         }
       });
       if (key) icons[key] = o;
-      if (i) o[1] = (+o[1] || 0) + i * 8;
     });
   };
   cfg.icons.forEach((a, i) => {
-    cIcon(read(resolve(unpackDir, a)), i);
+    parseIcon(read(resolve(unpackDir, a)), i);
   });
   parseLang();
   parseTooltip();
   parseSpells();
 
-  const parsWord = (str) => {
-    splitWorlds(str).forEach((k) => {
-      if (k.length > 2) counter[k] = (counter[k] || 0) + 1;
-    });
-  };
   const sk = spellKeys.join();
   const si = spellIds.join();
-  const ic = miniIco(icons);
+  const ic = usedIcons.join();
   const tp = [...types].join();
-  parsWord(tp);
-  parsWord(si);
-  parsWord(si);
-  parsWord(ic);
+  parse(tp);
+  parse(sk);
+  parse(si);
+  parse(ic);
   task.forEach((a) => {
-    parsWord(a[1]);
+    parse(a[1]);
   });
 
-  const kvs = Object.entries(counter);
-  kvs.sort((a, b) => {
-    return b[1] - a[1];
-  });
-
-  let base = dic.length.toString(32).length;
-
-  kvs.forEach(([str, num]) => {
-    if (num > 1 && str.length > base + 1) {
-      dic.push(str);
-      base = dic.length.toString(36).length;
-    }
-  });
+  sort();
 
   task.forEach(([p, d]) => {
-    fs.writeFileSync(p, 'loadSpell(' + strZip(d), { flag: 'w+' });
+    fs.writeFileSync(p, zip('loadSpell(' + d), { flag: 'w+' });
   });
+
+  const patch = {
+    scripts,
+    bgW,
+    bgH,
+    iconSiz,
+    total,
+    dds: usedIcons.map(a => {
+      const v = icons[a];
+      if (!v) console.log(a);
+      return v;
+    }),
+    spellIds: zip(si),
+    spellKeys: zip(sk),
+    icons: zip(ic),
+    dic: dic,
+    types: zip(tp)
+  };
 
   fs.writeFileSync(
     'src/plugin/patch.js',
-    `export default ${JSON.stringify({
-      scripts,
-      bgW,
-      bgH,
-      iconSiz,
-      total,
-      spellIds: strZip(si),
-      spellKeys: strZip(sk),
-      icons: strZip(ic),
-      dic: dic.join(),
-      types: strZip(tp)
-    }).replace(/"(\w+?)":/g, '$1:')}`
+    `export default ${JSON.stringify(patch).replace(/"(\w+?)":/g, '$1:')}`
   );
+  return patch;
 };

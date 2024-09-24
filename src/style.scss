@@ -23,6 +23,7 @@ html {
   width: 100vw;
   overflow: hidden;
   overscroll-behavior: none;
+  background: #17130d url(/bg.webp) center / cover;
 }
 
 @keyframes lp {
@@ -630,14 +631,13 @@ input {
     }
   }
 
-  & > i {
+  & > img {
     border: 1px solid rgb(220 197 5 / 34%);
     border-radius: 3px;
     display: block;
-    width: var(--iconSiz);
-    height: var(--iconSiz);
-    background: url('/un.webp') rgba(255, 87, 34, 0.04);
-    background-size: var(--bgW) var(--bgH);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 87, 34, 0.04);
   }
 }
 

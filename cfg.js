@@ -16,8 +16,8 @@ export default {
         'Shared/Public/Shared/GUI/Icons_Items.lsx'
     ],
     dds: [
-        ['Icons/Public/Shared/Assets/Textures/Icons/Icons_Skills.dds'],
-        ['Icons/Public/SharedDev/Assets/Textures/Icons/Icons_Skills.dds', 8],
-        ['Icons/Public/Shared/Assets/Textures/Icons/Icons_Items.dds', 16]
+        'Icons/Public/Shared/Assets/Textures/Icons/Icons_Skills.dds',
+        'Icons/Public/SharedDev/Assets/Textures/Icons/Icons_Skills.dds',
+        'Icons/Public/Shared/Assets/Textures/Icons/Icons_Items.dds'
     ]
 }

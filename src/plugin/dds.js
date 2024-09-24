@@ -5,33 +5,22 @@ import dxt from 'decode-dxt';
 import cfg from '../../cfg.js';
 import sharp from 'sharp';
 
-const resizeImage = async (sharpImage) => {
-  let a = 0;
-  const images = [];
-  while (a < 1536) {
-    const top = a;
-    a += 192;
+const resizeImage = async (sharpImage, data) => {
+  data.forEach(([x, y, n]) => {
     const sharp = sharpImage
       .clone()
-      .extract({ left: 0, top, height: 192, width: 1536 });
-    images.push(sharp);
-  }
-  return images;
-};
-
-const createClip = async (base, images) => {
-  for (const a of images) {
-    const i = images.indexOf(a);
-    await save(a, base + i);
-  }
+      .extract({ left: 48 * x, top: 48 * y, height: 48, width: 48 });
+    save(sharp, n);
+  });
 };
 
 const save = async (a, name) => {
   await a
-    .avif({
-      quality: 5
+    .webp({
+      alphaQuality: 0,
+      quality: 10
     })
-    .toFile(path.resolve(cfg.assets, `${name}.avif`));
+    .toFile(path.resolve(cfg.assets, `${name}.webp`));
 };
 
 const readDDS = (p) => {
@@ -52,7 +41,7 @@ const readDDS = (p) => {
     .removeAlpha();
 };
 
-export const buildImg = async () => {
+export const buildImg = async (dds) => {
   try {
     fs.readdirSync(cfg.assets).forEach((a) => {
       if (/^\d+\.(webp|avif)/.test(a))
@@ -61,7 +50,13 @@ export const buildImg = async () => {
   } catch (e) {
     console.warn(e);
   }
-  for (const [p, f = 0] of cfg.dds) {
-    await createClip(f, await resizeImage(readDDS(p)));
+  for (let i = 0; i < cfg.dds.length; i++) {
+    const data = [];
+    dds.forEach((a, n) => {
+      if (a && a[2] === i) {
+        data.push([a[0], a[1], n]);
+      }
+    });
+    await resizeImage(readDDS(cfg.dds[i]), data);
   }
 };
