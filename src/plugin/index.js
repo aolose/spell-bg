@@ -3,11 +3,8 @@ import cfg from '../../cfg.js';
 export function bg3SpellBuildPlugin() {
   const {
     scripts,
-    bgW,
     dic,
-    bgH,
     icons,
-    iconSiz,
     total,
     types,
     spellKeys,
@@ -32,7 +29,7 @@ export function bg3SpellBuildPlugin() {
           .replace('%icons%', icons)
           .replace('%%', cfg.version)
           .replace('%types%', types)
-          .replace('9999', `${total}`);
+          .replace("'%total%'", `${total}`);
       }
       return {
         code: src

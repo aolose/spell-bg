@@ -35,7 +35,7 @@ function getDesc(spell, field) {
 }
 
 let isMobile = 0;
-const all = 9999;
+const all = '%total%';
 const types = unZipStr('%types%').split(',');
 let syncA = 0;
 
@@ -198,7 +198,7 @@ function filter() {
 }
 
 let loaded = 0;
-window.ok = () => {
+const ok = () => {
   const e = (100 * ++loaded) / all;
   z.style.width = e + '%';
   if (100 === e) {
