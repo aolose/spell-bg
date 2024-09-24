@@ -443,7 +443,6 @@ const run = () => {
     }
     displayed = added;
     added = new Set();
-    if (act?.el) act.el.classList.add('a');
   }
 };
 let displayed = new Set();
@@ -496,6 +495,8 @@ const spellCard = (spell, idx, frm) => {
       SpellProperties = [],
       SpellSuccess = []
     } = spell;
+    if(act===spell)this.classList.add('a')
+    else this.classList.remove('a')
     const desc = getDesc(spell, 'Description');
     if (mod !== old.mod) {
       old.mod = titleEl.title = mod;
