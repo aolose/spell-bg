@@ -53,13 +53,7 @@ export const parseData = () => {
   const assets = 'public';
   const types = new Set();
   const bk = [];
-  const size = 500;
-  const sliceH = 128;
-  const iconSiz = 48;
-  const imgW = 1024;
-  const scale = iconSiz / 64;
-  const bgW = scale * 2048;
-  const bgH = (bgW / imgW) * sliceH;
+  const spellsFileCount = 5;
 
   if (!fs.existsSync(assets)) fs.mkdirSync(assets);
   let scripts = '';
@@ -239,7 +233,7 @@ export const parseData = () => {
     });
     let js = 0;
     let idx = 0;
-    const ld = (n = size) => {
+    const ld = (n = Math.ceil(arr.flat().length / spellsFileCount)) => {
       if (bk.length >= n) {
         const nm = `${js++}`;
         wJs(nm, `${idx},${miniSpell(bk)})`);
@@ -322,9 +316,6 @@ export const parseData = () => {
 
   const patch = {
     scripts,
-    bgW,
-    bgH,
-    iconSiz,
     total,
     dds: usedIcons.map((a) => {
       const v = icons[a];

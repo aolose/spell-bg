@@ -1,10 +1,7 @@
 export default {
   scripts:
-    "<script src='0.jqe71.js' async></script><script src='1.129fl.js' async></script><script src='2.1e32b.js' async></script><script src='3.5t56b.js' async></script><script src='4.5dnbt.js' async></script><script src='5.a2coo.js' async></script><script src='6.1j2f7.js' async></script><script src='7.jehms.js' async></script><script src='8.18ucl.js' async></script><script src='9.1fq0h.js' async></script>",
-  bgW: 1536,
-  bgH: 192,
-  iconSiz: 48,
-  total: 10,
+    "<script src='0.11iv4.js' async></script><script src='1.1shma.js' async></script><script src='2.4b17j.js' async></script><script src='3.1i886.js' async></script><script src='4.de415.js' async></script>",
+  total: 5,
   dds: [
     [22, 9, 0],
     [21, 9, 0],
