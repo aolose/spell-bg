@@ -631,13 +631,14 @@ input {
     }
   }
 
-  & > img {
+  & > i {
     border: 1px solid rgb(220 197 5 / 34%);
     border-radius: 3px;
     display: block;
-    width: 49px;
-    height: 49px;
-    background: rgba(255, 87, 34, 0.04);
+    width: 48px;
+    height: 48px;
+    background: url(/un.webp) top rgba(255, 87, 34, 0.04);
+    background-size: auto 48px;
   }
 }
 

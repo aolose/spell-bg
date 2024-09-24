@@ -26,8 +26,8 @@ export const n2s = (a) => {
 };
 export const s2n = (str) => {
   const l = str.length;
-  let a = baseStr.indexOf(str[l-1]);
-  if (l > 1) a += tStr.indexOf(str[l-2]) * ba;
+  let a = baseStr.indexOf(str[l - 1]);
+  if (l > 1) a += tStr.indexOf(str[l - 2]) * ba;
   if (l > 2) a += hStr.indexOf(str[0]) * ba * bb;
   return a;
 };

@@ -220,8 +220,9 @@ window.loadSpell = async (idx, str) => {
   items.forEach((str, i) => {
     const fields = str.split('\x00');
     const [ks, vs] = [
-      fields[0].match(/[\xfd-\xff]?[\xd7-\xfc]?[\x03-\x07\x0e-\x1f\x7f-\xd6]/g)
-        .map(a=>spellProps[s2n(a)]),
+      fields[0]
+        .match(/[\xfd-\xff]?[\xd7-\xfc]?[\x03-\x07\x0e-\x1f\x7f-\xd6]/g)
+        .map((a) => spellProps[s2n(a)]),
       fields.slice(1)
     ];
     const o = {};
@@ -231,9 +232,9 @@ window.loadSpell = async (idx, str) => {
     });
     o.refs = null;
     o.el = null;
-    if(/^\d+$/.test(o.Icon)){
-      o.ico = o.Icon
-      o.Icon = icons[o.Icon]
+    if (/^\d+$/.test(o.Icon)) {
+      o.ico = o.Icon;
+      o.Icon = icons[o.Icon];
     }
     const x = idx + i;
     if (o.Using) {
@@ -472,7 +473,7 @@ const spellCard = (spell, idx, frm) => {
   const elm = el(`<div class="c" role="listitem" >
 <div class="bd"><i></i><i></i><i></i><i></i></div>
     <span hidden>H</span>
-    <img decoding="async"/>
+    <i role="img"></i>
     <span class="lv">level -</span>
     <span class="tp"></span>
     <span class="cp"><span></span><button>+</button><button>-</button></span>
@@ -508,7 +509,7 @@ const spellCard = (spell, idx, frm) => {
       SpellID,
       mod = '',
       nm,
-      ico='',
+      ico = '',
       DisplayName,
       Icon = '',
       Level,
@@ -529,8 +530,17 @@ const spellCard = (spell, idx, frm) => {
     }
     if (old.ico !== ico) {
       old.Icon = Icon;
-      iconEl.src= ico?`/${ico}.webp`:'/un.webp';
-      iconEl.alt= Icon
+      const s = iconEl.style;
+      iconEl.ariaLabel = `icon of ${Icon}`;
+      if (ico) {
+        const v = ico % 128;
+        s.backgroundPositionX = -v * 48 + 'px';
+        s.backgroundImage = `url(/${(ico - v) / 128}.webp)`;
+      } else {
+        s.backgroundPositionX = 0;
+        s.backgroundImage = '';
+      }
+      iconEl.alt = Icon;
     }
     if (old.Level !== Level) {
       old.Level = Level;

@@ -4,6 +4,7 @@ import parse from 'parse-dds';
 import dxt from 'decode-dxt';
 import cfg from '../../cfg.js';
 import sharp from 'sharp';
+import mergeImg from 'merge-img';
 
 const resizeImage = async (sharpImage, data) => {
   data.forEach(([x, y, n]) => {
@@ -50,13 +51,30 @@ export const buildImg = async (dds) => {
   } catch (e) {
     console.warn(e);
   }
-  for (let i = 0; i < cfg.dds.length; i++) {
-    const data = [];
-    dds.forEach((a, n) => {
-      if (a && a[2] === i) {
-        data.push([a[0], a[1], n]);
+  const sharps = cfg.dds.map((a) => readDDS(a));
+  let i = 0;
+  let n = 0;
+  while (1) {
+    const icons = dds.slice(i, i + 128);
+    if (icons.length) {
+      const sps = icons.map(([x, y, i]) =>
+        sharps[i]
+          .clone()
+          .extract({ left: 48 * x, top: 48 * y, height: 48, width: 48 })
+      );
+      let img;
+      if (sps.length > 1) {
+        const images = await Promise.all(sps.map((a) => a.jpeg().toBuffer()));
+        const { data, width, height } = (await mergeImg(images)).bitmap;
+        img = sharp(data, {
+          raw: { width, height, channels: 4 }
+        }).removeAlpha();
+      } else {
+        img = sps[0];
       }
-    });
-    await resizeImage(readDDS(cfg.dds[i]), data);
+      await save(img, n);
+    } else break;
+    i += 128;
+    n += 1;
   }
 };

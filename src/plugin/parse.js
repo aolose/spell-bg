@@ -5,7 +5,7 @@ import cfg from '../../cfg.js';
 import { merge } from './spells.js';
 import { compressor, n2s } from './utils.js';
 
-const splitWords = str => str.split(/(?=[^a-zA-Z0-9\-])|(?<=[^a-zA-Z0-9\-])/);
+const splitWords = (str) => str.split(/(?=[^a-zA-Z0-9\-])|(?<=[^a-zA-Z0-9\-])/);
 const { parse, zip, sort, dic } = compressor(splitWords);
 
 const hash = (str) => {
@@ -195,7 +195,7 @@ export const parseData = () => {
         l = +(spell2.Level ?? 99);
       return n === l
         ? spell0.SpellID.replace(spell0.SpellType + '_', '').toLowerCase() >
-        spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
+          spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
           ? 1
           : -1
         : n > l
@@ -279,17 +279,16 @@ export const parseData = () => {
       let key = '';
       v.split(/\r?\n/).forEach((vv) => {
         const [, a] =
-        /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
+          /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
         const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
         if (a) key = a;
         if (n) {
           switch (t) {
             case 'U1':
-              if (n)
-                o[0] = Math.floor(n * 2048 / 64);
+              if (n) o[0] = Math.floor((n * 2048) / 64);
               break;
             case 'V1':
-              o[1] = Math.floor(n * 2048 / 64);
+              o[1] = Math.floor((n * 2048) / 64);
           }
         }
       });
@@ -327,7 +326,7 @@ export const parseData = () => {
     bgH,
     iconSiz,
     total,
-    dds: usedIcons.map(a => {
+    dds: usedIcons.map((a) => {
       const v = icons[a];
       if (!v) console.log(a);
       return v;
