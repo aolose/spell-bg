@@ -9,17 +9,16 @@ const splitWords = (str) => str.split(/(?=[^a-zA-Z0-9\-])|(?<=[^a-zA-Z0-9\-])/);
 const { parse, zip, sort, dic } = compressor(splitWords);
 
 const hash = (str) => {
-  let h = 0,
+  let h = new Uint32Array([0]),
     i,
     chr;
-  if (str.length === 0) return '0000';
   for (i = 0; i < str.length; i++) {
     chr = str.charCodeAt(i);
-    h = (h << 5) - h + chr;
-    h |= 0;
+    h[0] = (h[0]<<5) -h[0]  + chr;
   }
-  return h.toString(32).replace(/-/g, '').slice(0, 5);
+  return h[0].toString(36)
 };
+
 const spellIds = [];
 const spellKeys = [];
 const usedIcons = [];
