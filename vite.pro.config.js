@@ -11,9 +11,9 @@ export default defineConfig({
       injectRegister:null,
       includeAssets:['*.webp','c.svg'],
       manifest: {
-        name: 'Baldur\'s Gate 3 Spells',
+        name: 'Baldur\'s Gate 3 - Spells and Passives',
         short_name: 'BG3 Spells',
-        description: 'The Stats of Baldur\'s Gate 3 Spells',
+        description: 'List of all spells and Passives in Baldur\'s Gate 3。Also provides command codes for adding and removing Spells and Passives.',
         theme_color: '#0a0c17',
         background_color:"#241c10",
         icons: [
