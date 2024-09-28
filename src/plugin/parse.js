@@ -129,7 +129,7 @@ export const parseData = () => {
           }
         }
       }
-      if(Object.keys(e).length===0)return;
+      if(Object.keys(e).length<3&&!e.Using)return;
       if (e.SpellType) types.add(e.SpellType);
       if (e.SpellID) r.push(e);
     });
