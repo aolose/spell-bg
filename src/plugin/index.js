@@ -15,6 +15,7 @@ export function bg3SpellBuildPlugin() {
             ? 'src="/registerSW.js"'
             : 'src="./src/registerSW.js" type="module"';
         return html
+          .replace('%dic%', dic)
           .replace('%version%', cfg.version)
           .replace('%date%', new Date().toISOString())
           .replace('rel=registerSW', registerSW)
@@ -25,7 +26,6 @@ export function bg3SpellBuildPlugin() {
       if (/main/.test(id)) {
         src = src
           .replace('%spellKeys%', spellKeys)
-          .replace('%dic%', dic)
           .replace('%spellIds%', spellIds)
           .replace('%icons%', icons)
           .replace('%types%', types)

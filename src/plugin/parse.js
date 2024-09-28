@@ -101,9 +101,11 @@ export const parseData = () => {
     const r = [];
     a.split(/\r?\n\r?\n/).forEach((v) => {
       const e = { mod: flag };
-      v.split(/\r?\n/).forEach((n) => {
-        if (/^new entry/.test(n))
+      for (const n of v.split(/\r?\n/)) {
+        if (/^new entry/.test(n)) {
           e.SpellID = JSON.parse(n.replace('new entry ', ''));
+          if (e.SpellID[0] === '_') return;
+        }
         else if (/^using/.test(n)) {
           e.Using = n.slice(6).replace(/"/g, '');
         } else if (/^data/.test(n)) {
@@ -126,7 +128,8 @@ export const parseData = () => {
             }
           }
         }
-      });
+      }
+      if(Object.keys(e).length===0)return;
       if (e.SpellType) types.add(e.SpellType);
       if (e.SpellID) r.push(e);
     });
@@ -157,7 +160,7 @@ export const parseData = () => {
     spells.forEach(([name, flag]) => {
       const p = resolve(unpackDir, name);
       fs.readdirSync(p)
-        .filter((a) => /^Spell_|^Interrupt/.test(a))
+        .filter((a) => /^Spell_|^Passive/.test(a))
         .forEach((a) =>
           arr.push(
             fileParser(fs.readFileSync(resolve(p, a)).toString(), flag).reduce(
@@ -188,7 +191,7 @@ export const parseData = () => {
         l = +(spell2.Level ?? 99);
       return n === l
         ? spell0.SpellID.replace(spell0.SpellType + '_', '').toLowerCase() >
-          spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
+        spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
           ? 1
           : -1
         : n > l
@@ -272,7 +275,7 @@ export const parseData = () => {
       let key = '';
       v.split(/\r?\n/).forEach((vv) => {
         const [, a] =
-          /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
+        /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
         const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
         if (a) key = a;
         if (n) {
@@ -308,9 +311,9 @@ export const parseData = () => {
     'Teleportation',
     'Wall',
     'Zone',
-    'Interrupt'
+    'Passive'
   ];
-  const tp = [...types, 'Interrupt']
+  const tp = [...types, 'Passive']
     .sort((a, b) => od.indexOf(a) - od.indexOf(b))
     .join();
   parse(tp);

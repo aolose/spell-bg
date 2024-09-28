@@ -9,7 +9,7 @@ const base =
   '\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef' +
   '\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff';
 
-const [ba, bb] = [111, 38];
+const [ba, bb] = [115, 33];
 const baseStr = base.slice(0, ba);
 const tStr = base.slice(ba, ba + bb);
 const hStr = base.slice(ba + bb);
@@ -38,7 +38,7 @@ export const compressor = (tokenizer) => {
   let reduce = 0;
   const parsWord = (str) => {
     tokenizer(str).forEach((k) => {
-      if (k.length > 2) counter[k] = (counter[k] || 0) + 1;
+      if (k.length > 5) counter[k] = (counter[k] || 0) + 1;
     });
   };
   const strZip = (str) => {
