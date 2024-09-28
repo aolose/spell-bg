@@ -8,8 +8,8 @@ export function bg3SpellBuildPlugin() {
     transformIndexHtml: {
       order: 'pre',
       handler(html) {
-        const gtag = process.env.GTAG
-        if (gtag)html=html.replace('<!--gtag-->',gtag)
+        const gtag = process.env.GTAG;
+        if (gtag) html = html.replace('<!--gtag-->', gtag);
         const registerSW =
           process.env.NODE_ENV === 'production'
             ? 'src="/registerSW.js"'

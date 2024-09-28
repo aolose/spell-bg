@@ -14,9 +14,9 @@ const hash = (str) => {
     chr;
   for (i = 0; i < str.length; i++) {
     chr = str.charCodeAt(i);
-    h[0] = (h[0]<<5) -h[0]  + chr;
+    h[0] = (h[0] << 5) - h[0] + chr;
   }
-  return h[0].toString(36)
+  return h[0].toString(36).slice(0, 4);
 };
 
 const spellIds = [];
@@ -157,7 +157,7 @@ export const parseData = () => {
     spells.forEach(([name, flag]) => {
       const p = resolve(unpackDir, name);
       fs.readdirSync(p)
-        .filter((a) => /^Spell_/.test(a))
+        .filter((a) => /^Spell_|^Interrupt/.test(a))
         .forEach((a) =>
           arr.push(
             fileParser(fs.readFileSync(resolve(p, a)).toString(), flag).reduce(
@@ -298,7 +298,21 @@ export const parseData = () => {
   const sk = spellKeys.join();
   const si = spellIds.join();
   const ic = usedIcons.join();
-  const tp = [...types].join();
+  const od = [
+    'Rush',
+    'Shout',
+    'Target',
+    'Throw',
+    'ProjectileStrike',
+    'Projectile',
+    'Teleportation',
+    'Wall',
+    'Zone',
+    'Interrupt'
+  ];
+  const tp = [...types, 'Interrupt']
+    .sort((a, b) => od.indexOf(a) - od.indexOf(b))
+    .join();
   parse(tp);
   parse(sk);
   parse(si);

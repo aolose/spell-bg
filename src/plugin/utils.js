@@ -13,7 +13,6 @@ const [ba, bb] = [111, 38];
 const baseStr = base.slice(0, ba);
 const tStr = base.slice(ba, ba + bb);
 const hStr = base.slice(ba + bb);
-
 export const n2s = (a) => {
   if (a < ba) return baseStr[a];
   let v = a % ba;

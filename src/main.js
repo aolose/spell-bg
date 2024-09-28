@@ -27,7 +27,7 @@ function setCount() {
 function getDesc(spell, field) {
   const params = spell[field + 'Params'];
   let s = spell[field];
-  if (!s) return '';
+  if (!s) return s;
   [].concat(params).forEach((a, i) => {
     s = s?.replace?.(`[${i + 1}]`, `${a}`);
   });
@@ -251,6 +251,9 @@ window.loadSpell = async (idx, str) => {
       if (this.refs) this.refs.forEach((a) => a.update());
     };
     o.SpellID = spellIds[x] || spellIds[o.i];
+    if (/^Interrupt_/.test(o.SpellID)) {
+      o.SpellType = 'Interrupt';
+    }
     o.nm = o.SpellID.replace(o.SpellType + '_', '')
       .replace(/_/g, ' ')
       .replace(/([a-z0-9])([A-Z])/g, '$1 $2');
@@ -275,9 +278,7 @@ function detail(spell) {
   const render = (key) => {
     if (!/[A-Z]/.test(key[0])) return;
     let n;
-    if (key === 'Description') n = getDesc(spell, 'Description');
-    else if (key === 'TooltipUpcastDescription')
-      n = getDesc(spell, 'TooltipUpcastDescription');
+    if (/Description$/.test(key)) n = getDesc(spell, key);
     else {
       n = spell[key];
     }
@@ -292,6 +293,7 @@ function detail(spell) {
           : `<span>${n}</span>`
         : '';
     const cls = spell.hasOwnProperty(key) ? '' : '_';
+    if (value === 'Interrupt') return;
     if (value)
       cpm += `<div>\n<label class="${cls}">${key}</label>${value}\n</div>`;
   };
@@ -495,9 +497,9 @@ const spellCard = (spell, idx, frm) => {
       SpellProperties = [],
       SpellSuccess = []
     } = spell;
-    if(act===spell)this.classList.add('a')
-    else this.classList.remove('a')
-    const desc = getDesc(spell, 'Description');
+    if (act === spell) this.classList.add('a');
+    else this.classList.remove('a');
+    const desc = getDesc(spell, 'Description') || '';
     if (mod !== old.mod) {
       old.mod = titleEl.title = mod;
     }

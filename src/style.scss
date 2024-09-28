@@ -760,9 +760,6 @@ input {
       width: 20px;
     }
   }
-  #c {
-    gap: 0;
-  }
   input {
     width: 100px;
   }
@@ -788,7 +785,7 @@ input {
   }
 }
 
-@media only screen and (max-width: 920px) {
+@media only screen and (max-width: 960px) {
   .f,
   .lo {
     margin: 0 auto;
@@ -796,11 +793,12 @@ input {
   #c {
     padding: 10px 0;
     justify-content: center;
-  }
-  #c button {
-    min-width: 0;
-    padding: 5px;
-    font-size: 12px;
+    gap: 2px 7px;
+    button {
+      min-width: 0;
+      padding: 3px 0;
+      font-size: 12px;
+    }
   }
   #a,
   #b,
