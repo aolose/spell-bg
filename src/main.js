@@ -134,11 +134,12 @@ function filter() {
     if (spell.hasOwnProperty('i')) return;
     const valMatch = (targetVal, curVal) => {
       const regExp = regexIfy(targetVal);
-      if (regExp) return regExp.test(curVal);
+      const curStr = [].concat(curVal).join().toLowerCase()
+      if (regExp) return regExp.test(curStr);
       if (/.\*|\*./.test(targetVal))
-        return new RegExp(targetVal.replace(/\*/g, '.*'), 'ig').test(curVal);
+        return new RegExp(targetVal.replace(/\*/g, '.*'), 'ig').test(curStr);
       if ('-' === targetVal) {
-        if (curVal === 0 || curVal) return;
+        if (curVal === 0 || curVal.length) return;
       } else if ('*' === targetVal) {
         if (curVal === undefined || curVal === '') return;
       } else if (/^>\d+$/.test(targetVal)) {
@@ -160,7 +161,7 @@ function filter() {
           });
           if (!match) return;
         }
-      } else if (-1 === (curVal + '').indexOf(targetVal + '')) return;
+      } else if (-1 === curStr.indexOf(targetVal + '')) return;
       return 1;
     };
     if (!type || type === spell.SpellType) {
@@ -170,7 +171,7 @@ function filter() {
         for (const spellProp in spell) {
           if ('mod' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
           const v = spell[spellProp];
-          const spellValue = typeof v === 'string' ? v.toLowerCase() : [].concat(v).join().toLowerCase();
+          const spellValue = typeof v === 'string' ? v.toLowerCase() : v;
           const regExp = regexIfy(prop);
           const keyMatch =
             regExp?.test(spellProp) ||
