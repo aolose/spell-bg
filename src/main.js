@@ -112,7 +112,7 @@ function copy(str, cb) {
 
 function copySpell(flag, spell) {
   const name = spell.SpellID;
-  const suffix = spell.SpellType==='Passive'?'Passive':'Spell';
+  const suffix = spell.SpellType === 'Passive' ? 'Passive' : 'Spell';
   const type = flag === '+' ? 'Add' : 'Remove';
   clearTimeout(cpField?.t);
   copy(`${type}${suffix}(GetHostCharacter(),'${name}')`, () => {
@@ -132,20 +132,20 @@ function filter() {
   const value = l.toLowerCase();
   spellArr.forEach((spell) => {
     if (spell.hasOwnProperty('i')) return;
-    const check = (e, t) => {
-      const regExp = regexIfy(e);
-      if (regExp) return regExp.test(t);
-      if (/.\*|\*./.test(e))
-        return new RegExp(e.replace(/\*/g, '.*'), 'ig').test(t);
-      if ('-' === e) {
-        if (t === 0 || t) return;
-      } else if ('*' === e) {
-        if (t === undefined || t === '') return;
-      } else if (/^>\d+$/.test(e)) {
-        const n = +e.slice(1);
+    const valMatch = (targetVal, curVal) => {
+      const regExp = regexIfy(targetVal);
+      if (regExp) return regExp.test(curVal);
+      if (/.\*|\*./.test(targetVal))
+        return new RegExp(targetVal.replace(/\*/g, '.*'), 'ig').test(curVal);
+      if ('-' === targetVal) {
+        if (curVal === 0 || curVal) return;
+      } else if ('*' === targetVal) {
+        if (curVal === undefined || curVal === '') return;
+      } else if (/^>\d+$/.test(targetVal)) {
+        const n = +targetVal.slice(1);
         if (!isNaN(n)) {
           let match = 0;
-          [].concat(t).forEach((t) => {
+          [].concat(curVal).forEach((t) => {
             if (/^\d+$/.test(t)) {
               if (+t >= n) {
                 match = 1;
@@ -160,7 +160,7 @@ function filter() {
           });
           if (!match) return;
         }
-      } else if (-1 === (t + '').indexOf(e + '')) return;
+      } else if (-1 === (curVal + '').indexOf(targetVal + '')) return;
       return 1;
     };
     if (!type || type === spell.SpellType) {
@@ -170,7 +170,7 @@ function filter() {
         for (const spellProp in spell) {
           if ('mod' !== spellProp && /[a-z_]/.test(spellProp[0])) continue;
           const v = spell[spellProp];
-          const spellValue = typeof v === 'string' ? v.toLowerCase() : v;
+          const spellValue = typeof v === 'string' ? v.toLowerCase() : [].concat(v).join().toLowerCase();
           const regExp = regexIfy(prop);
           const keyMatch =
             regExp?.test(spellProp) ||
@@ -179,7 +179,7 @@ function filter() {
               new RegExp(prop.replace(/\*/g, '.*'), 'gi').test(spellProp));
           if (keyMatch) {
             mc = 1;
-            if (check(value, spellValue)) {
+            if (valMatch(value, spellValue)) {
               e = 1;
               break;
             }
