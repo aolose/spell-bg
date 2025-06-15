@@ -78,14 +78,7 @@ export const parseData = () => {
   const parseTooltip = () => {
     const o = JSON.parse(
       xmlParser.toJson(
-        fs
-          .readFileSync(
-            resolve(
-              unpackDir,
-              'Shared/Public/Shared/TooltipExtras/TooltipUpcastDescriptions.lsx'
-            )
-          )
-          .toString(),
+        fs.readFileSync(resolve(unpackDir, cfg.tooltip)).toString(),
         {}
       )
     );
@@ -105,8 +98,7 @@ export const parseData = () => {
         if (/^new entry/.test(n)) {
           e.SpellID = JSON.parse(n.replace('new entry ', ''));
           if (e.SpellID[0] === '_') return;
-        }
-        else if (/^using/.test(n)) {
+        } else if (/^using/.test(n)) {
           e.Using = n.slice(6).replace(/"/g, '');
         } else if (/^data/.test(n)) {
           const [, b, s] = /"([^"]+)" "([^"]+)"/gi.exec(n) || [];
@@ -129,7 +121,7 @@ export const parseData = () => {
           }
         }
       }
-      if(Object.keys(e).length<3&&!e.Using)return;
+      if (Object.keys(e).length < 3 && !e.Using) return;
       if (e.SpellType) types.add(e.SpellType);
       if (e.SpellID) r.push(e);
     });
@@ -191,7 +183,7 @@ export const parseData = () => {
         l = +(spell2.Level ?? 99);
       return n === l
         ? spell0.SpellID.replace(spell0.SpellType + '_', '').toLowerCase() >
-        spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
+          spell2.SpellID.replace(spell2.SpellType + '_', '').toLowerCase()
           ? 1
           : -1
         : n > l
@@ -275,7 +267,7 @@ export const parseData = () => {
       let key = '';
       v.split(/\r?\n/).forEach((vv) => {
         const [, a] =
-        /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
+          /id="MapKey" type="FixedString" value="(.*?)"/.exec(vv) || [];
         const [, t, n] = /id="(.*?)" type="float" value="(.*?)"/.exec(vv) || [];
         if (a) key = a;
         if (n) {
